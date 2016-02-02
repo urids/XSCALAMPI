@@ -1,1 +1,0 @@
-../../test/asm/atomic_cmpset.c

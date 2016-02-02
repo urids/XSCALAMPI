@@ -1,3 +1,0 @@
-commsInfo.lo: commsInfo.c commsInfo.h
-
-commsInfo.h:
