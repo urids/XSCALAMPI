@@ -68,7 +68,7 @@ int __attribute__ ((visibility ("protected"))) readTaskBinding(device_Task_Info*
 		exit(-1);
 	}
 
-
+//parsing of the taskSched.cfg file.
 	while (fgets(line, MAX_LINE_LEN, config_fp) != NULL) {
 		token = strtok(line, "\t =\n\r");
 		if (token != NULL && token[0] != '#') {
