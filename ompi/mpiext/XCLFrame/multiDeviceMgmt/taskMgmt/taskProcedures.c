@@ -138,6 +138,7 @@ typedef struct enqueueArgs_st{
 	cl_command_queue th_queue;
 	cl_kernel th_kernel;
 	int workDim;
+	int g_selTsk;
 	//cl_event kernelProfileEvent;
 
 }enqueueArgs_t;
@@ -171,7 +172,7 @@ void * enqueTaskReq(void *args) {
 		clGetEventProfilingInfo(kernelProfileEvent, CL_PROFILING_COMMAND_END,
 				sizeof(time_end), &time_end, NULL);
 		total_time = time_end - time_start;
-		printf("Execution time of task: -->  %0.3f ms \n", (total_time / 1000000.0));
+		printf("Execution time of task %d: -->  %0.3f ms \n",l_args->g_selTsk,(total_time / 1000000.0));
 
 	}
 		else{
@@ -267,6 +268,8 @@ if(selTask==-1){ // -1 means all tasks must enqueue this kernel.
 		//th_Args[selTask]->kernelProfileEvent=kernelProfileEvent;
 		th_Args[selTask]->th_queue=taskList[selTask].device[0].queue;
 		th_Args[selTask]->th_kernel=taskList[selTask].kernel[0].kernel;
+		th_Args[selTask]->g_selTsk=selTask;
+
 
 		//printf("task: %d Requesting at time: %s \n",numReq++,asctime(timeinfo));
 	  	pthread_create(&thds[selTask], NULL, enqueTaskReq, (void*) th_Args[selTask]);
