@@ -74,6 +74,8 @@ int l_numDevs;
 	return g_numDevs;
 }
 
+//testOK
+
 int OMPI_CollectTaskInfo(int devSelection, MPI_Comm comm){
 	int numRanks, myRank, HostNamelen;
 	int i,j,k; //indx variables.

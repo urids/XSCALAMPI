@@ -311,9 +311,6 @@ ompi/mpi/fortran/use-mpi-ignore-tkr/mpi-ignore-tkr-interfaces.h
 ompi/mpi/fortran/use-mpi-ignore-tkr/mpi-ignore-tkr-file-interfaces.h
 ompi/mpi/fortran/use-mpi-tkr/fortran_kinds.sh
 ompi/mpi/fortran/use-mpi-tkr/fortran_sizes.h
-ompi/mpi/fortran/use-mpi-tkr/mpi_*.f90
-ompi/mpi/fortran/use-mpi-tkr/mpi_kinds.ompi_module
-ompi/mpi/fortran/use-mpi-tkr/mpi-f90-interfaces.h
 ompi/mpi/java/java/mpi
 ompi/mpi/java/java/*.jar
 ompi/mpi/java/java/*.h
