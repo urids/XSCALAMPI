@@ -1,17 +1,18 @@
-adio/common/heap-sort.lo: adio/common/heap-sort.c /usr/include/assert.h \
- /usr/include/features.h /usr/include/x86_64-linux-gnu/bits/predefs.h \
+adio/common/heap-sort.lo: adio/common/heap-sort.c \
+ /usr/include/stdc-predef.h /usr/include/assert.h /usr/include/features.h \
  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h /usr/include/stdlib.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.7/include/stddef.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h \
  /usr/include/x86_64-linux-gnu/bits/waitflags.h \
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h /usr/include/endian.h \
  /usr/include/x86_64-linux-gnu/bits/endian.h \
  /usr/include/x86_64-linux-gnu/bits/byteswap.h \
- /usr/include/x86_64-linux-gnu/sys/types.h \
  /usr/include/x86_64-linux-gnu/bits/types.h \
- /usr/include/x86_64-linux-gnu/bits/typesizes.h /usr/include/time.h \
+ /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+ /usr/include/x86_64-linux-gnu/bits/byteswap-16.h \
+ /usr/include/x86_64-linux-gnu/sys/types.h /usr/include/time.h \
  /usr/include/x86_64-linux-gnu/sys/select.h \
  /usr/include/x86_64-linux-gnu/bits/select.h \
  /usr/include/x86_64-linux-gnu/bits/sigset.h \
@@ -19,9 +20,11 @@ adio/common/heap-sort.lo: adio/common/heap-sort.c /usr/include/assert.h \
  /usr/include/x86_64-linux-gnu/bits/select2.h \
  /usr/include/x86_64-linux-gnu/sys/sysmacros.h \
  /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h /usr/include/alloca.h \
+ /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
+ /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
  /usr/include/x86_64-linux-gnu/bits/stdlib.h /usr/include/stdio.h \
  /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.7/include/stdarg.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h \
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
  /usr/include/x86_64-linux-gnu/bits/sys_errlist.h \
  /usr/include/x86_64-linux-gnu/bits/stdio.h \
@@ -37,9 +40,10 @@ adio/common/heap-sort.lo: adio/common/heap-sort.c /usr/include/assert.h \
  adio/include/adio.h adio/include/romioconf.h \
  adio/include/romioconf-undefs.h adio/include/nopackage.h \
  ../../../../../ompi/include/mpi.h \
- /home/uriel/Dev/mpisrc/XCLMPI/ompi/mca/io/romio/romio/include/mpio.h \
- /home/uriel/Dev/mpisrc/XCLMPI/ompi/mca/io/romio/romio/include/io_romio_conv.h \
+ /home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/io/romio/romio/include/mpio.h \
+ /home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/io/romio/romio/include/io_romio_conv.h \
  /usr/include/fcntl.h /usr/include/x86_64-linux-gnu/bits/fcntl.h \
+ /usr/include/x86_64-linux-gnu/bits/fcntl-linux.h \
  /usr/include/x86_64-linux-gnu/bits/stat.h \
  /usr/include/x86_64-linux-gnu/bits/fcntl2.h \
  /usr/include/x86_64-linux-gnu/sys/stat.h /usr/include/string.h \
@@ -53,11 +57,11 @@ adio/common/heap-sort.lo: adio/common/heap-sort.c /usr/include/assert.h \
  adio/include/adioi_fs_proto.h adio/include/mpio_error.h \
  adio/include/mpipr.h
 
+/usr/include/stdc-predef.h:
+
 /usr/include/assert.h:
 
 /usr/include/features.h:
-
-/usr/include/x86_64-linux-gnu/bits/predefs.h:
 
 /usr/include/x86_64-linux-gnu/sys/cdefs.h:
 
@@ -69,7 +73,7 @@ adio/common/heap-sort.lo: adio/common/heap-sort.c /usr/include/assert.h \
 
 /usr/include/stdlib.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/4.7/include/stddef.h:
+/usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h:
 
 /usr/include/x86_64-linux-gnu/bits/waitflags.h:
 
@@ -81,11 +85,13 @@ adio/common/heap-sort.lo: adio/common/heap-sort.c /usr/include/assert.h \
 
 /usr/include/x86_64-linux-gnu/bits/byteswap.h:
 
-/usr/include/x86_64-linux-gnu/sys/types.h:
-
 /usr/include/x86_64-linux-gnu/bits/types.h:
 
 /usr/include/x86_64-linux-gnu/bits/typesizes.h:
+
+/usr/include/x86_64-linux-gnu/bits/byteswap-16.h:
+
+/usr/include/x86_64-linux-gnu/sys/types.h:
 
 /usr/include/time.h:
 
@@ -105,6 +111,10 @@ adio/common/heap-sort.lo: adio/common/heap-sort.c /usr/include/assert.h \
 
 /usr/include/alloca.h:
 
+/usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
+
 /usr/include/x86_64-linux-gnu/bits/stdlib.h:
 
 /usr/include/stdio.h:
@@ -115,7 +125,7 @@ adio/common/heap-sort.lo: adio/common/heap-sort.c /usr/include/assert.h \
 
 /usr/include/wchar.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/4.7/include/stdarg.h:
+/usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
 
@@ -155,13 +165,15 @@ adio/include/nopackage.h:
 
 ../../../../../ompi/include/mpi.h:
 
-/home/uriel/Dev/mpisrc/XCLMPI/ompi/mca/io/romio/romio/include/mpio.h:
+/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/io/romio/romio/include/mpio.h:
 
-/home/uriel/Dev/mpisrc/XCLMPI/ompi/mca/io/romio/romio/include/io_romio_conv.h:
+/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/io/romio/romio/include/io_romio_conv.h:
 
 /usr/include/fcntl.h:
 
 /usr/include/x86_64-linux-gnu/bits/fcntl.h:
+
+/usr/include/x86_64-linux-gnu/bits/fcntl-linux.h:
 
 /usr/include/x86_64-linux-gnu/bits/stat.h:
 

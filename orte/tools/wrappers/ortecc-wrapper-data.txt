@@ -21,7 +21,7 @@ linker_flags=    -Wl,-rpath -Wl,@{libdir} -Wl,--enable-new-dtags
 # ortecc/ortec++ because we intend ORTE applications to use both the
 # ORTE and OPAL APIs.
 libs=-lopen-rte -lopen-pal
-libs_static=-lopen-rte -lopen-pal -lm -lXNVCtrl -lXext -lX11 -lutil -ldl 
+libs_static=-lopen-rte -lopen-pal -lm -lutil -ldl 
 dyn_lib_file=libopen-rte.so
 static_lib_file=libopen-rte.a
 required_file=

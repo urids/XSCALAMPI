@@ -22,7 +22,7 @@ linker_flags=    -Wl,-rpath -Wl,@{libdir} -Wl,--enable-new-dtags
 # pulled in implicitly) because we intend MPI applications to only use
 # the MPI API.
 libs=-lmpi_cxx -lmpi
-libs_static=-lmpi_cxx -lmpi -lopen-rte -lopen-pal -lm -lXNVCtrl -lXext -lX11 -lutil -ldl 
+libs_static=-lmpi_cxx -lmpi -lopen-rte -lopen-pal -lm -lutil -ldl 
 dyn_lib_file=libmpi.so
 static_lib_file=libmpi.a
 required_file=

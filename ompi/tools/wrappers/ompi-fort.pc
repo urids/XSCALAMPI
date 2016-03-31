@@ -15,5 +15,5 @@ libdir=${exec_prefix}/lib
 # dependencies), so only list these in Libs.private.
 #
 Libs: -L${libdir}     -Wl,-rpath -Wl,@{libdir} -Wl,--enable-new-dtags   -lmpi_mpifh -lmpi
-Libs.private: -lm -lXNVCtrl -lXext -lX11 -lutil -ldl 
+Libs.private: -lm -lutil -ldl 
 Cflags: ${libdir} -I${includedir} -I${includedir}/openmpi/opal/mca/hwloc/hwloc172/hwloc/include -I${includedir}/openmpi/opal/mca/event/libevent2021/libevent -I${includedir}/openmpi/opal/mca/event/libevent2021/libevent/include    

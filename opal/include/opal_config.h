@@ -525,7 +525,7 @@
 /* #undef HAVE_NUMA_NODE_RELATIONSHIP */
 
 /* Define to 1 if you have the <NVCtrl/NVCtrl.h> header file. */
-#define HAVE_NVCTRL_NVCTRL_H 1
+/* #undef HAVE_NVCTRL_NVCTRL_H */
 
 /* Define to 1 if you have the <nvml.h> header file. */
 /* #undef HAVE_NVML_H */
@@ -1090,7 +1090,7 @@
 /* #undef HWLOC_HAVE_FLSL */
 
 /* Define to 1 if you have the GL module components. */
-#define HWLOC_HAVE_GL 1
+/* #undef HWLOC_HAVE_GL */
 
 /* Define to 1 if you have the `libpciaccess' library. */
 /* #undef HWLOC_HAVE_LIBPCIACCESS */
@@ -1216,7 +1216,7 @@
 /* #undef MCA_hwloc_external_openfabrics_header */
 
 /* Complete set of command line arguments given to ROMIOs configure script */
-#define MCA_io_romio_COMPLETE_CONFIGURE_FLAGS " FROM_OMPI=yes CC='gcc -std=gnu99' CFLAGS='-O3 -DNDEBUG -finline-functions -fno-strict-aliasing -pthread' CPPFLAGS='  -I/home/uriel/Dev/mpisrc/XCLMPI/opal/mca/hwloc/hwloc172/hwloc/include -I/home/uriel/Dev/mpisrc/XCLMPI/opal/mca/event/libevent2021/libevent -I/home/uriel/Dev/mpisrc/XCLMPI/opal/mca/event/libevent2021/libevent/include' FFLAGS='' LDFLAGS=' ' --enable-shared --disable-static  --prefix=/home/uriel/mpiELFs --disable-aio"
+#define MCA_io_romio_COMPLETE_CONFIGURE_FLAGS " FROM_OMPI=yes CC='gcc -std=gnu99' CFLAGS='-O3 -DNDEBUG -finline-functions -fno-strict-aliasing -pthread' CPPFLAGS='  -I/home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/hwloc/hwloc172/hwloc/include -I/home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/event/libevent2021/libevent -I/home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/event/libevent2021/libevent/include' FFLAGS='' LDFLAGS=' ' --enable-shared --disable-static  --prefix=/home/uriel/mpiELFs --disable-aio"
 
 /* Set of user-defined configure flags given to ROMIOs configure script via
    --with-io-romio-flags */
@@ -2002,10 +2002,10 @@
 #define OPAL_BUILD_PLATFORM_COMPILER_FAMILYNAME GNU
 
 /* The compiler $lower which OMPI was built with */
-#define OPAL_BUILD_PLATFORM_COMPILER_VERSION 263939
+#define OPAL_BUILD_PLATFORM_COMPILER_VERSION 264196
 
 /* The compiler $lower which OMPI was built with */
-#define OPAL_BUILD_PLATFORM_COMPILER_VERSION_STR 4.7.3
+#define OPAL_BUILD_PLATFORM_COMPILER_VERSION_STR 4.8.4
 
 /* OMPI underlying C compiler */
 #define OPAL_CC "gcc"
@@ -2572,7 +2572,7 @@
 #define WRAPPER_EXTRA_LDFLAGS "    -Wl,-rpath -Wl,@{libdir} -Wl,--enable-new-dtags"
 
 /* Additional LIBS to pass through the wrapper compilers */
-#define WRAPPER_EXTRA_LIBS "-lm -lXNVCtrl -lXext -lX11 -lutil -ldl "
+#define WRAPPER_EXTRA_LIBS "-lm -lutil -ldl "
 
 /* Whether the wrapper compilers add rpath flags by default */
 #define WRAPPER_RPATH_SUPPORT "runpath"

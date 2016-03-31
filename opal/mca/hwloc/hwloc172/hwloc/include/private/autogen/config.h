@@ -210,7 +210,7 @@
 /* #undef HAVE_NUMA_NODE_RELATIONSHIP */
 
 /* Define to 1 if you have the <NVCtrl/NVCtrl.h> header file. */
-#define HAVE_NVCTRL_NVCTRL_H 1
+/* #undef HAVE_NVCTRL_NVCTRL_H */
 
 /* Define to 1 if you have the <nvml.h> header file. */
 /* #undef HAVE_NVML_H */
@@ -468,7 +468,7 @@
 /* #undef HWLOC_HAVE_FLSL */
 
 /* Define to 1 if you have the GL module components. */
-#define HWLOC_HAVE_GL 1
+/* #undef HWLOC_HAVE_GL */
 
 /* Define to 1 if you have the `libpciaccess' library. */
 /* #undef HWLOC_HAVE_LIBPCIACCESS */

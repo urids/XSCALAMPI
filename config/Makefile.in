@@ -73,8 +73,7 @@ host_triplet = @host@
 target_triplet = @target@
 subdir = config
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in compile \
-	config.guess config.sub depcomp install-sh ltmain.sh missing \
-	ylwrap
+	config.guess config.sub install-sh ltmain.sh missing ylwrap
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/config/c_get_alignment.m4 \
 	$(top_srcdir)/config/c_weak_symbols.m4 \

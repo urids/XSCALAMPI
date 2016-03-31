@@ -17,7 +17,7 @@ old_library='libmca_hwloc_hwloc172.a'
 inherited_linker_flags=' -pthread'
 
 # Libraries that this one depends upon.
-dependency_libs=' -lXNVCtrl -lXext -lX11 -lrt -lm -lutil'
+dependency_libs=' -lrt -lm -lutil'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''

@@ -12,10 +12,10 @@
 # in the top-level romio directory
 #
 PREFIX=/home/uriel/mpiELFs
-ROMIO_HOME=/home/uriel/Dev/mpisrc/XCLMPI/ompi/mca/io/romio/romio
+ROMIO_HOME=/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/io/romio/romio
 ARCH=LINUX
 RANLIB=ranlib
-TOP_BUILD_DIR=/home/uriel/Dev/mpisrc/XCLMPI/ompi/mca/io/romio/romio
+TOP_BUILD_DIR=/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/io/romio/romio
 # LAM Do we want to install or uninstall?
 WANT_INSTALL=1
 #
@@ -35,7 +35,7 @@ datarootdir=@datatrootdir@
 #datadir=${datarootdir}
 docdir=${datarootdir}/doc/${PACKAGE_TARNAME}
 ## Location of sources
-#top_srcdir=/home/uriel/Dev/mpisrc/XCLMPI/ompi/mca/io/romio/romio
+#top_srcdir=/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/io/romio/romio
 #
 # File access mode
 MODE=0644
