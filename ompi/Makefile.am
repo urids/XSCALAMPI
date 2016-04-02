@@ -162,7 +162,7 @@ libmpi_la_LDFLAGS = \
         -Wl,-rpath,$(libdir)/XCLFrame/binding
 
 # included subdirectory Makefile.am's and appended-to variables
-headers =
+headers = 
 noinst_LTLIBRARIES =
 include_HEADERS =
 dist_ompidata_DATA =

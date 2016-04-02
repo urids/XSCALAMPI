@@ -53,13 +53,13 @@ typedef struct XCLtask_st{
 	XCLTrayInfo *trayInfo; /*info about size and mode of tray.
 	 	 	 	 	 	 	 	 the current cl_mem object is managed by its device*/
 
-	int Rack; //number Of Rack in device of this task. two task may have same number of rack
+	int RackID; //number Of RackID in device of this task. two task may have same number of rack
 				 // provided that they belong to different devices =) !!
 
 }XCLtask;
 
 
-extern XCLtask* taskList; //This will be defined in late.c and is property of the runtime system.
+extern XCLtask* l_taskList; //This will be defined in late.c and is property of the runtime system.
 
 
 #endif /* TASK_H_ */

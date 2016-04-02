@@ -79,32 +79,32 @@ int commsBenchmark(commsInfo* cmInf){
 	}
 
 
-	//here we allocate space for a provisional local taskList.
-	taskList = (XCLtask*) malloc(sizeof(XCLtask) * l_PUs);
+	//here we allocate space for a provisional local l_taskList.
+	l_taskList = (XCLtask*) malloc(sizeof(XCLtask) * l_PUs);
 
 
-	//Here we fill the local taskList and create the memory Racks.
+	//Here we fill the local l_taskList and create the memory RackIDs.
 	for (i = 0; i <l_PUs; i++) {
 		for (j = taskDevMap[i].min_tskIdx; j <= taskDevMap[i].max_tskIdx;j++) {
 			debug_print("-----matching task %d ------\n",j);
 
-			taskList[j].device = taskDevMap[i].mappedDevice;
-			taskList[j].numTrays = 0;
+			l_taskList[j].device = taskDevMap[i].mappedDevice;
+			l_taskList[j].numTrays = 0;
 
 			//here we query how many racks has this device.
-			int rackIdx = taskList[j].device[0].numRacks;
+			int rackIdx = l_taskList[j].device[0].numRackIDs;
 			if (rackIdx == 0) {
-				taskList[j].device[0].memHandler = malloc(1 * sizeof(cl_mem*));
-				//taskList[j].device[0].memHandler[0] = malloc(1 * sizeof(cl_mem));
-				taskList[j].Rack = rackIdx; //rack assignment
-				taskList[j].device[0].numRacks++;
+				l_taskList[j].device[0].memHandler = malloc(1 * sizeof(cl_mem*));
+				//l_taskList[j].device[0].memHandler[0] = malloc(1 * sizeof(cl_mem));
+				l_taskList[j].RackID = rackIdx; //rack assignment
+				l_taskList[j].device[0].numRackIDs++;
 			} else {
-				cl_mem** tmpRack;
-				tmpRack = (cl_mem**) realloc(taskList[j].device[0].memHandler,(rackIdx + 1) * sizeof(cl_mem*));
-				if (tmpRack != NULL) {
-					taskList[j].Rack = rackIdx;
-					taskList[j].device[0].memHandler = tmpRack;
-					taskList[j].device[0].numRacks++;
+				cl_mem** tmpRackID;
+				tmpRackID = (cl_mem**) realloc(l_taskList[j].device[0].memHandler,(rackIdx + 1) * sizeof(cl_mem*));
+				if (tmpRackID != NULL) {
+					l_taskList[j].RackID = rackIdx;
+					l_taskList[j].device[0].memHandler = tmpRackID;
+					l_taskList[j].device[0].numRackIDs++;
 				} else {
 					printf("ERROR AT: Reallocating racks. %d , %d",	__FILE__, __LINE__);
 				}
@@ -128,7 +128,7 @@ int commsBenchmark(commsInfo* cmInf){
 		g_taskList[i].g_taskIdx=i;
 
 
-	//this section creates the global taskList map (temporarily for benchmarking).
+	//this section creates the global l_taskList map (temporarily for benchmarking).
 	for(i=0,k=0;i<numRanks;i++){
 		for(j=0;j<RKS[i];j++){
 			g_taskList[k].r_rank=i;
@@ -350,15 +350,15 @@ if(myRank==ROOT){
 	for (i = 0; i <l_PUs; i++) {
 			for (j = taskDevMap[i].min_tskIdx; j <= taskDevMap[i].max_tskIdx;j++) {
 				debug_print("-----matching task %d ------\n",j);
-				taskList[j].numTrays = 0;
+				l_taskList[j].numTrays = 0;
 			}
 	}
 
 	//TODO: must we deallocate the number of racks created for each device??
 	free(taskDevMap);
 	taskDevMap=NULL;
-	free(taskList);
-	taskList=NULL;
+	free(l_taskList);
+	l_taskList=NULL;
 	free(g_taskList);
 	g_taskList=NULL;
 

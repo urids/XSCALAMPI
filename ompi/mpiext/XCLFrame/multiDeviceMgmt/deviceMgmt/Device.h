@@ -7,9 +7,7 @@
 
 #ifndef DEVICE_H_
 #define DEVICE_H_
-
 #include "CL/cl.h"
-
 #ifndef DEBUG
 #define DEBUG  1
 #endif
@@ -18,7 +16,7 @@
 #define PROFILE  1
 #endif
 
-
+//TODO:  this must reside in a profiling section =|
 #define debug_print(fmt, ...) \
         do { if (DEBUG) fprintf(stderr, " AT: %s:%d:%s(): \n " fmt, __FILE__, \
                                 __LINE__, __func__, ##__VA_ARGS__); } while (0)

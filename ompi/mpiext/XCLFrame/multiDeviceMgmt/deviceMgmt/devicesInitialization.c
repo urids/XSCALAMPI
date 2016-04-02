@@ -63,7 +63,7 @@ void devicesInitialization(CLxplorInfo* xpInfo){
 				cpu[m]->platform = (cl_context_properties) xpInfo->platforms[i];
 				cpu[m]->maxAllocMemSize=maxAllocMemSize;
 				cpu[m]->globalMemSize=globalMemSize;
-				cpu[m]->numRacks=0;
+				cpu[m]->numRacks=0; //init the num racks to Zero
 				createContext(cpu[m]);
 				createQueue(cpu[m]);
 				m++;
@@ -74,7 +74,7 @@ void devicesInitialization(CLxplorInfo* xpInfo){
 				gpu[n]->platform = (cl_context_properties) xpInfo->platforms[i];
 				gpu[n]->maxAllocMemSize=maxAllocMemSize;
 				gpu[n]->globalMemSize=globalMemSize;
-				gpu[n]->numRacks=0;
+				gpu[n]->numRacks=0;//init the num racks to Zero
 				createContext(gpu[n]);
 				createQueue(gpu[n]);
 				n++;
@@ -85,7 +85,7 @@ void devicesInitialization(CLxplorInfo* xpInfo){
 				accel[o]->platform = (cl_context_properties) xpInfo->platforms[i];
 				accel[o]->maxAllocMemSize=maxAllocMemSize;
 				accel[o]->globalMemSize=globalMemSize;
-				accel[o]->numRacks=0;
+				accel[o]->numRacks=0;//init the num racks to Zero
 				createContext(accel[o]);
 				createQueue(accel[o]);
 				o++;

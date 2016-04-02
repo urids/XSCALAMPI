@@ -5,18 +5,18 @@
 
 int writeBuffer(int taskId, int trayIdx, int bufferSize, void * hostBuffer){
 	int status;
-	int myRack=taskList[taskId].Rack;
+	int myRackID=l_taskList[taskId].RackID;
 	cl_event memProfileEvent;
 	cl_ulong time_start, time_end;
 	double total_time;
 
-		status = clEnqueueWriteBuffer(taskList[taskId].device[0].queue,
-				taskList[taskId].device[0].memHandler[myRack][trayIdx], CL_TRUE, 0, bufferSize,
+		status = clEnqueueWriteBuffer(l_taskList[taskId].device[0].queue,
+				l_taskList[taskId].device[0].memHandler[myRackID][trayIdx], CL_TRUE, 0, bufferSize,
 				hostBuffer, 0, NULL, &memProfileEvent);
-		//status=clFlush(taskList[taskId].device[0].queue);
+		//status=clFlush(l_taskList[taskId].device[0].queue);
 
 		chkerr(status, "Writing the new mem Buffer", __FILE__, __LINE__);
-		debug_print("--write done in task %d, rack %d, tray: %d. \n ",taskId,myRack,trayIdx);
+		debug_print("--write done in task %d, rack %d, tray: %d. \n ",taskId,myRackID,trayIdx);
 
 #if PROFILE
 		clWaitForEvents(1, &memProfileEvent);
@@ -46,15 +46,15 @@ int ALL_TASKS_writeBuffer(int numTasks, int trayIdx, void * hostBuffer ) {
 		cl_ulong time_start, time_end;
 		double total_time;
 
-		int myRack=taskList[i].Rack;
-				status = clEnqueueWriteBuffer(taskList[i].device[0].queue,
-								taskList[i].device[0].memHandler[myRack][trayIdx], CL_TRUE,0,
+		int myRackID=l_taskList[i].RackID;
+				status = clEnqueueWriteBuffer(l_taskList[i].device[0].queue,
+								l_taskList[i].device[0].memHandler[myRackID][trayIdx], CL_TRUE,0,
 								tskbufferSize[i], //extern DbuffersSize is declared in bufferFunctions.
 								tmpBuffer,
 								0, NULL, &memProfileEvent);
 				tmpBuffer+=tskbufferSize[0]; //each task writing must do an offset.
 			chkerr(status, "Writing mem Buffers", __FILE__, __LINE__);
-			debug_print("copied: %zd \n" ,taskList[i].trayInfo->size);
+			debug_print("copied: %zd \n" ,l_taskList[i].trayInfo->size);
 
 
 
@@ -83,14 +83,14 @@ int ALL_TASKS_writeBuffer(int numTasks, int trayIdx, void * hostBuffer ) {
 	p=(void**)malloc(numTasks*sizeof(void*));
 
 	for (i = 0; i < numTasks; i++) {
-		p[i] = (void *) clEnqueueMapBuffer(taskList[i].device[0].queue,  //map memory object on device to memory in host.
-				taskList[i].device[0].memHandler[0], CL_TRUE,
+		p[i] = (void *) clEnqueueMapBuffer(l_taskList[i].device[0].queue,  //map memory object on device to memory in host.
+				l_taskList[i].device[0].memHandler[0], CL_TRUE,
 				CL_MAP_WRITE, 0, bufferSize,
 				0, NULL, NULL, &status);
 
 		//memset(p, 0, task->kernel[0].buffer[0].size*sizeof(cl_float3));
 		p[i]=*entitiesbuffer;
-		status |= clEnqueueUnmapMemObject(taskList[i].device[0].queue, taskList[i].device[0].memHandler[0], p[i], 0, NULL,NULL);
+		status |= clEnqueueUnmapMemObject(l_taskList[i].device[0].queue, l_taskList[i].device[0].memHandler[0], p[i], 0, NULL,NULL);
 		chkerr(status, "error at Writing Buffers", __FILE__, __LINE__);
 	}
 */

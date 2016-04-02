@@ -3,9 +3,9 @@
 
 void XclFreeTaskBuffer(int l_taskIdx, int trayIdx){
 
-	int myRack=taskList[l_taskIdx].Rack;
+	int myRackID=l_taskList[l_taskIdx].RackID;
 	cl_int status;
-	status=clReleaseMemObject (taskList[l_taskIdx].device[0].memHandler[myRack][trayIdx]);
+	status=clReleaseMemObject (l_taskList[l_taskIdx].device[0].memHandler[myRackID][trayIdx]);
 	chkerr(status, "Error at: Freeing Mem Buffer, %s: %d", __FILE__, __LINE__);
 
 }

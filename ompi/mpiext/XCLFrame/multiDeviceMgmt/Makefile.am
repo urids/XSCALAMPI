@@ -26,4 +26,4 @@ libmultiDeviceMgmt_la_LDFLAGS = -lOpenCL -lm
 
 # Compiler options. Here we are adding the include directory
 # to be searched for headers included in the source code.
-#libmultiDeviceMgmt_la_CPPFLAGS = -I$(top_srcdir)/include 
+libmultiDeviceMgmt_la_CPPFLAGS = -I$(top_srcdir)/include -I/usr/local/cuda-7.5/include/

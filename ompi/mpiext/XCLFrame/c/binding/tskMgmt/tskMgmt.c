@@ -4,7 +4,7 @@
 //This file performs Task<->Device matching
 device_Task_Info* taskDevMap;
 
-int createTaskList(int devSelection){ //There exist only one taskList per Node and each task has a device.
+int createTaskList(int devSelection){ //There exist only one l_taskList per Node and each task has a device.
 
 int i,j;
 //taskDevMap=malloc(clXplr.numDevices*sizeof(device_Task_Info));
@@ -23,16 +23,16 @@ debug_print("1.- read taskDevMap succeed!!\n");
 
 	switch (devSelection) {
 	case ALL_DEVICES:
-		//here we allocate space for the local taskList.
-		taskList = (XCLtask*) malloc(sizeof(XCLtask) * l_numTasks);
+		//here we allocate space for the local l_taskList.
+		l_taskList = (XCLtask*) malloc(sizeof(XCLtask) * l_numTasks);
 
 		//Each task needs a handler (pointer) to its device
 		for (i = 0; i < l_numTasks; i++) {
-			taskList[i].device = (Device*) malloc(1*sizeof(Device)); //each task has only 1 device.
+			l_taskList[i].device = (Device*) malloc(1*sizeof(Device)); //each task has only 1 device.
 		}
 
-//int advance=0;
-		//Here we fill the taskList and create the memory Racks.
+		//int advance=0;
+		//Here we fill the l_taskList and create the memory RackIDs.
 		//for (i = 0; i <l_numTasks; i++) {
 		for (i = 0; i <numDecls; i++) {
 			//advance=taskDevMap[i].max_tskIdx-taskDevMap[i].min_tskIdx+1;
@@ -40,23 +40,23 @@ debug_print("1.- read taskDevMap succeed!!\n");
 			for (j = taskDevMap[i].min_tskIdx; j <= taskDevMap[i].max_tskIdx;j++) {
 				debug_print("-----matching task %d , %d- %d ------\n",j,taskDevMap[i].min_tskIdx,taskDevMap[i].max_tskIdx);
 
-				taskList[j].device = taskDevMap[i].mappedDevice;
-				taskList[j].numTrays = 0;
+				l_taskList[j].device = taskDevMap[i].mappedDevice;
+				l_taskList[j].numTrays = 0;
 
 				//here we query how many racks has this device.
-				int rackIdx = taskList[j].device[0].numRacks;
+				int rackIdx = l_taskList[j].device[0].numRackIDs;
 				if (rackIdx == 0) {
-					taskList[j].device[0].memHandler = malloc(1 * sizeof(cl_mem*));
-					//taskList[j].device[0].memHandler[0] = malloc(1 * sizeof(cl_mem));
-					taskList[j].Rack = rackIdx; //rack assignment
-					taskList[j].device[0].numRacks++;
+					l_taskList[j].device[0].memHandler = malloc(1 * sizeof(cl_mem*));
+					//l_taskList[j].device[0].memHandler[0] = malloc(1 * sizeof(cl_mem));
+					l_taskList[j].RackID = rackIdx; //rack assignment
+					l_taskList[j].device[0].numRackIDs++;
 				} else {
-					cl_mem** tmpRack;
-					tmpRack = (cl_mem**) realloc(taskList[j].device[0].memHandler,(rackIdx + 1) * sizeof(cl_mem*));
-					if (tmpRack != NULL) {
-						taskList[j].Rack = rackIdx;
-						taskList[j].device[0].memHandler = tmpRack;
-						taskList[j].device[0].numRacks++;
+					cl_mem** tmpRackID;
+					tmpRackID = (cl_mem**) realloc(l_taskList[j].device[0].memHandler,(rackIdx + 1) * sizeof(cl_mem*));
+					if (tmpRackID != NULL) {
+						l_taskList[j].RackID = rackIdx;
+						l_taskList[j].device[0].memHandler = tmpRackID;
+						l_taskList[j].device[0].numRackIDs++;
 					} else {
 						printf("ERROR AT: Reallocating racks. %d , %d",	__FILE__, __LINE__);
 					}
@@ -72,63 +72,63 @@ debug_print("1.- read taskDevMap succeed!!\n");
 	case CPU_DEVICES:
 		//l_numTasks = 4;
 		printf("CPU EXEC\n");
-		taskList = (XCLtask*) malloc(sizeof(XCLtask) * l_numTasks);
+		l_taskList = (XCLtask*) malloc(sizeof(XCLtask) * l_numTasks);
 
 
 		for (i = 0; i < l_numTasks; i++) {
-			taskList[i].device = (Device*) malloc(sizeof(Device));
-			taskList[i].device = cpu[0];//TODO: switch device number.
-			taskList[i].numTrays = 0; //init the number of device memBuffers to zero
+			l_taskList[i].device = (Device*) malloc(sizeof(Device));
+			l_taskList[i].device = cpu[0];//TODO: switch device number.
+			l_taskList[i].numTrays = 0; //init the number of device memBuffers to zero
 
-			int rackIdx = taskList[i].device[0].numRacks;
+			int rackIdx = l_taskList[i].device[0].numRackIDs;
 			if (rackIdx == 0) {
-				taskList[i].device[0].memHandler = malloc(1 * sizeof(cl_mem*));
-				taskList[i].Rack = rackIdx;
-				taskList[i].device[0].numRacks++;
+				l_taskList[i].device[0].memHandler = malloc(1 * sizeof(cl_mem*));
+				l_taskList[i].RackID = rackIdx;
+				l_taskList[i].device[0].numRackIDs++;
 			} else {
-				cl_mem** tmpRack;
-				tmpRack = (cl_mem**) realloc(taskList[i].device[0].memHandler,
+				cl_mem** tmpRackID;
+				tmpRackID = (cl_mem**) realloc(l_taskList[i].device[0].memHandler,
 						(rackIdx + 1) * sizeof(cl_mem*));
-				if (tmpRack != NULL) {
-					taskList[i].Rack = rackIdx;
-					taskList[i].device[0].memHandler = tmpRack;
-					taskList[i].device[0].numRacks++;
+				if (tmpRackID != NULL) {
+					l_taskList[i].RackID = rackIdx;
+					l_taskList[i].device[0].memHandler = tmpRackID;
+					l_taskList[i].device[0].numRackIDs++;
 				} else {
 					printf("ERROR AT: Reallocating racks. %d , %d", __FILE__,
 							__LINE__);
 				}
 			}
 
-			//taskList[i].Rack=i;
-			//taskList[i].device[0].numRacks++;
+			//l_taskList[i].RackID=i;
+			//l_taskList[i].device[0].numRackIDs++;
 		}
 		break;
 
 	case GPU_DEVICES:
 		//l_numTasks = 4;
 		printf("GPU EXEC\n");
-		taskList = (XCLtask*) malloc(sizeof(XCLtask) * l_numTasks);
+		l_taskList = (XCLtask*) malloc(sizeof(XCLtask) * l_numTasks);
 
 		for (i = 0; i < l_numTasks; i++) {
-			taskList[i].device = (Device*) malloc(sizeof(Device));
-			taskList[i].device = gpu[0]; //TODO: switch device number.
-			taskList[i].numTrays = 0; //init the number of device memBuffers to zero
+			l_taskList[i].device = (Device*) malloc(sizeof(Device));
+			l_taskList[i].device = gpu[0]; //TODO: switch device number.
+			l_taskList[i].numTrays = 0; //init the number of device memBuffers to zero
 
 			//here we query how many racks has this device.
-			int rackIdx = taskList[i].device[0].numRacks;
+			int rackIdx = l_taskList[i].device[0].numRackIDs;
 			if (rackIdx == 0) {
-				taskList[i].device[0].memHandler = malloc(1 * sizeof(cl_mem*));
-				//taskList[i].device[0].memHandler[0]=malloc(1*sizeof(cl_mem));
-				taskList[i].Rack = rackIdx;
-				taskList[i].device[0].numRacks++;
+				l_taskList[i].device[0].memHandler = malloc(1 * sizeof(cl_mem*));
+				//l_taskList[i].device[0].memHandler[0]=malloc(1*sizeof(cl_mem));
+				l_taskList[i].RackID = rackIdx;
+				l_taskList[i].device[0].numRackIDs++;
 			} else {
-				cl_mem** tmpRack;
-				tmpRack = (cl_mem**) realloc(taskList[i].device[0].memHandler,
+				cl_mem** tmpRackID;
+				tmpRackID = (cl_mem**) realloc(l_taskList[i].device[0].memHandler,
 						(rackIdx + 1) * sizeof(cl_mem*));
-				if (tmpRack != NULL) {
-					taskList[i].Rack = rackIdx;
-					taskList[i].device[0].memHandler = tmpRack;
-					taskList[i].device[0].numRacks++;
+				if (tmpRackID != NULL) {
+					l_taskList[i].RackID = rackIdx;
+					l_taskList[i].device[0].memHandler = tmpRackID;
+					l_taskList[i].device[0].numRackIDs++;
 				} else {
 					printf("ERROR AT: Reallocating racks. %d , %d", __FILE__,
 							__LINE__);
@@ -140,27 +140,27 @@ debug_print("1.- read taskDevMap succeed!!\n");
 
 	case ACC_DEVICES:
 		//l_numTasks = clXplr.numACCEL;
-		taskList = (XCLtask*) malloc(sizeof(XCLtask) * l_numTasks);
+		l_taskList = (XCLtask*) malloc(sizeof(XCLtask) * l_numTasks);
 
 		for (i = 0; i < l_numTasks; i++) {
-			taskList[i].device = (Device*) malloc(sizeof(Device));
-			taskList[i].device = accel[i];
-			taskList[i].numTrays=0;//init the number of device memBuffers to zero
+			l_taskList[i].device = (Device*) malloc(sizeof(Device));
+			l_taskList[i].device = accel[i];
+			l_taskList[i].numTrays=0;//init the number of device memBuffers to zero
 			//here we query how many racks has this device.
-			int rackIdx = taskList[i].device[0].numRacks;
+			int rackIdx = l_taskList[i].device[0].numRackIDs;
 			if (rackIdx == 0) {
-				taskList[i].device[0].memHandler = malloc(1 * sizeof(cl_mem*));
-				//taskList[i].device[0].memHandler[0]=malloc(1*sizeof(cl_mem));
-				taskList[i].Rack = rackIdx;
-				taskList[i].device[0].numRacks++;
+				l_taskList[i].device[0].memHandler = malloc(1 * sizeof(cl_mem*));
+				//l_taskList[i].device[0].memHandler[0]=malloc(1*sizeof(cl_mem));
+				l_taskList[i].RackID = rackIdx;
+				l_taskList[i].device[0].numRackIDs++;
 			} else {
-				cl_mem** tmpRack;
-				tmpRack = (cl_mem**) realloc(taskList[i].device[0].memHandler,
+				cl_mem** tmpRackID;
+				tmpRackID = (cl_mem**) realloc(l_taskList[i].device[0].memHandler,
 						(rackIdx + 1) * sizeof(cl_mem*));
-				if (tmpRack != NULL) {
-					taskList[i].Rack = rackIdx;
-					taskList[i].device[0].memHandler = tmpRack;
-					taskList[i].device[0].numRacks++;
+				if (tmpRackID != NULL) {
+					l_taskList[i].RackID = rackIdx;
+					l_taskList[i].device[0].memHandler = tmpRackID;
+					l_taskList[i].device[0].numRackIDs++;
 				} else {
 					printf("ERROR AT: Reallocating racks. %d , %d", __FILE__,
 							__LINE__);
