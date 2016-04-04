@@ -26,7 +26,7 @@
 
 PUInfo* g_PUList; //Global Variable declared at PUsMap.h
 int g_numDevs;  //Global Variable declared at PUsMap.h
-XCLtask* taskList; // Global Variable declared in task.h
+XCLtask* l_taskList; // Global Variable declared in task.h
 taskInfo* g_taskList; //Global Variable declared at taskMap.h
 int l_numTasks;//Global variable declared in tskMgmt.h
 

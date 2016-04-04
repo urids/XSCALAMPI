@@ -250,8 +250,8 @@ int OMPI_XclSendRecv(int src_task, int src_trayIdx,
 
 		if (myRank == g_taskList[src_task].r_rank
 						&& myRank == g_taskList[dest_task].r_rank  //if ranks match
-						&& taskList[l_src_task].device[0].deviceId
-								== taskList[l_dst_task].device[0].deviceId) { //if device match
+						&& l_taskList[l_src_task].device[0].deviceId
+								== l_taskList[l_dst_task].device[0].deviceId) { //if device match
 						//then call intra-device copy.
 					void * libHandler = NULL; //function pointer
 					int (*initNewBuffer)(int taskIdx, int trayIdx, int bufferSize);
@@ -318,8 +318,8 @@ int OMPI_XclSendRecv(int src_task, int src_trayIdx,
 
 		if (myRank == g_taskList[src_task].r_rank
 				&& myRank == g_taskList[dest_task].r_rank  //if ranks match
-				&& taskList[l_src_task].device[0].deviceId
-						== taskList[l_dst_task].device[0].deviceId) { //if device match
+				&& l_taskList[l_src_task].device[0].deviceId
+						== l_taskList[l_dst_task].device[0].deviceId) { //if device match
 				//then call intra-device copy.
 			void * libHandler = NULL; //function pointer
 			int (*initNewBuffer)(int taskIdx, int trayIdx, int bufferSize);

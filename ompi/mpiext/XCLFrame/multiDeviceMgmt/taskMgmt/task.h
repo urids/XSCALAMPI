@@ -59,7 +59,7 @@ typedef struct XCLtask_st{
 }XCLtask;
 
 
-extern XCLtask* taskList; //This will be defined in late.c and is property of the runtime system.
+extern XCLtask* l_taskList; //This will be defined in late.c and is property of the runtime system.
 
 
 #endif /* TASK_H_ */

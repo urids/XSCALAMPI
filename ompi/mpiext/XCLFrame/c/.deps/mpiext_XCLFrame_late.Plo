@@ -135,8 +135,7 @@ mpiext_XCLFrame_late.lo: mpiext_XCLFrame_late.c \
  /home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/event/libevent2021/libevent/include/event2/tag_compat.h \
  ../../../../opal/mca/event/libevent2021/libevent/include/event2/thread.h \
  ../../../../ompi/mpiext/mpiext.h hiddenComms.h \
- /usr/local/cuda-7.5/include/CL/cl.h \
- /usr/local/cuda-7.5/include/CL/cl_platform.h \
+ /usr/local/include/CL/cl.h /usr/local/include/CL/cl_platform.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/xmmintrin.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mmintrin.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mm_malloc.h \
@@ -515,9 +514,9 @@ mpiext_XCLFrame_late.lo: mpiext_XCLFrame_late.c \
 
 hiddenComms.h:
 
-/usr/local/cuda-7.5/include/CL/cl.h:
+/usr/local/include/CL/cl.h:
 
-/usr/local/cuda-7.5/include/CL/cl_platform.h:
+/usr/local/include/CL/cl_platform.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/4.8/include/xmmintrin.h:
 

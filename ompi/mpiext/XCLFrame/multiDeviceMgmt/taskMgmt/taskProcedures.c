@@ -19,17 +19,17 @@ int createProgram(int l_selTask, char* srcPath,int numTasks){
 		int sz = ftell(fp);
 		fseek(fp, 0L, SEEK_SET);
 
-		taskList[l_selTask].code = malloc(sizeof(XCLcode));
-		taskList[l_selTask].code[0].source_str = (char*) malloc(sz+1);
-		taskList[l_selTask].code[0].source_size = fread(taskList[l_selTask].code[0].source_str,
+		l_taskList[l_selTask].code = malloc(sizeof(XCLcode));
+		l_taskList[l_selTask].code[0].source_str = (char*) malloc(sz+1);
+		l_taskList[l_selTask].code[0].source_size = fread(l_taskList[l_selTask].code[0].source_str,
 				1, sz, fp);
 
-		taskList[l_selTask].CLprogram = malloc(sizeof(cl_program));
+		l_taskList[l_selTask].CLprogram = malloc(sizeof(cl_program));
 
-		taskList[l_selTask].CLprogram[0] = clCreateProgramWithSource(
-				taskList[l_selTask].device[0].context, 1,
-				(const char **) &taskList[l_selTask].code[0].source_str,
-				(const size_t *) &taskList[l_selTask].code[0].source_size, &status);
+		l_taskList[l_selTask].CLprogram[0] = clCreateProgramWithSource(
+				l_taskList[l_selTask].device[0].context, 1,
+				(const char **) &l_taskList[l_selTask].code[0].source_str,
+				(const size_t *) &l_taskList[l_selTask].code[0].source_size, &status);
 
 		chkerr(status, "Creating Program ", __FILE__, __LINE__);
 	fclose(fp);
@@ -42,19 +42,19 @@ int buildProgram(int l_selTask, int numTasks) {
 	int status;
 	//int i;
 	//for (i = 0; i < numTasks; i++) {
-		status = clBuildProgram(taskList[l_selTask].CLprogram[0], 1,
-				&taskList[l_selTask].device[0].deviceId, NULL, NULL, NULL);
+		status = clBuildProgram(l_taskList[l_selTask].CLprogram[0], 1,
+				&l_taskList[l_selTask].device[0].deviceId, NULL, NULL, NULL);
 
 		if (status == CL_BUILD_PROGRAM_FAILURE) {
 			// Determine the size of the log
 			size_t log_size;
-			clGetProgramBuildInfo(taskList[l_selTask].CLprogram[0], taskList[l_selTask].device[0].deviceId, CL_PROGRAM_BUILD_LOG,
+			clGetProgramBuildInfo(l_taskList[l_selTask].CLprogram[0], l_taskList[l_selTask].device[0].deviceId, CL_PROGRAM_BUILD_LOG,
 					0, NULL, &log_size);
 
 			// Allocate memory for the log
 			char *log = (char *) malloc(log_size+1);
 			// Get the log
-			clGetProgramBuildInfo(taskList[l_selTask].CLprogram[0], taskList[l_selTask].device[0].deviceId, CL_PROGRAM_BUILD_LOG,
+			clGetProgramBuildInfo(l_taskList[l_selTask].CLprogram[0], l_taskList[l_selTask].device[0].deviceId, CL_PROGRAM_BUILD_LOG,
 					log_size, log, NULL);
 			log[log_size+1] = '\0';
 			// Print the log
@@ -71,8 +71,8 @@ int createKernel(int l_selTask, char* kernelName, int numTasks){  //TODO: here w
 	int status;
 	//int i;
 	//for(i=0;i<numTasks;i++){
-	taskList[l_selTask].kernel=malloc(sizeof(XCLkernel));
-	taskList[l_selTask].kernel[0].kernel = clCreateKernel(taskList[l_selTask].CLprogram[0], kernelName, &status);
+	l_taskList[l_selTask].kernel=malloc(sizeof(XCLkernel));
+	l_taskList[l_selTask].kernel[0].kernel = clCreateKernel(l_taskList[l_selTask].CLprogram[0], kernelName, &status);
 	chkerr(status, "error at: creating the kernel:", __FILE__, __LINE__);
 	//}
 	return status;
@@ -86,17 +86,17 @@ int kernelXplor(int l_selTask, int numTasks){
 	cl_uint numArgs;
 	//for(i=0;i<numTasks;i++){
 
-	status=clGetKernelInfo(taskList[l_selTask].kernel[0].kernel,CL_KERNEL_FUNCTION_NAME,0,NULL,&kernNameSize);
+	status=clGetKernelInfo(l_taskList[l_selTask].kernel[0].kernel,CL_KERNEL_FUNCTION_NAME,0,NULL,&kernNameSize);
 	char* kernName=malloc(kernNameSize*sizeof(char));
-	status=clGetKernelInfo(taskList[l_selTask].kernel[0].kernel,CL_KERNEL_FUNCTION_NAME,kernNameSize,(char*)kernName,NULL);
+	status=clGetKernelInfo(l_taskList[l_selTask].kernel[0].kernel,CL_KERNEL_FUNCTION_NAME,kernNameSize,(char*)kernName,NULL);
 
-	status=clGetKernelInfo(taskList[l_selTask].kernel[0].kernel,CL_KERNEL_NUM_ARGS,sizeof(cl_uint),&numArgs,NULL);
+	status=clGetKernelInfo(l_taskList[l_selTask].kernel[0].kernel,CL_KERNEL_NUM_ARGS,sizeof(cl_uint),&numArgs,NULL);
 
 	chkerr(status, "error at: getting kernel info", __FILE__, __LINE__);
 
 	debug_print("\n Debug:  %s, has %u args\n",kernName,numArgs);
 
-	taskList[l_selTask].kernel[0].numArgs=numArgs;
+	l_taskList[l_selTask].kernel[0].numArgs=numArgs;
 	//}
 
 return status;
@@ -106,11 +106,11 @@ int setKernelmemObj(int seltask,int numparameter,int paramSize,int trayIdx){
 	int status;
 
 	//for (i = 0; i < numTasks; i++) {
-		int myRack=taskList[seltask].Rack;
+		int myRack=l_taskList[seltask].Rack;
 	debug_print("\n Debug: setting cl_mem arg: %d in task %d from rack: [%d] tray:[%d] \n", numparameter, seltask,myRack,trayIdx);
 
-		status = clSetKernelArg(taskList[seltask].kernel[0].kernel, numparameter,
-				sizeof(cl_mem), &taskList[seltask].device[0].memHandler[myRack][trayIdx]);
+		status = clSetKernelArg(l_taskList[seltask].kernel[0].kernel, numparameter,
+				sizeof(cl_mem), &l_taskList[seltask].device[0].memHandler[myRack][trayIdx]);
 	chkerr(status, "error at: Setting entity buffer Arg.", __FILE__, __LINE__);
 	//}
 	return 0;
@@ -122,7 +122,7 @@ int setKernelArgs(int seltask,int numparameter,int paramSize,void* paramValue){
 
 	//for (i = 0; i < numTasks; i++) {
 		debug_print("\n Debug: setting arg: %d in task %d \n", numparameter, seltask);
-		status = clSetKernelArg(taskList[seltask].kernel[0].kernel, numparameter,
+		status = clSetKernelArg(l_taskList[seltask].kernel[0].kernel, numparameter,
 				paramSize, (void *) paramValue);
 		chkerr(status, "error at: Setting other kernel Args", __FILE__,	__LINE__);
 	//}
@@ -200,7 +200,7 @@ if(selTask==-1){ // -1 means all tasks must enqueue this kernel.
 	cl_ulong time_start, time_end;
 	double total_time;
 
-	status = clEnqueueNDRangeKernel(taskList[i].device[0].queue, taskList[i].kernel[0].kernel, 1, NULL,
+	status = clEnqueueNDRangeKernel(l_taskList[i].device[0].queue, l_taskList[i].kernel[0].kernel, 1, NULL,
 			&globalThreads, &localThreads, 0, NULL, &kernelProfileEvent);
 	chkerr(status, "Enqueuing Kernels ", __FILE__, __LINE__);
 
@@ -266,8 +266,8 @@ if(selTask==-1){ // -1 means all tasks must enqueue this kernel.
 		th_Args[selTask]->localThreads=localThreads;
 		th_Args[selTask]->workDim=workDim;
 		//th_Args[selTask]->kernelProfileEvent=kernelProfileEvent;
-		th_Args[selTask]->th_queue=taskList[selTask].device[0].queue;
-		th_Args[selTask]->th_kernel=taskList[selTask].kernel[0].kernel;
+		th_Args[selTask]->th_queue=l_taskList[selTask].device[0].queue;
+		th_Args[selTask]->th_kernel=l_taskList[selTask].kernel[0].kernel;
 		th_Args[selTask]->g_selTsk=selTask;
 
 
@@ -278,7 +278,7 @@ if(selTask==-1){ // -1 means all tasks must enqueue this kernel.
 		//pthread_attr_destroy(&attr);
 
 /*
-		status = clEnqueueNDRangeKernel(taskList[selTask].device[0].queue, taskList[selTask].kernel[0].kernel, 1, NULL,
+		status = clEnqueueNDRangeKernel(l_taskList[selTask].device[0].queue, l_taskList[selTask].kernel[0].kernel, 1, NULL,
 				&globalThreads, &localThreads, 0, NULL, &kernelProfileEvent);
 		chkerr(status, "Enqueuing Kernels ", __FILE__, __LINE__);
 		  debug_print("Enqueuing Kernel requested..\n");*/
