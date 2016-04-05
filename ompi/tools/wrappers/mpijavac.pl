@@ -20,7 +20,7 @@ use strict;
 # user astonishment
 
 # Let the build system provide us with some critical values
-my $my_compiler = "";
+my $my_compiler = "/usr/bin/javac";
 my $ompi_classpath = "/home/uriel/mpiELFs/lib/mpi.jar";
 
 # globals

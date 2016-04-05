@@ -120,7 +120,7 @@
 /* #undef LTDL_DLOPEN_DEPLIBS */
 
 /* Define to the system default library search path. */
-#define LT_DLSEARCH_PATH "/lib:/usr/lib:/usr/lib/x86_64-linux-gnu/libfakeroot:/lib/i386-linux-gnu:/usr/lib/i386-linux-gnu:/lib/i686-linux-gnu:/usr/lib/i686-linux-gnu:/opt/intel/opencl-1.2-3.2.1.16712/lib64:/usr/local/lib:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu/mesa-egl:/usr/lib/nvidia-352:/usr/lib32/nvidia-352:/usr/lib/x86_64-linux-gnu/mir/clientplatform/mesa:/lib32:/usr/lib32:/libx32:/usr/libx32"
+#define LT_DLSEARCH_PATH "/lib:/usr/lib:/usr/lib/x86_64-linux-gnu/libfakeroot:/lib/i386-linux-gnu:/usr/lib/i386-linux-gnu:/lib/i686-linux-gnu:/usr/lib/i686-linux-gnu:/opt/intel/opencl-1.2-3.2.1.16712/lib64:/usr/local/lib:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu/mesa-egl:/usr/lib/nvidia-304:/usr/lib32/nvidia-304:/usr/lib/x86_64-linux-gnu/mir/clientplatform/mesa:/lib32:/usr/lib32:/libx32:/usr/libx32"
 
 /* The archive extension */
 #define LT_LIBEXT "a"

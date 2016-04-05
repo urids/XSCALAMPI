@@ -1058,9 +1058,9 @@ INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
-JAR = 
-JAVAC = 
-JAVAH = 
+JAR = /usr/bin/jar
+JAVAC = /usr/bin/javac
+JAVAH = /usr/bin/javah
 LD = /usr/bin/ld -m elf_x86_64
 LDFLAGS = -export-dynamic  
 LEX = flex
@@ -1730,7 +1730,7 @@ OPAL_ASSEMBLY_ARCH = AMD64
 OPAL_ASSEMBLY_BUILTIN = BUILTIN_NO
 OPAL_ASSEMBLY_FORMAT = default-.text-.globl-:--.L-@-1-0-1-1-1
 OPAL_CC_ABSOLUTE = /usr/bin/gcc
-OPAL_CONFIGURE_DATE = Wed Feb 17 19:10:45 CST 2016
+OPAL_CONFIGURE_DATE = Tue Apr  5 12:23:39 CDT 2016
 OPAL_CONFIGURE_HOST = myHost
 OPAL_CONFIGURE_USER = uriel
 OPAL_CXX_ABSOLUTE = /usr/bin/g++
@@ -1738,7 +1738,7 @@ OPAL_DEFAULT_MCA_PARAM_CONF = openmpi-mca-params.conf
 OPAL_DYN_LIB_PREFIX = lib
 OPAL_DYN_LIB_SUFFIX = so
 OPAL_GREEK_VERSION = rc6
-OPAL_JDK_CPPFLAGS = 
+OPAL_JDK_CPPFLAGS = -I/usr/lib/jvm/java-1.7.0-openjdk-amd64/include -I/usr/lib/jvm/java-1.7.0-openjdk-amd64/include/linux
 OPAL_MAJOR_VERSION = 1
 OPAL_MAX_DATAREP_STRING = 128
 OPAL_MAX_ERROR_STRING = 256
@@ -2151,11 +2151,13 @@ libmpi_la_LIBADD = datatype/libdatatype.la debuggers/libdebuggers.la \
 	$(MCA_ompi_FRAMEWORK_LIBS) $(OMPI_MPIEXT_C_LIBS) \
 	$(OMPI_LIBMPI_EXTRA_LIBS) $(am__append_2) \
 	$(top_ompi_builddir)/opal/libopen-pal.la
+libmpi_LDADD = $(top_ompi_builddir)/ompi/mpiext/XCLFrame/multiDeviceMgmt/libmultiDeviceMgmt.la		
 libmpi_la_DEPENDENCIES = $(libmpi_la_LIBADD)
 libmpi_la_LDFLAGS = \
        -version-info $(libmpi_so_version) \
         $(OMPI_LIBMPI_EXTRA_LDFLAGS) \
-        -Wl,-rpath,$(libdir)/XCLFrame/binding
+        -Wl,-rpath,$(libdir)/XCLFrame/binding \
+        -Wl,-rpath,$(libdir)/XCLFrame/multiDeviceMgmt
 
 
 # included subdirectory Makefile.am's and appended-to variables

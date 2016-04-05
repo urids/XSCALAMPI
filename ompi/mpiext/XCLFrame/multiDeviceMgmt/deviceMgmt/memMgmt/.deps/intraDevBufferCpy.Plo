@@ -28,8 +28,8 @@ deviceMgmt/memMgmt/intraDevBufferCpy.lo: \
  /usr/include/x86_64-linux-gnu/bits/mathdef.h \
  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
  /usr/include/x86_64-linux-gnu/bits/mathinline.h \
- deviceMgmt/memMgmt/../Device.h /usr/local/include/CL/cl.h \
- /usr/local/include/CL/cl_platform.h \
+ deviceMgmt/memMgmt/../Device.h /usr/local/cuda-7.5/include/CL/cl.h \
+ /usr/local/cuda-7.5/include/CL/cl_platform.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/xmmintrin.h \
@@ -141,9 +141,9 @@ deviceMgmt/memMgmt/bufferFunctions.h:
 
 deviceMgmt/memMgmt/../Device.h:
 
-/usr/local/include/CL/cl.h:
+/usr/local/cuda-7.5/include/CL/cl.h:
 
-/usr/local/include/CL/cl_platform.h:
+/usr/local/cuda-7.5/include/CL/cl_platform.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h:
 

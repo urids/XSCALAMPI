@@ -148,18 +148,22 @@ libmpi_la_LIBADD = \
         $(OMPI_MPIEXT_C_LIBS) \
         $(OMPI_LIBMPI_EXTRA_LIBS)
 
+libmpi_LDADD = $(top_ompi_builddir)/ompi/mpiext/XCLFrame/multiDeviceMgmt/libmultiDeviceMgmt.la		
 
 if OMPI_RTE_ORTE
 libmpi_la_LIBADD += \
         $(top_ompi_builddir)/orte/libopen-rte.la
 endif
 libmpi_la_LIBADD += \
-        $(top_ompi_builddir)/opal/libopen-pal.la
+        $(top_ompi_builddir)/opal/libopen-pal.la 
+        
+        
 libmpi_la_DEPENDENCIES = $(libmpi_la_LIBADD)
 libmpi_la_LDFLAGS = \
        -version-info $(libmpi_so_version) \
         $(OMPI_LIBMPI_EXTRA_LDFLAGS) \
-        -Wl,-rpath,$(libdir)/XCLFrame/binding
+        -Wl,-rpath,$(libdir)/XCLFrame/binding \
+        -Wl,-rpath,$(libdir)/XCLFrame/multiDeviceMgmt
 
 # included subdirectory Makefile.am's and appended-to variables
 headers =

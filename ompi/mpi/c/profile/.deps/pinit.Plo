@@ -180,7 +180,8 @@ pinit.lo: pinit.c /usr/include/stdc-predef.h \
  /usr/include/x86_64-linux-gnu/bits/dlfcn.h \
  ../../../../ompi/include/mpi.h \
  ../../../mpiext/XCLFrame/c/binding/dvMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h \
- /usr/local/include/CL/cl.h /usr/local/include/CL/cl_platform.h \
+ /usr/local/cuda-7.5/include/CL/cl.h \
+ /usr/local/cuda-7.5/include/CL/cl_platform.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/xmmintrin.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mmintrin.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mm_malloc.h \
@@ -667,9 +668,9 @@ pinit.lo: pinit.c /usr/include/stdc-predef.h \
 
 ../../../mpiext/XCLFrame/c/binding/dvMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h:
 
-/usr/local/include/CL/cl.h:
+/usr/local/cuda-7.5/include/CL/cl.h:
 
-/usr/local/include/CL/cl_platform.h:
+/usr/local/cuda-7.5/include/CL/cl_platform.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/4.8/include/xmmintrin.h:
 

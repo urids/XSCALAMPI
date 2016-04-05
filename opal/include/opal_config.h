@@ -2198,7 +2198,7 @@
 #define OPAL_HAVE_HWLOC 1
 
 /* do we have Java support */
-#define OPAL_HAVE_JAVA_SUPPORT no
+#define OPAL_HAVE_JAVA_SUPPORT 1
 
 /* Do not use outside of mpi.h. Define to 1 if the system has the type `long
    long'. */

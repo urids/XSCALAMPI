@@ -40,8 +40,9 @@ singleSidedComms/singleSidedComms.lo: singleSidedComms/singleSidedComms.c \
  /usr/include/x86_64-linux-gnu/bits/unistd.h /usr/include/string.h \
  /usr/include/xlocale.h /usr/include/x86_64-linux-gnu/bits/string.h \
  /usr/include/x86_64-linux-gnu/bits/string2.h \
- /usr/include/x86_64-linux-gnu/bits/string3.h /usr/local/include/CL/cl.h \
- /usr/local/include/CL/cl_platform.h \
+ /usr/include/x86_64-linux-gnu/bits/string3.h \
+ /usr/local/cuda-7.5/include/CL/cl.h \
+ /usr/local/cuda-7.5/include/CL/cl_platform.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/xmmintrin.h \
@@ -68,8 +69,8 @@ singleSidedComms/singleSidedComms.lo: singleSidedComms/singleSidedComms.c \
  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
  /usr/include/x86_64-linux-gnu/bits/mathinline.h \
  binding/tskMgmt/../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/../Device.h \
- binding/tskMgmt/../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/../../taskMgmt/task.h \
- binding/tskMgmt/../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/../../errorMgmt/errorHandling.h \
+ /home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/multiDeviceMgmt/taskMgmt/task.h \
+ /home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/multiDeviceMgmt/errorMgmt/errorHandling.h \
  binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h \
  binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/localDevices.h \
  binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/deviceExploration.h \
@@ -191,9 +192,9 @@ binding/tskMgmt/tskMgmt.h:
 
 /usr/include/x86_64-linux-gnu/bits/string3.h:
 
-/usr/local/include/CL/cl.h:
+/usr/local/cuda-7.5/include/CL/cl.h:
 
-/usr/local/include/CL/cl_platform.h:
+/usr/local/cuda-7.5/include/CL/cl_platform.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h:
 
@@ -253,9 +254,9 @@ binding/tskMgmt/../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/bufferFu
 
 binding/tskMgmt/../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/../Device.h:
 
-binding/tskMgmt/../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/../../taskMgmt/task.h:
+/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/multiDeviceMgmt/taskMgmt/task.h:
 
-binding/tskMgmt/../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/../../errorMgmt/errorHandling.h:
+/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/multiDeviceMgmt/errorMgmt/errorHandling.h:
 
 binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h:
 

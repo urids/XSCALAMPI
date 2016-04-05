@@ -1,8 +1,8 @@
 misc.lo: misc.c /usr/include/stdc-predef.h \
- /home/uriel/Dev/mpisrc/XCLMPI/opal/mca/hwloc/hwloc172/hwloc/include/private/autogen/config.h \
- /home/uriel/Dev/mpisrc/XCLMPI/opal/mca/hwloc/hwloc172/hwloc/include/private/private.h \
- /home/uriel/Dev/mpisrc/XCLMPI/opal/mca/hwloc/hwloc172/hwloc/include/hwloc.h \
- /home/uriel/Dev/mpisrc/XCLMPI/opal/mca/hwloc/hwloc172/hwloc/include/hwloc/autogen/config.h \
+ /home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/hwloc/hwloc172/hwloc/include/private/autogen/config.h \
+ /home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/hwloc/hwloc172/hwloc/include/private/private.h \
+ /home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/hwloc/hwloc172/hwloc/include/hwloc.h \
+ /home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/hwloc/hwloc172/hwloc/include/hwloc/autogen/config.h \
  /usr/include/pthread.h /usr/include/features.h \
  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
@@ -47,10 +47,10 @@ misc.lo: misc.c /usr/include/stdc-predef.h \
  /usr/include/linux/limits.h \
  /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
  /usr/include/x86_64-linux-gnu/bits/xopen_lim.h \
- /home/uriel/Dev/mpisrc/XCLMPI/opal/mca/hwloc/hwloc172/hwloc/include/hwloc/rename.h \
- /home/uriel/Dev/mpisrc/XCLMPI/opal/mca/hwloc/hwloc172/hwloc/include/hwloc/bitmap.h \
+ /home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/hwloc/hwloc172/hwloc/include/hwloc/rename.h \
+ /home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/hwloc/hwloc172/hwloc/include/hwloc/bitmap.h \
  /usr/include/assert.h \
- /home/uriel/Dev/mpisrc/XCLMPI/opal/mca/hwloc/hwloc172/hwloc/include/hwloc/helper.h \
+ /home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/hwloc/hwloc172/hwloc/include/hwloc/helper.h \
  /usr/include/x86_64-linux-gnu/bits/waitflags.h \
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h /usr/include/alloca.h \
  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
@@ -59,23 +59,23 @@ misc.lo: misc.c /usr/include/stdc-predef.h \
  /usr/include/x86_64-linux-gnu/bits/errno.h /usr/include/linux/errno.h \
  /usr/include/x86_64-linux-gnu/asm/errno.h \
  /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
- /home/uriel/Dev/mpisrc/XCLMPI/opal/mca/hwloc/hwloc172/hwloc/include/private/components.h \
- /home/uriel/Dev/mpisrc/XCLMPI/opal/mca/hwloc/hwloc172/hwloc/include/hwloc/plugins.h \
- /home/uriel/Dev/mpisrc/XCLMPI/opal/mca/hwloc/hwloc172/hwloc/include/private/debug.h \
+ /home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/hwloc/hwloc172/hwloc/include/private/components.h \
+ /home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/hwloc/hwloc172/hwloc/include/hwloc/plugins.h \
+ /home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/hwloc/hwloc172/hwloc/include/private/debug.h \
  /usr/include/x86_64-linux-gnu/sys/utsname.h \
  /usr/include/x86_64-linux-gnu/bits/utsname.h \
- /home/uriel/Dev/mpisrc/XCLMPI/opal/mca/hwloc/hwloc172/hwloc/include/private/misc.h \
+ /home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/hwloc/hwloc172/hwloc/include/private/misc.h \
  /usr/include/ctype.h
 
 /usr/include/stdc-predef.h:
 
-/home/uriel/Dev/mpisrc/XCLMPI/opal/mca/hwloc/hwloc172/hwloc/include/private/autogen/config.h:
+/home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/hwloc/hwloc172/hwloc/include/private/autogen/config.h:
 
-/home/uriel/Dev/mpisrc/XCLMPI/opal/mca/hwloc/hwloc172/hwloc/include/private/private.h:
+/home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/hwloc/hwloc172/hwloc/include/private/private.h:
 
-/home/uriel/Dev/mpisrc/XCLMPI/opal/mca/hwloc/hwloc172/hwloc/include/hwloc.h:
+/home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/hwloc/hwloc172/hwloc/include/hwloc.h:
 
-/home/uriel/Dev/mpisrc/XCLMPI/opal/mca/hwloc/hwloc172/hwloc/include/hwloc/autogen/config.h:
+/home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/hwloc/hwloc172/hwloc/include/hwloc/autogen/config.h:
 
 /usr/include/pthread.h:
 
@@ -193,13 +193,13 @@ misc.lo: misc.c /usr/include/stdc-predef.h \
 
 /usr/include/x86_64-linux-gnu/bits/xopen_lim.h:
 
-/home/uriel/Dev/mpisrc/XCLMPI/opal/mca/hwloc/hwloc172/hwloc/include/hwloc/rename.h:
+/home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/hwloc/hwloc172/hwloc/include/hwloc/rename.h:
 
-/home/uriel/Dev/mpisrc/XCLMPI/opal/mca/hwloc/hwloc172/hwloc/include/hwloc/bitmap.h:
+/home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/hwloc/hwloc172/hwloc/include/hwloc/bitmap.h:
 
 /usr/include/assert.h:
 
-/home/uriel/Dev/mpisrc/XCLMPI/opal/mca/hwloc/hwloc172/hwloc/include/hwloc/helper.h:
+/home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/hwloc/hwloc172/hwloc/include/hwloc/helper.h:
 
 /usr/include/x86_64-linux-gnu/bits/waitflags.h:
 
@@ -225,16 +225,16 @@ misc.lo: misc.c /usr/include/stdc-predef.h \
 
 /usr/include/asm-generic/errno-base.h:
 
-/home/uriel/Dev/mpisrc/XCLMPI/opal/mca/hwloc/hwloc172/hwloc/include/private/components.h:
+/home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/hwloc/hwloc172/hwloc/include/private/components.h:
 
-/home/uriel/Dev/mpisrc/XCLMPI/opal/mca/hwloc/hwloc172/hwloc/include/hwloc/plugins.h:
+/home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/hwloc/hwloc172/hwloc/include/hwloc/plugins.h:
 
-/home/uriel/Dev/mpisrc/XCLMPI/opal/mca/hwloc/hwloc172/hwloc/include/private/debug.h:
+/home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/hwloc/hwloc172/hwloc/include/private/debug.h:
 
 /usr/include/x86_64-linux-gnu/sys/utsname.h:
 
 /usr/include/x86_64-linux-gnu/bits/utsname.h:
 
-/home/uriel/Dev/mpisrc/XCLMPI/opal/mca/hwloc/hwloc172/hwloc/include/private/misc.h:
+/home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/hwloc/hwloc172/hwloc/include/private/misc.h:
 
 /usr/include/ctype.h:
