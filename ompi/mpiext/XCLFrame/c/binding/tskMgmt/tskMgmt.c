@@ -1,5 +1,6 @@
 
 #include "tskMgmt.h"
+#include "../../../TaskManager/Base/taskManager.h"
 #define DEBUG 0
 //This file performs Task<->Device matching
 device_Task_Info* taskDevMap;
@@ -192,20 +193,21 @@ int XclCreateKernel(MPI_Comm comm, int l_selTask, char* srcPath,char* kernelName
 
 	char *error;
 
-	dlhandle =dlopen("libmultiDeviceMgmt.so",RTLD_LAZY);
+	dlhandle =dlopen("libtaskManager.so",RTLD_LAZY);
 	if (!dlhandle) {
 		fputs(dlerror(), stderr);
 		exit(1);
 	}
 
 	createProgram = dlsym(dlhandle, "createProgram");
-	buildProgram = dlsym(dlhandle, "buildProgram");
-	createKernel = dlsym(dlhandle, "createKernel");
-	kernelXplor = dlsym(dlhandle, "kernelXplor");
 	if ((error = dlerror()) != NULL ) {
 		fputs(error, stderr);
 		exit(1);
 	}
+	buildProgram = dlsym(dlhandle, "buildProgram");
+	createKernel = dlsym(dlhandle, "createKernel");
+	kernelXplor = dlsym(dlhandle, "kernelXplor");
+
 
 	debug_print("0.-kernelSrcFile: %s\n",srcPath);
 		int err;

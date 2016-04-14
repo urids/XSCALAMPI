@@ -27,9 +27,9 @@
 #include "ompi/communicator/communicator.h"
 #include "ompi/errhandler/errhandler.h"
 #include "ompi/constants.h"
-//TODO: review this include according to the Architecture
+//TODO: review this include according to the OMPI Architecture
 #include "../../../mpiext/XCLFrame/c/binding/dvMgmt/commsBench.h"
-#include "../../../mpiext/XCLFrame/scheduling/commsInfo.h"
+#include "../../../mpiext/XCLFrame/Scheduling/commsInfo.h"
 #include <dlfcn.h>
 
 #if OPAL_HAVE_WEAK_SYMBOLS && OMPI_PROFILING_DEFINES

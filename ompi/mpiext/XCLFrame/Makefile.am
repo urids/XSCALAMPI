@@ -10,6 +10,15 @@
 # extension (i.e., "make all" in this directory to invoke "make all"
 # in all the subdirectories).
 
-SUBDIRS = c multiDeviceMgmt
+SUBDIRS = DataManager \
+		DataManager/DataCopy \
+		DataManager/BufferMgmt \
+		c \
+		c/binding/dvMgmt \
+		c/binding/tskMgmt \
+		multiDeviceMgmt \
+		TaskManager \
+		TaskManager/KernelMgmt \
+		Scheduling
 
 EXTRA_DIST = README.txt

@@ -75,14 +75,24 @@ endif
 # NOTE: The ordering of this list is VERY CAREFULLY CRAFTED!  Do not
 # change the ordering unless you really know what you're doing.  :-)
 
+##This addition enforces creation of dirs and installation. 
+
 SUBDIRS = \
         include \
         datatype \
         debuggers \
         etc \
-        mpiext/XCLFrame/scheduling \
         mpi/c \
         mpi/tool \
+        mpiext/XCLFrame/Scheduling \
+  	 	mpiext/XCLFrame/multiDeviceMgmt \
+        mpiext/XCLFrame/c/binding/dvMgmt \
+        mpiext/XCLFrame/c/binding/tskMgmt \
+        mpiext/XCLFrame/TaskManager \
+        mpiext/XCLFrame/TaskManager/KernelMgmt \
+        mpiext/XCLFrame/DataManager \
+        mpiext/XCLFrame/DataManager/DataCopy \
+        mpiext/XCLFrame/DataManager/BufferMgmt \
         $(OMPI_MPIEXT_C_DIRS) \
         mpi/fortran/base/ \
         $(MCA_ompi_FRAMEWORKS_SUBDIRS) \
@@ -96,11 +106,10 @@ SUBDIRS = \
         $(OMPI_FORTRAN_USEMPIF08_DIR) \
         mpi/fortran/mpiext \
         $(MCA_ompi_FRAMEWORK_COMPONENT_DSO_SUBDIRS) \
-        $(OMPI_CONTRIB_SUBDIRS) \
-		mpiext/XCLFrame/multiDeviceMgmt \
-        mpiext/XCLFrame/c/binding/dvMgmt \
-        mpiext/XCLFrame/c/binding/tskMgmt
-
+        $(OMPI_CONTRIB_SUBDIRS)
+       
+##This addition enforces creation of dirs and installation. 
+        
 if OMPI_WANT_JAVA_BINDINGS
 SUBDIRS += \
         mpi/java
@@ -147,23 +156,33 @@ libmpi_la_LIBADD = \
         $(MCA_ompi_FRAMEWORK_LIBS) \
         $(OMPI_MPIEXT_C_LIBS) \
         $(OMPI_LIBMPI_EXTRA_LIBS)
-
-libmpi_LDADD = $(top_ompi_builddir)/ompi/mpiext/XCLFrame/multiDeviceMgmt/libmultiDeviceMgmt.la		
+        
+##        $(top_ompi_builddir)/ompi/mpiext/XCLFrame/DataManager/libdataManager.la
+        
+#mpiext_XCLFrame_c_LDADD = $(top_ompi_builddir)/ompi/mpiext/XCLFrame/multiDeviceMgmt/libmultiDeviceMgmt.la \
+#		$(top_ompi_builddir)/ompi/mpiext/XCLFrame/DataManager/libdataManager.la \
+#		$(top_ompi_builddir)/ompi/mpiext/XCLFrame/TaskManager/libtaskManager.la	\
+#		$(top_ompi_builddir)/ompi/mpiext/XCLFrame/DataManager/DataCopy/libdataCopy.la	
 
 if OMPI_RTE_ORTE
 libmpi_la_LIBADD += \
         $(top_ompi_builddir)/orte/libopen-rte.la
 endif
 libmpi_la_LIBADD += \
-        $(top_ompi_builddir)/opal/libopen-pal.la 
+        $(top_ompi_builddir)/opal/libopen-pal.la
+  
         
-        
-libmpi_la_DEPENDENCIES = $(libmpi_la_LIBADD)
+libmpi_la_DEPENDENCIES = $(libmpi_la_LIBADD) 
 libmpi_la_LDFLAGS = \
        -version-info $(libmpi_so_version) \
         $(OMPI_LIBMPI_EXTRA_LDFLAGS) \
         -Wl,-rpath,$(libdir)/XCLFrame/binding \
-        -Wl,-rpath,$(libdir)/XCLFrame/multiDeviceMgmt
+        -Wl,-rpath,$(libdir)/XCLFrame/multiDeviceMgmt \
+        -Wl,-rpath,$(libdir)/XCLFrame/DataManager \
+        -Wl,-rpath,$(libdir)/XCLFrame/DataManager/DataCopy \
+        -Wl,-rpath,$(libdir)/XCLFrame/DataManager/BufferMgmt \
+        -Wl,-rpath,$(libdir)/XCLFrame/TaskManager \
+        -Wl,-rpath,$(libdir)/XCLFrame/TaskManager/KernelMgmt       
 
 # included subdirectory Makefile.am's and appended-to variables
 headers =

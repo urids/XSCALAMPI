@@ -16,4 +16,6 @@ libtskMgmt_la_SOURCES =tskMgmt.c \
 		       tskExec.c \
 		       taskScheduling.c
 					  
-libtskMgmt_la_LDFLAGS = -ldl -lOpenCL -Wl,-rpath,$(libdir)/XCLFrame/multiDeviceMgmt	
+libtskMgmt_la_LDFLAGS = -ldl -lOpenCL -Wl,-rpath,$(libdir)/XCLFrame/multiDeviceMgmt \
+    -Wl,-rpath,$(libdir)/XCLFrame/DataManager \
+    -Wl,-rpath,$(libdir)/XCLFrame/TaskManager 	

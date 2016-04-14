@@ -21,8 +21,7 @@
 
 #include "ompi/include/mpi.h"
 
-#include "../../../multiDeviceMgmt/taskMgmt/task.h"
-
+#include "../../../TaskManager/Base/task.h"
 #include "../../../multiDeviceMgmt/deviceMgmt/Device.h"
 #include "../../../multiDeviceMgmt/deviceMgmt/localDevices.h"
 #include "../../../multiDeviceMgmt/deviceMgmt/deviceExploration.h"
@@ -32,6 +31,6 @@
 
 //#include "../../singleSidedComms/XclScatter.h"
 
-extern int l_numTasks;  //This will be defined in late.c and is property of the runtime system.
+//extern int l_numTasks;  //This will be defined in late.c and is property of the runtime system.
 
 #endif /* TKMGMT_H_ */

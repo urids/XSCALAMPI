@@ -49,18 +49,18 @@ deviceMgmt/memMgmt/bufferInit.lo: deviceMgmt/memMgmt/bufferInit.c \
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
  /usr/include/x86_64-linux-gnu/bits/stdlib.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h \
- deviceMgmt/memMgmt/../../taskMgmt/task.h \
- deviceMgmt/memMgmt/../../taskMgmt/../deviceMgmt/Device.h \
- deviceMgmt/memMgmt/../../taskMgmt/taskProcedures.h \
- deviceMgmt/memMgmt/../../taskMgmt/task.h /usr/include/pthread.h \
+ deviceMgmt/memMgmt/../../kernelMgmt/task.h \
+ deviceMgmt/memMgmt/../../kernelMgmt/../deviceMgmt/Device.h \
+ deviceMgmt/memMgmt/../../kernelMgmt/taskProcedures.h \
+ deviceMgmt/memMgmt/../../kernelMgmt/task.h /usr/include/pthread.h \
  /usr/include/sched.h /usr/include/x86_64-linux-gnu/bits/sched.h \
  /usr/include/x86_64-linux-gnu/bits/setjmp.h \
  ../../../../ompi/include/mpi.h \
  ../../../../ompi/include/mpi_portable_platform.h \
- deviceMgmt/memMgmt/../../taskMgmt/../errorMgmt/errorHandling.h \
- deviceMgmt/memMgmt/../../taskMgmt/../deviceMgmt/localDevices.h \
- deviceMgmt/memMgmt/../../taskMgmt/../deviceMgmt/Device.h \
- deviceMgmt/memMgmt/../../taskMgmt/../deviceMgmt/memMgmt/bufferFunctions.h \
+ deviceMgmt/memMgmt/../../kernelMgmt/../errorMgmt/errorHandling.h \
+ deviceMgmt/memMgmt/../../kernelMgmt/../deviceMgmt/localDevices.h \
+ deviceMgmt/memMgmt/../../kernelMgmt/../deviceMgmt/Device.h \
+ deviceMgmt/memMgmt/../../kernelMgmt/../deviceMgmt/memMgmt/bufferFunctions.h \
  deviceMgmt/memMgmt/../../errorMgmt/errorHandling.h
 
 /usr/include/stdc-predef.h:
@@ -189,13 +189,13 @@ deviceMgmt/memMgmt/../Device.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h:
 
-deviceMgmt/memMgmt/../../taskMgmt/task.h:
+deviceMgmt/memMgmt/../../kernelMgmt/task.h:
 
-deviceMgmt/memMgmt/../../taskMgmt/../deviceMgmt/Device.h:
+deviceMgmt/memMgmt/../../kernelMgmt/../deviceMgmt/Device.h:
 
-deviceMgmt/memMgmt/../../taskMgmt/taskProcedures.h:
+deviceMgmt/memMgmt/../../kernelMgmt/taskProcedures.h:
 
-deviceMgmt/memMgmt/../../taskMgmt/task.h:
+deviceMgmt/memMgmt/../../kernelMgmt/task.h:
 
 /usr/include/pthread.h:
 
@@ -209,12 +209,12 @@ deviceMgmt/memMgmt/../../taskMgmt/task.h:
 
 ../../../../ompi/include/mpi_portable_platform.h:
 
-deviceMgmt/memMgmt/../../taskMgmt/../errorMgmt/errorHandling.h:
+deviceMgmt/memMgmt/../../kernelMgmt/../errorMgmt/errorHandling.h:
 
-deviceMgmt/memMgmt/../../taskMgmt/../deviceMgmt/localDevices.h:
+deviceMgmt/memMgmt/../../kernelMgmt/../deviceMgmt/localDevices.h:
 
-deviceMgmt/memMgmt/../../taskMgmt/../deviceMgmt/Device.h:
+deviceMgmt/memMgmt/../../kernelMgmt/../deviceMgmt/Device.h:
 
-deviceMgmt/memMgmt/../../taskMgmt/../deviceMgmt/memMgmt/bufferFunctions.h:
+deviceMgmt/memMgmt/../../kernelMgmt/../deviceMgmt/memMgmt/bufferFunctions.h:
 
 deviceMgmt/memMgmt/../../errorMgmt/errorHandling.h:

@@ -8,10 +8,10 @@
 //call from XCLFame_early just after devices are initialized.
 
 #include "commsBench.h"
-
+#include "../../../TaskManager/Base/taskManager.h"
 
 device_Task_Info* taskDevMap;
-taskInfo* g_taskList; //Global Variable declared at taskMap.h
+taskInfo* g_taskList; //Global Variable declared at taskManager.h
 int l_numTasks;//Global variable declared in tskMgmt.h
 int i,j,k;
 
@@ -152,14 +152,14 @@ int commsBenchmark(commsInfo* cmInf){
 	(cmInf->BW_Mtx)=BW_Mtx;
 
 	for(i=0;i<g_PUs;i++){
-		err|=OMPI_XclWriteTaskBuffer(i, 0, sizeof(char)*MAX_SIZE, buffer, MPI_COMM_WORLD); //first task inits token to 1
-		err|=OMPI_XclMallocTaskBuffer(i, 1, sizeof(char)*MAX_SIZE,MPI_COMM_WORLD);//remaining tasks allocate space
+		err|=OMPI_XclWriteTray(i, 0, sizeof(char)*MAX_SIZE, buffer, MPI_COMM_WORLD); //first task inits token to 1
+		err|=OMPI_XclMallocTray(i, 1, sizeof(char)*MAX_SIZE,MPI_COMM_WORLD);//remaining tasks allocate space
 
 	}
 /*
 	if(myRank==1){
 		char* testRes=malloc(sizeof(char));
-		err |= OMPI_XclReadTaskBuffer(2, 0, sizeof(char), testRes, MPI_COMM_WORLD);
+		err |= OMPI_XclReadTray(2, 0, sizeof(char), testRes, MPI_COMM_WORLD);
 		printf("%c data %c\n",buffer[0],testRes[0]);
 	}
 */
@@ -342,8 +342,8 @@ if(myRank==ROOT){
 
 
 	for(i=0;i<l_PUs;i++){
-		OMPI_XclFreeTaskBuffer(i, 0, MPI_COMM_WORLD);
-		OMPI_XclFreeTaskBuffer(i, 1, MPI_COMM_WORLD);
+		OMPI_XclFreeTray(i, 0, MPI_COMM_WORLD);
+		OMPI_XclFreeTray(i, 1, MPI_COMM_WORLD);
 	}
 
 	free(buffer);

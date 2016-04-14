@@ -1,5 +1,5 @@
-singleSidedComms/XclScatter.lo: singleSidedComms/XclScatter.c \
- /usr/include/stdc-predef.h singleSidedComms/XclScatter.h \
+TwoSidedComms/XclScatter.lo: TwoSidedComms/XclScatter.c \
+ /usr/include/stdc-predef.h TwoSidedComms/XclScatter.h \
  /usr/include/stdlib.h /usr/include/features.h \
  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
@@ -33,7 +33,7 @@ singleSidedComms/XclScatter.lo: singleSidedComms/XclScatter.c \
  /usr/include/x86_64-linux-gnu/bits/dlfcn.h \
  ../../../../ompi/include/mpi.h \
  ../../../../ompi/include/mpi_portable_platform.h \
- singleSidedComms/../binding/tskMgmt/tskMgmt.h /usr/include/unistd.h \
+ TwoSidedComms/../../c/binding/tskMgmt/tskMgmt.h /usr/include/unistd.h \
  /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
  /usr/include/x86_64-linux-gnu/bits/environments.h \
  /usr/include/x86_64-linux-gnu/bits/confname.h /usr/include/getopt.h \
@@ -49,43 +49,24 @@ singleSidedComms/XclScatter.lo: singleSidedComms/XclScatter.c \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mmintrin.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mm_malloc.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h \
- singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/taskMgmt/task.h \
- singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/Device.h \
- singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/taskMgmt/taskProcedures.h \
- singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/taskMgmt/task.h \
- /usr/include/pthread.h /usr/include/sched.h \
- /usr/include/x86_64-linux-gnu/bits/sched.h \
- /usr/include/x86_64-linux-gnu/bits/setjmp.h \
- singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/taskMgmt/../errorMgmt/errorHandling.h \
- singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/localDevices.h \
- singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/Device.h \
- singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/bufferFunctions.h \
- /usr/include/math.h /usr/include/x86_64-linux-gnu/bits/huge_val.h \
- /usr/include/x86_64-linux-gnu/bits/huge_valf.h \
- /usr/include/x86_64-linux-gnu/bits/huge_vall.h \
- /usr/include/x86_64-linux-gnu/bits/inf.h \
- /usr/include/x86_64-linux-gnu/bits/nan.h \
- /usr/include/x86_64-linux-gnu/bits/mathdef.h \
- /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
- /usr/include/x86_64-linux-gnu/bits/mathinline.h \
- singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/../Device.h \
- singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/../../taskMgmt/task.h \
- singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/../../errorMgmt/errorHandling.h \
- singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h \
- singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/localDevices.h \
- singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/deviceExploration.h \
- singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/devicesInitialization.h \
- singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/deviceExploration.h \
- singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h \
- singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/localDevices.h \
- singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/../errorMgmt/errorHandling.h \
- singleSidedComms/../binding/tskMgmt/deviceMap.h \
- singleSidedComms/../binding/tskMgmt/../../taskMap.h \
- singleSidedComms/entityInfo.h
+ TwoSidedComms/../../c/binding/tskMgmt/../../../TaskManager/Base/task.h \
+ TwoSidedComms/../../c/binding/tskMgmt/../../../TaskManager/Base/../../multiDeviceMgmt/deviceMgmt/Device.h \
+ TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h \
+ TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/localDevices.h \
+ TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h \
+ TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/deviceExploration.h \
+ TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/devicesInitialization.h \
+ TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/deviceExploration.h \
+ TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/localDevices.h \
+ TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/../errorMgmt/errorHandling.h \
+ TwoSidedComms/../../c/binding/tskMgmt/deviceMap.h \
+ TwoSidedComms/../../c/binding/tskMgmt/../../taskMap.h \
+ TwoSidedComms/../../TaskManager/Base/taskManager.h \
+ TwoSidedComms/entityInfo.h
 
 /usr/include/stdc-predef.h:
 
-singleSidedComms/XclScatter.h:
+TwoSidedComms/XclScatter.h:
 
 /usr/include/stdlib.h:
 
@@ -169,7 +150,7 @@ singleSidedComms/XclScatter.h:
 
 ../../../../ompi/include/mpi_portable_platform.h:
 
-singleSidedComms/../binding/tskMgmt/tskMgmt.h:
+TwoSidedComms/../../c/binding/tskMgmt/tskMgmt.h:
 
 /usr/include/unistd.h:
 
@@ -211,72 +192,30 @@ singleSidedComms/../binding/tskMgmt/tskMgmt.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h:
 
-singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/taskMgmt/task.h:
+TwoSidedComms/../../c/binding/tskMgmt/../../../TaskManager/Base/task.h:
 
-singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/Device.h:
+TwoSidedComms/../../c/binding/tskMgmt/../../../TaskManager/Base/../../multiDeviceMgmt/deviceMgmt/Device.h:
 
-singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/taskMgmt/taskProcedures.h:
+TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h:
 
-singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/taskMgmt/task.h:
+TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/localDevices.h:
 
-/usr/include/pthread.h:
+TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h:
 
-/usr/include/sched.h:
+TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/deviceExploration.h:
 
-/usr/include/x86_64-linux-gnu/bits/sched.h:
+TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/devicesInitialization.h:
 
-/usr/include/x86_64-linux-gnu/bits/setjmp.h:
+TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/deviceExploration.h:
 
-singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/taskMgmt/../errorMgmt/errorHandling.h:
+TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/localDevices.h:
 
-singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/localDevices.h:
+TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/../errorMgmt/errorHandling.h:
 
-singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/Device.h:
+TwoSidedComms/../../c/binding/tskMgmt/deviceMap.h:
 
-singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/bufferFunctions.h:
+TwoSidedComms/../../c/binding/tskMgmt/../../taskMap.h:
 
-/usr/include/math.h:
+TwoSidedComms/../../TaskManager/Base/taskManager.h:
 
-/usr/include/x86_64-linux-gnu/bits/huge_val.h:
-
-/usr/include/x86_64-linux-gnu/bits/huge_valf.h:
-
-/usr/include/x86_64-linux-gnu/bits/huge_vall.h:
-
-/usr/include/x86_64-linux-gnu/bits/inf.h:
-
-/usr/include/x86_64-linux-gnu/bits/nan.h:
-
-/usr/include/x86_64-linux-gnu/bits/mathdef.h:
-
-/usr/include/x86_64-linux-gnu/bits/mathcalls.h:
-
-/usr/include/x86_64-linux-gnu/bits/mathinline.h:
-
-singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/../Device.h:
-
-singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/../../taskMgmt/task.h:
-
-singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/../../errorMgmt/errorHandling.h:
-
-singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h:
-
-singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/localDevices.h:
-
-singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/deviceExploration.h:
-
-singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/devicesInitialization.h:
-
-singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/deviceExploration.h:
-
-singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h:
-
-singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/localDevices.h:
-
-singleSidedComms/../binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/../errorMgmt/errorHandling.h:
-
-singleSidedComms/../binding/tskMgmt/deviceMap.h:
-
-singleSidedComms/../binding/tskMgmt/../../taskMap.h:
-
-singleSidedComms/entityInfo.h:
+TwoSidedComms/entityInfo.h:

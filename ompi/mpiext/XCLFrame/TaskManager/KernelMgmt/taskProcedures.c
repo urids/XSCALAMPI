@@ -1,6 +1,6 @@
 #include "taskProcedures.h"
 
-#define DEBUG 0
+#define DEBUG 1
 #define PROFILE 0
 
 int createProgram(int l_selTask, char* srcPath,int numTasks){
@@ -175,13 +175,13 @@ void * enqueTaskReq(void *args) {
 		printf("Execution time of task %d: -->  %0.3f ms \n",l_args->g_selTsk,(total_time / 1000000.0));
 
 	}
-		else{
-	status = clEnqueueNDRangeKernel(l_args->th_queue, l_args->th_kernel, l_args->workDim, NULL,
-			l_args->globalThreads, l_args->localThreads, 0, NULL,
-			NULL);
-	clFlush(l_args->th_queue);
-	clFinish(l_args->th_queue);
-		}
+	else{
+		status = clEnqueueNDRangeKernel(l_args->th_queue, l_args->th_kernel, l_args->workDim, NULL,
+				l_args->globalThreads, l_args->localThreads, 0, NULL,
+				NULL);
+		clFlush(l_args->th_queue);
+		clFinish(l_args->th_queue);
+	}
 	//chkerr(status, "Enqueuing Kernels ", __FILE__, __LINE__);
 	//debug_print("Enqueuing Kernel successful..\n");
 	debug_print("Enqueue Kernel successful..\n");
@@ -319,4 +319,6 @@ int XclWaitFor(int l_numTasks, int* l_taskIds, MPI_Comm comm){
 		//MPI_Barrier(comm);
 		return 0;
 }
+
+
 

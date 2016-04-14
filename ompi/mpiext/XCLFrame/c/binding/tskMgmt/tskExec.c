@@ -1,6 +1,7 @@
 
 #include "tskMgmt.h"
-
+#include "../../../TaskManager/Base/taskManager.h"
+#define DEBUG 1
 
 /* int XclExecKernel(MPI_Comm communicator, const char * fmt, ...)
     __attribute__((format (printf, 2, 3)));*/
@@ -8,7 +9,8 @@
 //#define OMPI_XclExecKernel(dataFilePath , fmt, ...) _OMPI_XclExecKernel(dataFilePath , fmt,  ##__VA_ARGS__)
 
 // int XclExecKernel(MPI_Comm comm, int selTask, int globalThreads, int localThreads, const char * fmt, va_list arg) {
- int XclExecKernel(MPI_Comm comm, int selTask,int workDim , size_t * globalThreads, size_t* localThreads, const char * fmt, va_list arg) {
+
+int XclExecKernel(MPI_Comm comm, int selTask,int workDim , size_t * globalThreads, size_t* localThreads, const char * fmt, va_list arg) {
 	int numParam = 0;
 	const char *p;
 	int j, k; //index exclusive
@@ -28,7 +30,7 @@
 	char *error;
 
 	///home/uriel/Dev/mpiApps/FTWrkDistr/multiDeviceMgmt/Debug/
-	dlhandle =dlopen("libmultiDeviceMgmt.so",RTLD_LAZY);
+	dlhandle =dlopen("/home/uriel/mpiELFs/lib/XCLFrame/TaskManager/KernelMgmt/libkernelMgmt.so",RTLD_LAZY);
 
 	if (!dlhandle) {
 		fputs(dlerror(), stderr);
@@ -104,13 +106,13 @@
 }
 
 
-int XclWaitAllTasks(MPI_Comm comm){
+int EXclWaitAllTasks(MPI_Comm comm){
  	void *dlhandle;
 
  			int (*XclWaitAllTasks)(int l_numTasks,MPI_Comm comm);
  			char *error;
 
- 			dlhandle = dlopen("libmultiDeviceMgmt.so", RTLD_LAZY);
+ 			dlhandle = dlopen("libtaskManager.so", RTLD_LAZY);
  			if (!dlhandle) {
  				fputs(dlerror(), stderr);
  				exit(1);
@@ -169,7 +171,7 @@ int XclWaitFor(int numTasks, int* taskIds, MPI_Comm comm){
 		int (*XclWaitFor)(int l_numTasks, int* l_taskIds, MPI_Comm comm);
 		char *error;
 
-		dlhandle = dlopen("libmultiDeviceMgmt.so", RTLD_LAZY);
+		dlhandle = dlopen("libtaskManager.so", RTLD_LAZY);
 		if (!dlhandle) {
 			fputs(dlerror(), stderr);
 			exit(1);

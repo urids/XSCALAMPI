@@ -6,6 +6,8 @@
 //Device management libs//
 int g_numDevs; //global variable declared in dvMgmt.h
 
+
+
 void initializeDevices(CLxplorInfo*  xplorInfo){
 
 	void *dlhandle;

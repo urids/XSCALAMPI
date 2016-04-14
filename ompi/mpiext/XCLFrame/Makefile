@@ -1142,7 +1142,7 @@ OPAL_ASSEMBLY_ARCH = AMD64
 OPAL_ASSEMBLY_BUILTIN = BUILTIN_NO
 OPAL_ASSEMBLY_FORMAT = default-.text-.globl-:--.L-@-1-0-1-1-1
 OPAL_CC_ABSOLUTE = /usr/bin/gcc
-OPAL_CONFIGURE_DATE = Tue Apr  5 12:23:39 CDT 2016
+OPAL_CONFIGURE_DATE = Wed Apr 13 17:54:18 CDT 2016
 OPAL_CONFIGURE_HOST = myHost
 OPAL_CONFIGURE_USER = uriel
 OPAL_CXX_ABSOLUTE = /usr/bin/g++
@@ -1461,7 +1461,17 @@ top_builddir = ../../..
 top_ompi_builddir = /home/uriel/Dev/mpisrc/XSCALAMPI
 top_ompi_srcdir = /home/uriel/Dev/mpisrc/XSCALAMPI
 top_srcdir = ../../..
-SUBDIRS = c multiDeviceMgmt
+SUBDIRS = DataManager \
+		DataManager/DataCopy \
+		DataManager/BufferMgmt \
+		c \
+		c/binding/dvMgmt \
+		c/binding/tskMgmt \
+		multiDeviceMgmt \
+		TaskManager \
+		TaskManager/KernelMgmt \
+		Scheduling
+
 EXTRA_DIST = README.txt
 all: all-recursive
 

@@ -1,4 +1,4 @@
-#include "bufferFunctions.h"
+#include "../BufferMgmt/bufferFunctions.h"
 #define DEBUG 0
 #define PROFILE 0
 				/*WARNINIG!!!!!!!!!*/

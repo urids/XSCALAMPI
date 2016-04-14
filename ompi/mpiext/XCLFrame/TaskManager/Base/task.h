@@ -9,9 +9,9 @@
 #define TASK_H_
 
 #include "CL/cl.h"
-#include "../deviceMgmt/Device.h"
+#include "../../multiDeviceMgmt/deviceMgmt/Device.h"
 
-#include "taskProcedures.h"
+//#include "taskProcedures.h"
 
 
 typedef struct Xcode_st{

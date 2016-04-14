@@ -13,7 +13,7 @@
 #include "stdio.h"
 #include "dvMgmt.h"
 #include "ompi/include/mpi.h"
-#include "../../../multiDeviceMgmt/taskMgmt/task.h"
+#include "../../../TaskManager/Base/task.h"
 #include "../tskMgmt/deviceMap.h"
 #include "../../../c/taskMap.h"
 

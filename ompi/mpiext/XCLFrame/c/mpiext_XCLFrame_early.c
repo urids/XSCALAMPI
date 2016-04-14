@@ -80,7 +80,7 @@ static int XCLFrame_init(void)
 
 static int XCLFrame_fini(void)
 {
-	//After each device has been initialized we can perform communication benchmarks.
+
        return OMPI_SUCCESS;
 }
 

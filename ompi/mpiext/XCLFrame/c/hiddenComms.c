@@ -2,6 +2,35 @@
 
 #include "hiddenComms.h"
 
+
+int OMPI_XclWriteTray(int g_taskIdx, int trayIdx, int bufferSize,void * hostBuffer, MPI_Comm comm){
+	return _OMPI_XclWriteTray(g_taskIdx, trayIdx, bufferSize, hostBuffer, comm);
+}
+
+int OMPI_XclReadTray(int g_taskIdx, int trayIdx, int bufferSize, void * hostBuffer, MPI_Comm comm){
+	return _OMPI_XclReadTray(g_taskIdx, trayIdx, bufferSize, hostBuffer, comm);
+}
+
+int OMPI_XclMallocTray(int g_taskIdx, int trayIdx, int bufferSize, MPI_Comm comm){
+	return _OMPI_XclMallocTray(g_taskIdx, trayIdx, bufferSize, comm);
+}
+
+int OMPI_XclFreeTray(int g_taskIdx, int trayIdx, MPI_Comm comm){
+	return _OMPI_XclFreeTray(g_taskIdx, trayIdx, comm);
+}
+
+
+int OMPI_XclSendRecv(int src_task, int src_trayIdx,
+		             int dest_task, int dest_trayIdx,
+		             int count, MPI_Datatype MPIentityType,
+		             MPI_Comm comm){
+	return _OMPI_XclSendRecv(src_task, src_trayIdx,
+            dest_task, dest_trayIdx,
+            count, MPIentityType,
+            comm);
+}
+
+
 void rcvXploreInfo(MPI_Comm mcomm){
 
 	int testDt;

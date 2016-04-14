@@ -12,7 +12,8 @@
 #include "dlfcn.h"
 
 #include "ompi/include/mpi.h"
-#include "../binding/tskMgmt/tskMgmt.h"
+#include "../../c/binding/tskMgmt/tskMgmt.h"
+#include "../../TaskManager/Base/taskManager.h"
 
 #include "entityInfo.h"
 
@@ -26,7 +27,7 @@ struct entityData_st{
 
 
 //this declaration could be in mpiext_XCLFrame_c.h but also can be here because this file
-// is included in the automake file $makefile.am$
+// is included in the automake file TwoSidedComms/makefile.am
 int OMPI_commit_EntityType(int blockcount, int* blocklen, MPI_Aint* displacements, MPI_Datatype* basictypes, MPI_Datatype * newDatatype);
 
 

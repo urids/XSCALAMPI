@@ -13,9 +13,10 @@
 #include "dlfcn.h"
 
 #include "ompi/include/mpi.h"
-#include "binding/tskMgmt/tskMgmt.h"
+#include "../../c/binding/tskMgmt/tskMgmt.h"
 
+#include "../../TaskManager/Base/taskManager.h"
 #include "entityInfo.h"
-#include "../taskMap.h"
+#include "../../c/taskMap.h"
 
 #endif /* SINGLESIDEDCOMMS_H_ */

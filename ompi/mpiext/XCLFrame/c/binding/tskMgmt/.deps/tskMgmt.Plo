@@ -47,36 +47,17 @@ tskMgmt.lo: tskMgmt.c /usr/include/stdc-predef.h tskMgmt.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h \
  ../../../../../../ompi/include/mpi.h \
  ../../../../../../ompi/include/mpi_portable_platform.h \
- ../../../multiDeviceMgmt/taskMgmt/task.h \
- ../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/Device.h \
- ../../../multiDeviceMgmt/taskMgmt/taskProcedures.h \
- ../../../multiDeviceMgmt/taskMgmt/task.h /usr/include/pthread.h \
- /usr/include/sched.h /usr/include/x86_64-linux-gnu/bits/sched.h \
- /usr/include/x86_64-linux-gnu/bits/setjmp.h \
- ../../../multiDeviceMgmt/taskMgmt/../errorMgmt/errorHandling.h \
- ../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/localDevices.h \
- ../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/Device.h \
- ../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/bufferFunctions.h \
- /usr/include/math.h /usr/include/x86_64-linux-gnu/bits/huge_val.h \
- /usr/include/x86_64-linux-gnu/bits/huge_valf.h \
- /usr/include/x86_64-linux-gnu/bits/huge_vall.h \
- /usr/include/x86_64-linux-gnu/bits/inf.h \
- /usr/include/x86_64-linux-gnu/bits/nan.h \
- /usr/include/x86_64-linux-gnu/bits/mathdef.h \
- /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
- /usr/include/x86_64-linux-gnu/bits/mathinline.h \
- ../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/../Device.h \
- ../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/../../taskMgmt/task.h \
- ../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/../../errorMgmt/errorHandling.h \
+ ../../../TaskManager/Base/task.h \
+ ../../../TaskManager/Base/../../multiDeviceMgmt/deviceMgmt/Device.h \
  ../../../multiDeviceMgmt/deviceMgmt/Device.h \
  ../../../multiDeviceMgmt/deviceMgmt/localDevices.h \
+ ../../../multiDeviceMgmt/deviceMgmt/Device.h \
  ../../../multiDeviceMgmt/deviceMgmt/deviceExploration.h \
  ../../../multiDeviceMgmt/deviceMgmt/devicesInitialization.h \
  ../../../multiDeviceMgmt/deviceMgmt/deviceExploration.h \
- ../../../multiDeviceMgmt/deviceMgmt/Device.h \
  ../../../multiDeviceMgmt/deviceMgmt/localDevices.h \
  ../../../multiDeviceMgmt/deviceMgmt/../errorMgmt/errorHandling.h \
- deviceMap.h ../../taskMap.h
+ deviceMap.h ../../taskMap.h ../../../TaskManager/Base/taskManager.h
 
 /usr/include/stdc-predef.h:
 
@@ -204,65 +185,21 @@ tskMgmt.h:
 
 ../../../../../../ompi/include/mpi_portable_platform.h:
 
-../../../multiDeviceMgmt/taskMgmt/task.h:
+../../../TaskManager/Base/task.h:
 
-../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/Device.h:
-
-../../../multiDeviceMgmt/taskMgmt/taskProcedures.h:
-
-../../../multiDeviceMgmt/taskMgmt/task.h:
-
-/usr/include/pthread.h:
-
-/usr/include/sched.h:
-
-/usr/include/x86_64-linux-gnu/bits/sched.h:
-
-/usr/include/x86_64-linux-gnu/bits/setjmp.h:
-
-../../../multiDeviceMgmt/taskMgmt/../errorMgmt/errorHandling.h:
-
-../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/localDevices.h:
-
-../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/Device.h:
-
-../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/bufferFunctions.h:
-
-/usr/include/math.h:
-
-/usr/include/x86_64-linux-gnu/bits/huge_val.h:
-
-/usr/include/x86_64-linux-gnu/bits/huge_valf.h:
-
-/usr/include/x86_64-linux-gnu/bits/huge_vall.h:
-
-/usr/include/x86_64-linux-gnu/bits/inf.h:
-
-/usr/include/x86_64-linux-gnu/bits/nan.h:
-
-/usr/include/x86_64-linux-gnu/bits/mathdef.h:
-
-/usr/include/x86_64-linux-gnu/bits/mathcalls.h:
-
-/usr/include/x86_64-linux-gnu/bits/mathinline.h:
-
-../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/../Device.h:
-
-../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/../../taskMgmt/task.h:
-
-../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/../../errorMgmt/errorHandling.h:
+../../../TaskManager/Base/../../multiDeviceMgmt/deviceMgmt/Device.h:
 
 ../../../multiDeviceMgmt/deviceMgmt/Device.h:
 
 ../../../multiDeviceMgmt/deviceMgmt/localDevices.h:
+
+../../../multiDeviceMgmt/deviceMgmt/Device.h:
 
 ../../../multiDeviceMgmt/deviceMgmt/deviceExploration.h:
 
 ../../../multiDeviceMgmt/deviceMgmt/devicesInitialization.h:
 
 ../../../multiDeviceMgmt/deviceMgmt/deviceExploration.h:
-
-../../../multiDeviceMgmt/deviceMgmt/Device.h:
 
 ../../../multiDeviceMgmt/deviceMgmt/localDevices.h:
 
@@ -271,3 +208,5 @@ tskMgmt.h:
 deviceMap.h:
 
 ../../taskMap.h:
+
+../../../TaskManager/Base/taskManager.h:

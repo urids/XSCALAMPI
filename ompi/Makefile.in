@@ -465,6 +465,11 @@ target_triplet = @target@
 @OMPI_WANT_JAVA_BINDINGS_TRUE@am__append_1 = \
 @OMPI_WANT_JAVA_BINDINGS_TRUE@        mpi/java
 
+
+#mpiext_XCLFrame_c_LDADD = $(top_ompi_builddir)/ompi/mpiext/XCLFrame/multiDeviceMgmt/libmultiDeviceMgmt.la \
+#		$(top_ompi_builddir)/ompi/mpiext/XCLFrame/DataManager/libdataManager.la \
+#		$(top_ompi_builddir)/ompi/mpiext/XCLFrame/TaskManager/libtaskManager.la	\
+#		$(top_ompi_builddir)/ompi/mpiext/XCLFrame/DataManager/DataCopy/libdataCopy.la	
 @OMPI_RTE_ORTE_TRUE@am__append_2 = \
 @OMPI_RTE_ORTE_TRUE@        $(top_ompi_builddir)/orte/libopen-rte.la
 
@@ -2094,18 +2099,22 @@ EXTRA_DIST = CMakeLists.txt tools/win_makefile tools/CMakeLists.txt \
 
 # NOTE: The ordering of this list is VERY CAREFULLY CRAFTED!  Do not
 # change the ordering unless you really know what you're doing.  :-)
-SUBDIRS = include datatype debuggers etc mpiext/XCLFrame/scheduling \
-	mpi/c mpi/tool $(OMPI_MPIEXT_C_DIRS) mpi/fortran/base/ \
-	$(MCA_ompi_FRAMEWORKS_SUBDIRS) \
+SUBDIRS = include datatype debuggers etc mpi/c mpi/tool \
+	mpiext/XCLFrame/Scheduling mpiext/XCLFrame/multiDeviceMgmt \
+	mpiext/XCLFrame/c/binding/dvMgmt \
+	mpiext/XCLFrame/c/binding/tskMgmt mpiext/XCLFrame/TaskManager \
+	mpiext/XCLFrame/TaskManager/KernelMgmt \
+	mpiext/XCLFrame/DataManager \
+	mpiext/XCLFrame/DataManager/DataCopy \
+	mpiext/XCLFrame/DataManager/BufferMgmt $(OMPI_MPIEXT_C_DIRS) \
+	mpi/fortran/base/ $(MCA_ompi_FRAMEWORKS_SUBDIRS) \
 	$(MCA_ompi_FRAMEWORK_COMPONENT_STATIC_SUBDIRS) . mpi/cxx \
 	$(OMPI_MPIEXT_MPIFH_DIRS) mpi/fortran/mpif-h \
 	$(OMPI_FORTRAN_USEMPI_DIR) $(OMPI_MPIEXT_USEMPIF08_DIRS) \
 	$(OMPI_FORTRAN_USEMPIF08_DIR) mpi/fortran/mpiext \
 	$(MCA_ompi_FRAMEWORK_COMPONENT_DSO_SUBDIRS) \
-	$(OMPI_CONTRIB_SUBDIRS) mpiext/XCLFrame/multiDeviceMgmt \
-	mpiext/XCLFrame/c/binding/dvMgmt \
-	mpiext/XCLFrame/c/binding/tskMgmt $(am__append_1) \
-	tools/ompi_info tools/wrappers
+	$(OMPI_CONTRIB_SUBDIRS) $(am__append_1) tools/ompi_info \
+	tools/wrappers
 
 # The ordering of the DIST_SUBDIRS isn't as important, but note that
 # its contents *are* different than SUBDIRS.  In particular, the
@@ -2151,13 +2160,17 @@ libmpi_la_LIBADD = datatype/libdatatype.la debuggers/libdebuggers.la \
 	$(MCA_ompi_FRAMEWORK_LIBS) $(OMPI_MPIEXT_C_LIBS) \
 	$(OMPI_LIBMPI_EXTRA_LIBS) $(am__append_2) \
 	$(top_ompi_builddir)/opal/libopen-pal.la
-libmpi_LDADD = $(top_ompi_builddir)/ompi/mpiext/XCLFrame/multiDeviceMgmt/libmultiDeviceMgmt.la		
-libmpi_la_DEPENDENCIES = $(libmpi_la_LIBADD)
+libmpi_la_DEPENDENCIES = $(libmpi_la_LIBADD) 
 libmpi_la_LDFLAGS = \
        -version-info $(libmpi_so_version) \
         $(OMPI_LIBMPI_EXTRA_LDFLAGS) \
         -Wl,-rpath,$(libdir)/XCLFrame/binding \
-        -Wl,-rpath,$(libdir)/XCLFrame/multiDeviceMgmt
+        -Wl,-rpath,$(libdir)/XCLFrame/multiDeviceMgmt \
+        -Wl,-rpath,$(libdir)/XCLFrame/DataManager \
+        -Wl,-rpath,$(libdir)/XCLFrame/DataManager/DataCopy \
+        -Wl,-rpath,$(libdir)/XCLFrame/DataManager/BufferMgmt \
+        -Wl,-rpath,$(libdir)/XCLFrame/TaskManager \
+        -Wl,-rpath,$(libdir)/XCLFrame/TaskManager/KernelMgmt       
 
 
 # included subdirectory Makefile.am's and appended-to variables

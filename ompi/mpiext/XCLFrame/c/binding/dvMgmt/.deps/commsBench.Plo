@@ -47,31 +47,17 @@ commsBench.lo: commsBench.c /usr/include/stdc-predef.h commsBench.h \
  ../../../multiDeviceMgmt/deviceMgmt/Device.h \
  ../../../multiDeviceMgmt/deviceMgmt/localDevices.h \
  ../../../multiDeviceMgmt/deviceMgmt/../errorMgmt/errorHandling.h \
- PUsMap.h ../../../multiDeviceMgmt/taskMgmt/task.h \
- ../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/Device.h \
- ../../../multiDeviceMgmt/taskMgmt/taskProcedures.h \
- ../../../multiDeviceMgmt/taskMgmt/task.h /usr/include/xlocale.h \
- /usr/include/pthread.h /usr/include/sched.h \
- /usr/include/x86_64-linux-gnu/bits/sched.h \
- /usr/include/x86_64-linux-gnu/bits/setjmp.h \
- ../../../multiDeviceMgmt/taskMgmt/../errorMgmt/errorHandling.h \
- ../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/localDevices.h \
- ../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/bufferFunctions.h \
- /usr/include/string.h /usr/include/x86_64-linux-gnu/bits/string.h \
+ PUsMap.h ../../../TaskManager/Base/task.h \
+ ../../../TaskManager/Base/../../multiDeviceMgmt/deviceMgmt/Device.h \
+ ../tskMgmt/deviceMap.h ../../../c/taskMap.h \
+ ../../../TaskManager/Base/taskManager.h /usr/include/unistd.h \
+ /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
+ /usr/include/x86_64-linux-gnu/bits/environments.h \
+ /usr/include/x86_64-linux-gnu/bits/confname.h /usr/include/getopt.h \
+ /usr/include/x86_64-linux-gnu/bits/unistd.h /usr/include/string.h \
+ /usr/include/xlocale.h /usr/include/x86_64-linux-gnu/bits/string.h \
  /usr/include/x86_64-linux-gnu/bits/string2.h \
- /usr/include/x86_64-linux-gnu/bits/string3.h /usr/include/math.h \
- /usr/include/x86_64-linux-gnu/bits/huge_val.h \
- /usr/include/x86_64-linux-gnu/bits/huge_valf.h \
- /usr/include/x86_64-linux-gnu/bits/huge_vall.h \
- /usr/include/x86_64-linux-gnu/bits/inf.h \
- /usr/include/x86_64-linux-gnu/bits/nan.h \
- /usr/include/x86_64-linux-gnu/bits/mathdef.h \
- /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
- /usr/include/x86_64-linux-gnu/bits/mathinline.h \
- ../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/../Device.h \
- ../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/../../taskMgmt/task.h \
- ../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/../../errorMgmt/errorHandling.h \
- ../tskMgmt/deviceMap.h ../../../c/taskMap.h
+ /usr/include/x86_64-linux-gnu/bits/string3.h
 
 /usr/include/stdc-predef.h:
 
@@ -195,62 +181,34 @@ dvMgmt.h:
 
 PUsMap.h:
 
-../../../multiDeviceMgmt/taskMgmt/task.h:
+../../../TaskManager/Base/task.h:
 
-../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/Device.h:
+../../../TaskManager/Base/../../multiDeviceMgmt/deviceMgmt/Device.h:
 
-../../../multiDeviceMgmt/taskMgmt/taskProcedures.h:
+../tskMgmt/deviceMap.h:
 
-../../../multiDeviceMgmt/taskMgmt/task.h:
+../../../c/taskMap.h:
 
-/usr/include/xlocale.h:
+../../../TaskManager/Base/taskManager.h:
 
-/usr/include/pthread.h:
+/usr/include/unistd.h:
 
-/usr/include/sched.h:
+/usr/include/x86_64-linux-gnu/bits/posix_opt.h:
 
-/usr/include/x86_64-linux-gnu/bits/sched.h:
+/usr/include/x86_64-linux-gnu/bits/environments.h:
 
-/usr/include/x86_64-linux-gnu/bits/setjmp.h:
+/usr/include/x86_64-linux-gnu/bits/confname.h:
 
-../../../multiDeviceMgmt/taskMgmt/../errorMgmt/errorHandling.h:
+/usr/include/getopt.h:
 
-../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/localDevices.h:
-
-../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/bufferFunctions.h:
+/usr/include/x86_64-linux-gnu/bits/unistd.h:
 
 /usr/include/string.h:
+
+/usr/include/xlocale.h:
 
 /usr/include/x86_64-linux-gnu/bits/string.h:
 
 /usr/include/x86_64-linux-gnu/bits/string2.h:
 
 /usr/include/x86_64-linux-gnu/bits/string3.h:
-
-/usr/include/math.h:
-
-/usr/include/x86_64-linux-gnu/bits/huge_val.h:
-
-/usr/include/x86_64-linux-gnu/bits/huge_valf.h:
-
-/usr/include/x86_64-linux-gnu/bits/huge_vall.h:
-
-/usr/include/x86_64-linux-gnu/bits/inf.h:
-
-/usr/include/x86_64-linux-gnu/bits/nan.h:
-
-/usr/include/x86_64-linux-gnu/bits/mathdef.h:
-
-/usr/include/x86_64-linux-gnu/bits/mathcalls.h:
-
-/usr/include/x86_64-linux-gnu/bits/mathinline.h:
-
-../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/../Device.h:
-
-../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/../../taskMgmt/task.h:
-
-../../../multiDeviceMgmt/taskMgmt/../deviceMgmt/memMgmt/../../errorMgmt/errorHandling.h:
-
-../tskMgmt/deviceMap.h:
-
-../../../c/taskMap.h:

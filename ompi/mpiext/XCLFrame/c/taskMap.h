@@ -7,7 +7,7 @@
 
 #ifndef TASKMAP_H_
 #define TASKMAP_H_
-
+/*
 typedef struct taskInfo_st{
 	int g_taskIdx;
 	int l_taskIdx;
@@ -15,6 +15,6 @@ typedef struct taskInfo_st{
 }taskInfo;
 
 
-extern taskInfo* g_taskList; //defined in late.c
+extern taskInfo* g_taskList; //defined in late.c*/
 
 #endif /* TASKMAP_H_ */

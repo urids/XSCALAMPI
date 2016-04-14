@@ -1,5 +1,6 @@
 
 #include  "tskMgmt.h"
+#include "../../../TaskManager/Base/taskManager.h"
 
 #define MAX_LINE_LEN 256
 

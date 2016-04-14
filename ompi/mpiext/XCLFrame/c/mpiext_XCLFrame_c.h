@@ -6,8 +6,7 @@
 
 #include "../multiDeviceMgmt/deviceMgmt/Device.h"
 #include "../multiDeviceMgmt/deviceMgmt/localDevices.h"
-#include "../multiDeviceMgmt/taskMgmt/task.h"
-
+#include "../TaskManager/Base/task.h"
 
 #include "../multiDeviceMgmt/deviceMgmt/deviceExploration.h"
 #include "../multiDeviceMgmt/deviceMgmt/devicesInitialization.h"
@@ -40,13 +39,13 @@ OMPI_DECLSPEC int OMPI_XclGather(int trayIdx, int count, MPI_Datatype MPIentityT
 OMPI_DECLSPEC int OMPI_XclSend(int trayIdx, int count, MPI_Datatype MPIentityType, int src_task, int dest_task, int TAG, MPI_Comm comm); //TODO: offset parameter to from tray start
 OMPI_DECLSPEC int OMPI_XclRecv(int trayIdx, int count, MPI_Datatype MPIentityType, int src_task, int dest_task, int TAG,MPI_Comm comm); //TODO: offset parameter to from tray start
 OMPI_DECLSPEC int OMPI_XclSendRecv(int src_task, int src_trayIdx, int dest_task, int dest_trayIdx, int count, MPI_Datatype MPIentityType, MPI_Comm comm);
-OMPI_DECLSPEC int OMPI_XclReadTaskBuffer(int taskIdx, int trayIdx, int bufferSize, void * hostBuffer, MPI_Comm comm);
-OMPI_DECLSPEC int OMPI_XclWriteTaskBuffer(int taskIdx, int trayIdx, int bufferSize, void * hostBuffer, MPI_Comm comm);
+OMPI_DECLSPEC int OMPI_XclReadTray(int taskIdx, int trayIdx, int bufferSize, void * hostBuffer, MPI_Comm comm);
+OMPI_DECLSPEC int OMPI_XclWriteTray(int taskIdx, int trayIdx, int bufferSize, void * hostBuffer, MPI_Comm comm);
 
 //OMPI_DECLSPEC int OMPI_XclNewTask(int Rank, int Device, MPI_Comm comm);
 //TODO: implement Free routines.
-OMPI_DECLSPEC int OMPI_XclMallocTaskBuffer(int g_taskIdx, int trayIdx, int bufferSize, MPI_Comm comm);
-OMPI_DECLSPEC int OMPI_XclFreeTaskBuffer(int g_taskIdx, int trayIdx, MPI_Comm comm);
+OMPI_DECLSPEC int OMPI_XclMallocTray(int g_taskIdx, int trayIdx, int bufferSize, MPI_Comm comm);
+OMPI_DECLSPEC int OMPI_XclFreeTray(int g_taskIdx, int trayIdx, MPI_Comm comm);
 //OMPI_DECLSPEC int OMPI_XclFreeAllBuffers(int taskIdx, MPI_Comm comm);
 //OMPI_DECLSPEC int OMPI_XclFreeTask(int taskIdx, MPI_Comm comm);
 //OMPI_DECLSPEC int OMPI_XclFreeAllTasks(MPI_Comm comm);

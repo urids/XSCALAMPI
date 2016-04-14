@@ -13,9 +13,9 @@
 #include <string.h>
 #include <stdio.h>
 #include <math.h>
-#include "../Device.h"
-#include "../../taskMgmt/task.h"
-#include "../../errorMgmt/errorHandling.h"
+#include "../../multiDeviceMgmt/deviceMgmt/Device.h"
+#include "../../TaskManager/Base/task.h"
+#include "../../c/ErrorHandling/errorHandling.h"
 
 extern int numEntitiesInHost;
 extern float entitiesPerTask;

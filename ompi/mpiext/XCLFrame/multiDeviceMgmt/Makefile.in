@@ -357,13 +357,7 @@ libmultiDeviceMgmt_la_LIBADD =
 am__dirstamp = $(am__leading_dot)dirstamp
 am_libmultiDeviceMgmt_la_OBJECTS = ./errorMgmt/errorHandling.lo \
 	./deviceMgmt/deviceExploration.lo \
-	./deviceMgmt/devicesInitialization.lo \
-	./deviceMgmt/memMgmt/bufferInit.lo \
-	./deviceMgmt/memMgmt/bufferRead.lo \
-	./deviceMgmt/memMgmt/bufferWrite.lo \
-	./deviceMgmt/memMgmt/bufferFree.lo \
-	./deviceMgmt/memMgmt/intraDevBufferCpy.lo \
-	./taskMgmt/taskProcedures.lo
+	./deviceMgmt/devicesInitialization.lo
 libmultiDeviceMgmt_la_OBJECTS = $(am_libmultiDeviceMgmt_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -1499,13 +1493,7 @@ multiDeviceMgmt_LTLIBRARIES = libmultiDeviceMgmt.la
 # Sources for libmultiDeviceMgmt
 libmultiDeviceMgmt_la_SOURCES = ./errorMgmt/errorHandling.c \
 								./deviceMgmt/deviceExploration.c \
-								./deviceMgmt/devicesInitialization.c \
-								./deviceMgmt/memMgmt/bufferInit.c \
-								./deviceMgmt/memMgmt/bufferRead.c \
-								./deviceMgmt/memMgmt/bufferWrite.c \
-								./deviceMgmt/memMgmt/bufferFree.c \
-								./deviceMgmt/memMgmt/intraDevBufferCpy.c \
-								./taskMgmt/taskProcedures.c
+								./deviceMgmt/devicesInitialization.c 
 
 
 # Linker options libTestProgram
@@ -1596,35 +1584,6 @@ deviceMgmt/$(DEPDIR)/$(am__dirstamp):
 	deviceMgmt/$(DEPDIR)/$(am__dirstamp)
 ./deviceMgmt/devicesInitialization.lo: deviceMgmt/$(am__dirstamp) \
 	deviceMgmt/$(DEPDIR)/$(am__dirstamp)
-deviceMgmt/memMgmt/$(am__dirstamp):
-	@$(MKDIR_P) ./deviceMgmt/memMgmt
-	@: > deviceMgmt/memMgmt/$(am__dirstamp)
-deviceMgmt/memMgmt/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) ./deviceMgmt/memMgmt/$(DEPDIR)
-	@: > deviceMgmt/memMgmt/$(DEPDIR)/$(am__dirstamp)
-./deviceMgmt/memMgmt/bufferInit.lo:  \
-	deviceMgmt/memMgmt/$(am__dirstamp) \
-	deviceMgmt/memMgmt/$(DEPDIR)/$(am__dirstamp)
-./deviceMgmt/memMgmt/bufferRead.lo:  \
-	deviceMgmt/memMgmt/$(am__dirstamp) \
-	deviceMgmt/memMgmt/$(DEPDIR)/$(am__dirstamp)
-./deviceMgmt/memMgmt/bufferWrite.lo:  \
-	deviceMgmt/memMgmt/$(am__dirstamp) \
-	deviceMgmt/memMgmt/$(DEPDIR)/$(am__dirstamp)
-./deviceMgmt/memMgmt/bufferFree.lo:  \
-	deviceMgmt/memMgmt/$(am__dirstamp) \
-	deviceMgmt/memMgmt/$(DEPDIR)/$(am__dirstamp)
-./deviceMgmt/memMgmt/intraDevBufferCpy.lo:  \
-	deviceMgmt/memMgmt/$(am__dirstamp) \
-	deviceMgmt/memMgmt/$(DEPDIR)/$(am__dirstamp)
-taskMgmt/$(am__dirstamp):
-	@$(MKDIR_P) ./taskMgmt
-	@: > taskMgmt/$(am__dirstamp)
-taskMgmt/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) ./taskMgmt/$(DEPDIR)
-	@: > taskMgmt/$(DEPDIR)/$(am__dirstamp)
-./taskMgmt/taskProcedures.lo: taskMgmt/$(am__dirstamp) \
-	taskMgmt/$(DEPDIR)/$(am__dirstamp)
 libmultiDeviceMgmt.la: $(libmultiDeviceMgmt_la_OBJECTS) $(libmultiDeviceMgmt_la_DEPENDENCIES) $(EXTRA_libmultiDeviceMgmt_la_DEPENDENCIES) 
 	$(AM_V_CCLD)$(libmultiDeviceMgmt_la_LINK) -rpath $(multiDeviceMgmtdir) $(libmultiDeviceMgmt_la_OBJECTS) $(libmultiDeviceMgmt_la_LIBADD) $(LIBS)
 
@@ -1632,25 +1591,15 @@ mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 	-rm -f ./deviceMgmt/*.$(OBJEXT)
 	-rm -f ./deviceMgmt/*.lo
-	-rm -f ./deviceMgmt/memMgmt/*.$(OBJEXT)
-	-rm -f ./deviceMgmt/memMgmt/*.lo
 	-rm -f ./errorMgmt/*.$(OBJEXT)
 	-rm -f ./errorMgmt/*.lo
-	-rm -f ./taskMgmt/*.$(OBJEXT)
-	-rm -f ./taskMgmt/*.lo
 
 distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./deviceMgmt/$(DEPDIR)/deviceExploration.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./deviceMgmt/$(DEPDIR)/devicesInitialization.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./deviceMgmt/memMgmt/$(DEPDIR)/bufferFree.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./deviceMgmt/memMgmt/$(DEPDIR)/bufferInit.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./deviceMgmt/memMgmt/$(DEPDIR)/bufferRead.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./deviceMgmt/memMgmt/$(DEPDIR)/bufferWrite.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./deviceMgmt/memMgmt/$(DEPDIR)/intraDevBufferCpy.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./errorMgmt/$(DEPDIR)/errorHandling.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./taskMgmt/$(DEPDIR)/taskProcedures.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -1682,9 +1631,7 @@ mostlyclean-libtool:
 clean-libtool:
 	-rm -rf .libs _libs
 	-rm -rf ./deviceMgmt/.libs ./deviceMgmt/_libs
-	-rm -rf ./deviceMgmt/memMgmt/.libs ./deviceMgmt/memMgmt/_libs
 	-rm -rf ./errorMgmt/.libs ./errorMgmt/_libs
-	-rm -rf ./taskMgmt/.libs ./taskMgmt/_libs
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
@@ -1818,12 +1765,8 @@ distclean-generic:
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
 	-rm -f deviceMgmt/$(DEPDIR)/$(am__dirstamp)
 	-rm -f deviceMgmt/$(am__dirstamp)
-	-rm -f deviceMgmt/memMgmt/$(DEPDIR)/$(am__dirstamp)
-	-rm -f deviceMgmt/memMgmt/$(am__dirstamp)
 	-rm -f errorMgmt/$(DEPDIR)/$(am__dirstamp)
 	-rm -f errorMgmt/$(am__dirstamp)
-	-rm -f taskMgmt/$(DEPDIR)/$(am__dirstamp)
-	-rm -f taskMgmt/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
@@ -1834,7 +1777,7 @@ clean-am: clean-generic clean-libtool clean-multiDeviceMgmtLTLIBRARIES \
 	mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf ./deviceMgmt/$(DEPDIR) ./deviceMgmt/memMgmt/$(DEPDIR) ./errorMgmt/$(DEPDIR) ./taskMgmt/$(DEPDIR)
+	-rm -rf ./deviceMgmt/$(DEPDIR) ./errorMgmt/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -1880,7 +1823,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf ./deviceMgmt/$(DEPDIR) ./deviceMgmt/memMgmt/$(DEPDIR) ./errorMgmt/$(DEPDIR) ./taskMgmt/$(DEPDIR)
+	-rm -rf ./deviceMgmt/$(DEPDIR) ./errorMgmt/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

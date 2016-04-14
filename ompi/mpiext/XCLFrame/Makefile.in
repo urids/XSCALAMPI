@@ -1461,7 +1461,17 @@ top_builddir = @top_builddir@
 top_ompi_builddir = @top_ompi_builddir@
 top_ompi_srcdir = @top_ompi_srcdir@
 top_srcdir = @top_srcdir@
-SUBDIRS = c multiDeviceMgmt
+SUBDIRS = DataManager \
+		DataManager/DataCopy \
+		DataManager/BufferMgmt \
+		c \
+		c/binding/dvMgmt \
+		c/binding/tskMgmt \
+		multiDeviceMgmt \
+		TaskManager \
+		TaskManager/KernelMgmt \
+		Scheduling
+
 EXTRA_DIST = README.txt
 all: all-recursive
 

@@ -14,6 +14,8 @@
 #include "binding/dvMgmt/PUsMap.h"
 #include "../multiDeviceMgmt/deviceMgmt/deviceExploration.h"
 
+#include "../TaskManager/Base/taskManager.h"
+
 /*
  * Here we put the definition of variables that can be queried in the user application
  * through an API call =)!!
@@ -136,8 +138,12 @@ int OMPI_CollectTaskInfo(int devSelection, MPI_Comm comm){
 	return g_numTasks;
 }
 
-
 int OMPI_XclSetProcedure(MPI_Comm comm, int g_selTask, char* srcPath, char* kernelName){
+	return _OMPI_XclSetProcedure(comm, g_selTask, srcPath, kernelName);
+}
+
+
+int AAOMPI_XclSetProcedure(MPI_Comm comm, int g_selTask, char* srcPath, char* kernelName){
 	int myRank;
 	MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
 	//Select the appropriate local task if any.
@@ -177,6 +183,19 @@ int OMPI_XclSetProcedure(MPI_Comm comm, int g_selTask, char* srcPath, char* kern
 	//int localThreads, const char * fmt, ...) {
 
 int OMPI_XclExecTask(MPI_Comm communicator, int g_selTask, int workDim, size_t * globalThreads,
+		size_t * localThreads, const char * fmt, ...) {
+
+	va_list argptr;
+	va_start(argptr, fmt);
+
+	 _OMPI_XclExecTask(communicator, g_selTask, workDim, globalThreads,
+				localThreads, fmt, argptr);
+	va_end(argptr);
+
+	return 0;
+}
+
+int AAOMPI_XclExecTask(MPI_Comm communicator, int g_selTask, int workDim, size_t * globalThreads,
 		size_t * localThreads, const char * fmt, ...) {
 
 	int myRank;
@@ -220,6 +239,10 @@ int OMPI_XclExecTask(MPI_Comm communicator, int g_selTask, int workDim, size_t *
 }
 
 int OMPI_XclWaitAllTasks(MPI_Comm comm){
+	return _OMPI_XclWaitAllTasks(comm);
+}
+
+int AAOMPI_XclWaitAllTasks(MPI_Comm comm){
 	void *dlhandle;
 
 	int (*XclWaitAllTasks)(MPI_Comm comm);
@@ -244,7 +267,11 @@ int OMPI_XclWaitAllTasks(MPI_Comm comm){
 	return MPI_SUCCESS;
 }
 
- int OMPI_XclWaitFor(int numTasks, int* taskIds, MPI_Comm comm){
+int OMPI_XclWaitFor(int numTasks, int* taskIds, MPI_Comm comm){
+	return _OMPI_XclWaitFor(numTasks, taskIds, comm);
+}
+
+ int AAOMPI_XclWaitFor(int numTasks, int* taskIds, MPI_Comm comm){
 	int i; //index variable
 	int err;
 	int * l_ids=NULL;
