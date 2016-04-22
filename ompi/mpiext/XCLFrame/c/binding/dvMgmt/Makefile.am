@@ -14,8 +14,7 @@ dvMgmt_LTLIBRARIES = libdvMgmt.la
 # Sources for libmultiDeviceMgmt
 libdvMgmt_la_SOURCES =dvXplore.c \
 					  dvInit.c \
-					  memMgmt.c \
-					  commsBench.c
+					  memMgmt.c
 					  
 libdvMgmt_la_LDFLAGS = -ldl	-lOpenCL -Wl,-rpath,$(libdir)/XCLFrame/multiDeviceMgmt			  
 					  

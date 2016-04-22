@@ -1,6 +1,6 @@
 taskProcedures.lo: taskProcedures.c /usr/include/stdc-predef.h \
- taskProcedures.h ../Base/task.h /usr/local/cuda-7.5/include/CL/cl.h \
- /usr/local/cuda-7.5/include/CL/cl_platform.h \
+ taskProcedures.h ../Base/task.h /usr/local/include/CL/cl.h \
+ /usr/local/include/CL/cl_platform.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h /usr/include/stdint.h \
  /usr/include/features.h /usr/include/x86_64-linux-gnu/sys/cdefs.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
@@ -72,9 +72,9 @@ taskProcedures.h:
 
 ../Base/task.h:
 
-/usr/local/cuda-7.5/include/CL/cl.h:
+/usr/local/include/CL/cl.h:
 
-/usr/local/cuda-7.5/include/CL/cl_platform.h:
+/usr/local/include/CL/cl_platform.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h:
 

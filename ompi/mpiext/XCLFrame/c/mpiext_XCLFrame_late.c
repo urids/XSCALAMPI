@@ -8,7 +8,6 @@
 
 #include "ompi/mpi/c/bindings.h"
 #include "ompi/mpiext/mpiext.h"
-#include "hiddenComms.h"
 #include "ompi/mpiext/XCLFrame/c/mpiext_XCLFrame_c.h"
 #include "taskMap.h"
 #include "binding/dvMgmt/PUsMap.h"
@@ -21,27 +20,12 @@
  * through an API call =)!!
  */
 
-/* ==================================
- * | INIT OF GLOBAL INITIALIZATIONS |
- * ==================================
- * */
 
-PUInfo* g_PUList; //Global Variable declared at PUsMap.h
-int g_numDevs;  //Global Variable declared at PUsMap.h
-XCLtask* l_taskList; // Global Variable declared in task.h
-taskInfo* g_taskList; //Global Variable declared at taskMap.h
-int l_numTasks;//Global variable declared in tskMgmt.h
-
-
-/* ==================================
- * | END OF GLOBAL INITIALIZATIONS  |
- * ==================================
- * */
 
 int numRanks, myRank, HostNamelen;
 
 
-int OMPI_CollectDevicesInfo(int devSelection, MPI_Comm comm){
+int AAOMPI_CollectDevicesInfo(int devSelection, MPI_Comm comm){
 
 int i,j,k;
 int myRank,numRanks;
@@ -78,7 +62,7 @@ int l_numDevs;
 
 //testOK
 
-int OMPI_CollectTaskInfo(int devSelection, MPI_Comm comm){
+int AAOMPI_CollectTaskInfo(int devSelection, MPI_Comm comm){
 	int numRanks, myRank, HostNamelen;
 	int i,j,k; //indx variables.
 
@@ -138,9 +122,6 @@ int OMPI_CollectTaskInfo(int devSelection, MPI_Comm comm){
 	return g_numTasks;
 }
 
-int OMPI_XclSetProcedure(MPI_Comm comm, int g_selTask, char* srcPath, char* kernelName){
-	return _OMPI_XclSetProcedure(comm, g_selTask, srcPath, kernelName);
-}
 
 
 int AAOMPI_XclSetProcedure(MPI_Comm comm, int g_selTask, char* srcPath, char* kernelName){
@@ -182,18 +163,7 @@ int AAOMPI_XclSetProcedure(MPI_Comm comm, int g_selTask, char* srcPath, char* ke
 //int OMPI_XclExecKernel(MPI_Comm communicator, int g_selTask, int globalThreads,
 	//int localThreads, const char * fmt, ...) {
 
-int OMPI_XclExecTask(MPI_Comm communicator, int g_selTask, int workDim, size_t * globalThreads,
-		size_t * localThreads, const char * fmt, ...) {
 
-	va_list argptr;
-	va_start(argptr, fmt);
-
-	 _OMPI_XclExecTask(communicator, g_selTask, workDim, globalThreads,
-				localThreads, fmt, argptr);
-	va_end(argptr);
-
-	return 0;
-}
 
 int AAOMPI_XclExecTask(MPI_Comm communicator, int g_selTask, int workDim, size_t * globalThreads,
 		size_t * localThreads, const char * fmt, ...) {
@@ -238,9 +208,7 @@ int AAOMPI_XclExecTask(MPI_Comm communicator, int g_selTask, int workDim, size_t
 	return MPI_SUCCESS;
 }
 
-int OMPI_XclWaitAllTasks(MPI_Comm comm){
-	return _OMPI_XclWaitAllTasks(comm);
-}
+
 
 int AAOMPI_XclWaitAllTasks(MPI_Comm comm){
 	void *dlhandle;
@@ -267,9 +235,7 @@ int AAOMPI_XclWaitAllTasks(MPI_Comm comm){
 	return MPI_SUCCESS;
 }
 
-int OMPI_XclWaitFor(int numTasks, int* taskIds, MPI_Comm comm){
-	return _OMPI_XclWaitFor(numTasks, taskIds, comm);
-}
+
 
  int AAOMPI_XclWaitFor(int numTasks, int* taskIds, MPI_Comm comm){
 	int i; //index variable

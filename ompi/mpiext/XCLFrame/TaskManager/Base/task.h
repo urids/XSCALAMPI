@@ -40,26 +40,39 @@ typedef struct XCLtask_st{
 
 	int localID;
 
+
+/*********************************************
+				DEVICE
+*********************************************/
 	//every task MUST have an associated device
 	Device* device;
 
+
+/*********************************************
+				PROCEDURE
+*********************************************/
 	//every task MUST have its code //and have their kernel List
 	XCLcode* code;
 	cl_program* CLprogram;
 	int numKernels; // TODO: will be useful for multiKernels.
 	XCLkernel* kernel;
 
+
+/*********************************************
+				DATA
+*********************************************/
+
 	int numTrays; //number of trays for this task
 	XCLTrayInfo *trayInfo; /*info about size and mode of tray.
 	 	 	 	 	 	 	 	 the current cl_mem object is managed by its device*/
-
 	int Rack; //number Of Rack in device of this task. two task may have same number of rack
 				 // provided that they belong to different devices =) !!
 
 }XCLtask;
 
 
-extern XCLtask* l_taskList; //This will be defined in late.c and is property of the runtime system.
+extern XCLtask* l_taskList; //This will is defined in taskManager.c and is property of the runtime system.
+extern int l_numTasks; //This variable is defined in taskManager.c and is property of the runtime system.
 
 
 #endif /* TASK_H_ */

@@ -8,25 +8,27 @@
 //call from XCLFame_early just after devices are initialized.
 
 #include "commsBench.h"
-#include "../../../TaskManager/Base/taskManager.h"
 
 device_Task_Info* taskDevMap;
 taskInfo* g_taskList; //Global Variable declared at taskManager.h
-int l_numTasks;//Global variable declared in tskMgmt.h
+//int l_numTasks;//Global variable declared in tskMgmt.h
 int i,j,k;
 
-int commsBenchmark(commsInfo* cmInf){
+int _commsBenchmark(commsInfo* cmInf){
 
+	int err;
 
 	int numRanks, myRank;
 	MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
 	MPI_Comm_size(MPI_COMM_WORLD, &numRanks);
 
+
+	char * myBuff;
 	//*(cmInf->BW_Mtx)=0.0;
 
-	int g_PUs=OMPI_CollectDevicesInfo(ALL_DEVICES, MPI_COMM_WORLD);
+	int g_PUs=_OMPI_CollectDevicesInfo(ALL_DEVICES, MPI_COMM_WORLD);
 	int l_PUs=clXplr.numDevices;
-
+		//printf("localPUs: %d \n",l_PUs);
 	int* PU_RK =(int*)malloc(numRanks*sizeof(int)); //PU per RanK Structure
 	MPI_Allgather(&l_PUs,1,MPI_INT,PU_RK,1,MPI_INT,MPI_COMM_WORLD);
 
@@ -83,7 +85,7 @@ int commsBenchmark(commsInfo* cmInf){
 	l_taskList = (XCLtask*) malloc(sizeof(XCLtask) * l_PUs);
 
 
-	//Here we fill the local l_taskList and create the memory Racks.
+	//Here we fill the local l_taskList and create "PROVITIONAL" memory Racks.
 	for (i = 0; i <l_PUs; i++) {
 		for (j = taskDevMap[i].min_tskIdx; j <= taskDevMap[i].max_tskIdx;j++) {
 			debug_print("-----matching task %d ------\n",j);
@@ -152,12 +154,11 @@ int commsBenchmark(commsInfo* cmInf){
 	(cmInf->BW_Mtx)=BW_Mtx;
 
 	for(i=0;i<g_PUs;i++){
-		err|=OMPI_XclWriteTray(i, 0, sizeof(char)*MAX_SIZE, buffer, MPI_COMM_WORLD); //first task inits token to 1
-		err|=OMPI_XclMallocTray(i, 1, sizeof(char)*MAX_SIZE,MPI_COMM_WORLD);//remaining tasks allocate space
-
+		err = _OMPI_XclWriteTray(i, 0, sizeof(char)*MAX_SIZE, buffer, MPI_COMM_WORLD); //first task init token to 1
+		err|= _OMPI_XclMallocTray(i, 1, sizeof(char)*MAX_SIZE,MPI_COMM_WORLD);//remaining tasks allocate space
 	}
-/*
-	if(myRank==1){
+
+/*	if(myRank==0){
 		char* testRes=malloc(sizeof(char));
 		err |= OMPI_XclReadTray(2, 0, sizeof(char), testRes, MPI_COMM_WORLD);
 		printf("%c data %c\n",buffer[0],testRes[0]);
@@ -190,8 +191,8 @@ int commsBenchmark(commsInfo* cmInf){
 	 			for(i=0;i<LATENCY_REPS;i++){
 	 				deltaT = 0;
 	 				T1 = MPI_Wtime(); // start time
-	 				err |= OMPI_XclSendRecv(src, 0, dst, 1, 1, MPI_CHAR,MPI_COMM_WORLD ); //SEND
-	 				err |= OMPI_XclSendRecv(dst, 1, src, 0, 1, MPI_CHAR,MPI_COMM_WORLD ); //SEND-BACK
+	 				err |= _OMPI_XclSendRecv(src, 0, dst, 1, 1, MPI_CHAR,MPI_COMM_WORLD ); //SEND
+	 				err |= _OMPI_XclSendRecv(dst, 1, src, 0, 1, MPI_CHAR,MPI_COMM_WORLD ); //SEND-BACK
 	 				T2 = MPI_Wtime(); // end time
 	 				deltaT = T2-T1;
 	 				accumTime += deltaT;
@@ -223,8 +224,8 @@ int commsBenchmark(commsInfo* cmInf){
 				while(msgSz<=MAX_SIZE){
 					deltaT = 0;
 					T1 = MPI_Wtime(); // start time
-					err |= OMPI_XclSendRecv(src, 0, dst, 1, sizeof(char)*msgSz, MPI_CHAR,MPI_COMM_WORLD ); //SEND
-					err |= OMPI_XclSendRecv(dst, 1, src, 0, sizeof(char)*msgSz, MPI_CHAR,MPI_COMM_WORLD ); //SEND-BACK
+					err |= _OMPI_XclSendRecv(src, 0, dst, 1, sizeof(char)*msgSz, MPI_CHAR,MPI_COMM_WORLD ); //SEND
+					err |= _OMPI_XclSendRecv(dst, 1, src, 0, sizeof(char)*msgSz, MPI_CHAR,MPI_COMM_WORLD ); //SEND-BACK
 					T2 = MPI_Wtime(); // end time
 					deltaT = T2-T1;
 					Avg[numBWTrials]=2*msgSz/deltaT;
@@ -342,8 +343,8 @@ if(myRank==ROOT){
 
 
 	for(i=0;i<l_PUs;i++){
-		OMPI_XclFreeTray(i, 0, MPI_COMM_WORLD);
-		OMPI_XclFreeTray(i, 1, MPI_COMM_WORLD);
+		_OMPI_XclFreeTray(i, 0, MPI_COMM_WORLD);
+		_OMPI_XclFreeTray(i, 1, MPI_COMM_WORLD);
 	}
 
 	free(buffer);

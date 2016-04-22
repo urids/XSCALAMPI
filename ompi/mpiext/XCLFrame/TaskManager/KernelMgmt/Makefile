@@ -349,7 +349,7 @@ am__uninstall_files_from_dir = { \
 am__installdirs = "$(DESTDIR)$(kernelMgmtdir)"
 LTLIBRARIES = $(kernelMgmt_LTLIBRARIES)
 libkernelMgmt_la_LIBADD =
-am_libkernelMgmt_la_OBJECTS = taskProcedures.lo argsParsing.lo
+am_libkernelMgmt_la_OBJECTS = kernelSetup.lo argsParsing.lo
 libkernelMgmt_la_OBJECTS = $(am_libkernelMgmt_la_OBJECTS)
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
@@ -1157,7 +1157,7 @@ OPAL_ASSEMBLY_ARCH = AMD64
 OPAL_ASSEMBLY_BUILTIN = BUILTIN_NO
 OPAL_ASSEMBLY_FORMAT = default-.text-.globl-:--.L-@-1-0-1-1-1
 OPAL_CC_ABSOLUTE = /usr/bin/gcc
-OPAL_CONFIGURE_DATE = Wed Apr 13 17:54:18 CDT 2016
+OPAL_CONFIGURE_DATE = Sat Apr 16 18:41:08 CDT 2016
 OPAL_CONFIGURE_HOST = myHost
 OPAL_CONFIGURE_USER = uriel
 OPAL_CXX_ABSOLUTE = /usr/bin/g++
@@ -1483,8 +1483,7 @@ kernelMgmt_LTLIBRARIES = libkernelMgmt.la
 # Build information for this library
 
 # Sources for libmultiDeviceMgmt
-libkernelMgmt_la_SOURCES = taskProcedures.c \
-						   taskProcedures.h \
+libkernelMgmt_la_SOURCES = kernelSetup.c \
 						   argsParsing.c
 
 
@@ -1568,7 +1567,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 include ./$(DEPDIR)/argsParsing.Plo
-include ./$(DEPDIR)/taskProcedures.Plo
+include ./$(DEPDIR)/kernelSetup.Plo
 
 .c.o:
 	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\

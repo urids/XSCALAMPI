@@ -1172,7 +1172,7 @@ OPAL_ASSEMBLY_ARCH = AMD64
 OPAL_ASSEMBLY_BUILTIN = BUILTIN_NO
 OPAL_ASSEMBLY_FORMAT = default-.text-.globl-:--.L-@-1-0-1-1-1
 OPAL_CC_ABSOLUTE = /usr/bin/gcc
-OPAL_CONFIGURE_DATE = Wed Apr 13 17:54:18 CDT 2016
+OPAL_CONFIGURE_DATE = Sat Apr 16 18:41:08 CDT 2016
 OPAL_CONFIGURE_HOST = myHost
 OPAL_CONFIGURE_USER = uriel
 OPAL_CXX_ABSOLUTE = /usr/bin/g++
@@ -1823,10 +1823,10 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
-uninstall-local:
-uninstall-local:
 install-data-local:
 install-data-local:
+uninstall-local:
+uninstall-local:
 clean: clean-recursive
 
 clean-am: clean-generic clean-libtool mostlyclean-am

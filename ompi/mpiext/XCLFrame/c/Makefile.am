@@ -9,8 +9,7 @@ noinst_LTLIBRARIES = libmpiext_XCLFrame_c.la
 ompidir = $(ompiincludedir)/ompi/mpiext/XCLFrame/c
 
 # This is the header file that is installed.
-#ompi_HEADERS = mpiext_XCLFrame_c.h hiddenComms.h singleSidedComms/XclScatter.h
-ompi_HEADERS = mpiext_XCLFrame_c.h hiddenComms.h ../DataManager/TwoSidedComms/XclScatter.h
+ompi_HEADERS = mpiext_XCLFrame_c.h ../DataManager/TwoSidedComms/XclScatter.h
 
 # Sources for the convenience libtool library.  Other than the one
 # header file, all source files in the extension have no file naming
@@ -25,22 +24,28 @@ libmpiext_XCLFrame_c_la_SOURCES = \
         $(ompi_HEADERS) \
         mpiext_XCLFrame_early.c \
         mpiext_XCLFrame_late.c \
-        hiddenComms.c \
+        c_Interface.c \
         ./ErrorHandling/errorHandling.c 
 		
 		
 #######################################		
 # Linker options  for XCLFrame_c library
 #libmpiext_XCLFrame_c_la_LIBADD = -L$(libdir)/XCLFrame/DataManager -ldataManager
+
 libmpiext_XCLFrame_c_la_LIBADD = $(top_ompi_builddir)/ompi/mpiext/XCLFrame/DataManager/libdataManager.la \
-								 $(top_ompi_builddir)/ompi/mpiext/XCLFrame/TaskManager/libtaskManager.la
+								 $(top_ompi_builddir)/ompi/mpiext/XCLFrame/TaskManager/libtaskManager.la \
+								 $(top_ompi_builddir)/ompi/mpiext/XCLFrame/Scheduling/libscheduling.la
 
 libmpiext_XCLFrame_c_la_LDFLAGS = -module -avoid-version -ldl -lOpenCL -lm \
 	-Wl,-rpath,$(libdir)/XCLFrame/DataManager \
 	-Wl,-rpath,$(libdir)/XCLFrame/DataManager/DataCopy \
 	-Wl,-rpath,$(libdir)/XCLFrame/DataManager/BufferMgmt \
 	-Wl,-rpath,$(libdir)/XCLFrame/TaskManager \
-    -Wl,-rpath,$(libdir)/XCLFrame/TaskManager/KernelMgmt
+    -Wl,-rpath,$(libdir)/XCLFrame/TaskManager/KernelMgmt \
+    -Wl,-rpath,$(libdir)/XCLFrame/TaskManager/SynchMgmt \
+    -Wl,-rpath,$(libdir)/XCLFrame/Scheduling \
+    -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/ManualSched \
+    -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/Benchmark
 	
 #	 \
 #	-L/home/uriel/mpiELFs/lib/XCLFrame/DataManager -ldataManager

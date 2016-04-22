@@ -14,7 +14,7 @@
 
 
 #define DEBUG 0
-
+//this function is declared in XclScatter.h (Why?)-To show is possible?
 //OMPI_DECLSPEC int OMPI_commit_EntityType(int blockcount, int* blocklen, MPI_Aint* displacements, MPI_Datatype* basictypes, MPI_Datatype * newDatatype);
 
 //this function collect in root node the information of all devices in each node of the communicator.

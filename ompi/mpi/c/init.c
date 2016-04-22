@@ -28,8 +28,9 @@
 #include "ompi/errhandler/errhandler.h"
 #include "ompi/constants.h"
 //TODO: review this include according to the OMPI Architecture
-#include "../../../mpiext/XCLFrame/c/binding/dvMgmt/commsBench.h"
-#include "../../../mpiext/XCLFrame/Scheduling/commsInfo.h"
+//#include "../../../mpiext/XCLFrame/c/binding/dvMgmt/commsBench.h"
+//#include "../../../mpiext/XCLFrame/Scheduling/Benchmark/commsBench.h"
+#include "../../../mpiext/XCLFrame/Scheduling/Base/scheduling.h"
 #include <dlfcn.h>
 
 #if OPAL_HAVE_WEAK_SYMBOLS && OMPI_PROFILING_DEFINES
@@ -107,7 +108,7 @@ int MPI_Init(int *argc, char ***argv)
 
     //Assume we have now the MPI_COMM_WORLD Communicator!!!
 
-	void *dvMgmt_dlhandle;
+/*	void *dvMgmt_dlhandle;
 	int (*commsBenchmark)(commsInfo*);
 
 	char *error;
@@ -121,7 +122,7 @@ int MPI_Init(int *argc, char ***argv)
 	}
 
 	commsBenchmark = dlsym(dvMgmt_dlhandle, "commsBenchmark");
-
+*/
 	commsInfo cmf;
 	cmf.BW_Mtx = NULL;
 
@@ -133,7 +134,7 @@ int MPI_Init(int *argc, char ***argv)
 	}
 
 	if (profilingEnabled) {
-		(*commsBenchmark)(&cmf);
+		commsBenchmark(&cmf);
 	}
 
 

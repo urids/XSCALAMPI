@@ -1,7 +1,8 @@
 
-
 #include "taskManager.h"
-#define DEBUG 1
+
+XCLtask* l_taskList; // Global Variable declared in task.h
+int l_numTasks;//Global variable declared in task.h
 
 int _OMPI_XclSetProcedure(MPI_Comm comm, int g_selTask, char* srcPath,char* kernelName){
 	int myRank;
@@ -121,7 +122,55 @@ int _OMPI_XclExecTask(MPI_Comm comm, int g_selTask, int workDim, size_t * global
 }
 
 int _OMPI_XclWaitFor(int numTasks, int* taskIds, MPI_Comm comm){
- return 0;
+
+	int myRank;
+	MPI_Comm_rank(comm, &myRank);
+	int * l_tasks=NULL;
+	int l_taskCounter=0;
+	int i,j;
+	int err;
+	int * l_ids=NULL;
+	int * tmp_l_ids=NULL;
+	int l_wTskSize=0;
+
+
+	for(i=0;i<numTasks;i++){
+		if (myRank == g_taskList[taskIds[i]].r_rank){
+			l_wTskSize++;
+			tmp_l_ids=realloc(l_ids,l_wTskSize*sizeof(int));
+			if (tmp_l_ids!=NULL){
+				l_ids=tmp_l_ids;
+			}
+			l_ids[l_wTskSize-1]=g_taskList[taskIds[i]].l_taskIdx;
+		}
+	}
+	if(l_wTskSize>0){ //Am I owner of a task?
+		//err = (*XclWaitFor)(l_wTskSize,l_ids, comm);
+		void *dlhandle;
+
+				int (*XclWaitFor)(pthread_t* thds, int l_numTasks, int* l_taskIds, MPI_Comm comm);
+				char *error;
+
+				dlhandle = dlopen("libsynchMgmt.so", RTLD_LAZY);
+				if (!dlhandle) {
+					fputs(dlerror(), stderr);
+					exit(1);
+				}
+
+				XclWaitFor = dlsym(dlhandle, "XclWaitFor");
+
+				if ((error = dlerror()) != NULL) {
+					fputs(error, stderr);
+					exit(1);
+				}
+				err = (*XclWaitFor)(thds, l_wTskSize,l_ids, comm);
+				//dlclose(dlhandle);
+	}
+
+	MPI_Barrier(comm);
+
+
+	return MPI_SUCCESS;
 }
 
 int _OMPI_XclWaitAllTasks(MPI_Comm comm){
@@ -145,3 +194,5 @@ int _OMPI_XclWaitAllTasks(MPI_Comm comm){
 	return (*XclWaitAllTasks)(l_numTasks,comm);
 
 }
+
+

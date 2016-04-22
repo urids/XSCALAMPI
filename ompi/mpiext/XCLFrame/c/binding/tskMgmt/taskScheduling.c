@@ -1,6 +1,7 @@
 
 #include  "tskMgmt.h"
 #include "../../../TaskManager/Base/taskManager.h"
+//#include "../../../Scheduling/scheduling.h"
 
 #define MAX_LINE_LEN 256
 
@@ -41,7 +42,7 @@ int __attribute__ ((visibility ("protected"))) getNumDecls(){
 	return declsLineCounter;
 }
 
-
+/*
 int __attribute__ ((visibility ("protected"))) readTaskBinding(device_Task_Info* taskDevMap) {
 
 	enum devDesc {
@@ -105,7 +106,7 @@ int __attribute__ ((visibility ("protected"))) readTaskBinding(device_Task_Info*
 					token = strtok(NULL, "\t =\n\r");
 					printf("ID:\t%d\n\n", atoi(token));
 					token = strtok(NULL, "\t =\n\r");
-					printf("numTasks Assigned:\t%d\n\n", atoi(token));*/
+					printf("numTasks Assigned:\t%d\n\n", atoi(token));
 
 
 					token = strtok(NULL, "\t =\n\r"); //gets the device Id
@@ -119,12 +120,12 @@ int __attribute__ ((visibility ("protected"))) readTaskBinding(device_Task_Info*
 
 					break;
 
-				case ACCEL:/*
+				case ACCEL:
 					//printf("Device type::\t%s\n", token);
 					token = strtok(NULL, "\t =\n\r");
 					//printf("ID:\t%d\n\n", atoi(token));
 					token = strtok(NULL, "\t =\n\r");
-					//printf("numTasks Assigned:\t%d\n\n", atoi(token));*/
+					//printf("numTasks Assigned:\t%d\n\n", atoi(token));
 
 					token = strtok(NULL, "\t =\n\r"); //reads the device Id
 					taskDevMap[slot].mappedDevice = accel[atoi(token)];
@@ -152,4 +153,4 @@ int __attribute__ ((visibility ("protected"))) readTaskBinding(device_Task_Info*
 	}
 
 	return 0;
-}
+}*/

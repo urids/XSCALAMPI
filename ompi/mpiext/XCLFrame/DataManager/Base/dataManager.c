@@ -2,24 +2,26 @@
 
 ///TODO: should I enable pass a rank where we want to read such data?
 ///TODO: should I enable pass a rank where host buffer lives?
+//TODO: I think no. but I should take care of perform a transparent SendRecv
+		//to complete the operation where it was requested =) !!
+
 int _OMPI_XclReadTray(int g_taskIdx, int trayIdx, int bufferSize, void * hostBuffer, MPI_Comm comm){
 	int myRank;
 	MPI_Comm_rank(comm, &myRank);
 	if (myRank == g_taskList[g_taskIdx].r_rank) {
 		void * memReadHandle = NULL;
-		int (*readBuffer)(int taskIdx, int trayIdx, int bufferSize,
-				void * hostBuffer);
+		int (*readBuffer)(int taskIdx, int trayIdx, int bufferSize,void * hostBuffer);
 		char *error;
 		memReadHandle = dlopen("libbufferMgmt.so", RTLD_NOW);
 
 		if (!memReadHandle) {
-			perror("library not found or could not be opened AT: OMPI_XclSend");
+			perror("library not found or could not be opened AT: _OMPI_XclReadTrays");
 			exit(1);
 		}
 
 		readBuffer = dlsym(memReadHandle, "readBuffer");
 		if ((error = dlerror()) != NULL) {
-			printf("err:");
+			printf("err: AT Func: _OMPI_XclReadTray File %d",__FILE__);
 			fputs(error, stderr);
 			exit(1);
 		}
@@ -50,7 +52,7 @@ int _OMPI_XclWriteTray(int g_taskIdx, int trayIdx, int bufferSize,void * hostBuf
 		memWrtHandle = dlopen("libbufferMgmt.so", RTLD_NOW);
 
 		if (!memWrtHandle) {
-			perror("library not found or could not be opened AT: OMPI_XclWriteTray");
+			perror("library not found or could not be opened AT: _OMPI_XclWriteTray");
 			exit(1);
 		}
 
@@ -79,7 +81,7 @@ int _OMPI_XclMallocTray(int g_taskIdx, int trayIdx, int bufferSize, MPI_Comm com
 		memHandle = dlopen("libbufferMgmt.so", RTLD_NOW);
 
 		if (!memHandle) {
-			perror("library not found or could not be opened AT: OMPI_XclMallocTray");
+			perror("library not found or could not be opened AT: _OMPI_XclMallocTray");
 			exit(1);
 		}
 
@@ -93,7 +95,6 @@ int _OMPI_XclMallocTray(int g_taskIdx, int trayIdx, int bufferSize, MPI_Comm com
 	}
 	return 0;
 }
-
 
 
 int _OMPI_XclFreeTray(int g_taskIdx, int trayIdx, MPI_Comm comm) {

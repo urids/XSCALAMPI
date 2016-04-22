@@ -19,6 +19,9 @@ SUBDIRS = DataManager \
 		multiDeviceMgmt \
 		TaskManager \
 		TaskManager/KernelMgmt \
-		Scheduling
+		TaskManager/SynchMgmt \
+		Scheduling \
+		Scheduling/Benchmark \
+		Scheduling/ManualSched
 
 EXTRA_DIST = README.txt

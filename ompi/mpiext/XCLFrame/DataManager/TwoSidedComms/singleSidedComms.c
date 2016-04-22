@@ -15,7 +15,7 @@ int OMPI_XclSend(int trayIdx, int count, MPI_Datatype MPIentityType, int g_src_t
 		int (*readBuffer)(int taskId, int bufferSize, int memIdx,
 				void * entitiesbuffer);
 		char *error;
-		memSendHandle = dlopen("libdataManager.so", RTLD_NOW);
+		memSendHandle = dlopen("libbufferMgmt.so", RTLD_NOW);
 
 		if (!memSendHandle) {
 			perror("library not found or could not be opened AT: OMPI_XclSend");
@@ -24,7 +24,7 @@ int OMPI_XclSend(int trayIdx, int count, MPI_Datatype MPIentityType, int g_src_t
 
 		readBuffer = dlsym(memSendHandle, "readBuffer");
 		if ((error = dlerror()) != NULL) {
-			printf("err:");
+			printf("err: AT %d , %d ", __FUNCTION__ ,__FILE__);
 			fputs(error, stderr);
 			exit(1);
 		}
@@ -78,7 +78,7 @@ int OMPI_XclRecv(int trayIdx, int count, MPI_Datatype MPIentityType, int g_src_t
 				void * hostBuffer);
 
 		char *error;
-		memRecvHandle = dlopen("libdataManager.so", RTLD_NOW);
+		memRecvHandle = dlopen("libbufferMgmt.so", RTLD_NOW);
 
 		if (!memRecvHandle) {
 			perror("library not found or could not be opened AT: OMPI_XclRecv");
@@ -137,7 +137,7 @@ int _OMPI_XclSendRecv(int src_task, int src_trayIdx,
 							int dst_taskId, int dstTrayIdx, int bufferSize);
 
 					char *error;
-					libHandler = dlopen("libdataManager.so", RTLD_NOW);
+					libHandler = dlopen("libbufferMgmt.so", RTLD_NOW);
 
 					if (!libHandler) {
 						perror(
@@ -219,7 +219,7 @@ int _OMPI_XclSendRecv(int src_task, int src_trayIdx,
 					int dst_taskId, int dstTrayIdx, int bufferSize);
 
 			char *error;
-			libHandler = dlopen("libdataManager.so", RTLD_NOW);
+			libHandler = dlopen("libbufferMgmt.so", RTLD_NOW);
 			if (!libHandler) {
 				perror(
 						"library libdataManager not found or could not be opened AT: OMPI_XclSendRecv");

@@ -11,12 +11,12 @@
 
 #include "stdlib.h"
 #include "stdio.h"
-#include "dvMgmt.h"
-#include "ompi/include/mpi.h"
-#include "../../../TaskManager/Base/task.h"
-#include "../tskMgmt/deviceMap.h"
-#include "../../../c/taskMap.h"
 
+#include "ompi/include/mpi.h"
+#include "../../TaskManager/Base/task.h"
+#include "../../TaskManager/Base/taskManager.h"
+#include "../Base/scheduling.h"
+#include "../../multiDeviceMgmt/deviceMgmt/deviceExploration.h"
 
 
 //msg size starts in 16 MB and duplicates up to 128 MB
@@ -44,13 +44,6 @@ float Avg[MAX_BW_REPS];
 double T1, T2,              /* start/end times per rep */
 accumTime,                   /* sum of all reps times */
 deltaT;                 /* time for one rep */
-
-
-typedef struct commsInfo_st{
-  	float L,BW;
-  	float* L_Mtx;
-  	float* BW_Mtx;
- }commsInfo;
 
 
 #endif /* COMMSBENCH_H_ */

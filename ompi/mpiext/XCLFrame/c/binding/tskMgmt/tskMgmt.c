@@ -1,11 +1,12 @@
 
 #include "tskMgmt.h"
 #include "../../../TaskManager/Base/taskManager.h"
+//#include "../../../Scheduling/scheduling.h"
 #define DEBUG 0
 //This file performs Task<->Device matching
-device_Task_Info* taskDevMap;
-
-int createTaskList(int devSelection){ //There exist only one l_taskList per Node and each task has a device.
+//device_Task_Info* taskDevMap;
+/*
+int AAcreateTaskList(int devSelection){ //There exist only one l_taskList per Node and each task has a device.
 
 int i,j;
 //taskDevMap=malloc(clXplr.numDevices*sizeof(device_Task_Info));
@@ -179,7 +180,7 @@ return 0;
 
 
 }
-
+*/
 
 int XclCreateKernel(MPI_Comm comm, int l_selTask, char* srcPath,char* kernelName,int numTasks){
 

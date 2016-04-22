@@ -1,6 +1,6 @@
-#include "taskProcedures.h"
+#include "kernelSetup.h"
 
-#define DEBUG 1
+#define DEBUG 0
 #define PROFILE 0
 
 int createProgram(int l_selTask, char* srcPath,int numTasks){
@@ -132,18 +132,7 @@ int setKernelArgs(int seltask,int numparameter,int paramSize,void* paramValue){
 }
 
 
-typedef struct enqueueArgs_st{
-	size_t* globalThreads;
-	size_t* localThreads;
-	cl_command_queue th_queue;
-	cl_kernel th_kernel;
-	int workDim;
-	int g_selTsk;
-	//cl_event kernelProfileEvent;
 
-}enqueueArgs_t;
-enqueueArgs_t **th_Args;
-pthread_t*  thds;
 
 void * enqueTaskReq(void *args) {
 	int status;
@@ -296,29 +285,7 @@ if(selTask==-1){ // -1 means all tasks must enqueue this kernel.
 }
 
 
-int XclWaitAllTasks(int numTasks,MPI_Comm comm){
-	int i;
-	for(i=0;i<numTasks;i++){
-				pthread_join(thds[i], NULL);
-	}
-	/*for(i=0;i<numTasks;i++){
-		pthread_detach(thds[i]);
-	}*/
-	MPI_Barrier(comm);
-	return 0;
-}
 
-
-int XclWaitFor(int l_numTasks, int* l_taskIds, MPI_Comm comm){
-	int i,j;
-	debug_print("waiting for %d \n", *l_taskIds);
-		for(i=0;i<l_numTasks;i++){
-			j=l_taskIds[i];
-			pthread_join(thds[j], NULL);
-		}
-		//MPI_Barrier(comm);
-		return 0;
-}
 
 
 

@@ -1,5 +1,5 @@
-#include "taskProcedures.h"
-#define DEBUG 1
+#include "kernelSetup.h"
+
 
 int argsParser(MPI_Comm comm, int selTask,int workDim , size_t * globalThreads, size_t* localThreads, const char * fmt, va_list arg) {
 

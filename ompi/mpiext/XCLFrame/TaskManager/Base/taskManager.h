@@ -17,6 +17,10 @@
 #include "string.h"
 #include <CL/cl.h>
 
+#include "task.h"
+
+#include "pthread.h"
+
 #include "ompi/include/mpi.h"
 
 typedef struct taskInfo_st{
@@ -26,10 +30,25 @@ typedef struct taskInfo_st{
 }taskInfo;
 
 
-extern taskInfo* g_taskList; //defined in late.c
+extern taskInfo* g_taskList; //defined in c_Interface.c
+extern int g_numTasks; //defined in c_Interface.c
 
 
-extern int l_numTasks; //This  variable is defined in late.c and is property of the runtime system.
+
+
+typedef struct enqueueArgs_st{
+	size_t* globalThreads;
+	size_t* localThreads;
+	cl_command_queue th_queue;
+	cl_kernel th_kernel;
+	int workDim;
+	int g_selTsk;
+	//cl_event kernelProfileEvent;
+
+}enqueueArgs_t;
+enqueueArgs_t **th_Args;
+pthread_t*  thds;
+
 
 #define DEBUG 0
 #define PROFILE 0

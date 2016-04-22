@@ -148,15 +148,7 @@ mpiext_XCLFrame_early.lo: mpiext_XCLFrame_early.c \
  ../multiDeviceMgmt/deviceMgmt/devicesInitialization.h \
  ../multiDeviceMgmt/deviceMgmt/deviceExploration.h \
  ../multiDeviceMgmt/deviceMgmt/localDevices.h \
- ../multiDeviceMgmt/deviceMgmt/../errorMgmt/errorHandling.h \
- binding/dvMgmt/commsBench.h binding/dvMgmt/dvMgmt.h \
- ../../../../ompi/include/mpi.h \
- binding/dvMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h \
- binding/dvMgmt/../../../multiDeviceMgmt/deviceMgmt/deviceExploration.h \
- binding/dvMgmt/../../../multiDeviceMgmt/deviceMgmt/devicesInitialization.h \
- binding/dvMgmt/PUsMap.h binding/dvMgmt/../../../TaskManager/Base/task.h \
- binding/dvMgmt/../tskMgmt/deviceMap.h \
- binding/dvMgmt/../../../c/taskMap.h
+ ../multiDeviceMgmt/deviceMgmt/../errorMgmt/errorHandling.h
 
 /usr/include/stdc-predef.h:
 
@@ -529,23 +521,3 @@ mpiext_XCLFrame_c.h:
 ../multiDeviceMgmt/deviceMgmt/localDevices.h:
 
 ../multiDeviceMgmt/deviceMgmt/../errorMgmt/errorHandling.h:
-
-binding/dvMgmt/commsBench.h:
-
-binding/dvMgmt/dvMgmt.h:
-
-../../../../ompi/include/mpi.h:
-
-binding/dvMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h:
-
-binding/dvMgmt/../../../multiDeviceMgmt/deviceMgmt/deviceExploration.h:
-
-binding/dvMgmt/../../../multiDeviceMgmt/deviceMgmt/devicesInitialization.h:
-
-binding/dvMgmt/PUsMap.h:
-
-binding/dvMgmt/../../../TaskManager/Base/task.h:
-
-binding/dvMgmt/../tskMgmt/deviceMap.h:
-
-binding/dvMgmt/../../../c/taskMap.h:

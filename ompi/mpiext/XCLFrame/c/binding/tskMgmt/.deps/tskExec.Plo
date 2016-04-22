@@ -57,7 +57,10 @@ tskExec.lo: tskExec.c /usr/include/stdc-predef.h tskMgmt.h \
  ../../../multiDeviceMgmt/deviceMgmt/deviceExploration.h \
  ../../../multiDeviceMgmt/deviceMgmt/localDevices.h \
  ../../../multiDeviceMgmt/deviceMgmt/../errorMgmt/errorHandling.h \
- deviceMap.h ../../taskMap.h ../../../TaskManager/Base/taskManager.h
+ deviceMap.h ../../taskMap.h ../../../TaskManager/Base/taskManager.h \
+ ../../../TaskManager/Base/task.h /usr/include/pthread.h \
+ /usr/include/sched.h /usr/include/x86_64-linux-gnu/bits/sched.h \
+ /usr/include/x86_64-linux-gnu/bits/setjmp.h
 
 /usr/include/stdc-predef.h:
 
@@ -210,3 +213,13 @@ deviceMap.h:
 ../../taskMap.h:
 
 ../../../TaskManager/Base/taskManager.h:
+
+../../../TaskManager/Base/task.h:
+
+/usr/include/pthread.h:
+
+/usr/include/sched.h:
+
+/usr/include/x86_64-linux-gnu/bits/sched.h:
+
+/usr/include/x86_64-linux-gnu/bits/setjmp.h:

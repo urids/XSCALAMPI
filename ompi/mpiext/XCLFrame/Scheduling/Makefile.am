@@ -3,16 +3,16 @@
 # The 'lib_' indicates that these build products will be installed
 # in the $(libdir) directory. For example /usr/lib
 
-commsInfodir=$(libdir)/XCLFrame/commsInfo
+schedulingdir=$(libdir)/XCLFrame/Scheduling
 
-commsInfo_LTLIBRARIES = libcommsInfo.la
+scheduling_LTLIBRARIES = libscheduling.la
 
 
 #######################################
 # Build information for each library
 
 # Sources for libcommsInfo
-libcommsInfo_la_SOURCES =commsInfo.c
+libscheduling_la_SOURCES =./Base/scheduling.c \
+						  ./Base/taskSetup.c
 					  
-#libcommsInfo_la_LDFLAGS = -ldl	-lOpenCL -Wl,-rpath -Wl$(libdir)/XCLFrame/multiDeviceMgmt			  
-					  
+libscheduling_la_LDFLAGS = -avoid-version -lOpenCL -lm -ldl		  				  

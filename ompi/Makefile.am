@@ -85,11 +85,14 @@ SUBDIRS = \
         mpi/c \
         mpi/tool \
         mpiext/XCLFrame/Scheduling \
+        mpiext/XCLFrame/Scheduling/Benchmark \
+        mpiext/XCLFrame/Scheduling/ManualSched \
   	 	mpiext/XCLFrame/multiDeviceMgmt \
         mpiext/XCLFrame/c/binding/dvMgmt \
         mpiext/XCLFrame/c/binding/tskMgmt \
         mpiext/XCLFrame/TaskManager \
         mpiext/XCLFrame/TaskManager/KernelMgmt \
+        mpiext/XCLFrame/TaskManager/SynchMgmt \
         mpiext/XCLFrame/DataManager \
         mpiext/XCLFrame/DataManager/DataCopy \
         mpiext/XCLFrame/DataManager/BufferMgmt \
@@ -155,7 +158,8 @@ libmpi_la_LIBADD = \
         $(mpi_fortran_base_lib) \
         $(MCA_ompi_FRAMEWORK_LIBS) \
         $(OMPI_MPIEXT_C_LIBS) \
-        $(OMPI_LIBMPI_EXTRA_LIBS)
+        $(OMPI_LIBMPI_EXTRA_LIBS) \
+        $(top_ompi_builddir)/ompi/mpiext/XCLFrame/Scheduling/libscheduling.la
         
 ##        $(top_ompi_builddir)/ompi/mpiext/XCLFrame/DataManager/libdataManager.la
         
@@ -182,7 +186,11 @@ libmpi_la_LDFLAGS = \
         -Wl,-rpath,$(libdir)/XCLFrame/DataManager/DataCopy \
         -Wl,-rpath,$(libdir)/XCLFrame/DataManager/BufferMgmt \
         -Wl,-rpath,$(libdir)/XCLFrame/TaskManager \
-        -Wl,-rpath,$(libdir)/XCLFrame/TaskManager/KernelMgmt       
+        -Wl,-rpath,$(libdir)/XCLFrame/TaskManager/KernelMgmt \
+        -Wl,-rpath,$(libdir)/XCLFrame/TaskManager/SynchMgmt \
+        -Wl,-rpath,$(libdir)/XCLFrame/Scheduling \
+        -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/Benchmark \
+        -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/ManualSched 
 
 # included subdirectory Makefile.am's and appended-to variables
 headers =

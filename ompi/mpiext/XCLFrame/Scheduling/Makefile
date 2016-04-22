@@ -351,15 +351,20 @@ am__uninstall_files_from_dir = { \
     || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
-am__installdirs = "$(DESTDIR)$(commsInfodir)"
-LTLIBRARIES = $(commsInfo_LTLIBRARIES)
-libcommsInfo_la_LIBADD =
-am_libcommsInfo_la_OBJECTS = commsInfo.lo
-libcommsInfo_la_OBJECTS = $(am_libcommsInfo_la_OBJECTS)
+am__installdirs = "$(DESTDIR)$(schedulingdir)"
+LTLIBRARIES = $(scheduling_LTLIBRARIES)
+libscheduling_la_LIBADD =
+am__dirstamp = $(am__leading_dot)dirstamp
+am_libscheduling_la_OBJECTS = ./Base/scheduling.lo ./Base/taskSetup.lo
+libscheduling_la_OBJECTS = $(am_libscheduling_la_OBJECTS)
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
 am__v_lt_0 = --silent
 am__v_lt_1 = 
+libscheduling_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(AM_CFLAGS) $(CFLAGS) $(libscheduling_la_LDFLAGS) $(LDFLAGS) \
+	-o $@
 AM_V_P = $(am__v_P_$(V))
 am__v_P_ = $(am__v_P_$(AM_DEFAULT_VERBOSITY))
 am__v_P_0 = false
@@ -394,8 +399,8 @@ AM_V_CCLD = $(am__v_CCLD_$(V))
 am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(libcommsInfo_la_SOURCES)
-DIST_SOURCES = $(libcommsInfo_la_SOURCES)
+SOURCES = $(libscheduling_la_SOURCES)
+DIST_SOURCES = $(libscheduling_la_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -1158,7 +1163,7 @@ OPAL_ASSEMBLY_ARCH = AMD64
 OPAL_ASSEMBLY_BUILTIN = BUILTIN_NO
 OPAL_ASSEMBLY_FORMAT = default-.text-.globl-:--.L-@-1-0-1-1-1
 OPAL_CC_ABSOLUTE = /usr/bin/gcc
-OPAL_CONFIGURE_DATE = Wed Apr 13 17:54:18 CDT 2016
+OPAL_CONFIGURE_DATE = Sat Apr 16 18:41:08 CDT 2016
 OPAL_CONFIGURE_HOST = myHost
 OPAL_CONFIGURE_USER = uriel
 OPAL_CXX_ABSOLUTE = /usr/bin/g++
@@ -1477,14 +1482,17 @@ top_builddir = ../../../..
 top_ompi_builddir = /home/uriel/Dev/mpisrc/XSCALAMPI
 top_ompi_srcdir = /home/uriel/Dev/mpisrc/XSCALAMPI
 top_srcdir = ../../../..
-commsInfodir = $(libdir)/XCLFrame/commsInfo
-commsInfo_LTLIBRARIES = libcommsInfo.la
+schedulingdir = $(libdir)/XCLFrame/Scheduling
+scheduling_LTLIBRARIES = libscheduling.la
 
 #######################################
 # Build information for each library
 
 # Sources for libcommsInfo
-libcommsInfo_la_SOURCES = commsInfo.c
+libscheduling_la_SOURCES = ./Base/scheduling.c \
+						  ./Base/taskSetup.c
+
+libscheduling_la_LDFLAGS = -avoid-version -lOpenCL -lm -ldl		  				  
 all: all-am
 
 .SUFFIXES:
@@ -1519,33 +1527,33 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
-install-commsInfoLTLIBRARIES: $(commsInfo_LTLIBRARIES)
+install-schedulingLTLIBRARIES: $(scheduling_LTLIBRARIES)
 	@$(NORMAL_INSTALL)
-	@list='$(commsInfo_LTLIBRARIES)'; test -n "$(commsInfodir)" || list=; \
+	@list='$(scheduling_LTLIBRARIES)'; test -n "$(schedulingdir)" || list=; \
 	list2=; for p in $$list; do \
 	  if test -f $$p; then \
 	    list2="$$list2 $$p"; \
 	  else :; fi; \
 	done; \
 	test -z "$$list2" || { \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(commsInfodir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(commsInfodir)" || exit 1; \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 '$(DESTDIR)$(commsInfodir)'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 "$(DESTDIR)$(commsInfodir)"; \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(schedulingdir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(schedulingdir)" || exit 1; \
+	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 '$(DESTDIR)$(schedulingdir)'"; \
+	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 "$(DESTDIR)$(schedulingdir)"; \
 	}
 
-uninstall-commsInfoLTLIBRARIES:
+uninstall-schedulingLTLIBRARIES:
 	@$(NORMAL_UNINSTALL)
-	@list='$(commsInfo_LTLIBRARIES)'; test -n "$(commsInfodir)" || list=; \
+	@list='$(scheduling_LTLIBRARIES)'; test -n "$(schedulingdir)" || list=; \
 	for p in $$list; do \
 	  $(am__strip_dir) \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(commsInfodir)/$$f'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(commsInfodir)/$$f"; \
+	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(schedulingdir)/$$f'"; \
+	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(schedulingdir)/$$f"; \
 	done
 
-clean-commsInfoLTLIBRARIES:
-	-test -z "$(commsInfo_LTLIBRARIES)" || rm -f $(commsInfo_LTLIBRARIES)
-	@list='$(commsInfo_LTLIBRARIES)'; \
+clean-schedulingLTLIBRARIES:
+	-test -z "$(scheduling_LTLIBRARIES)" || rm -f $(scheduling_LTLIBRARIES)
+	@list='$(scheduling_LTLIBRARIES)'; \
 	locs=`for p in $$list; do echo $$p; done | \
 	      sed 's|^[^/]*$$|.|; s|/[^/]*$$||; s|$$|/so_locations|' | \
 	      sort -u`; \
@@ -1553,16 +1561,29 @@ clean-commsInfoLTLIBRARIES:
 	  echo rm -f $${locs}; \
 	  rm -f $${locs}; \
 	}
-libcommsInfo.la: $(libcommsInfo_la_OBJECTS) $(libcommsInfo_la_DEPENDENCIES) $(EXTRA_libcommsInfo_la_DEPENDENCIES) 
-	$(AM_V_CCLD)$(LINK) -rpath $(commsInfodir) $(libcommsInfo_la_OBJECTS) $(libcommsInfo_la_LIBADD) $(LIBS)
+Base/$(am__dirstamp):
+	@$(MKDIR_P) ./Base
+	@: > Base/$(am__dirstamp)
+Base/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) ./Base/$(DEPDIR)
+	@: > Base/$(DEPDIR)/$(am__dirstamp)
+./Base/scheduling.lo: Base/$(am__dirstamp) \
+	Base/$(DEPDIR)/$(am__dirstamp)
+./Base/taskSetup.lo: Base/$(am__dirstamp) \
+	Base/$(DEPDIR)/$(am__dirstamp)
+libscheduling.la: $(libscheduling_la_OBJECTS) $(libscheduling_la_DEPENDENCIES) $(EXTRA_libscheduling_la_DEPENDENCIES) 
+	$(AM_V_CCLD)$(libscheduling_la_LINK) -rpath $(schedulingdir) $(libscheduling_la_OBJECTS) $(libscheduling_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
+	-rm -f ./Base/*.$(OBJEXT)
+	-rm -f ./Base/*.lo
 
 distclean-compile:
 	-rm -f *.tab.c
 
-include ./$(DEPDIR)/commsInfo.Plo
+include ./Base/$(DEPDIR)/scheduling.Plo
+include ./Base/$(DEPDIR)/taskSetup.Plo
 
 .c.o:
 	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -1593,6 +1614,7 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
+	-rm -rf ./Base/.libs ./Base/_libs
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
@@ -1694,7 +1716,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(LTLIBRARIES)
 installdirs:
-	for dir in "$(DESTDIR)$(commsInfodir)"; do \
+	for dir in "$(DESTDIR)$(schedulingdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -1724,17 +1746,19 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
+	-rm -f Base/$(DEPDIR)/$(am__dirstamp)
+	-rm -f Base/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-commsInfoLTLIBRARIES clean-generic clean-libtool \
+clean-am: clean-generic clean-libtool clean-schedulingLTLIBRARIES \
 	mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf ./$(DEPDIR)
+	-rm -rf ./Base/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -1751,7 +1775,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-commsInfoLTLIBRARIES
+install-data-am: install-schedulingLTLIBRARIES
 
 install-dvi: install-dvi-am
 
@@ -1780,7 +1804,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf ./$(DEPDIR)
+	-rm -rf ./Base/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
@@ -1797,27 +1821,25 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-commsInfoLTLIBRARIES
+uninstall-am: uninstall-schedulingLTLIBRARIES
 
 .MAKE: install-am install-strip
 
-.PHONY: CTAGS GTAGS all all-am check check-am clean \
-	clean-commsInfoLTLIBRARIES clean-generic clean-libtool \
-	cscopelist ctags distclean distclean-compile distclean-generic \
+.PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
+	clean-libtool clean-schedulingLTLIBRARIES cscopelist ctags \
+	distclean distclean-compile distclean-generic \
 	distclean-libtool distclean-tags distdir dvi dvi-am html \
-	html-am info info-am install install-am \
-	install-commsInfoLTLIBRARIES install-data install-data-am \
-	install-dvi install-dvi-am install-exec install-exec-am \
-	install-html install-html-am install-info install-info-am \
-	install-man install-pdf install-pdf-am install-ps \
-	install-ps-am install-strip installcheck installcheck-am \
-	installdirs maintainer-clean maintainer-clean-generic \
-	mostlyclean mostlyclean-compile mostlyclean-generic \
-	mostlyclean-libtool pdf pdf-am ps ps-am tags uninstall \
-	uninstall-am uninstall-commsInfoLTLIBRARIES
+	html-am info info-am install install-am install-data \
+	install-data-am install-dvi install-dvi-am install-exec \
+	install-exec-am install-html install-html-am install-info \
+	install-info-am install-man install-pdf install-pdf-am \
+	install-ps install-ps-am install-schedulingLTLIBRARIES \
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
+	pdf pdf-am ps ps-am tags uninstall uninstall-am \
+	uninstall-schedulingLTLIBRARIES
 
-
-#libcommsInfo_la_LDFLAGS = -ldl	-lOpenCL -Wl,-rpath -Wl$(libdir)/XCLFrame/multiDeviceMgmt			  
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

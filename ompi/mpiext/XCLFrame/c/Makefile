@@ -325,7 +325,7 @@ am__objects_1 =
 am__dirstamp = $(am__leading_dot)dirstamp
 am_libmpiext_XCLFrame_c_la_OBJECTS = $(am__objects_1) \
 	mpiext_XCLFrame_early.lo mpiext_XCLFrame_late.lo \
-	hiddenComms.lo ./ErrorHandling/errorHandling.lo
+	c_Interface.lo ./ErrorHandling/errorHandling.lo
 libmpiext_XCLFrame_c_la_OBJECTS =  \
 	$(am_libmpiext_XCLFrame_c_la_OBJECTS)
 AM_V_lt = $(am__v_lt_$(V))
@@ -1163,7 +1163,7 @@ OPAL_ASSEMBLY_ARCH = AMD64
 OPAL_ASSEMBLY_BUILTIN = BUILTIN_NO
 OPAL_ASSEMBLY_FORMAT = default-.text-.globl-:--.L-@-1-0-1-1-1
 OPAL_CC_ABSOLUTE = /usr/bin/gcc
-OPAL_CONFIGURE_DATE = Wed Apr 13 17:54:18 CDT 2016
+OPAL_CONFIGURE_DATE = Sat Apr 16 18:41:08 CDT 2016
 OPAL_CONFIGURE_HOST = myHost
 OPAL_CONFIGURE_USER = uriel
 OPAL_CXX_ABSOLUTE = /usr/bin/g++
@@ -1494,8 +1494,7 @@ noinst_LTLIBRARIES = libmpiext_XCLFrame_c.la
 ompidir = $(ompiincludedir)/ompi/mpiext/XCLFrame/c
 
 # This is the header file that is installed.
-#ompi_HEADERS = mpiext_XCLFrame_c.h hiddenComms.h singleSidedComms/XclScatter.h
-ompi_HEADERS = mpiext_XCLFrame_c.h hiddenComms.h ../DataManager/TwoSidedComms/XclScatter.h
+ompi_HEADERS = mpiext_XCLFrame_c.h ../DataManager/TwoSidedComms/XclScatter.h
 
 # Sources for the convenience libtool library.  Other than the one
 # header file, all source files in the extension have no file naming
@@ -1507,7 +1506,7 @@ libmpiext_XCLFrame_c_la_SOURCES = \
         $(ompi_HEADERS) \
         mpiext_XCLFrame_early.c \
         mpiext_XCLFrame_late.c \
-        hiddenComms.c \
+        c_Interface.c \
         ./ErrorHandling/errorHandling.c 
 
 
@@ -1515,14 +1514,19 @@ libmpiext_XCLFrame_c_la_SOURCES = \
 # Linker options  for XCLFrame_c library
 #libmpiext_XCLFrame_c_la_LIBADD = -L$(libdir)/XCLFrame/DataManager -ldataManager
 libmpiext_XCLFrame_c_la_LIBADD = $(top_ompi_builddir)/ompi/mpiext/XCLFrame/DataManager/libdataManager.la \
-								 $(top_ompi_builddir)/ompi/mpiext/XCLFrame/TaskManager/libtaskManager.la
+								 $(top_ompi_builddir)/ompi/mpiext/XCLFrame/TaskManager/libtaskManager.la \
+								 $(top_ompi_builddir)/ompi/mpiext/XCLFrame/Scheduling/libscheduling.la
 
 libmpiext_XCLFrame_c_la_LDFLAGS = -module -avoid-version -ldl -lOpenCL -lm \
 	-Wl,-rpath,$(libdir)/XCLFrame/DataManager \
 	-Wl,-rpath,$(libdir)/XCLFrame/DataManager/DataCopy \
 	-Wl,-rpath,$(libdir)/XCLFrame/DataManager/BufferMgmt \
 	-Wl,-rpath,$(libdir)/XCLFrame/TaskManager \
-    -Wl,-rpath,$(libdir)/XCLFrame/TaskManager/KernelMgmt
+    -Wl,-rpath,$(libdir)/XCLFrame/TaskManager/KernelMgmt \
+    -Wl,-rpath,$(libdir)/XCLFrame/TaskManager/SynchMgmt \
+    -Wl,-rpath,$(libdir)/XCLFrame/Scheduling \
+    -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/ManualSched \
+    -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/Benchmark
 
 
 #	 \
@@ -1592,7 +1596,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-include ./$(DEPDIR)/hiddenComms.Plo
+include ./$(DEPDIR)/c_Interface.Plo
 include ./$(DEPDIR)/mpiext_XCLFrame_early.Plo
 include ./$(DEPDIR)/mpiext_XCLFrame_late.Plo
 include ./ErrorHandling/$(DEPDIR)/errorHandling.Plo

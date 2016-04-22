@@ -7,9 +7,10 @@ int* tskbufferSize; //Device BufferSize global variable declared in bufferFuncti
 
 /* *
  * Buffer initialization has two stages:
- * 1.- Rack initialization (DONE in tskMgmt.c at createTaskList() )
+ * 1.- Rack initialization (DONE in taskSetup.c at fillLocalTaskList() )
  * 2.- Trays initialization.
  * */
+
 
 int initNewBuffer(int taskIdx, int trayIdx, int bufferSize ){
 

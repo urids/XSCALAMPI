@@ -4,7 +4,7 @@
 #include "ompi/mpi/c/bindings.h"
 #include "ompi/mpiext/mpiext.h"
 #include "mpiext_XCLFrame_c.h"
-#include "binding/dvMgmt/commsBench.h" //TODO: must this be here to keep architecture schema?
+//#include "binding/dvMgmt/commsBench.h" //TODO: must this be here to keep architecture schema?
 
 
 /* 
@@ -41,11 +41,11 @@ acceldev* accel; // Global Variable declared in localDevices.h
 
 static int XCLFrame_init(void)
 {
-    void *dvMgmt_dlhandle;
+	/*    void *dvMgmt_dlhandle;
 
 	void (*deviceXploration)(CLxplorInfo *);
 	void (*initializeDevices)(CLxplorInfo*);
-	int (*commsBenchmark)(commsInfo*);
+	//int (*commsBenchmark)(commsInfo*);
 
 
 	char *error;
@@ -73,9 +73,38 @@ static int XCLFrame_init(void)
     (*initializeDevices)(&clXplr);
 
     dlclose(dvMgmt_dlhandle);
+	 */
 
-    
-    return OMPI_SUCCESS;
+
+	void *dlhandle;
+	CLxplorInfo (*devXploration)();
+	void (*devInit)(CLxplorInfo* );
+	char *error;
+
+	dlhandle = dlopen ("libmultiDeviceMgmt.so", RTLD_LAZY);
+	if (!dlhandle) {
+		fputs (dlerror(), stderr);
+		exit(1);
+	}
+
+
+	devXploration = dlsym(dlhandle, "deviceExploration");
+	if ((error = dlerror()) != NULL)  {
+		fputs(error, stderr);
+		exit(1);
+	}
+	devInit = dlsym(dlhandle, "devicesInitialization");
+	if ((error = dlerror()) != NULL)  {
+		fputs(error, stderr);
+		exit(1);
+	}
+
+	clXplr=(*devXploration)();
+	(*devInit)(&clXplr);
+
+	dlclose(dlhandle);
+
+	return OMPI_SUCCESS;
 }
 
 static int XCLFrame_fini(void)

@@ -354,8 +354,7 @@ am__uninstall_files_from_dir = { \
 am__installdirs = "$(DESTDIR)$(dvMgmtdir)"
 LTLIBRARIES = $(dvMgmt_LTLIBRARIES)
 libdvMgmt_la_LIBADD =
-am_libdvMgmt_la_OBJECTS = dvXplore.lo dvInit.lo memMgmt.lo \
-	commsBench.lo
+am_libdvMgmt_la_OBJECTS = dvXplore.lo dvInit.lo memMgmt.lo
 libdvMgmt_la_OBJECTS = $(am_libdvMgmt_la_OBJECTS)
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
@@ -1162,7 +1161,7 @@ OPAL_ASSEMBLY_ARCH = AMD64
 OPAL_ASSEMBLY_BUILTIN = BUILTIN_NO
 OPAL_ASSEMBLY_FORMAT = default-.text-.globl-:--.L-@-1-0-1-1-1
 OPAL_CC_ABSOLUTE = /usr/bin/gcc
-OPAL_CONFIGURE_DATE = Wed Apr 13 17:54:18 CDT 2016
+OPAL_CONFIGURE_DATE = Sat Apr 16 18:41:08 CDT 2016
 OPAL_CONFIGURE_HOST = myHost
 OPAL_CONFIGURE_USER = uriel
 OPAL_CXX_ABSOLUTE = /usr/bin/g++
@@ -1490,8 +1489,7 @@ dvMgmt_LTLIBRARIES = libdvMgmt.la
 # Sources for libmultiDeviceMgmt
 libdvMgmt_la_SOURCES = dvXplore.c \
 					  dvInit.c \
-					  memMgmt.c \
-					  commsBench.c
+					  memMgmt.c
 
 libdvMgmt_la_LDFLAGS = -ldl	-lOpenCL -Wl,-rpath,$(libdir)/XCLFrame/multiDeviceMgmt			  
 all: all-am
@@ -1571,7 +1569,6 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-include ./$(DEPDIR)/commsBench.Plo
 include ./$(DEPDIR)/dvInit.Plo
 include ./$(DEPDIR)/dvXplore.Plo
 include ./$(DEPDIR)/memMgmt.Plo

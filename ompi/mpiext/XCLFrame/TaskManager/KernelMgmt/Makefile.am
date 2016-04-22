@@ -7,8 +7,7 @@ kernelMgmt_LTLIBRARIES = libkernelMgmt.la
 # Build information for this library
 
 # Sources for libmultiDeviceMgmt
-libkernelMgmt_la_SOURCES = taskProcedures.c \
-						   taskProcedures.h \
+libkernelMgmt_la_SOURCES = kernelSetup.c \
 						   argsParsing.c
 
 # Linker options libTestProgram

@@ -1,16 +1,15 @@
 /*
- * taskFunctions.h
+ * kernelSetup.h
  *
- *  Created on: May 13, 2014
+ *  Created on: Apr 14, 2016
  *      Author: uriel
  */
 
-#ifndef TASKPROCEDURES_H_
-#define TASKPROCEDURES_H_
+#ifndef KERNELSETUP_H_
+#define KERNELSETUP_H_
 
-#define DEBUG 0
 
-#include "../Base/task.h"
+
 #include "CL/cl.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -21,6 +20,7 @@
 #include <stdarg.h>
 #include "string.h"
 
+#include "../Base/task.h"
 #include "ompi/include/mpi.h"
 #include "../../multiDeviceMgmt/deviceMgmt/localDevices.h"
 #include "../../DataManager/BufferMgmt/bufferFunctions.h"
@@ -28,6 +28,5 @@
 
 #include "../Base/taskManager.h"
 
-int enqueueKernel(int numTasks,int selTask, int workDim, const size_t* globalThreads, const size_t* localThreads);
 
-#endif /* TASKPROCEDURES_H_ */
+#endif /* KERNELSETUP_H_ */
