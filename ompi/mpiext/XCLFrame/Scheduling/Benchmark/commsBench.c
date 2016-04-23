@@ -9,9 +9,11 @@
 
 #include "commsBench.h"
 
-device_Task_Info* taskDevMap;
+/*--device_Task_Info* taskDevMap;
 taskInfo* g_taskList; //Global Variable declared at taskManager.h
+--*/
 //int l_numTasks;//Global variable declared in tskMgmt.h
+
 int i,j,k;
 
 int _commsBenchmark(commsInfo* cmInf){
@@ -24,7 +26,6 @@ int _commsBenchmark(commsInfo* cmInf){
 
 
 	char * myBuff;
-	//*(cmInf->BW_Mtx)=0.0;
 
 	int g_PUs=_OMPI_CollectDevicesInfo(ALL_DEVICES, MPI_COMM_WORLD);
 	int l_PUs=clXplr.numDevices;
@@ -34,17 +35,6 @@ int _commsBenchmark(commsInfo* cmInf){
 
 	//this section creates the global PUs map.
 
-
-	/*	g_PUList=malloc(sizeof(PUInfo)*g_PUs);
-	for(i=0;i<g_PUs;i++)
-		g_PUList[i].g_PUIdx=i;
-	for(i=0,k=0;i<numRanks;i++){
-		for(j=0;j<PU_RK[i];j++){
-			g_PUList[k].r_rank=i;
-			g_PUList[k].l_PUIdx=j;
-			k++;
-		}
-	}*/
 
 	int mygPU_min=0,mygPU_max=0;
 
@@ -158,13 +148,6 @@ int _commsBenchmark(commsInfo* cmInf){
 		err|= _OMPI_XclMallocTray(i, 1, sizeof(char)*MAX_SIZE,MPI_COMM_WORLD);//remaining tasks allocate space
 	}
 
-/*	if(myRank==0){
-		char* testRes=malloc(sizeof(char));
-		err |= OMPI_XclReadTray(2, 0, sizeof(char), testRes, MPI_COMM_WORLD);
-		printf("%c data %c\n",buffer[0],testRes[0]);
-	}
-*/
-
 
 	MPI_Win ltcWin,bdwWin;
 
@@ -213,8 +196,6 @@ int _commsBenchmark(commsInfo* cmInf){
 	 MPI_Win_fence(0, ltcWin);
 
 	 //Bandwidth test.
-
-
 //	 float bwd=0;
 		for(src=0;src<g_PUs;src++){
 			for(dst=0;dst<=src;dst++){
@@ -253,55 +234,6 @@ int _commsBenchmark(commsInfo* cmInf){
 		MPI_Win_fence(0, bdwWin);
 
 
-	//latency test.
-
-/*	for(src=0;src<g_PUs;src++){
-		for(dst=0;dst<=src;dst++){
-			accumTime=0;
-			for(i=0;i<LATENCY_REPS;i++){
-
-				deltaT = 0;
-				T1 = MPI_Wtime(); // start time
-				err |= OMPI_XclSendRecv(src, 0, dst, 1, 1, MPI_CHAR,MPI_COMM_WORLD ); //SEND
-				err |= OMPI_XclSendRecv(dst, 1, src, 0, 1, MPI_CHAR,MPI_COMM_WORLD ); //SEND-BACK
-				T2 = MPI_Wtime(); // end time
-				deltaT = T2-T1;
-				accumTime += deltaT;
-			}
-			L_Mtx[g_PUs*src+dst]=L_Mtx[src+g_PUs*dst]=(accumTime/LATENCY_REPS); //Symmetric mtx.
-		}
-	}
-*/
-
-	//Bandwidth test.
-/*
-	for(src=0;src<g_PUs;src++){
-		for(dst=0;dst<=src;dst++){
-			msgSz=MIN_SIZE;
-			numBWTrials=0;
-			sumAvgs=0;
-			while(msgSz<=MAX_SIZE){
-				deltaT = 0;
-				T1 = MPI_Wtime(); // start time
-				err |= OMPI_XclSendRecv(src, 0, dst, 1, sizeof(char)*msgSz, MPI_CHAR,MPI_COMM_WORLD ); //SEND
-				err |= OMPI_XclSendRecv(dst, 1, src, 0, sizeof(char)*msgSz, MPI_CHAR,MPI_COMM_WORLD ); //SEND-BACK
-				T2 = MPI_Wtime(); // end time
-				//printf("src: %d-dst: %d ",src,dst);
-				//printf("%f-%f  %f \n",T2,T1,T2-T1);
-				deltaT = T2-T1;
-				Avg[numBWTrials]=2*msgSz/deltaT;
-				numBWTrials++;
-				msgSz<<=1;
-			}
-
-			for(i=0;i<numBWTrials;i++){
-				sumAvgs+=Avg[i];
-			}
-			BW_Mtx[g_PUs*src+dst]=BW_Mtx[src+g_PUs*dst]=(sumAvgs/numBWTrials); //the matrix is symmetric.
-		}
-	}
-
-*/
 	//Average computations
 
 if(myRank==ROOT){
@@ -340,6 +272,7 @@ if(myRank==ROOT){
 	}
 
 }
+
 
 
 	for(i=0;i<l_PUs;i++){

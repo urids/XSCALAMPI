@@ -28,6 +28,11 @@ int fillGlobalTaskList(MPI_Comm comm){ //this function creates a local assignmen
 			}
 		}
 
+ 		/*printf("local num tasks: %d  \n", g_numTasks);
+ 		for(i=0;i<l_numTasks;i++){ //Print the global task list
+ 			printf("%d  \n",myAssignedTasks[i]);
+ 		}*/
+
  		//This array serves to interchange the myAssignedtasks array.
  		int* assignments =(int*)malloc(g_numTasks*sizeof(int));
  		int displs[numRanks];
@@ -35,6 +40,7 @@ int fillGlobalTaskList(MPI_Comm comm){ //this function creates a local assignmen
  		for(i=1;i<numRanks;i++){
  			displs[i]=RKS[i-1];
  		}
+
  		MPI_Allgatherv(myAssignedTasks,l_numTasks,MPI_INT,assignments,RKS,displs,MPI_INT,comm);
  		int k=0;
 		for(i=0;i<numRanks;i++){
@@ -58,7 +64,9 @@ int fillLocalTaskList(MPI_Comm comm){
 	MPI_Comm_rank(comm, &myRank);
 	MPI_Comm_size(comm,&numRanks);
 
-	//int l_numTasks=0; !!!!!!!!!!!!!!!!!!!NEVER INITIALIZE GLOBAL VARS INSIDE A FUNCTIONS
+    l_numTasks=0; // this initialization is very important to reset after the benchmark.
+
+	//int l_numTasks=0; !!!!!!!!!!!!!!! BUT NEVER DEFINE GLOBAL VARS INSIDE A FUNCTION because BECOMES LOCAL COPY.
 	//XCLtask * l_taskList=NULL; !!!!!!!THE FUNCTION WORKS WITH A LOCAL COPY ='(..
 
 	for(i=0;i<g_numTasks;i++){ //EACH PROCESS: read the whole tasDevList created when parsing to fill his # of tasks

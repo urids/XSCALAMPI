@@ -333,7 +333,7 @@ int readAndParse() {
 
 	} //ENDwhile lines
 
-     g_numTasks=currSlot;
+     g_numTasks=currSlot; //final counting of the global num tasks.
 
      //Sorting the taskDevList (On^2 is not good =/);
      taskDevList=malloc(g_numTasks*sizeof(schedConfigInfo_t));
