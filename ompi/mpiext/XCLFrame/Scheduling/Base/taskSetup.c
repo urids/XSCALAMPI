@@ -1,7 +1,8 @@
 
 #include "scheduling.h"
 
-int fillGlobalTaskList(MPI_Comm comm){
+int fillGlobalTaskList(MPI_Comm comm){ //this function creates a local assignment array and then
+										// interchanges this array in all2all (making every process aware.)
 	int i,j;
 	int myRank,numRanks;
 	MPI_Comm_rank(comm, &myRank);
@@ -17,17 +18,35 @@ int fillGlobalTaskList(MPI_Comm comm){
 			g_taskList[i].r_rank=taskDevList[i].rank;
 		}
 
-		int k;
-		for(i=0,k=0;i<numRanks;i++){
-			for(j=0;j<RKS[i];j++,k++){
-				g_taskList[k].l_taskIdx=j;
+		//This array serves to deal with separated decls.
+ 		int * myAssignedTasks=(int*)malloc(l_numTasks*sizeof(int));
+
+ 		for(i=0,j=0;i<g_numTasks;i++){
+			if(taskDevList[i].rank==myRank){
+				myAssignedTasks[j]=taskDevList[i].g_taskId;
+				j++;
 			}
 		}
 
-		printf("in %d, %d, %d",__FILE__,__FUNCTION__,__LINE__);
+ 		//This array serves to interchange the myAssignedtasks array.
+ 		int* assignments =(int*)malloc(g_numTasks*sizeof(int));
+ 		int displs[numRanks];
+ 		displs[0]=0;
+ 		for(i=1;i<numRanks;i++){
+ 			displs[i]=RKS[i-1];
+ 		}
+ 		MPI_Allgatherv(myAssignedTasks,l_numTasks,MPI_INT,assignments,RKS,displs,MPI_INT,comm);
+ 		int k=0;
+		for(i=0;i<numRanks;i++){
+			for(j=0;j<RKS[i];j++,k++){
+				g_taskList[assignments[k]].l_taskIdx=j;
+			}
+		}
+
+		/*printf("in %s, %s, %d",__FILE__,__FUNCTION__,__LINE__);
 		for(i=0;i<g_numTasks;i++){ //Print the global task list
 			printf("%d -- %d -- %d \n",g_taskList[i].g_taskIdx, g_taskList[i].l_taskIdx, g_taskList[i].r_rank);
-		}
+		}*/
 
 	return 0;
 }

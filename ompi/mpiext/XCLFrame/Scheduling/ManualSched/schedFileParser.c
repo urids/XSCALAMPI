@@ -346,7 +346,11 @@ int readAndParse() {
     	 }
      }
 
-    // taskDevList=tmp_taskDevList;
+   /*  for(i=0;i<g_numTasks;i++){ //Print the global task list
+    	 printf("%d .. %d   \n",taskDevList[i].g_taskId, taskDevList[i].rank);
+     }*/
+
+     //taskDevList=tmp_taskDevList;
 
 	return 0;
 }
