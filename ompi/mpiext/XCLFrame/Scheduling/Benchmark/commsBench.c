@@ -240,7 +240,7 @@ if(myRank==ROOT){
 	float LAccum=0;
 	float BWAccum=0;
 	for(i=0;i<g_PUs;i++){
-		for(j=0;j<g_PUs;j++){
+		for(j=0;j<=i;j++){ //sum triangular inferior of the values due to the other are repeated.
 			LAccum+=L_Mtx[g_PUs*i+j];
 			BWAccum+=BW_Mtx[g_PUs*i+j];
 		}
@@ -251,22 +251,39 @@ if(myRank==ROOT){
 	printf("Average Latency: %8.8f microSeconds\n",L*1000000);
 	printf("Average Bandwidth: %8.8f GB/s\n",BW/(float)(ONEGB));
 
-	//print matrices
+	//print && store the matrices
+
+	FILE* FP_L_Mtx=NULL;
+	FP_L_Mtx=fopen("./L_MtxFile.dat","wb");
+	if(FP_L_Mtx==NULL){
+		perror("L_MtxFile could not be created");
+		exit(-1);
+	}
+
 
 	for(i=0;i<g_PUs;i++){
 		printf("| ");
 		for(j=0;j<g_PUs;j++){
-			printf(" %8.8f |",L_Mtx[g_PUs*i+j]*1000000);
+			printf(" %8.8f |",L_Mtx[g_PUs*i+j]*1000000); //printed in microseconds
+			fwrite(&L_Mtx[g_PUs*i+j],sizeof(float),1,FP_L_Mtx);
 		}
 		printf("\n-------------------------------\n");
 	}
 
 	printf("\n\n");
 
+	FILE* FP_BW_Mtx=NULL;
+	FP_BW_Mtx=fopen("./BW_MtxFile.dat","wb");
+	if(FP_BW_Mtx==NULL){
+		perror("BW_MtxFile could not be created");
+		exit(-1);
+	}
+
 	for(i=0;i<g_PUs;i++){
 		printf("| ");
 		for(j=0;j<g_PUs;j++){
 			printf("  %8.6f |",BW_Mtx[g_PUs*i+j]/(float)(ONEGB));
+			fwrite(&BW_Mtx[g_PUs*i+j],sizeof(float),1,FP_BW_Mtx);
 		}
 		printf("\n-------------------------------\n");
 	}
@@ -288,7 +305,17 @@ if(myRank==ROOT){
 			}
 	}
 
-	//TODO: must we deallocate the number of racks created for each device??
+	//TODO: we must deallocate the number of racks created for each device.
+
+	for (i = 0; i <l_PUs; i++) {
+		for (j = taskDevMap[i].min_tskIdx; j <= taskDevMap[i].max_tskIdx;j++) {
+
+			free(l_taskList[j].device[0].memHandler);
+			l_taskList[j].device[0].numRacks=0;
+		}
+	}
+
+
 	free(taskDevMap);
 	taskDevMap=NULL;
 	free(l_taskList);

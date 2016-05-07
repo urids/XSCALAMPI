@@ -64,7 +64,7 @@ int initNewBuffer(int taskIdx, int trayIdx, int bufferSize ){
 								NULL,
 								&status);
 
-		/*This section ensures proper device memory allocation.*/
+		/*This section can help to ensure a real memory allocation by performing a real writing.*/
 		char * dset=malloc(3*sizeof(char));//="0\0";
 	/*	dset=clEnqueueMapBuffer(l_taskList[taskIdx].device[0].queue,
 								l_taskList[taskIdx].device[0].memHandler[myRack][trayIdx],

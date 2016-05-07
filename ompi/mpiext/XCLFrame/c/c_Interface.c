@@ -13,7 +13,7 @@ int g_numDevs;  //Global Variable declared at localDevices.h
 taskInfo* g_taskList; //Global Variable declared at taskManager.h
 int g_numTasks; //Global Variable declared at taskManager.h
 
-
+struct timeval tval_globalInit; // Global variable declared in taskManager.h
 
 /* ==================================
  * | END OF GLOBAL INITIALIZATIONS  |
@@ -26,6 +26,23 @@ int OMPI_CollectDevicesInfo(int devSelection, MPI_Comm comm){
 
 
 int OMPI_CollectTaskInfo(int devSelection, MPI_Comm comm){
+
+/*	int numRanks, myRank;
+	MPI_Comm_rank(comm, &myRank);
+	MPI_Comm_size(comm,&numRanks);
+
+
+	double off_secs,R_secs;
+	double off_micrs,R_micrs;
+	if(myRank==0){
+		R_secs = (double) tval_result.tv_sec;
+		R_micrs = (double) (tval_result.tv_usec);
+	}
+
+	MPI_Bcast(&R_secs,1,MPI_DOUBLE,0,comm);
+	MPI_Bcast(&R_micrs,1,MPI_DOUBLE,0,comm);*/
+
+	gettimeofday(&tval_globalInit, NULL );//TODO:  find the appropiate place to init the clock =0
 	return _OMPI_CollectTaskInfo(devSelection, comm);
 }
 
@@ -41,8 +58,23 @@ int OMPI_XclExecTask(MPI_Comm communicator, int g_selTask, int workDim, size_t *
 	va_list argptr;
 	va_start(argptr, fmt);
 
-	 _OMPI_XclExecTask(communicator, g_selTask, workDim, globalThreads,
+	char* profileFlag;
+	int profilingEnabled = 0;
+	profileFlag = getenv("XSCALA_PROFILING_APP"); //TODO: this profiling file might not be appropriated.
+	if (profileFlag != NULL) {
+		profilingEnabled = 1;
+	}
+
+	if (profilingEnabled) {
+		_OMPI_P_XclExecTask(communicator, g_selTask, workDim, globalThreads,
+				localThreads, tval_globalInit ,fmt, argptr);
+	}else{
+		_OMPI_XclExecTask(communicator, g_selTask, workDim, globalThreads,
 				localThreads, fmt, argptr);
+	}
+
+
+
 	va_end(argptr);
 
 	return 0;

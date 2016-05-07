@@ -93,8 +93,8 @@ int _OMPI_XclExecTask(MPI_Comm comm, int g_selTask, int workDim, size_t * global
 	//Select the appropriate local task if any.
 	if (myRank == g_taskList[g_selTask].r_rank) {
 		debug_print("...task %d requested in rank %d \n",g_selTask,myRank);
-		int l_selTask= g_taskList[g_selTask].l_taskIdx;
 
+		int l_selTask= g_taskList[g_selTask].l_taskIdx;
 		void *dlhandle;
 
 		int (*argsParser)(MPI_Comm, int selTask, int workDim, size_t*, size_t*, const char *,
@@ -117,9 +117,54 @@ int _OMPI_XclExecTask(MPI_Comm comm, int g_selTask, int workDim, size_t * global
 		int err;
 		err=argsParser(comm, l_selTask, workDim , globalThreads, localThreads, fmt, argsList);
 		//dlclose(dlhandle); //TODO: something wrong here memory leak if I close!.
+
 	}
 	return MPI_SUCCESS;
 }
+
+
+int _OMPI_P_XclExecTask(MPI_Comm comm, int g_selTask, int workDim, size_t * globalThreads,
+		size_t * localThreads, struct timeval tval_globalInit , const char * fmt, va_list argsList) {
+
+	int myRank;
+	MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
+
+
+	//Select the appropriate local task if any.
+	if (myRank == g_taskList[g_selTask].r_rank) {
+		debug_print("...task %d requested in rank %d \n",g_selTask,myRank);
+
+
+
+		int l_selTask= g_taskList[g_selTask].l_taskIdx;
+		void *dlhandle;
+
+		int (*argsParser)(MPI_Comm, int selTask, int workDim, size_t*, size_t*, const char *,
+				va_list);
+		char *error;
+
+		dlhandle = dlopen("libkernelMgmt.so", RTLD_LAZY);
+		if (!dlhandle) {
+			fputs(dlerror(), stderr);
+			exit(1);
+		}
+
+		argsParser = dlsym(dlhandle, "argsParser");
+
+		if ((error = dlerror()) != NULL) {
+			fputs(error, stderr);
+			exit(1);
+		}
+
+		int err;
+		err=argsParser(comm, l_selTask, workDim , globalThreads, localThreads, fmt, argsList);
+		//dlclose(dlhandle); //TODO: something wrong here memory leak if I close!.
+
+
+	}
+	return MPI_SUCCESS;
+}
+
 
 int _OMPI_XclWaitFor(int numTasks, int* taskIds, MPI_Comm comm){
 

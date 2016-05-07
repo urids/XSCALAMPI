@@ -9,6 +9,7 @@
 #define C_INTERFACE_H_
 
 #include <stdarg.h>
+#include <unistd.h> //for getenv
 #include "ompi/include/mpi.h"
 
 #include "../TaskManager/Base/task.h"

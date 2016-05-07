@@ -61,6 +61,7 @@ TwoSidedComms/singleSidedComms.lo: TwoSidedComms/singleSidedComms.c \
  TwoSidedComms/../../c/binding/tskMgmt/deviceMap.h \
  TwoSidedComms/../../c/binding/tskMgmt/../../taskMap.h \
  TwoSidedComms/../../TaskManager/Base/taskManager.h \
+ /usr/include/x86_64-linux-gnu/sys/time.h \
  TwoSidedComms/../../TaskManager/Base/task.h /usr/include/pthread.h \
  /usr/include/sched.h /usr/include/x86_64-linux-gnu/bits/sched.h \
  /usr/include/x86_64-linux-gnu/bits/setjmp.h TwoSidedComms/entityInfo.h \
@@ -219,6 +220,8 @@ TwoSidedComms/../../c/binding/tskMgmt/deviceMap.h:
 TwoSidedComms/../../c/binding/tskMgmt/../../taskMap.h:
 
 TwoSidedComms/../../TaskManager/Base/taskManager.h:
+
+/usr/include/x86_64-linux-gnu/sys/time.h:
 
 TwoSidedComms/../../TaskManager/Base/task.h:
 

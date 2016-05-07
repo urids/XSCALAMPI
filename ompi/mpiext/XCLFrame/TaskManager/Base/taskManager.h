@@ -17,6 +17,8 @@
 #include "string.h"
 #include <CL/cl.h>
 
+#include <sys/time.h> //for profiling =)
+
 #include "task.h"
 
 #include "pthread.h"
@@ -33,7 +35,7 @@ typedef struct taskInfo_st{
 extern taskInfo* g_taskList; //defined in c_Interface.c
 extern int g_numTasks; //defined in c_Interface.c
 
-
+extern struct timeval tval_globalInit; //defined in c_Interface.c
 
 
 typedef struct enqueueArgs_st{

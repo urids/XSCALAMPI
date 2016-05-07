@@ -67,7 +67,7 @@ int argsParser(MPI_Comm comm, int selTask,int workDim , size_t * globalThreads, 
 		}
 	}
 
-	enqueueKernel(l_numTasks,selTask,workDim, globalThreads, localThreads);
+	enqueueKernel(l_numTasks,selTask,workDim, globalThreads, localThreads); //TODO: this cal must reside in taskManager.c ==> XCLExecTask
   return 0;
 }
 

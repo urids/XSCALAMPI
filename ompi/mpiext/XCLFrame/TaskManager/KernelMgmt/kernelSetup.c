@@ -135,7 +135,8 @@ int setKernelArgs(int seltask,int numparameter,int paramSize,void* paramValue){
 
 
 void * enqueTaskReq(void *args) {
-	int status;
+	int status=0;
+	int i; //indx var.
 	enqueueArgs_t* l_args = (enqueueArgs_t*) args;
 
 	char* profileFlag;
@@ -146,12 +147,36 @@ void * enqueTaskReq(void *args) {
 		}
 
 	if (profilingEnabled) {
+
+		//****************************
+		struct timeval tval_ini, tval_fini, tval_IniResult, tval_FiniResult,tval_total; //these structures will provide the ini--fini times for profiling.
+		gettimeofday(&tval_ini, NULL);
+
+		/*printf("\n global_Initime: %ld.%06ld\n", (long int) tval_globalInit.tv_sec,
+								(long int) tval_globalInit.tv_usec);
+		printf("\n initime: %ld.%06ld\n", (long int) tval_ini.tv_sec,
+										(long int) tval_ini.tv_usec);*/
+
+		timersub(&tval_ini, &tval_globalInit, &tval_IniResult);
+		double secsIni = (double) tval_IniResult.tv_sec;
+		double milsIni = (double) (tval_IniResult.tv_usec) / 1000000;
+
+
+
+		//*****************************
+
+
 		cl_ulong time_start, time_end;
 			double total_time;
 		cl_event kernelProfileEvent;
 		status = clEnqueueNDRangeKernel(l_args->th_queue, l_args->th_kernel,
 				l_args->workDim, NULL, l_args->globalThreads,
 				l_args->localThreads, 0, NULL, &kernelProfileEvent);
+
+		//chkerr(status,"enqueuing the kernel:", __FILE__, __LINE__);
+
+
+
 		clFlush(l_args->th_queue);
 		clFinish(l_args->th_queue);
 
@@ -160,8 +185,49 @@ void * enqueTaskReq(void *args) {
 				sizeof(time_start), &time_start, NULL);
 		clGetEventProfilingInfo(kernelProfileEvent, CL_PROFILING_COMMAND_END,
 				sizeof(time_end), &time_end, NULL);
+		//***********************************************
+
+		gettimeofday(&tval_fini, NULL );
+		timersub(&tval_fini, &tval_globalInit, &tval_FiniResult);
+		double secsFini = (double) tval_FiniResult.tv_sec;
+		double milsFini = (double) (tval_FiniResult.tv_usec) / 1000000;
+
+
+
+		int myRank;
+		MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
+		FILE* schedImg;
+		schedImg = fopen("./schedImg.txt", "a");
+
+		for(i=0;i<g_numTasks;i++){
+			if(g_taskList[i].r_rank==myRank && g_taskList[i].l_taskIdx==l_args->g_selTsk ){
+				fprintf(schedImg, " %ld.%06ld ",(long int) tval_IniResult.tv_sec,
+						(long int) tval_IniResult.tv_usec);
+				//printf(" %ld.%06ld ", (long int) tval_IniResult.tv_sec,(long int) tval_IniResult.tv_usec);
+				fprintf(schedImg," %ld.%06ld ", (long int) tval_FiniResult.tv_sec,
+										(long int) tval_FiniResult.tv_usec);
+				fprintf(schedImg, " %d \n",g_taskList[i].g_taskIdx);
+
+
+				timersub(&tval_fini, &tval_ini, &tval_total);
+				double secs = (double) tval_total.tv_sec;
+				double mils = (double) (tval_total.tv_usec) / 1000000;
+				if(status!=0){
+					printf("Exec status of task %d : %d \n",g_taskList[i].g_taskIdx,status);
+				}
+				else{
+				printf("Execution time of task %d: -->  %ld.%06ld secs. \n",g_taskList[i].g_taskIdx,(long int) tval_total.tv_sec,
+						(long int) tval_total.tv_usec);
+				}
+				break;
+			}
+		}
+		fclose(schedImg);
+		//*********************************************
+
+
 		total_time = time_end - time_start;
-		printf("Execution time of task %d: -->  %0.3f ms \n",l_args->g_selTsk,(total_time / 1000000.0));
+		//printf("Execution time of task %d: -->  %0.3f ms \n",l_args->g_selTsk,(total_time / 1000000.0));
 
 	}
 	else{
@@ -257,7 +323,7 @@ if(selTask==-1){ // -1 means all tasks must enqueue this kernel.
 		//th_Args[selTask]->kernelProfileEvent=kernelProfileEvent;
 		th_Args[selTask]->th_queue=l_taskList[selTask].device[0].queue;
 		th_Args[selTask]->th_kernel=l_taskList[selTask].kernel[0].kernel;
-		th_Args[selTask]->g_selTsk=selTask;
+		th_Args[selTask]->g_selTsk=selTask; //TODO this is not the global, in fact is the local =(
 
 
 		//printf("task: %d Requesting at time: %s \n",numReq++,asctime(timeinfo));

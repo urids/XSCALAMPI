@@ -28,29 +28,41 @@ int fillGlobalTaskList(MPI_Comm comm){ //this function creates a local assignmen
 			}
 		}
 
- 		/*printf("local num tasks: %d  \n", g_numTasks);
+ 		/*printf("RANK: %d local num tasks: %d  \n",myRank, l_numTasks);
  		for(i=0;i<l_numTasks;i++){ //Print the global task list
  			printf("%d  \n",myAssignedTasks[i]);
  		}*/
 
  		//This array serves to interchange the myAssignedtasks array.
- 		int* assignments =(int*)malloc(g_numTasks*sizeof(int));
+ 		int* g_Assignments =(int*)malloc(g_numTasks*sizeof(int));
  		int displs[numRanks];
  		displs[0]=0;
  		for(i=1;i<numRanks;i++){
- 			displs[i]=RKS[i-1];
+ 			displs[i]=displs[i-1]+RKS[i-1];
  		}
+ 		//
+ 		/*for(i=0;i<numRanks;i++){
+ 			printf("displ[%d]=%d ",i,displs[i]);
+ 		}
+ 		printf("\n");*/
 
- 		MPI_Allgatherv(myAssignedTasks,l_numTasks,MPI_INT,assignments,RKS,displs,MPI_INT,comm);
+ 		MPI_Allgatherv(myAssignedTasks,l_numTasks,MPI_INT,g_Assignments,RKS,displs,MPI_INT,comm);
+ 		//
+ 		/*printf("globalAssignments array: ");
+ 		for(i=0;i<g_numTasks;i++){
+ 			printf(" %d |",g_Assignments[i]);
+ 		}
+ 		printf("\n");*/
+
  		int k=0;
 		for(i=0;i<numRanks;i++){
 			for(j=0;j<RKS[i];j++,k++){
-				g_taskList[assignments[k]].l_taskIdx=j;
+				g_taskList[g_Assignments[k]].l_taskIdx=j;
 			}
 		}
 
-		/*printf("in %s, %s, %d",__FILE__,__FUNCTION__,__LINE__);
-		for(i=0;i<g_numTasks;i++){ //Print the global task list
+		//printf("in %s, %s, %d",__FILE__,__FUNCTION__,__LINE__);
+		/*for(i=0;i<g_numTasks;i++){ //Print the global task list
 			printf("%d -- %d -- %d \n",g_taskList[i].g_taskIdx, g_taskList[i].l_taskIdx, g_taskList[i].r_rank);
 		}*/
 

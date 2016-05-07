@@ -65,7 +65,7 @@ kernelSetup.lo: kernelSetup.c /usr/include/stdc-predef.h kernelSetup.h \
  ../../DataManager/BufferMgmt/../../c/ErrorHandling/errorHandling.h \
  ../../c/ErrorHandling/errorHandling.h ../Base/taskManager.h \
  /usr/include/dlfcn.h /usr/include/x86_64-linux-gnu/bits/dlfcn.h \
- ../Base/task.h
+ /usr/include/x86_64-linux-gnu/sys/time.h ../Base/task.h
 
 /usr/include/stdc-predef.h:
 
@@ -238,5 +238,7 @@ kernelSetup.h:
 /usr/include/dlfcn.h:
 
 /usr/include/x86_64-linux-gnu/bits/dlfcn.h:
+
+/usr/include/x86_64-linux-gnu/sys/time.h:
 
 ../Base/task.h:
