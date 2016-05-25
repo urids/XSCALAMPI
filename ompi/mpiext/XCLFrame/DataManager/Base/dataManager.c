@@ -37,7 +37,7 @@ int _OMPI_XclReadTray(int g_taskIdx, int trayIdx, int bufferSize, void * hostBuf
 
 //TODO: should I pass a rank to enable say on which task lives host buffer?
 //TODO: REVIEW should I enable pass a rank where host buffer lives? =|
-//TODO: SEVERE "Intra device copy do not automates buffer allocation =("
+//TODO: SEVERE "Intra device copy does not automates buffer allocation =("
 
 int _OMPI_XclWriteTray(int g_taskIdx, int trayIdx, int bufferSize,void * hostBuffer, MPI_Comm comm){
 	int myRank;

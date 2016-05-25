@@ -123,7 +123,7 @@ int _OMPI_XclSendRecv(int src_task, int src_trayIdx,
 			tval_initSendRecvProfile= MPI_Wtime();
 		}
 
-		//insert here sendRecvProcedure =).
+		//init sendRecvProcedure =).
 
 		if (myRank == g_taskList[src_task].r_rank
 						&& myRank == g_taskList[dest_task].r_rank  //if ranks match

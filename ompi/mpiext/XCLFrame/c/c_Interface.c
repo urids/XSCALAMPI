@@ -42,7 +42,7 @@ int OMPI_CollectTaskInfo(int devSelection, MPI_Comm comm){
 	MPI_Bcast(&R_secs,1,MPI_DOUBLE,0,comm);
 	MPI_Bcast(&R_micrs,1,MPI_DOUBLE,0,comm);*/
 
-	gettimeofday(&tval_globalInit, NULL );//TODO:  find the appropiate place to init the clock =0
+	gettimeofday(&tval_globalInit, NULL);//TODO:  find the appropiate place to init the clock =0
 	return _OMPI_CollectTaskInfo(devSelection, comm);
 }
 

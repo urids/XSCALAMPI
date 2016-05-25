@@ -45,8 +45,8 @@ int createTaskList(int devSelection,MPI_Comm comm){ //This function fills the l_
 	int i,j; //index vars.
 
 	void *dlhandle;
-	int (*getNumDecls)();
-	int (*readTaskBinding)(device_Task_Info* taskDevMap);
+//	int (*getNumDecls)();
+//	int (*readTaskBinding)(device_Task_Info* taskDevMap);
 
 	//new
 	int (*readAndParse)();
@@ -58,8 +58,8 @@ int createTaskList(int devSelection,MPI_Comm comm){ //This function fills the l_
 		exit(1);
 	}
 
-	getNumDecls = dlsym(dlhandle, "getNumDecls");
-	readTaskBinding=dlsym(dlhandle, "readTaskBinding");
+//	getNumDecls = dlsym(dlhandle, "getNumDecls");
+//	readTaskBinding=dlsym(dlhandle, "readTaskBinding");
 
 
 	readAndParse=dlsym(dlhandle, "readAndParse"); //new
