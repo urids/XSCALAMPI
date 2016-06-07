@@ -48,10 +48,15 @@ c_Interface.lo: c_Interface.c /usr/include/stdc-predef.h c_Interface.h \
  /usr/include/xlocale.h /usr/include/x86_64-linux-gnu/bits/string.h \
  /usr/include/x86_64-linux-gnu/bits/string2.h \
  /usr/include/x86_64-linux-gnu/bits/string3.h \
- /usr/include/x86_64-linux-gnu/sys/time.h ../TaskManager/Base/task.h \
+ /usr/include/x86_64-linux-gnu/sys/time.h \
+ ../TaskManager/Base/../../c/queueMutexes.h ../TaskManager/Base/task.h \
  /usr/include/pthread.h /usr/include/sched.h \
  /usr/include/x86_64-linux-gnu/bits/sched.h \
  /usr/include/x86_64-linux-gnu/bits/setjmp.h \
+ ../DataManager/Base/dataManager.h \
+ ../DataManager/Base/../../TaskManager/Base/taskManager.h \
+ ../DataManager/Base/../../c/taskMap.h ../DataManager/Base/entityInfo.h \
+ ../DataManager/Base/../../c/queueMutexes.h \
  ../multiDeviceMgmt/deviceMgmt/localDevices.h \
  ../multiDeviceMgmt/deviceMgmt/Device.h
 
@@ -189,6 +194,8 @@ c_Interface.h:
 
 /usr/include/x86_64-linux-gnu/sys/time.h:
 
+../TaskManager/Base/../../c/queueMutexes.h:
+
 ../TaskManager/Base/task.h:
 
 /usr/include/pthread.h:
@@ -198,6 +205,16 @@ c_Interface.h:
 /usr/include/x86_64-linux-gnu/bits/sched.h:
 
 /usr/include/x86_64-linux-gnu/bits/setjmp.h:
+
+../DataManager/Base/dataManager.h:
+
+../DataManager/Base/../../TaskManager/Base/taskManager.h:
+
+../DataManager/Base/../../c/taskMap.h:
+
+../DataManager/Base/entityInfo.h:
+
+../DataManager/Base/../../c/queueMutexes.h:
 
 ../multiDeviceMgmt/deviceMgmt/localDevices.h:
 

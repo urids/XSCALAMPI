@@ -1,9 +1,12 @@
 
 #include "scheduling.h"
 
+//?? still works?
 device_Task_Info* taskDevMap;
 int numDecls;
-schedConfigInfo_t * taskDevList;
+
+
+schedConfigInfo_t * taskDevList; //Global variable declared in scheduling.h
 
 int _OMPI_CollectDevicesInfo(int devSelection, MPI_Comm comm){
 
@@ -39,16 +42,12 @@ int l_numDevs;
 
 	return g_numDevs;
 }
-
+//TODO: REMOVE THIS FUNCTION is useless
 int createTaskList(int devSelection,MPI_Comm comm){ //This function fills the l_taskList table
 									  //There exist one l_taskList per Node
-	int i,j; //index vars.
+	int i,j; //index exclusive vars.
 
 	void *dlhandle;
-//	int (*getNumDecls)();
-//	int (*readTaskBinding)(device_Task_Info* taskDevMap);
-
-	//new
 	int (*readAndParse)();
 
 	char *error;
@@ -58,10 +57,6 @@ int createTaskList(int devSelection,MPI_Comm comm){ //This function fills the l_
 		exit(1);
 	}
 
-//	getNumDecls = dlsym(dlhandle, "getNumDecls");
-//	readTaskBinding=dlsym(dlhandle, "readTaskBinding");
-
-
 	readAndParse=dlsym(dlhandle, "readAndParse"); //new
 
 	if ((error = dlerror()) != NULL ) {
@@ -69,24 +64,10 @@ int createTaskList(int devSelection,MPI_Comm comm){ //This function fills the l_
 		exit(1);
 	}
 
-	//function defined in schedFileParse.c to get the number of declarations in the taskSched.cfg file.
-
-/*	numDecls=getNumDecls();
-	taskDevMap=malloc(numDecls*sizeof(device_Task_Info));
-
-	for (i = 0; i < numDecls; i++) {
-		taskDevMap[i].min_tskIdx=-1; //By default each device has no assigned task.
-	}
-
-	readTaskBinding(taskDevMap); //function defined in schedFileParse.c to read taskSched.cfg file.
-	debug_print("1.- read taskDevMap succeed!!\n");
-
-		taskSetup(devSelection); //this function fills the l_tasklist table.
-*/
-	//new
 	(*readAndParse)();
 	fillLocalTaskList(comm);
     fillGlobalTaskList(comm);
+    insertThreads(l_numTasks); // At this very moment we known the local number of tasks.
 	return 0;
 }
 
@@ -102,6 +83,8 @@ int _OMPI_CollectTaskInfo(int devSelection, MPI_Comm comm){
 		MPI_Comm_rank(comm, &myRank);
 		MPI_Comm_size(comm,&numRanks);
 		MPI_Get_processor_name(hostname, &HostNamelen);
+
+		//TODO PUT something like cases or remove this call and do a direct substitution
 		createTaskList(devSelection,comm); //function defined here.
 
 	return g_numTasks;

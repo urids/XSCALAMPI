@@ -10,7 +10,7 @@
 #include "ompi/mpiext/mpiext.h"
 #include "ompi/mpiext/XCLFrame/c/mpiext_XCLFrame_c.h"
 #include "taskMap.h"
-#include "binding/dvMgmt/PUsMap.h"
+//#include "binding/dvMgmt/PUsMap.h"
 #include "../multiDeviceMgmt/deviceMgmt/deviceExploration.h"
 
 #include "../TaskManager/Base/taskManager.h"

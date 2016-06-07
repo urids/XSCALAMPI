@@ -33,7 +33,7 @@ TwoSidedComms/XclScatter.lo: TwoSidedComms/XclScatter.c \
  /usr/include/x86_64-linux-gnu/bits/dlfcn.h \
  ../../../../ompi/include/mpi.h \
  ../../../../ompi/include/mpi_portable_platform.h \
- TwoSidedComms/../../c/binding/tskMgmt/tskMgmt.h /usr/include/unistd.h \
+ TwoSidedComms/../../TaskManager/Base/taskManager.h /usr/include/unistd.h \
  /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
  /usr/include/x86_64-linux-gnu/bits/environments.h \
  /usr/include/x86_64-linux-gnu/bits/confname.h /usr/include/getopt.h \
@@ -48,23 +48,14 @@ TwoSidedComms/XclScatter.lo: TwoSidedComms/XclScatter.c \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mmintrin.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mm_malloc.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h \
- TwoSidedComms/../../c/binding/tskMgmt/../../../TaskManager/Base/task.h \
- TwoSidedComms/../../c/binding/tskMgmt/../../../TaskManager/Base/../../multiDeviceMgmt/deviceMgmt/Device.h \
- TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h \
- TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/localDevices.h \
- TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h \
- TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/deviceExploration.h \
- TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/devicesInitialization.h \
- TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/deviceExploration.h \
- TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/localDevices.h \
- TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/../errorMgmt/errorHandling.h \
- TwoSidedComms/../../c/binding/tskMgmt/deviceMap.h \
- TwoSidedComms/../../c/binding/tskMgmt/../../taskMap.h \
- TwoSidedComms/../../TaskManager/Base/taskManager.h \
  /usr/include/x86_64-linux-gnu/sys/time.h \
- TwoSidedComms/../../TaskManager/Base/task.h /usr/include/pthread.h \
- /usr/include/sched.h /usr/include/x86_64-linux-gnu/bits/sched.h \
- /usr/include/x86_64-linux-gnu/bits/setjmp.h TwoSidedComms/entityInfo.h
+ TwoSidedComms/../../TaskManager/Base/../../c/queueMutexes.h \
+ TwoSidedComms/../../TaskManager/Base/task.h \
+ TwoSidedComms/../../TaskManager/Base/../../multiDeviceMgmt/deviceMgmt/Device.h \
+ /usr/include/pthread.h /usr/include/sched.h \
+ /usr/include/x86_64-linux-gnu/bits/sched.h \
+ /usr/include/x86_64-linux-gnu/bits/setjmp.h \
+ TwoSidedComms/../Base/entityInfo.h
 
 /usr/include/stdc-predef.h:
 
@@ -152,7 +143,7 @@ TwoSidedComms/XclScatter.h:
 
 ../../../../ompi/include/mpi_portable_platform.h:
 
-TwoSidedComms/../../c/binding/tskMgmt/tskMgmt.h:
+TwoSidedComms/../../TaskManager/Base/taskManager.h:
 
 /usr/include/unistd.h:
 
@@ -194,35 +185,13 @@ TwoSidedComms/../../c/binding/tskMgmt/tskMgmt.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h:
 
-TwoSidedComms/../../c/binding/tskMgmt/../../../TaskManager/Base/task.h:
-
-TwoSidedComms/../../c/binding/tskMgmt/../../../TaskManager/Base/../../multiDeviceMgmt/deviceMgmt/Device.h:
-
-TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h:
-
-TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/localDevices.h:
-
-TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h:
-
-TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/deviceExploration.h:
-
-TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/devicesInitialization.h:
-
-TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/deviceExploration.h:
-
-TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/localDevices.h:
-
-TwoSidedComms/../../c/binding/tskMgmt/../../../multiDeviceMgmt/deviceMgmt/../errorMgmt/errorHandling.h:
-
-TwoSidedComms/../../c/binding/tskMgmt/deviceMap.h:
-
-TwoSidedComms/../../c/binding/tskMgmt/../../taskMap.h:
-
-TwoSidedComms/../../TaskManager/Base/taskManager.h:
-
 /usr/include/x86_64-linux-gnu/sys/time.h:
 
+TwoSidedComms/../../TaskManager/Base/../../c/queueMutexes.h:
+
 TwoSidedComms/../../TaskManager/Base/task.h:
+
+TwoSidedComms/../../TaskManager/Base/../../multiDeviceMgmt/deviceMgmt/Device.h:
 
 /usr/include/pthread.h:
 
@@ -232,4 +201,4 @@ TwoSidedComms/../../TaskManager/Base/task.h:
 
 /usr/include/x86_64-linux-gnu/bits/setjmp.h:
 
-TwoSidedComms/entityInfo.h:
+TwoSidedComms/../Base/entityInfo.h:

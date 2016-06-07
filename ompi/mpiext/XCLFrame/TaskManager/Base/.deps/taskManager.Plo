@@ -44,9 +44,10 @@ Base/taskManager.lo: Base/taskManager.c /usr/include/stdc-predef.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mmintrin.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mm_malloc.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h \
- /usr/include/x86_64-linux-gnu/sys/time.h Base/task.h \
- Base/../../multiDeviceMgmt/deviceMgmt/Device.h /usr/include/pthread.h \
- /usr/include/sched.h /usr/include/x86_64-linux-gnu/bits/sched.h \
+ /usr/include/x86_64-linux-gnu/sys/time.h Base/../../c/queueMutexes.h \
+ Base/task.h Base/../../multiDeviceMgmt/deviceMgmt/Device.h \
+ /usr/include/pthread.h /usr/include/sched.h \
+ /usr/include/x86_64-linux-gnu/bits/sched.h \
  /usr/include/x86_64-linux-gnu/bits/setjmp.h \
  ../../../../ompi/include/mpi.h \
  ../../../../ompi/include/mpi_portable_platform.h
@@ -174,6 +175,8 @@ Base/taskManager.h:
 /usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h:
 
 /usr/include/x86_64-linux-gnu/sys/time.h:
+
+Base/../../c/queueMutexes.h:
 
 Base/task.h:
 

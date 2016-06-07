@@ -1142,7 +1142,7 @@ OPAL_ASSEMBLY_ARCH = AMD64
 OPAL_ASSEMBLY_BUILTIN = BUILTIN_NO
 OPAL_ASSEMBLY_FORMAT = default-.text-.globl-:--.L-@-1-0-1-1-1
 OPAL_CC_ABSOLUTE = /usr/bin/gcc
-OPAL_CONFIGURE_DATE = Sat Apr 16 18:41:08 CDT 2016
+OPAL_CONFIGURE_DATE = Fri Jun  3 11:10:08 CDT 2016
 OPAL_CONFIGURE_HOST = myHost
 OPAL_CONFIGURE_USER = uriel
 OPAL_CXX_ABSOLUTE = /usr/bin/g++
@@ -1465,8 +1465,7 @@ SUBDIRS = DataManager \
 		DataManager/DataCopy \
 		DataManager/BufferMgmt \
 		c \
-		c/binding/dvMgmt \
-		c/binding/tskMgmt \
+		PoolManager \
 		multiDeviceMgmt \
 		TaskManager \
 		TaskManager/KernelMgmt \

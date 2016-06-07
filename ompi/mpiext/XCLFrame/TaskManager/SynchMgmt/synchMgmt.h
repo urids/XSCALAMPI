@@ -10,7 +10,12 @@
 
 #include "ompi/include/mpi.h"
 #include "pthread.h"
-
 #include "../Base/taskManager.h"
+
+typedef struct syncArgs_st{
+	pthread_barrier_t localBarrier;
+	int num_l_tasks;
+}synchArgs_t;
+int i; //index Exclusive
 
 #endif /* SYNCHMGMT_H_ */

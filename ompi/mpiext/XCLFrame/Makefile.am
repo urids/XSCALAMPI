@@ -14,8 +14,7 @@ SUBDIRS = DataManager \
 		DataManager/DataCopy \
 		DataManager/BufferMgmt \
 		c \
-		c/binding/dvMgmt \
-		c/binding/tskMgmt \
+		PoolManager \
 		multiDeviceMgmt \
 		TaskManager \
 		TaskManager/KernelMgmt \

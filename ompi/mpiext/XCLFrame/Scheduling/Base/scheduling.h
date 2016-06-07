@@ -37,7 +37,7 @@ typedef struct schedConfigInfo_st{
 extern device_Task_Info* taskDevMap;
 extern int numDecls;
 
-extern schedConfigInfo_t* taskDevList;
+extern schedConfigInfo_t* taskDevList; //global variable defined in scheduling.c
 
 typedef struct commsInfo_st{
   	float L,BW;

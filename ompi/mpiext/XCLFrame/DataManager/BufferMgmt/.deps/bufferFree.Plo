@@ -26,10 +26,14 @@ bufferFree.lo: bufferFree.c /usr/include/stdc-predef.h bufferFunctions.h \
  /usr/include/x86_64-linux-gnu/bits/nan.h \
  /usr/include/x86_64-linux-gnu/bits/mathdef.h \
  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
- /usr/include/x86_64-linux-gnu/bits/mathinline.h \
- ../../multiDeviceMgmt/deviceMgmt/Device.h \
- /usr/local/cuda-7.5/include/CL/cl.h \
- /usr/local/cuda-7.5/include/CL/cl_platform.h \
+ /usr/include/x86_64-linux-gnu/bits/mathinline.h /usr/include/pthread.h \
+ /usr/include/sched.h /usr/include/time.h \
+ /usr/include/x86_64-linux-gnu/bits/sched.h \
+ /usr/include/x86_64-linux-gnu/bits/time.h \
+ /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
+ /usr/include/x86_64-linux-gnu/bits/setjmp.h \
+ ../../multiDeviceMgmt/deviceMgmt/Device.h /usr/local/include/CL/cl.h \
+ /usr/local/include/CL/cl_platform.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/xmmintrin.h \
@@ -37,14 +41,12 @@ bufferFree.lo: bufferFree.c /usr/include/stdc-predef.h bufferFunctions.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mm_malloc.h \
  /usr/include/x86_64-linux-gnu/bits/waitflags.h \
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
- /usr/include/x86_64-linux-gnu/sys/types.h /usr/include/time.h \
+ /usr/include/x86_64-linux-gnu/sys/types.h \
  /usr/include/x86_64-linux-gnu/sys/select.h \
  /usr/include/x86_64-linux-gnu/bits/select.h \
  /usr/include/x86_64-linux-gnu/bits/sigset.h \
- /usr/include/x86_64-linux-gnu/bits/time.h \
  /usr/include/x86_64-linux-gnu/bits/select2.h \
- /usr/include/x86_64-linux-gnu/sys/sysmacros.h \
- /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h /usr/include/alloca.h \
+ /usr/include/x86_64-linux-gnu/sys/sysmacros.h /usr/include/alloca.h \
  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
  /usr/include/x86_64-linux-gnu/bits/stdlib.h \
@@ -129,11 +131,25 @@ bufferFunctions.h:
 
 /usr/include/x86_64-linux-gnu/bits/mathinline.h:
 
+/usr/include/pthread.h:
+
+/usr/include/sched.h:
+
+/usr/include/time.h:
+
+/usr/include/x86_64-linux-gnu/bits/sched.h:
+
+/usr/include/x86_64-linux-gnu/bits/time.h:
+
+/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:
+
+/usr/include/x86_64-linux-gnu/bits/setjmp.h:
+
 ../../multiDeviceMgmt/deviceMgmt/Device.h:
 
-/usr/local/cuda-7.5/include/CL/cl.h:
+/usr/local/include/CL/cl.h:
 
-/usr/local/cuda-7.5/include/CL/cl_platform.h:
+/usr/local/include/CL/cl_platform.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h:
 
@@ -153,21 +169,15 @@ bufferFunctions.h:
 
 /usr/include/x86_64-linux-gnu/sys/types.h:
 
-/usr/include/time.h:
-
 /usr/include/x86_64-linux-gnu/sys/select.h:
 
 /usr/include/x86_64-linux-gnu/bits/select.h:
 
 /usr/include/x86_64-linux-gnu/bits/sigset.h:
 
-/usr/include/x86_64-linux-gnu/bits/time.h:
-
 /usr/include/x86_64-linux-gnu/bits/select2.h:
 
 /usr/include/x86_64-linux-gnu/sys/sysmacros.h:
-
-/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:
 
 /usr/include/alloca.h:
 

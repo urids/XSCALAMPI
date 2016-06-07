@@ -17,7 +17,7 @@ old_library=''
 inherited_linker_flags=' -pthread'
 
 # Libraries that this one depends upon.
-dependency_libs=' /home/uriel/Dev/mpisrc/XSCALAMPI/ompi/libmpi.la /home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/DataManager/libdataManager.la /home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/TaskManager/libtaskManager.la /home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/Scheduling/libscheduling.la -lOpenCL /home/uriel/Dev/mpisrc/XSCALAMPI/orte/libopen-rte.la /home/uriel/Dev/mpisrc/XSCALAMPI/opal/libopen-pal.la -ldl -lrt -lutil'
+dependency_libs=' /home/uriel/Dev/mpisrc/XSCALAMPI/ompi/libmpi.la /home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/DataManager/libdataManager.la /home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/TaskManager/libtaskManager.la /home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/Scheduling/libscheduling.la /home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/PoolManager/libpoolManager.la -lOpenCL /home/uriel/Dev/mpisrc/XSCALAMPI/orte/libopen-rte.la /home/uriel/Dev/mpisrc/XSCALAMPI/opal/libopen-pal.la -ldl -lrt -lutil'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''

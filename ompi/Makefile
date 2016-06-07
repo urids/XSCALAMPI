@@ -1735,7 +1735,7 @@ OPAL_ASSEMBLY_ARCH = AMD64
 OPAL_ASSEMBLY_BUILTIN = BUILTIN_NO
 OPAL_ASSEMBLY_FORMAT = default-.text-.globl-:--.L-@-1-0-1-1-1
 OPAL_CC_ABSOLUTE = /usr/bin/gcc
-OPAL_CONFIGURE_DATE = Sat Apr 16 18:41:08 CDT 2016
+OPAL_CONFIGURE_DATE = Fri Jun  3 11:10:08 CDT 2016
 OPAL_CONFIGURE_HOST = myHost
 OPAL_CONFIGURE_USER = uriel
 OPAL_CXX_ABSOLUTE = /usr/bin/g++
@@ -2100,12 +2100,10 @@ mpi_fortran_base_lib =
 # NOTE: The ordering of this list is VERY CAREFULLY CRAFTED!  Do not
 # change the ordering unless you really know what you're doing.  :-)
 SUBDIRS = include datatype debuggers etc mpi/c mpi/tool \
-	mpiext/XCLFrame/Scheduling \
+	mpiext/XCLFrame/PoolManager mpiext/XCLFrame/Scheduling \
 	mpiext/XCLFrame/Scheduling/Benchmark \
 	mpiext/XCLFrame/Scheduling/ManualSched \
-	mpiext/XCLFrame/multiDeviceMgmt \
-	mpiext/XCLFrame/c/binding/dvMgmt \
-	mpiext/XCLFrame/c/binding/tskMgmt mpiext/XCLFrame/TaskManager \
+	mpiext/XCLFrame/multiDeviceMgmt mpiext/XCLFrame/TaskManager \
 	mpiext/XCLFrame/TaskManager/KernelMgmt \
 	mpiext/XCLFrame/TaskManager/SynchMgmt \
 	mpiext/XCLFrame/DataManager \
@@ -2164,12 +2162,13 @@ libmpi_la_LIBADD = datatype/libdatatype.la debuggers/libdebuggers.la \
 	$(MCA_ompi_FRAMEWORK_LIBS) $(OMPI_MPIEXT_C_LIBS) \
 	$(OMPI_LIBMPI_EXTRA_LIBS) \
 	$(top_ompi_builddir)/ompi/mpiext/XCLFrame/Scheduling/libscheduling.la \
+	$(top_ompi_builddir)/ompi/mpiext/XCLFrame/PoolManager/libpoolManager.la \
 	$(am__append_2) $(top_ompi_builddir)/opal/libopen-pal.la
 libmpi_la_DEPENDENCIES = $(libmpi_la_LIBADD) 
 libmpi_la_LDFLAGS = \
        -version-info $(libmpi_so_version) \
         $(OMPI_LIBMPI_EXTRA_LDFLAGS) \
-        -Wl,-rpath,$(libdir)/XCLFrame/binding \
+        -Wl,-rpath,$(libdir)/XCLFrame/PoolManager \
         -Wl,-rpath,$(libdir)/XCLFrame/multiDeviceMgmt \
         -Wl,-rpath,$(libdir)/XCLFrame/DataManager \
         -Wl,-rpath,$(libdir)/XCLFrame/DataManager/DataCopy \

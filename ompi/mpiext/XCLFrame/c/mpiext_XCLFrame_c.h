@@ -14,14 +14,11 @@
 
 
 #define DEBUG 0
+// this function also forms part of the framework but is declared in DataManager/TwoSidedComms/XclScatter.h(just for fun!!)
 //this function is declared in XclScatter.h (Why?)-To show is possible?
+// int OMPI_commit_EntityType(int blockcount, int* blocklen, MPI_Aint* displacements, MPI_Datatype* basictypes, MPI_Datatype * newDatatype);
+// ACTUALLY IS DECLRED WITHOUT OMPI_DECLSPEC.
 //OMPI_DECLSPEC int OMPI_commit_EntityType(int blockcount, int* blocklen, MPI_Aint* displacements, MPI_Datatype* basictypes, MPI_Datatype * newDatatype);
-
-//this function collect in root node the information of all devices in each node of the communicator.
-//TODO: maybe we also must implement something like myRank.
-
-// this function also forma part of the framework but is declred in XclScatter.h (just for fun!!)
-//            int OMPI_commit_EntityType(int blockcount, int* blocklen, MPI_Aint* displacements, MPI_Datatype* basictypes, MPI_Datatype * newDatatype);
 
 
 OMPI_DECLSPEC int OMPI_CollectDevicesInfo(int devSelection, MPI_Comm comm); //this function returns global number of devices in the system
@@ -36,9 +33,9 @@ OMPI_DECLSPEC int OMPI_XclExecTask(MPI_Comm communicator,int selTask,int workDim
 //TODO: new Scatter (const char* datafileName, int* count, MPI_Datatype MPIentityType, int trayIdx, MPI_Comm comm);
 OMPI_DECLSPEC int OMPI_XclScatter(const char* datafileName, int* count, MPI_Datatype MPIentityType, void* hostbuffer, int trayIdx, MPI_Comm comm);
 OMPI_DECLSPEC int OMPI_XclGather(int trayIdx, int count, MPI_Datatype MPIentityType,void **hostbuffer, const char* datafileName , MPI_Comm comm);
-OMPI_DECLSPEC int OMPI_XclSend(int trayIdx, int count, MPI_Datatype MPIentityType, int src_task, int dest_task, int TAG, MPI_Comm comm); //TODO: offset parameter to from tray start
-OMPI_DECLSPEC int OMPI_XclRecv(int trayIdx, int count, MPI_Datatype MPIentityType, int src_task, int dest_task, int TAG,MPI_Comm comm); //TODO: offset parameter to from tray start
-OMPI_DECLSPEC int OMPI_XclSendRecv(int src_task, int src_trayIdx, int dest_task, int dest_trayIdx, int count, MPI_Datatype MPIentityType, MPI_Comm comm);
+OMPI_DECLSPEC int _OMPI_XclSend(int trayIdx, int count, MPI_Datatype MPIentityType, int src_task, int dest_task, int TAG, MPI_Comm comm); //TODO: offset parameter to from tray start
+OMPI_DECLSPEC int _OMPI_XclRecv(int trayIdx, int count, MPI_Datatype MPIentityType, int src_task, int dest_task, int TAG,MPI_Comm comm); //TODO: offset parameter to from tray start
+OMPI_DECLSPEC int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dest_task, int dest_trayIdx, int count, MPI_Datatype MPIentityType, int TAG, MPI_Comm comm);
 OMPI_DECLSPEC int OMPI_XclReadTray(int taskIdx, int trayIdx, int bufferSize, void * hostBuffer, MPI_Comm comm);
 OMPI_DECLSPEC int OMPI_XclWriteTray(int taskIdx, int trayIdx, int bufferSize, void * hostBuffer, MPI_Comm comm);
 
@@ -57,8 +54,6 @@ OMPI_DECLSPEC int OMPI_XclWaitFor(int numTasks, int* taskIds, MPI_Comm comm);
 /***************************************/
 /*  TASK DEPENDENCY TRACKING FUNCTIONS */
 /***************************************/
-
-
 
 OMPI_DECLSPEC int OMPI_XclTaskDependency(const int src_task, const int src_trayIdx, const int dest_task, const int dest_trayIdx, MPI_Comm comm);
 

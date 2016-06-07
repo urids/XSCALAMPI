@@ -48,8 +48,8 @@ synchMgmt.lo: synchMgmt.c /usr/include/stdc-predef.h synchMgmt.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mmintrin.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mm_malloc.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h \
- /usr/include/x86_64-linux-gnu/sys/time.h ../Base/task.h \
- ../Base/../../multiDeviceMgmt/deviceMgmt/Device.h
+ /usr/include/x86_64-linux-gnu/sys/time.h ../Base/../../c/queueMutexes.h \
+ ../Base/task.h ../Base/../../multiDeviceMgmt/deviceMgmt/Device.h
 
 /usr/include/stdc-predef.h:
 
@@ -188,6 +188,8 @@ synchMgmt.h:
 /usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h:
 
 /usr/include/x86_64-linux-gnu/sys/time.h:
+
+../Base/../../c/queueMutexes.h:
 
 ../Base/task.h:
 

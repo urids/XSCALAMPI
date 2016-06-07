@@ -184,6 +184,7 @@ pinit.lo: pinit.c /usr/include/stdc-predef.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mmintrin.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mm_malloc.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h \
+ ../../../mpiext/XCLFrame/Scheduling/Base/../../TaskManager/Base/../../c/queueMutexes.h \
  ../../../mpiext/XCLFrame/Scheduling/Base/../../TaskManager/Base/task.h \
  ../../../mpiext/XCLFrame/Scheduling/Base/../../TaskManager/Base/../../multiDeviceMgmt/deviceMgmt/Device.h \
  ../../../mpiext/XCLFrame/Scheduling/Base/../../multiDeviceMgmt/deviceMgmt/Device.h \
@@ -653,6 +654,8 @@ pinit.lo: pinit.c /usr/include/stdc-predef.h \
 /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mm_malloc.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h:
+
+../../../mpiext/XCLFrame/Scheduling/Base/../../TaskManager/Base/../../c/queueMutexes.h:
 
 ../../../mpiext/XCLFrame/Scheduling/Base/../../TaskManager/Base/task.h:
 

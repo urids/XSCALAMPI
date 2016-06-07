@@ -84,12 +84,11 @@ SUBDIRS = \
         etc \
         mpi/c \
         mpi/tool \
+        mpiext/XCLFrame/PoolManager \
         mpiext/XCLFrame/Scheduling \
         mpiext/XCLFrame/Scheduling/Benchmark \
         mpiext/XCLFrame/Scheduling/ManualSched \
   	 	mpiext/XCLFrame/multiDeviceMgmt \
-        mpiext/XCLFrame/c/binding/dvMgmt \
-        mpiext/XCLFrame/c/binding/tskMgmt \
         mpiext/XCLFrame/TaskManager \
         mpiext/XCLFrame/TaskManager/KernelMgmt \
         mpiext/XCLFrame/TaskManager/SynchMgmt \
@@ -159,7 +158,8 @@ libmpi_la_LIBADD = \
         $(MCA_ompi_FRAMEWORK_LIBS) \
         $(OMPI_MPIEXT_C_LIBS) \
         $(OMPI_LIBMPI_EXTRA_LIBS) \
-        $(top_ompi_builddir)/ompi/mpiext/XCLFrame/Scheduling/libscheduling.la
+        $(top_ompi_builddir)/ompi/mpiext/XCLFrame/Scheduling/libscheduling.la \
+        $(top_ompi_builddir)/ompi/mpiext/XCLFrame/PoolManager/libpoolManager.la        
         
 ##        $(top_ompi_builddir)/ompi/mpiext/XCLFrame/DataManager/libdataManager.la
         
@@ -180,7 +180,7 @@ libmpi_la_DEPENDENCIES = $(libmpi_la_LIBADD)
 libmpi_la_LDFLAGS = \
        -version-info $(libmpi_so_version) \
         $(OMPI_LIBMPI_EXTRA_LDFLAGS) \
-        -Wl,-rpath,$(libdir)/XCLFrame/binding \
+        -Wl,-rpath,$(libdir)/XCLFrame/PoolManager \
         -Wl,-rpath,$(libdir)/XCLFrame/multiDeviceMgmt \
         -Wl,-rpath,$(libdir)/XCLFrame/DataManager \
         -Wl,-rpath,$(libdir)/XCLFrame/DataManager/DataCopy \

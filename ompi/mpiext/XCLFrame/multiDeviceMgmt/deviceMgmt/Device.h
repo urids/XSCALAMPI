@@ -10,6 +10,7 @@
 
 #include "CL/cl.h"
 
+
 #ifndef DEBUG
 #define DEBUG  1
 #endif
@@ -26,6 +27,9 @@
 #define profile_print(fmt, ...) \
         do { if (PROFILE) fprintf(stderr, " AT: %s:%d:%s(): \n " fmt, __FILE__, \
                                 __LINE__, __func__, ##__VA_ARGS__); } while (0)
+
+
+
 
 
 typedef struct Device_st {

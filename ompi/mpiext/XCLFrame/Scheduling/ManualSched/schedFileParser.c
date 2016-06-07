@@ -156,6 +156,7 @@ int readTaskBinding(device_Task_Info* taskDevMap) {
 
 
 //--------------------------------------------------------------------
+//TODO: this parser must be done using LR Grammar parsing.
 
 int readAndParse() {
 

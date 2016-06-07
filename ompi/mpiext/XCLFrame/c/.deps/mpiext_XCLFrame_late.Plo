@@ -136,8 +136,7 @@ mpiext_XCLFrame_late.lo: mpiext_XCLFrame_late.c \
  ../../../../opal/mca/event/libevent2021/libevent/include/event2/thread.h \
  ../../../../ompi/mpiext/mpiext.h \
  ../../../../ompi/mpiext/XCLFrame/c/mpiext_XCLFrame_c.h \
- /usr/local/cuda-7.5/include/CL/cl.h \
- /usr/local/cuda-7.5/include/CL/cl_platform.h \
+ /usr/local/include/CL/cl.h /usr/local/include/CL/cl_platform.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/xmmintrin.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mmintrin.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mm_malloc.h \
@@ -152,9 +151,9 @@ mpiext_XCLFrame_late.lo: mpiext_XCLFrame_late.c \
  ../../../../ompi/mpiext/XCLFrame/c/../multiDeviceMgmt/deviceMgmt/deviceExploration.h \
  ../../../../ompi/mpiext/XCLFrame/c/../multiDeviceMgmt/deviceMgmt/localDevices.h \
  ../../../../ompi/mpiext/XCLFrame/c/../multiDeviceMgmt/deviceMgmt/../errorMgmt/errorHandling.h \
- taskMap.h binding/dvMgmt/PUsMap.h \
- ../multiDeviceMgmt/deviceMgmt/deviceExploration.h \
- ../TaskManager/Base/taskManager.h ../TaskManager/Base/task.h \
+ taskMap.h ../multiDeviceMgmt/deviceMgmt/deviceExploration.h \
+ ../TaskManager/Base/taskManager.h \
+ ../TaskManager/Base/../../c/queueMutexes.h ../TaskManager/Base/task.h \
  ../../../../ompi/include/mpi.h
 
 /usr/include/stdc-predef.h:
@@ -497,9 +496,9 @@ mpiext_XCLFrame_late.lo: mpiext_XCLFrame_late.c \
 
 ../../../../ompi/mpiext/XCLFrame/c/mpiext_XCLFrame_c.h:
 
-/usr/local/cuda-7.5/include/CL/cl.h:
+/usr/local/include/CL/cl.h:
 
-/usr/local/cuda-7.5/include/CL/cl_platform.h:
+/usr/local/include/CL/cl_platform.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/4.8/include/xmmintrin.h:
 
@@ -531,11 +530,11 @@ mpiext_XCLFrame_late.lo: mpiext_XCLFrame_late.c \
 
 taskMap.h:
 
-binding/dvMgmt/PUsMap.h:
-
 ../multiDeviceMgmt/deviceMgmt/deviceExploration.h:
 
 ../TaskManager/Base/taskManager.h:
+
+../TaskManager/Base/../../c/queueMutexes.h:
 
 ../TaskManager/Base/task.h:
 

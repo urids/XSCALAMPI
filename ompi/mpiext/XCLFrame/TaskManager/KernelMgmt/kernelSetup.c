@@ -5,9 +5,8 @@
 
 int createProgram(int l_selTask, char* srcPath,int numTasks){
 	int status;
-	//int i;
 	FILE *fp;
-	//for (i = 0; i < numTasks; i++) {
+
 		fp = fopen(srcPath, "r");
 		if (!fp) {
 			fprintf(stderr, "Can not find or load kernels source file.\n");
@@ -33,15 +32,13 @@ int createProgram(int l_selTask, char* srcPath,int numTasks){
 
 		chkerr(status, "Creating Program ", __FILE__, __LINE__);
 	fclose(fp);
-	//}
 
 	return status;
 }
 
 int buildProgram(int l_selTask, int numTasks) {
 	int status;
-	//int i;
-	//for (i = 0; i < numTasks; i++) {
+
 		status = clBuildProgram(l_taskList[l_selTask].CLprogram[0], 1,
 				&l_taskList[l_selTask].device[0].deviceId, NULL, NULL, NULL);
 
@@ -62,7 +59,6 @@ int buildProgram(int l_selTask, int numTasks) {
 		}
 
 		chkerr(status, "Building Program ", __FILE__, __LINE__);
-	//}
 
 	return status;
 }
@@ -108,7 +104,6 @@ int setKernelmemObj(int seltask,int numparameter,int paramSize,int trayIdx){
 	//for (i = 0; i < numTasks; i++) {
 		int myRack=l_taskList[seltask].Rack;
 	debug_print("\n Debug: setting cl_mem arg: %d in task %d from rack: [%d] tray:[%d] \n", numparameter, seltask,myRack,trayIdx);
-
 		status = clSetKernelArg(l_taskList[seltask].kernel[0].kernel, numparameter,
 				sizeof(cl_mem), &l_taskList[seltask].device[0].memHandler[myRack][trayIdx]);
 	chkerr(status, "error at: Setting entity buffer Arg.", __FILE__, __LINE__);
@@ -122,8 +117,11 @@ int setKernelArgs(int seltask,int numparameter,int paramSize,void* paramValue){
 
 	//for (i = 0; i < numTasks; i++) {
 		debug_print("\n Debug: setting arg: %d in task %d \n", numparameter, seltask);
+
 		status = clSetKernelArg(l_taskList[seltask].kernel[0].kernel, numparameter,
 				paramSize, (void *) paramValue);
+
+
 		chkerr(status, "error at: Setting other kernel Args", __FILE__,	__LINE__);
 	//}
 
@@ -231,11 +229,15 @@ void * enqueTaskReq(void *args) {
 
 	}
 	else{
+		//TODO: Only one thread must enqueue at time (concurrency).
+		//MUST USE multiple mutex to enqueue procedures involves different queues (devices).
+
 		status = clEnqueueNDRangeKernel(l_args->th_queue, l_args->th_kernel, l_args->workDim, NULL,
 				l_args->globalThreads, l_args->localThreads, 0, NULL,
 				NULL);
 		clFlush(l_args->th_queue);
 		clFinish(l_args->th_queue);
+
 	}
 	//chkerr(status, "Enqueuing Kernels ", __FILE__, __LINE__);
 	//debug_print("Enqueuing Kernel successful..\n");
@@ -257,6 +259,8 @@ if(selTask==-1){ // -1 means all tasks must enqueue this kernel.
 
 	status = clEnqueueNDRangeKernel(l_taskList[i].device[0].queue, l_taskList[i].kernel[0].kernel, 1, NULL,
 			&globalThreads, &localThreads, 0, NULL, &kernelProfileEvent);
+
+
 	chkerr(status, "Enqueuing Kernels ", __FILE__, __LINE__);
 
 	debug_print("Enqueuing Kernel successful..\n");
@@ -271,13 +275,12 @@ if(selTask==-1){ // -1 means all tasks must enqueue this kernel.
 	#endif //if PROFILE
 	}
 
-}else{
+}else{ //sel task != -1
 
 	int myRank;
 	MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
+	//cl_event kernelProfileEvent;
 
-
-	cl_event kernelProfileEvent;
 #if PROFILE
 	cl_ulong time_start, time_end;
 	double total_time;
@@ -296,39 +299,48 @@ if(selTask==-1){ // -1 means all tasks must enqueue this kernel.
 		 *
 		 * */
 
-		if(thds==NULL)
+		/*--if(thds==NULL)
 			thds=(pthread_t*)malloc(numTasks*sizeof(pthread_t));
 
 		if(th_Args==NULL)
-			th_Args=(enqueueArgs_t **)malloc(numTasks*sizeof(enqueueArgs_t*));
+			th_Args=(enqueueArgs_t **)malloc(numTasks*sizeof(enqueueArgs_t*)); --*/
 
 		/*pthread_attr_t attr;
 		pthread_attr_init(&attr);
 		pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);*/
 
-		int ret;
-		static int numReq=0;
-
+/*--		int ret;
 		time_t rawtime;
 		struct tm * timeinfo;
 		time(&rawtime);
-		timeinfo = localtime(&rawtime);
+		timeinfo = localtime(&rawtime);--*/
 
 
-
-		th_Args[selTask]=(enqueueArgs_t*)malloc(sizeof(enqueueArgs_t));
+		/*--th_Args[selTask]=(enqueueArgs_t*)malloc(sizeof(enqueueArgs_t));
 		th_Args[selTask]->globalThreads=globalThreads;
 		th_Args[selTask]->localThreads=localThreads;
 		th_Args[selTask]->workDim=workDim;
 		//th_Args[selTask]->kernelProfileEvent=kernelProfileEvent;
 		th_Args[selTask]->th_queue=l_taskList[selTask].device[0].queue;
 		th_Args[selTask]->th_kernel=l_taskList[selTask].kernel[0].kernel;
-		th_Args[selTask]->g_selTsk=selTask; //TODO this is not the global, in fact is the local =(
+		th_Args[selTask]->g_selTsk=selTask; //TODO this is not the global, in fact is the local =( --*/
 
+		enqueueArgs_t* th_Args= (enqueueArgs_t*)malloc(sizeof(enqueueArgs_t));
 
-		//printf("task: %d Requesting at time: %s \n",numReq++,asctime(timeinfo));
-	  	pthread_create(&thds[selTask], NULL, enqueTaskReq, (void*) th_Args[selTask]);
+		th_Args->globalThreads=globalThreads;
+		th_Args->localThreads=localThreads;
+		th_Args->workDim=workDim;
+		//th_Args->kernelProfileEvent=kernelProfileEvent;
+		th_Args->th_queue=l_taskList[selTask].device[0].queue;
+		th_Args->th_kernel=l_taskList[selTask].kernel[0].kernel;
+		th_Args->g_selTsk=selTask;
+
+		enqueTaskReq((void*)th_Args);
+		//pthread_create(&thds[selTask], NULL, enqueTaskReq, (void*) th_Args[selTask]);
 	  	debug_print(" -- task %d requested in rank: %d -- \n",selTask,myRank);
+
+
+
 	  	//printf("task: %d rank  Requested at time: %s \n",(numReq++),asctime(timeinfo));
 		//pthread_attr_destroy(&attr);
 
@@ -337,6 +349,9 @@ if(selTask==-1){ // -1 means all tasks must enqueue this kernel.
 				&globalThreads, &localThreads, 0, NULL, &kernelProfileEvent);
 		chkerr(status, "Enqueuing Kernels ", __FILE__, __LINE__);
 		  debug_print("Enqueuing Kernel requested..\n");*/
+
+
+
 
 #if PROFILE
 		clWaitForEvents(1 , &kernelProfileEvent);

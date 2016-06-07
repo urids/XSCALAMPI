@@ -12,10 +12,10 @@
 #include "dlfcn.h"
 
 #include "ompi/include/mpi.h"
-#include "../../c/binding/tskMgmt/tskMgmt.h"
+//#include "../../c/binding/tskMgmt/tskMgmt.h"
 #include "../../TaskManager/Base/taskManager.h"
 
-#include "entityInfo.h"
+#include "../Base/entityInfo.h"
 
 struct entityData_st{
 	int blockCount;

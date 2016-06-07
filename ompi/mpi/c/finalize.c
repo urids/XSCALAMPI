@@ -22,6 +22,8 @@
 #include "ompi/runtime/params.h"
 #include "ompi/errhandler/errhandler.h"
 
+//#include "/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/TaskManager/Base/task.h"
+
 #if OPAL_HAVE_WEAK_SYMBOLS && OMPI_PROFILING_DEFINES
 #pragma weak MPI_Finalize = PMPI_Finalize
 #endif
@@ -35,6 +37,7 @@ static const char FUNC_NAME[] = "MPI_Finalize";
 
 int MPI_Finalize(void)
 {
+	//finishThreads(l_numTasks);
     OPAL_CR_FINALIZE_LIBRARY();
 
     if (MPI_PARAM_CHECK) {

@@ -109,8 +109,8 @@ static int XCLFrame_init(void)
 
 static int XCLFrame_fini(void)
 {
-
-       return OMPI_SUCCESS;
+	finishThreads(l_numTasks);
+	return OMPI_SUCCESS;
 }
 
 /*

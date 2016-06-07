@@ -10,7 +10,7 @@ int fillGlobalTaskList(MPI_Comm comm){ //this function creates a local assignmen
 
 	g_taskList=(taskInfo*)malloc(g_numTasks*sizeof(taskInfo)); //TODO: find the space for deallocation.
 
-	int* RKS =(int*)malloc(numRanks*sizeof(int)); //RKS-> RanK Structure
+	int* RKS =(int*)malloc(numRanks*sizeof(int)); //RKS-> RanK Structure stores the localNumTask on each node
 	MPI_Allgather(&l_numTasks,1,MPI_INT,RKS,1,MPI_INT,comm);
 
 		for(i=0;i<g_numTasks;i++){
@@ -18,9 +18,10 @@ int fillGlobalTaskList(MPI_Comm comm){ //this function creates a local assignmen
 			g_taskList[i].r_rank=taskDevList[i].rank;
 		}
 
-		//This array serves to deal with separated decls.
+		//This array serves to deal with non consecutive task declarations.
  		int * myAssignedTasks=(int*)malloc(l_numTasks*sizeof(int));
 
+ 		//first each process fills myAssignedTasks with the global IDS assigned
  		for(i=0,j=0;i<g_numTasks;i++){
 			if(taskDevList[i].rank==myRank){
 				myAssignedTasks[j]=taskDevList[i].g_taskId;
@@ -33,19 +34,19 @@ int fillGlobalTaskList(MPI_Comm comm){ //this function creates a local assignmen
  			printf("%d  \n",myAssignedTasks[i]);
  		}*/
 
- 		//This array serves to interchange the myAssignedtasks array.
+
  		int* g_Assignments =(int*)malloc(g_numTasks*sizeof(int));
  		int displs[numRanks];
  		displs[0]=0;
  		for(i=1;i<numRanks;i++){
  			displs[i]=displs[i-1]+RKS[i-1];
  		}
- 		//
  		/*for(i=0;i<numRanks;i++){
  			printf("displ[%d]=%d ",i,displs[i]);
  		}
  		printf("\n");*/
 
+ 		//Then the processes interchange the myAssignedTasks.
  		MPI_Allgatherv(myAssignedTasks,l_numTasks,MPI_INT,g_Assignments,RKS,displs,MPI_INT,comm);
  		//
  		/*printf("globalAssignments array: ");
@@ -54,10 +55,14 @@ int fillGlobalTaskList(MPI_Comm comm){ //this function creates a local assignmen
  		}
  		printf("\n");*/
 
+ 		//Finally each process fill localID in the globalTask_List
+ 		// based on the amount of tasks allocated on each rank
  		int k=0;
-		for(i=0;i<numRanks;i++){
-			for(j=0;j<RKS[i];j++,k++){
-				g_taskList[g_Assignments[k]].l_taskIdx=j;
+		for(i=0;i<numRanks;i++){ //for each rank
+			for(j=0;j<RKS[i];j++,k++){ //j is the counter of the next local assignment, and k goes through the global concatenation
+				g_taskList[g_Assignments[k]].l_taskIdx=j; // g_Assignments[k] is an array concatenating local
+														  // array assignments, i.e the j-th entry stores
+														  // the global ID of a task allocated in some rank.
 			}
 		}
 
@@ -76,9 +81,10 @@ int fillLocalTaskList(MPI_Comm comm){
 	MPI_Comm_rank(comm, &myRank);
 	MPI_Comm_size(comm,&numRanks);
 
-    l_numTasks=0; // this initialization is very important to reset after the benchmark.
+    l_numTasks=0; // this initialization is very important to reset the local num tasks after the benchmark.
+    			  //TODO: maybe must be moved just after the exec of the benchmark.
 
-	//int l_numTasks=0; !!!!!!!!!!!!!!! BUT NEVER DEFINE GLOBAL VARS INSIDE A FUNCTION because BECOMES LOCAL COPY.
+	//int l_numTasks=0; !!!!!!!!!!!!!!! YOU MUST NEVER DEFINE GLOBAL VARS WITHIN FUNCTION BODY because it BECOMES LOCAL COPY.
 	//XCLtask * l_taskList=NULL; !!!!!!!THE FUNCTION WORKS WITH A LOCAL COPY ='(..
 
 	for(i=0;i<g_numTasks;i++){ //EACH PROCESS: read the whole tasDevList created when parsing to fill his # of tasks

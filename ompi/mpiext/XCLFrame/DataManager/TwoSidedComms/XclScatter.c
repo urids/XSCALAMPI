@@ -8,7 +8,7 @@
 int MPIentityTypeSize;
 int ePerRank;
 
-int OMPI_commit_EntityType(int blockcount, int* blocklen, MPI_Aint* displacements, MPI_Datatype* basictypes, MPI_Datatype * newDatatype){
+int _OMPI_commit_EntityType(int blockcount, int* blocklen, MPI_Aint* displacements, MPI_Datatype* basictypes, MPI_Datatype * newDatatype){
 
 	MPI_Type_create_struct(blockcount, blocklen, displacements, basictypes, newDatatype);
 	MPI_Type_commit(newDatatype);
@@ -26,7 +26,7 @@ int OMPI_commit_EntityType(int blockcount, int* blocklen, MPI_Aint* displacement
 //int OMPI_XclScatter(MPI_Comm communicator, const char* fileName, MPI_Datatype MPIentityType, void **entitiesbuffer,int size, int* ePerRank, cl_mem * memObjects){
 
 //count is of type pointer because in this same address we could return the number of entities per Rank =)!!.
-int OMPI_XclScatter(const char* datafileName, int* count, MPI_Datatype MPIentityType, void* hostbuffer, int trayIdx, MPI_Comm comm){
+int _OMPI_XclScatter(const char* datafileName, int* count, MPI_Datatype MPIentityType, void* hostbuffer, int trayIdx, MPI_Comm comm){
 	int i,j;
 	int commsize,myRank;
 	MPI_Status status;
@@ -85,7 +85,7 @@ int OMPI_XclScatter(const char* datafileName, int* count, MPI_Datatype MPIentity
 
 
 //hostbuffer is a pointer to pointer to return a copy of the buffer (if user requests that.)!!
-int OMPI_XclGather(int trayIdx, int count, MPI_Datatype MPIentityType,void **hostbuffer,
+int _OMPI_XclGather(int trayIdx, int count, MPI_Datatype MPIentityType,void **hostbuffer,
 				   const char* datafileName , MPI_Comm comm){
 	int i, j;
 	int commsize, myRank;

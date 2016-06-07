@@ -13,9 +13,11 @@
 #include <string.h>
 #include <stdio.h>
 #include <math.h>
+#include "pthread.h"
 #include "../../multiDeviceMgmt/deviceMgmt/Device.h"
 #include "../../TaskManager/Base/task.h"
 #include "../../c/ErrorHandling/errorHandling.h"
+
 
 extern int numEntitiesInHost;
 extern float entitiesPerTask;
