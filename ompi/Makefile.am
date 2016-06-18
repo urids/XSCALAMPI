@@ -94,6 +94,7 @@ SUBDIRS = \
         mpiext/XCLFrame/TaskManager/SynchMgmt \
         mpiext/XCLFrame/DataManager \
         mpiext/XCLFrame/DataManager/DataCopy \
+        mpiext/XCLFrame/DataManager/CollectiveOps \
         mpiext/XCLFrame/DataManager/BufferMgmt \
         $(OMPI_MPIEXT_C_DIRS) \
         mpi/fortran/base/ \
@@ -185,6 +186,7 @@ libmpi_la_LDFLAGS = \
         -Wl,-rpath,$(libdir)/XCLFrame/DataManager \
         -Wl,-rpath,$(libdir)/XCLFrame/DataManager/DataCopy \
         -Wl,-rpath,$(libdir)/XCLFrame/DataManager/BufferMgmt \
+        -Wl,-rpath,$(libdir)/XCLFrame/DataManager/CollectiveOps \
         -Wl,-rpath,$(libdir)/XCLFrame/TaskManager \
         -Wl,-rpath,$(libdir)/XCLFrame/TaskManager/KernelMgmt \
         -Wl,-rpath,$(libdir)/XCLFrame/TaskManager/SynchMgmt \

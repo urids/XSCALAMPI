@@ -24,12 +24,13 @@ int initNewBuffer(int taskIdx, int trayIdx, int bufferSize ){
 	//if (trayIdx==0 && memIdx==0 ){ //if this is the first tray to be initialized.
 	debug_print("task %d has -%d- trays \n",taskIdx,memIdx);
 	if (memIdx==0){//TODO: WARNING!!!!! memindx is cero on rack? <- This is BUG DETECTED
-			l_taskList[taskIdx].trayInfo = malloc(sizeof(XCLTrayInfo));
+			l_taskList[taskIdx].trayInfo = malloc((trayIdx+1)*sizeof(XCLTrayInfo));
 			l_taskList[taskIdx].device[0].memHandler[myRack] = malloc(trayIdx+1 * sizeof(cl_mem)); //init the first device mem space.
 			l_taskList[taskIdx].numTrays=trayIdx+1;
 
 			int j=0;
 			for(j=0;j<trayIdx+1;j++){
+			//(l_taskList[taskIdx].trayInfo[j])->size=bufferSize;
 			l_taskList[taskIdx].device[0].memHandler[myRack][j] = clCreateBuffer(
 						l_taskList[taskIdx].device[0].context,
 						CL_MEM_READ_WRITE,
@@ -57,6 +58,8 @@ int initNewBuffer(int taskIdx, int trayIdx, int bufferSize ){
 		}
 		//free(tmpMemHandler); TODO: is it now ready to free?
 
+		l_taskList[taskIdx].trayInfo = realloc(l_taskList[taskIdx].trayInfo,(trayIdx+1)*sizeof(XCLTrayInfo));
+		//(l_taskList[taskIdx].trayInfo[trayIdx])->size=bufferSize;
 		l_taskList[taskIdx].device[0].memHandler[myRack][trayIdx] = clCreateBuffer(
 								l_taskList[taskIdx].device[0].context,
 								CL_MEM_READ_WRITE | CL_MEM_ALLOC_HOST_PTR, //best practice
@@ -91,7 +94,8 @@ int initNewBuffer(int taskIdx, int trayIdx, int bufferSize ){
 
 		chkerr(status, "Error at: Creating new Mem Buffer", __FILE__, __LINE__);
 
-	}
+	} //Ok if the tray exists there is no need to create another but
+	  //We must review if the size is appropiated or resize it.
 
 	//TODO: missing trayInfo space allocation
     //l_taskList[taskIdx].trayInfo->size = bufferSize;

@@ -9,6 +9,7 @@
 #define LOCALDEVICES_H_
 #include "Device.h"
 
+
 extern cpudev*   cpu;
 extern gpudev*   gpu;
 extern acceldev* accel;

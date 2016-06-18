@@ -13,6 +13,7 @@
 SUBDIRS = DataManager \
 		DataManager/DataCopy \
 		DataManager/BufferMgmt \
+		DataManager/CollectiveOps \
 		c \
 		PoolManager \
 		multiDeviceMgmt \

@@ -32,11 +32,11 @@ void* readerUNSubscribe(void* Args){
 	reader_Sts[tID]=0;
 	return NULL;
 }
-
+int * counters;
 void* taskThrdDoWk(void *threadid)
 {
 	int thID;
-	thID = (long)threadid;
+	thID = (int)(long)threadid;
 	node_t* queueNode=malloc(sizeof(node_t));
 
 	do{
@@ -49,14 +49,14 @@ void* taskThrdDoWk(void *threadid)
 		if(exitSignal[thID] && SubRoutinesQueues[thID]==NULL){ //if required and there's no more work EXIT
 			pthread_exit(NULL);
 		}
-
+		printf("thd:%d -%d\n",thID,counters[thID]);
 		//avoids concurrence issues when retrieving a tasks against the process thread.
 		pthread_mutex_lock(&prodConsExcl[thID]);
 			pop(&SubRoutinesQueues[thID],&queueNode);//retrieve the subroutine
 		pthread_mutex_unlock(&prodConsExcl[thID]);
 
 		queueNode->function(queueNode->Args);
-
+		counters[thID]++;
 	} while(1);
 }
 
@@ -74,7 +74,7 @@ int addSubRoutine(int thdID, void*(*fp)(void*) ,void* Args){
 
 void insertThreads(int numThds){
 	static int currNumThds=0;
-
+	counters=calloc(numThds,sizeof(int));
 	if(currNumThds==0){
 		//each thread requires a semaphore, a queue, and a mutex.
 		SubRoutinesQueues=malloc(numThds*sizeof(queue));

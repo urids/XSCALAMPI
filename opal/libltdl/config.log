@@ -336,7 +336,7 @@ configure:10914: checking how to hardcode library paths into programs
 configure:10939: result: immediate
 configure:11033: checking for shl_load
 configure:11033: gcc -o conftest -g -O2   conftest.c  >&5
-/tmp/ccXPHPkC.o: In function `main':
+/tmp/ccNy6jUD.o: In function `main':
 /home/uriel/Dev/mpisrc/XSCALAMPI/opal/libltdl/conftest.c:57: undefined reference to `shl_load'
 collect2: error: ld returned 1 exit status
 configure:11033: $? = 1
@@ -448,7 +448,7 @@ configure: failed program was:
 configure:11071: result: no
 configure:11076: checking for dlopen
 configure:11076: gcc -o conftest -g -O2   conftest.c  >&5
-/tmp/ccVOsn6F.o: In function `main':
+/tmp/ccq0sBoC.o: In function `main':
 /home/uriel/Dev/mpisrc/XSCALAMPI/opal/libltdl/conftest.c:57: undefined reference to `dlopen'
 collect2: error: ld returned 1 exit status
 configure:11076: $? = 1
@@ -524,7 +524,7 @@ configure:11316: $? = 0
 configure:11334: result: yes
 configure:11339: checking whether a statically linked program can dlopen itself
 configure:11419: gcc -o conftest -g -O2  -DHAVE_DLFCN_H  -Wl,--export-dynamic -static conftest.c -ldl  >&5
-/tmp/ccSV7e4S.o: In function `main':
+/tmp/ccPsW5PL.o: In function `main':
 /home/uriel/Dev/mpisrc/XSCALAMPI/opal/libltdl/configure:11398: warning: Using 'dlopen' in statically linked applications requires at runtime the shared libraries from the glibc version used for linking
 /usr/bin/ld: dynamic STT_GNU_IFUNC symbol `strcmp' with pointer equality in `/usr/lib/gcc/x86_64-linux-gnu/4.8/../../../x86_64-linux-gnu/libc.a(strcmp.o)' can not be used when making an executable; recompile with -fPIE and relink with -pie
 collect2: error: ld returned 1 exit status
@@ -546,7 +546,7 @@ configure:11635: checking for the default library search path
 configure:11642: result: /lib /usr/lib /usr/lib/x86_64-linux-gnu/libfakeroot /lib/i386-linux-gnu /usr/lib/i386-linux-gnu /lib/i686-linux-gnu /usr/lib/i686-linux-gnu /opt/intel/opencl-1.2-3.2.1.16712/lib64 /usr/local/lib /lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/mesa-egl /usr/lib/nvidia-304 /usr/lib32/nvidia-304 /usr/lib/x86_64-linux-gnu/mir/clientplatform/mesa /lib32 /usr/lib32 /libx32 /usr/libx32 
 configure:11672: checking for library containing dlopen
 configure:11703: gcc -o conftest -g -O2   conftest.c  >&5
-/tmp/ccDaeDsX.o: In function `main':
+/tmp/ccdiWI3S.o: In function `main':
 /home/uriel/Dev/mpisrc/XSCALAMPI/opal/libltdl/conftest.c:37: undefined reference to `dlopen'
 collect2: error: ld returned 1 exit status
 configure:11703: $? = 1
@@ -1103,7 +1103,7 @@ configure:12437: $? = 0
 configure:12437: result: yes
 configure:12456: checking for strlcat
 configure:12456: gcc -o conftest -g -O2   conftest.c -ldl  >&5
-/tmp/ccAqYYkB.o: In function `main':
+/tmp/ccU6V66H.o: In function `main':
 /home/uriel/Dev/mpisrc/XSCALAMPI/opal/libltdl/conftest.c:79: undefined reference to `strlcat'
 collect2: error: ld returned 1 exit status
 configure:12456: $? = 1
@@ -1193,7 +1193,7 @@ configure: failed program was:
 configure:12456: result: no
 configure:12456: checking for strlcpy
 configure:12456: gcc -o conftest -g -O2   conftest.c -ldl  >&5
-/tmp/cc70vMtH.o: In function `main':
+/tmp/ccMLvqkK.o: In function `main':
 /home/uriel/Dev/mpisrc/XSCALAMPI/opal/libltdl/conftest.c:79: undefined reference to `strlcpy'
 collect2: error: ld returned 1 exit status
 configure:12456: $? = 1

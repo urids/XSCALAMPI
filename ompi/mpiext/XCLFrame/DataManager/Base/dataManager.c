@@ -1,7 +1,23 @@
 #include "dataManager.h"
 
 
-//int _OMPI_XclSend(int trayIdx, int count, MPI_Datatype MPIentityType, int l_src_task, int g_dest_task, int TAG, MPI_Comm comm){
+int _OMPI_commit_EntityType(int blockcount, int* blocklen, MPI_Aint* displacements, MPI_Datatype* basictypes, MPI_Datatype * newDatatype){
+
+	MPI_Type_create_struct(blockcount, blocklen, displacements, basictypes, newDatatype);
+	MPI_Type_commit(newDatatype);
+
+	entityData_t entityData;
+
+	entityData.blockCount=blockcount;
+	entityData.blocklen=blocklen;
+	entityData.displacements=displacements;
+	entityData.basictypes=basictypes;
+	entityData.newDatatype=newDatatype;
+
+	return MPI_SUCCESS;
+}
+
+//int _OMPI_XclSend(int trayIdx, int count, MPI_Datatype MPIentityType, int l_src_task, int g_dest_task, int tgID, MPI_Comm comm){
 int _OMPI_XclSend(void* Args){
 	//1.- unwrap Args.
 
@@ -11,7 +27,7 @@ int _OMPI_XclSend(void* Args){
 	MPI_Datatype MPIentityType=send_Args->MPIentityType;
 	int l_src_task   =send_Args->l_src_task;
 	int g_dest_task  =send_Args->g_dest_task;
-	int TAG			 =send_Args->TAG;
+	int tgID			 =send_Args->tgID;
 	MPI_Comm comm	 =send_Args->comm;
 
 
@@ -41,22 +57,22 @@ int _OMPI_XclSend(void* Args){
 	}
 
 	//GET the data from the device.
-	pthread_mutex_lock(&deviceQueueMutex);
+
 	(*readBuffer)(l_src_task, trayIdx, tmpBuffSz, tmpBuffData);
-	pthread_mutex_unlock(&deviceQueueMutex);
+
 	//Send to the appropriate rank.
 	int dest_rank = g_taskList[g_dest_task].r_rank;
 	int ack;
 	MPI_Request request;
 	MPI_Status status;
 	int flag=0;
-	MPI_Issend(tmpBuffData, count, MPIentityType, dest_rank, TAG, comm, &request);
+	MPI_Issend(tmpBuffData, count, MPIentityType, dest_rank, tgID, comm, &request);
 	while (!flag)
 	{
 		MPI_Test(&request, &flag, &status);
 	}
 
-	//MPI_Send(tmpBuffData, count, MPIentityType, dest_rank, TAG, comm);
+	//MPI_Send(tmpBuffData, count, MPIentityType, dest_rank, tgID, comm);
 
 	//printf("hello there user, I've just started this send\n\
 	and I'm having a good time relaxing.\n");
@@ -70,7 +86,7 @@ int _OMPI_XclSend(void* Args){
 }
 
 
-//int _OMPI_XclRecv(int trayIdx, int count, MPI_Datatype MPIentityType, int g_src_task, int l_recv_task, int TAG,MPI_Comm comm){
+//int _OMPI_XclRecv(int trayIdx, int count, MPI_Datatype MPIentityType, int g_src_task, int l_recv_task, int tgID,MPI_Comm comm){
 int _OMPI_XclRecv(void* Args){
 	//1.- unwrap the Args.
 	struct Args_Recv_st * recv_Args=(struct Args_Recv_st*)Args;
@@ -80,7 +96,7 @@ int _OMPI_XclRecv(void* Args){
 	MPI_Datatype MPIentityType = recv_Args->MPIentityType;
 	int g_src_task   =recv_Args->g_src_task;
 	int l_recv_task  =recv_Args->l_recv_task;
-	int TAG			 =recv_Args->TAG;
+	int tgID			 =recv_Args->tgID;
 	MPI_Comm comm	 =recv_Args->comm;
 
 	//2.-The task thread makes the calls to the components
@@ -95,16 +111,16 @@ int _OMPI_XclRecv(void* Args){
 	MPI_Request request;
 	MPI_Status status;
 	int flag=0;
-	MPI_Irecv(tmpBuffData, count, MPIentityType, src_rank, TAG, comm,&request);
+	MPI_Irecv(tmpBuffData, count, MPIentityType, src_rank, tgID, comm,&request);
 	MPI_Test(&request, &flag, &status);
 	while (!flag)
 	{
 		MPI_Test(&request, &flag, &status);
 	}
 
-	//MPI_Recv(tmpBuffData, count, MPIentityType, src_rank, TAG, comm,NULL);
+	//MPI_Recv(tmpBuffData, count, MPIentityType, src_rank, tgID, comm,NULL);
 
-	//MPI_Recv(tmpBuffData, count, MPIentityType, src_rank, TAG, comm,MPI_STATUS_IGNORE);
+	//MPI_Recv(tmpBuffData, count, MPIentityType, src_rank, tgID, comm,MPI_STATUS_IGNORE);
 	//printf("hello there user, I've just started this receive\n\
 	on, and I'm having a good time relaxing.\n");
 	//MPI_Send(&ack,1,MPI_INT,0,88,comm);
@@ -131,25 +147,24 @@ int _OMPI_XclRecv(void* Args){
 		exit(1);
 	}
 
-
-	pthread_mutex_lock(&deviceQueueMutex);
 	(*initNewBuffer)(l_recv_task, trayIdx, tmpBuffSz);
 	(*writeBuffer)(l_recv_task, trayIdx, tmpBuffSz, tmpBuffData);
-	pthread_mutex_unlock(&deviceQueueMutex);
+
 
 	return 0;
 }
 
 
 
-int _OMPI_XclSendRecv(int src_task, int src_trayIdx,
+
+
+int  _OMPI_XclSendRecv(int src_task, int src_trayIdx,
 		int dest_task, int dest_trayIdx,
 		int count, MPI_Datatype MPIentityType,
-		int TAG, MPI_Comm comm) {
+		int tgID, MPI_Comm comm) {
 
-	//int TAG = 0;
-	int myRank;
-	MPI_Comm_rank(comm, &myRank);
+
+
 
 
 	/*
@@ -203,7 +218,7 @@ int _OMPI_XclSendRecv(int src_task, int src_trayIdx,
 	} else { //perform the copy using MPI calls
 	 */
 
-	if (myRank == g_taskList[src_task].r_rank) {
+	/*--	if (myRank == g_taskList[src_task].r_rank) {
 		int l_src_task = g_taskList[src_task].l_taskIdx;
 
 		//3.- Wrap the setProcedure_Args_st with the call parameters (wrap usually done in the c_Interface.c )
@@ -213,14 +228,14 @@ int _OMPI_XclSendRecv(int src_task, int src_trayIdx,
 		send_Args->MPIentityType=MPIentityType;
 		send_Args->l_src_task=l_src_task;
 		send_Args->g_dest_task=dest_task;
-		send_Args->TAG=TAG;
+		send_Args->tgID=tgID;
 		send_Args->comm=comm;
 
 		//4.- Delegate the call to the thread.
 		addSubRoutine(l_src_task, _OMPI_XclSend, (void*)send_Args);
 	}
 
-	//_OMPI_XclSend(src_trayIdx, count, MPIentityType, src_task, dest_task,TAG, comm);
+	//_OMPI_XclSend(src_trayIdx, count, MPIentityType, src_task, dest_task,tgID, comm);
 
 
 	//3.- Wrap the setProcedure_Args_st with the call parameters
@@ -233,78 +248,218 @@ int _OMPI_XclSendRecv(int src_task, int src_trayIdx,
 		recv_Args->MPIentityType=MPIentityType;
 		recv_Args->g_src_task=src_task;
 		recv_Args->l_recv_task=l_dst_task;
-		recv_Args->TAG=TAG;
+		recv_Args->tgID=tgID;
 		recv_Args->comm=comm;
 
 		//4.- Delegate the call to the thread.
 		addSubRoutine(l_dst_task, _OMPI_XclRecv, (void*)recv_Args);
 
 	}
-	//_OMPI_XclRecv(dest_trayIdx, count, MPIentityType, src_task,	dest_task, TAG, comm);
+	//_OMPI_XclRecv(dest_trayIdx, count, MPIentityType, src_task,	dest_task, tgID, comm);
 	//} //END mpi involved data transfer calls
+--*/
 
 
-	//EXPERIMENTAL PART WITHOUT MPI
-	/*--
-	void* tmpBuffData;
-	MPI_Type_size(MPIentityType, &MPIentityTypeSize);//TODO:  this might conflict with scatter measure.
-	int tmpBuffSz = count * MPIentityTypeSize;
-	tmpBuffData = (void*) malloc(tmpBuffSz);
 
-	void * buffHandle = NULL;
-	int (*readBuffer)(int taskId, int bufferSize, int memIdx,
-			void * entitiesbuffer);
+/**--	//READING PART.
+
+	struct Args_waitSubroutine_st * waitSRCSubroutine_Args=malloc(sizeof(struct Args_waitSubroutine_st));
+	waitSRCSubroutine_Args->semaphore=malloc(sizeof(sem_t));
+	waitSRCSubroutine_Args->semaphore=&EMPTY;
+	addSubRoutine(l_src_task, waitSubroutine, (void*)waitSRCSubroutine_Args);
+
+
+	struct Args_ReadTray_st * readTray_Args=malloc(sizeof(struct Args_ReadTray_st));
+	readTray_Args->l_taskIdx=l_src_task;
+	readTray_Args->trayIdx=src_trayIdx;
+	readTray_Args->bufferSize=tmpCpyBuffSz;
+	readTray_Args->hostBuffer=tmpCpyBuffData;
+	addSubRoutine(l_src_task, _OMPI_XclReadTray, (void*)readTray_Args);
+
+	struct Args_signalSubroutine_st * signalSRCSubroutine_Args=malloc(sizeof(struct Args_signalSubroutine_st));
+	signalSRCSubroutine_Args->semaphore=malloc(sizeof(sem_t));
+	signalSRCSubroutine_Args->semaphore=&FULL;
+	addSubRoutine(l_src_task, signalSubroutine, (void*)signalSRCSubroutine_Args);
+
+
+	//WRITING PART.
+
+	struct Args_waitSubroutine_st * waitDSTSubroutine_Args=malloc(sizeof(struct Args_waitSubroutine_st));
+	waitDSTSubroutine_Args->semaphore=malloc(sizeof(sem_t));
+	waitDSTSubroutine_Args->semaphore=&FULL;
+	addSubRoutine(l_dst_task, waitSubroutine, (void*)waitDSTSubroutine_Args);
+
+	struct Args_WriteTray_st * writeTray_Args=malloc(sizeof(struct Args_WriteTray_st));
+	writeTray_Args->l_taskIdx=l_dst_task;
+	writeTray_Args->trayIdx=dest_trayIdx;
+	writeTray_Args->bufferSize=tmpCpyBuffSz;
+	writeTray_Args->hostBuffer=tmpCpyBuffData;
+	addSubRoutine(l_dst_task, _OMPI_XclWriteTray, (void*)writeTray_Args);
+
+	struct Args_signalSubroutine_st * signalDSTSubroutine_Args=malloc(sizeof(struct Args_signalSubroutine_st));
+	signalDSTSubroutine_Args->semaphore=malloc(sizeof(sem_t));
+	signalDSTSubroutine_Args->semaphore=&EMPTY;
+	addSubRoutine(l_dst_task, signalSubroutine, (void*)signalDSTSubroutine_Args);
+	--**/
+
+	return 0;
+}
+
+int _interNode(int src_task, int src_trayIdx,
+		int dest_task, int dest_trayIdx,
+		int count, MPI_Datatype MPIentityType,
+		int tgID, MPI_Comm comm){
+	int myRank;
+	MPI_Comm_rank(comm, &myRank);
+
+	if(myRank == g_taskList[src_task].r_rank){ //I'm Src process
+
+	}else{ //I'm dst process
+
+	}
+	return 0;
+}
+
+int _interDevCpyProducer(void* Args){
+
+	void * dataCopyHandle = NULL;
+	int (*interDevCpyProducer)(void* Args);
 	char *error;
-	buffHandle = dlopen("libbufferMgmt.so", RTLD_NOW);
 
-	if (!buffHandle) {
-		perror("library not found or could not be opened AT: OMPI_XclSend");
-		exit(1);
+	dataCopyHandle = dlopen("libdataCopy.so", RTLD_NOW);
+	if (!dataCopyHandle) {
+		perror("library data  Copy not found or could not be opened AT: _interDevCpyProducer");
+		exit(-1);
 	}
 
-	readBuffer = dlsym(buffHandle, "readBuffer");
+	interDevCpyProducer = dlsym(dataCopyHandle, "interDevCpyProducer");
 	if ((error = dlerror()) != NULL) {
 		printf("err: AT %d , %d ", __FUNCTION__ ,__FILE__);
 		fputs(error, stderr);
 		exit(1);
 	}
 
-	//GET the data from the device.
-	pthread_mutex_lock(&deviceQueueMutex);
-	(*readBuffer)(l_src_task, trayIdx, tmpBuffSz, tmpBuffData);
-	pthread_mutex_unlock(&deviceQueueMutex);
+	interDevCpyProducer(Args);
 
-	//2.- Writing Part:
+	return 0;
 
-	int (*initNewBuffer)(int taskIdx, int trayIdx, int bufferSize);
-	int (*writeBuffer)(int taskId, int trayIdx, int bufferSize,
-			void * hostBuffer);
+}
 
-	initNewBuffer = dlsym(buffHandle, "initNewBuffer");
-	writeBuffer = dlsym(buffHandle, "writeBuffer");
+int _interDevCpyConsumer(void* Args){
+
+	void * dataCopyHandle = NULL;
+	int (*interDevCpyConsumer)(void* Args);
+	char *error;
+
+	dataCopyHandle = dlopen("libdataCopy.so", RTLD_NOW);
+	if (!dataCopyHandle) {
+		perror("library data  Copy not found or could not be opened AT: _intraDevCpyProducer");
+		exit(-1);
+	}
+
+	interDevCpyConsumer = dlsym(dataCopyHandle, "interDevCpyConsumer");
 	if ((error = dlerror()) != NULL) {
+		printf("err: AT %d , %d ", __FUNCTION__ ,__FILE__);
 		fputs(error, stderr);
 		exit(1);
 	}
 
-
-	pthread_mutex_lock(&deviceQueueMutex);
-	(*initNewBuffer)(l_recv_task, trayIdx, tmpBuffSz);
-	(*writeBuffer)(l_recv_task, trayIdx, tmpBuffSz, tmpBuffData);
-	pthread_mutex_unlock(&deviceQueueMutex);
-	--*/
-
+	interDevCpyConsumer(Args);
 
 	return 0;
+
 }
+
+
+int _intraDevCpyProducer(void* Args){
+
+	void * dataCopyHandle = NULL;
+	int (*intraDevCpyProducer)(void* Args);
+	char *error;
+
+	dataCopyHandle = dlopen("libdataCopy.so", RTLD_NOW);
+	if (!dataCopyHandle) {
+		perror("library data  Copy not found or could not be opened AT: _intraDevCpyProducer");
+		exit(-1);
+	}
+
+	intraDevCpyProducer = dlsym(dataCopyHandle, "intraDevCpyProducer");
+	if ((error = dlerror()) != NULL) {
+		printf("err: AT %d , %d ", __FUNCTION__ ,__FILE__);
+		fputs(error, stderr);
+		exit(1);
+	}
+
+	intraDevCpyProducer(Args);
+
+	return 0;
+
+}
+
+int _intraDevCpyConsumer(void* Args){
+
+	void * dataCopyHandle = NULL;
+	int (*intraDevCpyConsumer)(void* Args);
+	char *error;
+
+	dataCopyHandle = dlopen("libdataCopy.so", RTLD_NOW);
+	if (!dataCopyHandle) {
+		perror("library data  Copy not found or could not be opened AT: _interDevCpyProducer");
+		exit(-1);
+	}
+
+	intraDevCpyConsumer = dlsym(dataCopyHandle, "intraDevCpyConsumer");
+	if ((error = dlerror()) != NULL) {
+		printf("err: AT %d , %d ", __FUNCTION__ ,__FILE__);
+		fputs(error, stderr);
+		exit(1);
+	}
+
+	intraDevCpyConsumer(Args);
+
+	return 0;
+
+}
+
+/*
+int interDevice(int src_task, int src_trayIdx,
+		int dst_task, int dst_trayIdx,
+		int count, MPI_Datatype MPIentityType,
+		int tgID){
+
+
+
+		//READING PART
+		struct Args_matchedProducer_st* matchedProducer_Args=malloc(sizeof(struct Args_matchedProducer_st));
+		matchedProducer_Args->tgID=tgID;
+		matchedProducer_Args->FULL=&FULL;
+		matchedProducer_Args->l_taskIdx=l_src_task;
+		matchedProducer_Args->dataSize=cpyBuffSz;
+		matchedProducer_Args->trayId=src_trayIdx;
+		matchedProducer_Args->ticket=&opTicket;
+
+		addSubRoutine(l_src_task, _matchedProducer, (void*)matchedProducer_Args);
+
+		//WRITING PART
+		struct Args_matchedConsumer_st* matchedConsumer_Args=malloc(sizeof(struct Args_matchedConsumer_st));
+			matchedConsumer_Args->tgID=tgID;
+			matchedConsumer_Args->FULL=&FULL;
+			matchedConsumer_Args->ticket=&opTicket;
+			matchedConsumer_Args->l_taskIdx=l_dst_task;
+			matchedConsumer_Args->dataSize=cpyBuffSz;
+			matchedConsumer_Args->trayId=dst_trayIdx;
+
+		addSubRoutine(l_dst_task, _matchedConsumer, (void*)matchedConsumer_Args);
+	return 0;
+}*/
 
 
 int _OMPI_P_XclSendRecv(int src_task, int src_trayIdx,
 		int dest_task, int dest_trayIdx,
 		int count, MPI_Datatype MPIentityType,
-		int TAG, MPI_Comm comm){
+		int tgID, MPI_Comm comm){
 
-	//int TAG = 0;
+	//int tgID = 0;
 	int myRank;
 	MPI_Comm_rank(comm, &myRank);
 	int l_src_task = g_taskList[src_task].l_taskIdx;
@@ -377,8 +532,8 @@ int _OMPI_P_XclSendRecv(int src_task, int src_trayIdx,
 
 		} else { //perform the copy using MPI
 
-			//_OMPI_XclSend(src_trayIdx, count, MPIentityType, src_task, dest_task,TAG, comm);
-			//_OMPI_XclRecv(dest_trayIdx, count, MPIentityType, src_task,	dest_task, TAG, comm);
+			//_OMPI_XclSend(src_trayIdx, count, MPIentityType, src_task, dest_task,tgID, comm);
+			//_OMPI_XclRecv(dest_trayIdx, count, MPIentityType, src_task,	dest_task, tgID, comm);
 		} //END sendRecv Procedure Next is for profiling.
 
 
@@ -427,29 +582,31 @@ int _OMPI_XclReadTray(void* Args){
 	void* hostBuffer=readTray_Args->hostBuffer;
 
 	//2.-The task thread makes the calls to the components
-	void * memReadHandle = NULL;
+
+
+	void * dataCopyHandle = NULL;
 	int (*readBuffer)(int taskIdx, int trayIdx, int bufferSize,void * hostBuffer);
 	char *error;
-	memReadHandle = dlopen("libbufferMgmt.so", RTLD_NOW);
 
-	if (!memReadHandle) {
-		perror("library not found or could not be opened AT: _OMPI_XclReadTrays");
-		exit(1);
+	dataCopyHandle = dlopen("libdataCopy.so", RTLD_NOW);
+	if (!dataCopyHandle) {
+		perror("library data  Copy not found or could not be opened AT: _interDevCpyProducer");
+		exit(-1);
 	}
-
-	readBuffer = dlsym(memReadHandle, "readBuffer");
-	if ((error = dlerror()) != NULL) {
-		printf("err: AT Func: _OMPI_XclReadTray File %d",__FILE__);
-		fputs(error, stderr);
-		exit(1);
+	readBuffer = dlsym(dataCopyHandle, "readBuffer");
+		if ((error = dlerror()) != NULL) {
+			printf("err: AT %d , %d ", __FUNCTION__ ,__FILE__);
+			fputs(error, stderr);
+			exit(1);
 	}
 
 	//convert the global task Id into a local to recover the data.
 	//we already have verified that this data lives in this rank with the first IF upstream=)!!
 	//int l_taskIdx= g_taskList[g_taskIdx].l_taskIdx;
-	pthread_mutex_lock(&deviceQueueMutex);
+
+
 	(*readBuffer)(l_taskIdx, trayIdx, bufferSize, hostBuffer);
-	pthread_mutex_unlock(&deviceQueueMutex);
+
 
 	return 0;
 }
@@ -469,31 +626,45 @@ int _OMPI_XclWriteTray(void* Args){
 
 
 	//2.-The task thread makes the calls to the components
-	void * memWrtHandle = NULL; //function pointer
+
+
+	void * dataCopyHandle = NULL;
+	void * bufferMgmtHandle = NULL;
 	int (*initNewBuffer)(int l_taskIdx, int trayIdx, int bufferSize);
 	int (*writeBuffer)(int l_taskIdx, int trayIdx, int bufferSize,
 			void * hostBuffer);
 
 	char *error;
-	memWrtHandle = dlopen("libbufferMgmt.so", RTLD_NOW);
 
-	if (!memWrtHandle) {
-		perror("library not found or could not be opened AT: _OMPI_XclWriteTray");
+	bufferMgmtHandle = dlopen("libbufferMgmt.so", RTLD_NOW);
+	if (!bufferMgmtHandle) {
+		perror("library bufferMgmt not found or could not be opened AT: _OMPI_XclWriteTray");
 		exit(1);
 	}
+	dataCopyHandle = dlopen("libdataCopy.so", RTLD_NOW);
+	if (!dataCopyHandle) {
+		perror("library dataCopy not found or could not be opened AT: _OMPI_XclWriteTray");
+		exit(-1);
+	}
 
-	initNewBuffer = dlsym(memWrtHandle, "initNewBuffer");
-	writeBuffer = dlsym(memWrtHandle, "writeBuffer");
+	initNewBuffer = dlsym(bufferMgmtHandle, "initNewBuffer");
 	if ((error = dlerror()) != NULL) {
 		fputs(error, stderr);
 		exit(1);
 	}
 
+	writeBuffer = dlsym(dataCopyHandle, "writeBuffer");
+		if ((error = dlerror()) != NULL) {
+			printf("err: AT %d , %d ", __FUNCTION__ ,__FILE__);
+			fputs(error, stderr);
+			exit(1);
+	}
+
 	//int l_taskIdx= g_taskList[g_taskIdx].l_taskIdx;
-	pthread_mutex_lock(&deviceQueueMutex);
+
 	(*initNewBuffer)(l_taskIdx, trayIdx, bufferSize);
 	(*writeBuffer)(l_taskIdx, trayIdx, bufferSize, hostBuffer);
-	pthread_mutex_unlock(&deviceQueueMutex);
+
 
 	return 0;
 }
@@ -523,14 +694,13 @@ int _OMPI_XclMallocTray(void* Args){
 		fputs(error, stderr);
 		exit(1);
 	}
-	pthread_mutex_lock(&deviceQueueMutex);
+
 	(*initNewBuffer)(l_taskIdx, trayIdx, bufferSize);
-	pthread_mutex_unlock(&deviceQueueMutex);
+
 	return 0;
 }
 
 
-//int _OMPI_XclFreeTray(int g_taskIdx, int trayIdx, MPI_Comm comm) {
 int _OMPI_XclFreeTray(void* Args){
 	//1.- unwrap the Args.
 	struct Args_FreeTray_st * freeTray_Args=(struct Args_FreeTray_st*)Args;
@@ -538,25 +708,36 @@ int _OMPI_XclFreeTray(void* Args){
 	int trayIdx=freeTray_Args->trayIdx;
 
 	//2.-The task thread makes the calls to the components
-	void * libHandle = NULL;
+	void * bufferMgmtHandle = NULL;
 	void (*XclFreeTaskBuffer)(int, int);
 	char *error;
 
-	libHandle = dlopen("libbufferMgmt.so", RTLD_LAZY);
+	bufferMgmtHandle = dlopen("libbufferMgmt.so", RTLD_LAZY);
 
-	if (!libHandle) {
+	if (!bufferMgmtHandle) {
 		printf("library not found or could not be opened %d, %d", __FILE__,__LINE__);
 		exit(1);
 	}
 
-	XclFreeTaskBuffer = dlsym(libHandle, "XclFreeTaskBuffer");
+	XclFreeTaskBuffer = dlsym(bufferMgmtHandle, "XclFreeTaskBuffer");
 	if ((error = dlerror()) != NULL) {
 		fputs(error, stderr);
 		exit(1);
 	}
 	//int l_taskIdx= g_taskList[g_taskIdx].l_taskIdx;
 	(*XclFreeTaskBuffer)(l_taskIdx, trayIdx);
-
-
 	return 0;
 }
+
+int _OMPI_XclScatter(const char* datafileName, int* count, MPI_Datatype MPIentityType, void* hostbuffer, int trayIdx, MPI_Comm comm){
+	return 0;
+}
+
+int _OMPI_XclGather(int trayIdx, int count, MPI_Datatype MPIentityType,void **hostbuffer,
+		const char* datafileName , MPI_Comm comm){
+	return 0;
+}
+
+
+
+

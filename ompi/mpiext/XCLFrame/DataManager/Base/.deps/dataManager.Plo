@@ -47,6 +47,7 @@ Base/dataManager.lo: Base/dataManager.c /usr/include/stdc-predef.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mmintrin.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mm_malloc.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h \
+ /usr/include/semaphore.h /usr/include/x86_64-linux-gnu/bits/semaphore.h \
  /usr/include/x86_64-linux-gnu/sys/time.h \
  Base/../../TaskManager/Base/../../c/queueMutexes.h \
  Base/../../TaskManager/Base/task.h \
@@ -183,6 +184,10 @@ Base/../../TaskManager/Base/taskManager.h:
 /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mm_malloc.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h:
+
+/usr/include/semaphore.h:
+
+/usr/include/x86_64-linux-gnu/bits/semaphore.h:
 
 /usr/include/x86_64-linux-gnu/sys/time.h:
 

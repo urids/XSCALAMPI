@@ -4,6 +4,7 @@
 int argsParser(MPI_Comm comm, int selTask,int workDim , size_t * globalThreads, size_t* localThreads, const char * fmt, va_list arg) {
 
 	int numParam = 0;
+	int numConsts=0;
 	const char *p;
 	int j, k; //index exclusive
 	int i;
@@ -14,8 +15,6 @@ int argsParser(MPI_Comm comm, int selTask,int workDim , size_t * globalThreads, 
 	char *s;
 
 	cl_mem* memObj=malloc(sizeof(cl_mem));
-
-  int numConsts=0;
 
 
 	for(p = fmt; *p != '\0'; p++) {

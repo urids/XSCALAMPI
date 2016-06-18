@@ -41,6 +41,8 @@ typedef struct Device_st {
 	cl_context_properties platform; //device platform controller
 	cl_context context;         	//context
 	cl_command_queue queue;     	//command-queue
+	cl_command_queue queue2;     	//command-queue
+
 
 	cl_event eventObject;       	//event object
 	cl_ulong kernelStartTime;   	//kernel start time

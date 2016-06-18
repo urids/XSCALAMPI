@@ -20,9 +20,14 @@
 #include "../TaskManager/Base/taskManager.h"
 
 #include "../DataManager/Base/dataManager.h"
+#include "../DataManager/DataCopy/CopyContainers/containers.h" // to access containerList declaration
 
 #include "../multiDeviceMgmt/deviceMgmt/localDevices.h"
 
-
+enum copyMode_en{
+	INTRADEVICE=0,
+	INTERDEVICE=1,
+	INTERNODE=2
+};
 
 #endif /* C_INTERFACE_H_ */

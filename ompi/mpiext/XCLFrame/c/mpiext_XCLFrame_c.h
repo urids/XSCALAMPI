@@ -19,6 +19,7 @@
 // int OMPI_commit_EntityType(int blockcount, int* blocklen, MPI_Aint* displacements, MPI_Datatype* basictypes, MPI_Datatype * newDatatype);
 // ACTUALLY IS DECLRED WITHOUT OMPI_DECLSPEC.
 //OMPI_DECLSPEC int OMPI_commit_EntityType(int blockcount, int* blocklen, MPI_Aint* displacements, MPI_Datatype* basictypes, MPI_Datatype * newDatatype);
+OMPI_DECLSPEC int OMPI_commit_EntityType(int blockcount, int* blocklen, MPI_Aint* displacements, MPI_Datatype* basictypes, MPI_Datatype * newDatatype);
 
 
 OMPI_DECLSPEC int OMPI_CollectDevicesInfo(int devSelection, MPI_Comm comm); //this function returns global number of devices in the system
@@ -33,11 +34,15 @@ OMPI_DECLSPEC int OMPI_XclExecTask(MPI_Comm communicator,int selTask,int workDim
 //TODO: new Scatter (const char* datafileName, int* count, MPI_Datatype MPIentityType, int trayIdx, MPI_Comm comm);
 OMPI_DECLSPEC int OMPI_XclScatter(const char* datafileName, int* count, MPI_Datatype MPIentityType, void* hostbuffer, int trayIdx, MPI_Comm comm);
 OMPI_DECLSPEC int OMPI_XclGather(int trayIdx, int count, MPI_Datatype MPIentityType,void **hostbuffer, const char* datafileName , MPI_Comm comm);
-OMPI_DECLSPEC int _OMPI_XclSend(int trayIdx, int count, MPI_Datatype MPIentityType, int src_task, int dest_task, int TAG, MPI_Comm comm); //TODO: offset parameter to from tray start
-OMPI_DECLSPEC int _OMPI_XclRecv(int trayIdx, int count, MPI_Datatype MPIentityType, int src_task, int dest_task, int TAG,MPI_Comm comm); //TODO: offset parameter to from tray start
-OMPI_DECLSPEC int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dest_task, int dest_trayIdx, int count, MPI_Datatype MPIentityType, int TAG, MPI_Comm comm);
+OMPI_DECLSPEC int OMPI_XclSend(int trayIdx, int count, MPI_Datatype MPIentityType, int src_task, int dest_task, int tgId, MPI_Comm comm); //TODO: offset parameter to from tray start
+OMPI_DECLSPEC int OMPI_XclRecv(int trayIdx, int count, MPI_Datatype MPIentityType, int src_task, int dest_task, int tgId, MPI_Comm comm); //TODO: offset parameter to from tray start
+//OMPI_DECLSPEC int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_trayIdx, int count, MPI_Datatype MPIentityType, int TAG, MPI_Comm comm);
+OMPI_DECLSPEC int OMPI_XclSendRecv(MPI_Comm comm, int g_src_task, int src_trayIdx, int g_dst_task, int dst_trayIdx, int traySize, int tgID);
 OMPI_DECLSPEC int OMPI_XclReadTray(int taskIdx, int trayIdx, int bufferSize, void * hostBuffer, MPI_Comm comm);
 OMPI_DECLSPEC int OMPI_XclWriteTray(int taskIdx, int trayIdx, int bufferSize, void * hostBuffer, MPI_Comm comm);
+//OMPI_DECLSPEC int OMPI_XcltestF(int gsrctask, int srctrayIdx,int gdsttask, int dsttrayIdx, int count, int opTag, MPI_Comm comm);
+OMPI_DECLSPEC int OMPI_XcltestF (int gsrctask, MPI_Comm comm, int srctrayIdx, int gdsttask, int dsttrayIdx , int traySize, int tgId);
+
 
 //OMPI_DECLSPEC int OMPI_XclNewTask(int Rank, int Device, MPI_Comm comm);
 //TODO: implement Free routines.

@@ -19,8 +19,6 @@
 #include "../../c/ErrorHandling/errorHandling.h"
 
 
-extern int numEntitiesInHost;
-extern float entitiesPerTask;
-extern int* tskbufferSize; //Device BufferSize
+
 
 #endif /* BUFFERFUNCTIONS_H_ */

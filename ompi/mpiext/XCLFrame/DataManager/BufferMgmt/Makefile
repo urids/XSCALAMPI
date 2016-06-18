@@ -354,8 +354,7 @@ am__uninstall_files_from_dir = { \
 am__installdirs = "$(DESTDIR)$(bufferMgmtdir)"
 LTLIBRARIES = $(bufferMgmt_LTLIBRARIES)
 libbufferMgmt_la_LIBADD =
-am_libbufferMgmt_la_OBJECTS = bufferInit.lo bufferRead.lo \
-	bufferWrite.lo bufferFree.lo
+am_libbufferMgmt_la_OBJECTS = bufferInit.lo bufferFree.lo
 libbufferMgmt_la_OBJECTS = $(am_libbufferMgmt_la_OBJECTS)
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
@@ -1163,7 +1162,7 @@ OPAL_ASSEMBLY_ARCH = AMD64
 OPAL_ASSEMBLY_BUILTIN = BUILTIN_NO
 OPAL_ASSEMBLY_FORMAT = default-.text-.globl-:--.L-@-1-0-1-1-1
 OPAL_CC_ABSOLUTE = /usr/bin/gcc
-OPAL_CONFIGURE_DATE = Fri Jun  3 11:10:08 CDT 2016
+OPAL_CONFIGURE_DATE = Sat Jun 18 14:39:10 CDT 2016
 OPAL_CONFIGURE_HOST = myHost
 OPAL_CONFIGURE_USER = uriel
 OPAL_CXX_ABSOLUTE = /usr/bin/g++
@@ -1490,9 +1489,7 @@ bufferMgmt_LTLIBRARIES = libbufferMgmt.la
 
 # Sources for libmultiDeviceMgmt
 libbufferMgmt_la_SOURCES = bufferInit.c \
-			bufferRead.c \
-  			bufferWrite.c \
-			bufferFree.c
+						   bufferFree.c
 
 
 # Linker options libTestProgram
@@ -1576,8 +1573,6 @@ distclean-compile:
 
 include ./$(DEPDIR)/bufferFree.Plo
 include ./$(DEPDIR)/bufferInit.Plo
-include ./$(DEPDIR)/bufferRead.Plo
-include ./$(DEPDIR)/bufferWrite.Plo
 
 .c.o:
 	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\

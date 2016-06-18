@@ -1163,7 +1163,7 @@ OPAL_ASSEMBLY_ARCH = AMD64
 OPAL_ASSEMBLY_BUILTIN = BUILTIN_NO
 OPAL_ASSEMBLY_FORMAT = default-.text-.globl-:--.L-@-1-0-1-1-1
 OPAL_CC_ABSOLUTE = /usr/bin/gcc
-OPAL_CONFIGURE_DATE = Fri Jun  3 11:10:08 CDT 2016
+OPAL_CONFIGURE_DATE = Sat Jun 18 14:39:10 CDT 2016
 OPAL_CONFIGURE_HOST = myHost
 OPAL_CONFIGURE_USER = uriel
 OPAL_CXX_ABSOLUTE = /usr/bin/g++
@@ -1493,10 +1493,13 @@ noinst_LTLIBRARIES = libmpiext_XCLFrame_c.la
 # <mpi-ext.h>) must be installed.
 ompidir = $(ompiincludedir)/ompi/mpiext/XCLFrame/c
 
-# This is the header file that is installed.
+# Installable headers file.
 #THE XclScatter.h show us that headers can be distributed on multiple blocks.
-ompi_HEADERS = mpiext_XCLFrame_c.h ../DataManager/TwoSidedComms/XclScatter.h
+ompi_HEADERS = mpiext_XCLFrame_c.h \
+			   ../DataManager/Base/entityInfo.h
 
+
+#../DataManager/TwoSidedComms/XclScatter.h
 # Sources for the convenience libtool library.  Other than the one
 # header file, all source files in the extension have no file naming
 # conventions.
@@ -1524,6 +1527,7 @@ libmpiext_XCLFrame_c_la_LDFLAGS = -module -avoid-version -ldl -lOpenCL -lm \
 	-Wl,-rpath,$(libdir)/XCLFrame/DataManager \
 	-Wl,-rpath,$(libdir)/XCLFrame/DataManager/DataCopy \
 	-Wl,-rpath,$(libdir)/XCLFrame/DataManager/BufferMgmt \
+	-Wl,-rpath,$(libdir)/XCLFrame/DataManager/CollectiveOps \
 	-Wl,-rpath,$(libdir)/XCLFrame/TaskManager \
     -Wl,-rpath,$(libdir)/XCLFrame/TaskManager/KernelMgmt \
     -Wl,-rpath,$(libdir)/XCLFrame/TaskManager/SynchMgmt \

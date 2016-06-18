@@ -6,9 +6,7 @@ dataManager_LTLIBRARIES = libdataManager.la
  
        
 # Sources for libdataManager
-libdataManager_la_SOURCES = ./Base/dataManager.c \
-		./TwoSidedComms/XclScatter.c \
-        ./TwoSidedComms/singleSidedComms.c
+libdataManager_la_SOURCES = ./Base/dataManager.c
 		
 
 #######################################		

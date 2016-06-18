@@ -27,6 +27,7 @@
 #include "../../c/ErrorHandling/errorHandling.h"
 
 #include "../Base/taskManager.h"
+#include "../../c/queueMutexes.h"
 
 
 #endif /* KERNELSETUP_H_ */

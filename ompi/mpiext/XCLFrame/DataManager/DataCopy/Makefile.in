@@ -354,7 +354,10 @@ am__uninstall_files_from_dir = { \
 am__installdirs = "$(DESTDIR)$(dataCopydir)"
 LTLIBRARIES = $(dataCopy_LTLIBRARIES)
 libdataCopy_la_LIBADD =
-am_libdataCopy_la_OBJECTS = intraDevBufferCpy.lo
+am__dirstamp = $(am__leading_dot)dirstamp
+am_libdataCopy_la_OBJECTS = bufferRead.lo bufferWrite.lo \
+	./CopyContainers/containersList.lo ./IntraDev/intraDev.lo \
+	./IntraDev/intraDevBufferCpy.lo ./InterDev/interDev.lo
 libdataCopy_la_OBJECTS = $(am_libdataCopy_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -1488,7 +1491,13 @@ dataCopy_LTLIBRARIES = libdataCopy.la
 # Build information for each library
 
 # Sources for libmultiDeviceMgmt
-libdataCopy_la_SOURCES = intraDevBufferCpy.c
+libdataCopy_la_SOURCES = bufferRead.c \
+  			bufferWrite.c \
+        	./CopyContainers/containersList.c \
+        	./IntraDev/intraDev.c \
+        	./IntraDev/intraDevBufferCpy.c \
+        	./InterDev/interDev.c 
+
 
 # Linker options libTestProgram
 libdataCopy_la_LDFLAGS = -module -avoid-version -lOpenCL -lm
@@ -1560,16 +1569,53 @@ clean-dataCopyLTLIBRARIES:
 	  echo rm -f $${locs}; \
 	  rm -f $${locs}; \
 	}
+CopyContainers/$(am__dirstamp):
+	@$(MKDIR_P) ./CopyContainers
+	@: > CopyContainers/$(am__dirstamp)
+CopyContainers/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) ./CopyContainers/$(DEPDIR)
+	@: > CopyContainers/$(DEPDIR)/$(am__dirstamp)
+./CopyContainers/containersList.lo: CopyContainers/$(am__dirstamp) \
+	CopyContainers/$(DEPDIR)/$(am__dirstamp)
+IntraDev/$(am__dirstamp):
+	@$(MKDIR_P) ./IntraDev
+	@: > IntraDev/$(am__dirstamp)
+IntraDev/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) ./IntraDev/$(DEPDIR)
+	@: > IntraDev/$(DEPDIR)/$(am__dirstamp)
+./IntraDev/intraDev.lo: IntraDev/$(am__dirstamp) \
+	IntraDev/$(DEPDIR)/$(am__dirstamp)
+./IntraDev/intraDevBufferCpy.lo: IntraDev/$(am__dirstamp) \
+	IntraDev/$(DEPDIR)/$(am__dirstamp)
+InterDev/$(am__dirstamp):
+	@$(MKDIR_P) ./InterDev
+	@: > InterDev/$(am__dirstamp)
+InterDev/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) ./InterDev/$(DEPDIR)
+	@: > InterDev/$(DEPDIR)/$(am__dirstamp)
+./InterDev/interDev.lo: InterDev/$(am__dirstamp) \
+	InterDev/$(DEPDIR)/$(am__dirstamp)
 libdataCopy.la: $(libdataCopy_la_OBJECTS) $(libdataCopy_la_DEPENDENCIES) $(EXTRA_libdataCopy_la_DEPENDENCIES) 
 	$(AM_V_CCLD)$(libdataCopy_la_LINK) -rpath $(dataCopydir) $(libdataCopy_la_OBJECTS) $(libdataCopy_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
+	-rm -f ./CopyContainers/*.$(OBJEXT)
+	-rm -f ./CopyContainers/*.lo
+	-rm -f ./InterDev/*.$(OBJEXT)
+	-rm -f ./InterDev/*.lo
+	-rm -f ./IntraDev/*.$(OBJEXT)
+	-rm -f ./IntraDev/*.lo
 
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/intraDevBufferCpy.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bufferRead.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bufferWrite.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./CopyContainers/$(DEPDIR)/containersList.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./InterDev/$(DEPDIR)/interDev.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./IntraDev/$(DEPDIR)/intraDev.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./IntraDev/$(DEPDIR)/intraDevBufferCpy.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -1600,6 +1646,9 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
+	-rm -rf ./CopyContainers/.libs ./CopyContainers/_libs
+	-rm -rf ./InterDev/.libs ./InterDev/_libs
+	-rm -rf ./IntraDev/.libs ./IntraDev/_libs
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
@@ -1731,6 +1780,12 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
+	-rm -f CopyContainers/$(DEPDIR)/$(am__dirstamp)
+	-rm -f CopyContainers/$(am__dirstamp)
+	-rm -f InterDev/$(DEPDIR)/$(am__dirstamp)
+	-rm -f InterDev/$(am__dirstamp)
+	-rm -f IntraDev/$(DEPDIR)/$(am__dirstamp)
+	-rm -f IntraDev/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
@@ -1741,7 +1796,7 @@ clean-am: clean-dataCopyLTLIBRARIES clean-generic clean-libtool \
 	mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf ./$(DEPDIR)
+	-rm -rf ./$(DEPDIR) ./CopyContainers/$(DEPDIR) ./InterDev/$(DEPDIR) ./IntraDev/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -1787,7 +1842,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf ./$(DEPDIR)
+	-rm -rf ./$(DEPDIR) ./CopyContainers/$(DEPDIR) ./InterDev/$(DEPDIR) ./IntraDev/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

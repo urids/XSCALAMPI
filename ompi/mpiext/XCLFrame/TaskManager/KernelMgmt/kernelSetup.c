@@ -7,30 +7,30 @@ int createProgram(int l_selTask, char* srcPath,int numTasks){
 	int status;
 	FILE *fp;
 
-		fp = fopen(srcPath, "r");
-		if (!fp) {
-			fprintf(stderr, "Can not find or load kernels source file.\n");
-			perror ("The following error occurred");
-			exit(1);
-		}
+	fp = fopen(srcPath, "r");
+	if (!fp) {
+		fprintf(stderr, "Can not find or load kernels source file.\n");
+		perror ("The following error occurred");
+		exit(1);
+	}
 
-		fseek(fp, 0L, SEEK_END);
-		int sz = ftell(fp);
-		fseek(fp, 0L, SEEK_SET);
+	fseek(fp, 0L, SEEK_END);
+	int sz = ftell(fp);
+	fseek(fp, 0L, SEEK_SET);
 
-		l_taskList[l_selTask].code = malloc(sizeof(XCLcode));
-		l_taskList[l_selTask].code[0].source_str = (char*) malloc(sz+1);
-		l_taskList[l_selTask].code[0].source_size = fread(l_taskList[l_selTask].code[0].source_str,
-				1, sz, fp);
+	l_taskList[l_selTask].code = malloc(sizeof(XCLcode));
+	l_taskList[l_selTask].code[0].source_str = (char*) malloc(sz+1);
+	l_taskList[l_selTask].code[0].source_size = fread(l_taskList[l_selTask].code[0].source_str,
+			1, sz, fp);
 
-		l_taskList[l_selTask].CLprogram = malloc(sizeof(cl_program));
+	l_taskList[l_selTask].CLprogram = malloc(sizeof(cl_program));
 
-		l_taskList[l_selTask].CLprogram[0] = clCreateProgramWithSource(
-				l_taskList[l_selTask].device[0].context, 1,
-				(const char **) &l_taskList[l_selTask].code[0].source_str,
-				(const size_t *) &l_taskList[l_selTask].code[0].source_size, &status);
+	l_taskList[l_selTask].CLprogram[0] = clCreateProgramWithSource(
+			l_taskList[l_selTask].device[0].context, 1,
+			(const char **) &l_taskList[l_selTask].code[0].source_str,
+			(const size_t *) &l_taskList[l_selTask].code[0].source_size, &status);
 
-		chkerr(status, "Creating Program ", __FILE__, __LINE__);
+	chkerr(status, "Creating Program ", __FILE__, __LINE__);
 	fclose(fp);
 
 	return status;
@@ -39,26 +39,26 @@ int createProgram(int l_selTask, char* srcPath,int numTasks){
 int buildProgram(int l_selTask, int numTasks) {
 	int status;
 
-		status = clBuildProgram(l_taskList[l_selTask].CLprogram[0], 1,
-				&l_taskList[l_selTask].device[0].deviceId, NULL, NULL, NULL);
+	status = clBuildProgram(l_taskList[l_selTask].CLprogram[0], 1,
+			&l_taskList[l_selTask].device[0].deviceId, NULL, NULL, NULL);
 
-		if (status == CL_BUILD_PROGRAM_FAILURE) {
-			// Determine the size of the log
-			size_t log_size;
-			clGetProgramBuildInfo(l_taskList[l_selTask].CLprogram[0], l_taskList[l_selTask].device[0].deviceId, CL_PROGRAM_BUILD_LOG,
-					0, NULL, &log_size);
+	if (status == CL_BUILD_PROGRAM_FAILURE) {
+		// Determine the size of the log
+		size_t log_size;
+		clGetProgramBuildInfo(l_taskList[l_selTask].CLprogram[0], l_taskList[l_selTask].device[0].deviceId, CL_PROGRAM_BUILD_LOG,
+				0, NULL, &log_size);
 
-			// Allocate memory for the log
-			char *log = (char *) malloc(log_size+1);
-			// Get the log
-			clGetProgramBuildInfo(l_taskList[l_selTask].CLprogram[0], l_taskList[l_selTask].device[0].deviceId, CL_PROGRAM_BUILD_LOG,
-					log_size, log, NULL);
-			log[log_size+1] = '\0';
-			// Print the log
-			printf("log Description: %s\n", log);
-		}
+		// Allocate memory for the log
+		char *log = (char *) malloc(log_size+1);
+		// Get the log
+		clGetProgramBuildInfo(l_taskList[l_selTask].CLprogram[0], l_taskList[l_selTask].device[0].deviceId, CL_PROGRAM_BUILD_LOG,
+				log_size, log, NULL);
+		log[log_size+1] = '\0';
+		// Print the log
+		printf("log Description: %s\n", log);
+	}
 
-		chkerr(status, "Building Program ", __FILE__, __LINE__);
+	chkerr(status, "Building Program. ", __FILE__, __LINE__);
 
 	return status;
 }
@@ -95,17 +95,20 @@ int kernelXplor(int l_selTask, int numTasks){
 	l_taskList[l_selTask].kernel[0].numArgs=numArgs;
 	//}
 
-return status;
+	return status;
 }
 
 int setKernelmemObj(int seltask,int numparameter,int paramSize,int trayIdx){
 	int status;
 
 	//for (i = 0; i < numTasks; i++) {
-		int myRack=l_taskList[seltask].Rack;
+	int myRack=l_taskList[seltask].Rack;
 	debug_print("\n Debug: setting cl_mem arg: %d in task %d from rack: [%d] tray:[%d] \n", numparameter, seltask,myRack,trayIdx);
-		status = clSetKernelArg(l_taskList[seltask].kernel[0].kernel, numparameter,
-				sizeof(cl_mem), &l_taskList[seltask].device[0].memHandler[myRack][trayIdx]);
+
+	pthread_mutex_lock(&deviceQueueMutex);
+	status = clSetKernelArg(l_taskList[seltask].kernel[0].kernel, numparameter,
+			sizeof(cl_mem), &l_taskList[seltask].device[0].memHandler[myRack][trayIdx]);
+	pthread_mutex_unlock(&deviceQueueMutex);
 	chkerr(status, "error at: Setting entity buffer Arg.", __FILE__, __LINE__);
 	//}
 	return 0;
@@ -116,13 +119,13 @@ int setKernelArgs(int seltask,int numparameter,int paramSize,void* paramValue){
 	int i;
 
 	//for (i = 0; i < numTasks; i++) {
-		debug_print("\n Debug: setting arg: %d in task %d \n", numparameter, seltask);
+	debug_print("\n Debug: setting arg: %d in task %d \n", numparameter, seltask);
+	pthread_mutex_lock(&deviceQueueMutex);
+	status = clSetKernelArg(l_taskList[seltask].kernel[0].kernel, numparameter,
+			paramSize, (void *) paramValue);
+	pthread_mutex_unlock(&deviceQueueMutex);
 
-		status = clSetKernelArg(l_taskList[seltask].kernel[0].kernel, numparameter,
-				paramSize, (void *) paramValue);
-
-
-		chkerr(status, "error at: Setting other kernel Args", __FILE__,	__LINE__);
+	chkerr(status, "error at: Setting other kernel Args", __FILE__,	__LINE__);
 	//}
 
 	debug_print("set Args %d successful..\n",numparameter);
@@ -132,17 +135,17 @@ int setKernelArgs(int seltask,int numparameter,int paramSize,void* paramValue){
 
 
 
-void * enqueTaskReq(void *args) {
+int enqueTaskReq(void *args) {
 	int status=0;
 	int i; //indx var.
 	enqueueArgs_t* l_args = (enqueueArgs_t*) args;
 
 	char* profileFlag;
-		int profilingEnabled = 0;
-		profileFlag = getenv("XSCALA_PROFILING_APP");
-		if (profileFlag != NULL) {
-			profilingEnabled = 1;
-		}
+	int profilingEnabled = 0;
+	profileFlag = getenv("XSCALA_PROFILING_APP");
+	if (profileFlag != NULL) {
+		profilingEnabled = 1;
+	}
 
 	if (profilingEnabled) {
 
@@ -165,7 +168,7 @@ void * enqueTaskReq(void *args) {
 
 
 		cl_ulong time_start, time_end;
-			double total_time;
+		double total_time;
 		cl_event kernelProfileEvent;
 		status = clEnqueueNDRangeKernel(l_args->th_queue, l_args->th_kernel,
 				l_args->workDim, NULL, l_args->globalThreads,
@@ -203,7 +206,7 @@ void * enqueTaskReq(void *args) {
 						(long int) tval_IniResult.tv_usec);
 				//printf(" %ld.%06ld ", (long int) tval_IniResult.tv_sec,(long int) tval_IniResult.tv_usec);
 				fprintf(schedImg," %ld.%06ld ", (long int) tval_FiniResult.tv_sec,
-										(long int) tval_FiniResult.tv_usec);
+						(long int) tval_FiniResult.tv_usec);
 				fprintf(schedImg, " %d \n",g_taskList[i].g_taskIdx);
 
 
@@ -214,76 +217,80 @@ void * enqueTaskReq(void *args) {
 					printf("Exec status of task %d : %d \n",g_taskList[i].g_taskIdx,status);
 				}
 				else{
-				printf("Execution time of task %d: -->  %ld.%06ld secs. \n",g_taskList[i].g_taskIdx,(long int) tval_total.tv_sec,
-						(long int) tval_total.tv_usec);
+					printf("Execution time of task %d: -->  %ld.%06ld secs. \n",g_taskList[i].g_taskIdx,(long int) tval_total.tv_sec,
+							(long int) tval_total.tv_usec);
 				}
 				break;
 			}
 		}
 		fclose(schedImg);
 		//*********************************************
-
-
 		total_time = time_end - time_start;
 		//printf("Execution time of task %d: -->  %0.3f ms \n",l_args->g_selTsk,(total_time / 1000000.0));
 
 	}
-	else{
+	else{ //no Profiling
 		//TODO: Only one thread must enqueue at time (concurrency).
 		//MUST USE multiple mutex to enqueue procedures involves different queues (devices).
 
+		cl_event kernelDone;
 		status = clEnqueueNDRangeKernel(l_args->th_queue, l_args->th_kernel, l_args->workDim, NULL,
 				l_args->globalThreads, l_args->localThreads, 0, NULL,
-				NULL);
+				&kernelDone);
 		clFlush(l_args->th_queue);
 		clFinish(l_args->th_queue);
+		clWaitForEvents(1, &kernelDone);
+		//clEnqueueBarrier(l_args->th_queue);
+
+
 
 	}
 	//chkerr(status, "Enqueuing Kernels ", __FILE__, __LINE__);
 	//debug_print("Enqueuing Kernel successful..\n");
 	debug_print("Enqueue Kernel successful..\n");
 	//pthread_exit(NULL);
+	return 0;
 }
 
 //int enqueueKernel(int numTasks,int selTask, int workDim, const size_t globalThreads, const size_t localThreads) {
-int enqueueKernel(int numTasks,int selTask, int workDim, const size_t* globalThreads, const size_t* localThreads) {
+int enqueueKernel(int numTasks,int selTask, int workDim, size_t* globalThreads, size_t* localThreads) {
 	int status;
 	int i;
 
-if(selTask==-1){ // -1 means all tasks must enqueue this kernel.
+	if(selTask==-1){ // -1 means all tasks must enqueue this kernel.
 
-	for(i=0;i<numTasks;i++){
-	cl_event kernelProfileEvent;
-	cl_ulong time_start, time_end;
-	double total_time;
+		for(i=0;i<numTasks;i++){
+			cl_event kernelProfileEvent;
+			cl_ulong time_start, time_end;
+			double total_time;
 
-	status = clEnqueueNDRangeKernel(l_taskList[i].device[0].queue, l_taskList[i].kernel[0].kernel, 1, NULL,
-			&globalThreads, &localThreads, 0, NULL, &kernelProfileEvent);
-
-
-	chkerr(status, "Enqueuing Kernels ", __FILE__, __LINE__);
-
-	debug_print("Enqueuing Kernel successful..\n");
+			status = clEnqueueNDRangeKernel(l_taskList[i].device[0].queue, l_taskList[i].kernel[0].kernel, 1, NULL,
+					&globalThreads, &localThreads, 0, NULL, &kernelProfileEvent);
 
 
-	#if PROFILE
-	clWaitForEvents(1 , &kernelProfileEvent);
-	clGetEventProfilingInfo(kernelProfileEvent, CL_PROFILING_COMMAND_START, sizeof(time_start), &time_start, NULL);
-	clGetEventProfilingInfo(kernelProfileEvent, CL_PROFILING_COMMAND_END, sizeof(time_end), &time_end, NULL);
-	total_time = time_end - time_start;
-	profile_print("Execution time of task: %d -->  %0.3f ms\n",i,(total_time / 1000000.0));
-	#endif //if PROFILE
-	}
+			chkerr(status, "Enqueuing Kernels ", __FILE__, __LINE__);
 
-}else{ //sel task != -1
+			debug_print("Enqueuing Kernel successful..\n");
 
-	int myRank;
-	MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
-	//cl_event kernelProfileEvent;
 
 #if PROFILE
-	cl_ulong time_start, time_end;
-	double total_time;
+			clWaitForEvents(1 , &kernelProfileEvent);
+			clGetEventProfilingInfo(kernelProfileEvent, CL_PROFILING_COMMAND_START, sizeof(time_start), &time_start, NULL);
+			clGetEventProfilingInfo(kernelProfileEvent, CL_PROFILING_COMMAND_END, sizeof(time_end), &time_end, NULL);
+			total_time = time_end - time_start;
+			profile_print("Execution time of task: %d -->  %0.3f ms\n",i,(total_time / 1000000.0));
+#endif //if PROFILE
+		}
+
+	}else{ //sel task != -1
+
+		int myRank;
+		MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
+		//cl_event kernelProfileEvent;
+
+#if PROFILE
+		cl_ulong time_start, time_end;
+		double total_time;
 
 		time_t rawtime;
 		struct tm * timeinfo;
@@ -294,7 +301,7 @@ if(selTask==-1){ // -1 means all tasks must enqueue this kernel.
 #endif //if PROFILE
 
 		/*
-		 * This must be done with pthreads because clEnqueueNDRangeKernel is synchronous for
+		 * This must be done with pthreads because clEnqueueNDRangeKernel is synchronous on
 		 * some openCL implementations like NVIDIA ='(...
 		 *
 		 * */
@@ -309,7 +316,7 @@ if(selTask==-1){ // -1 means all tasks must enqueue this kernel.
 		pthread_attr_init(&attr);
 		pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);*/
 
-/*--		int ret;
+		/*--		int ret;
 		time_t rawtime;
 		struct tm * timeinfo;
 		time(&rawtime);
@@ -335,20 +342,39 @@ if(selTask==-1){ // -1 means all tasks must enqueue this kernel.
 		th_Args->th_kernel=l_taskList[selTask].kernel[0].kernel;
 		th_Args->g_selTsk=selTask;
 
-		enqueTaskReq((void*)th_Args);
+		//enqueTaskReq((void*)th_Args);
+
+		/*clEnqueueNDRangeKernel(l_args->th_queue, l_args->th_kernel, l_args->workDim, NULL,
+						l_args->globalThreads, l_args->localThreads, 0, NULL,
+						&kernelDone);*/
+
+		cl_event kernelEvent;
+		status = clEnqueueNDRangeKernel(l_taskList[selTask].device[0].queue, l_taskList[selTask].kernel[0].kernel, workDim, NULL,
+				globalThreads,localThreads, 0, NULL, &kernelEvent);
+		chkerr(status, "Enqueuing Kernels ", __FILE__, __LINE__);
+		clFlush(l_taskList[selTask].device[0].queue);
+		clFinish(l_taskList[selTask].device[0].queue);
+		clWaitForEvents(1 , &kernelEvent);
+
+		//cl_event kernelDone;
+		//clEnqueueBarrierWithWaitList ( l_taskList[selTask].device[0].queue ,1, &kernelEvent ,&kernelDone);
+
+		int myRack=l_taskList[selTask].Rack;
+		int dataRes;
+		status = clEnqueueReadBuffer(l_taskList[selTask].device[0].queue,
+							l_taskList[selTask].device[0].memHandler[myRack][0],
+							CL_TRUE, 0, sizeof(int),
+							&dataRes, 0, NULL, NULL);
+		//clFlush(l_taskList[selTask].device[0].queue2);
+		//clFinish(l_taskList[selTask].device[0].queue2);
+		printf(" X-: %d \n",dataRes);
 		//pthread_create(&thds[selTask], NULL, enqueTaskReq, (void*) th_Args[selTask]);
-	  	debug_print(" -- task %d requested in rank: %d -- \n",selTask,myRank);
+		debug_print(" -- task %d requested in rank: %d -- \n",selTask,myRank);
 
-
-
-	  	//printf("task: %d rank  Requested at time: %s \n",(numReq++),asctime(timeinfo));
+		//printf("task: %d rank  Requested at time: %s \n",(numReq++),asctime(timeinfo));
 		//pthread_attr_destroy(&attr);
 
-/*
-		status = clEnqueueNDRangeKernel(l_taskList[selTask].device[0].queue, l_taskList[selTask].kernel[0].kernel, 1, NULL,
-				&globalThreads, &localThreads, 0, NULL, &kernelProfileEvent);
-		chkerr(status, "Enqueuing Kernels ", __FILE__, __LINE__);
-		  debug_print("Enqueuing Kernel requested..\n");*/
+
 
 
 
@@ -361,7 +387,7 @@ if(selTask==-1){ // -1 means all tasks must enqueue this kernel.
 		profile_print("Execution time of task: %d in rank %d -->  %0.3f ms \n",selTask, myRank,(total_time / 1000000.0));
 #endif //if PROFILE
 
-}
+	}
 	return status;
 }
 

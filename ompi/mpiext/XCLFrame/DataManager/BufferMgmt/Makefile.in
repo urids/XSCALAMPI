@@ -354,8 +354,7 @@ am__uninstall_files_from_dir = { \
 am__installdirs = "$(DESTDIR)$(bufferMgmtdir)"
 LTLIBRARIES = $(bufferMgmt_LTLIBRARIES)
 libbufferMgmt_la_LIBADD =
-am_libbufferMgmt_la_OBJECTS = bufferInit.lo bufferRead.lo \
-	bufferWrite.lo bufferFree.lo
+am_libbufferMgmt_la_OBJECTS = bufferInit.lo bufferFree.lo
 libbufferMgmt_la_OBJECTS = $(am_libbufferMgmt_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -1490,9 +1489,7 @@ bufferMgmt_LTLIBRARIES = libbufferMgmt.la
 
 # Sources for libmultiDeviceMgmt
 libbufferMgmt_la_SOURCES = bufferInit.c \
-			bufferRead.c \
-  			bufferWrite.c \
-			bufferFree.c
+						   bufferFree.c
 
 
 # Linker options libTestProgram
@@ -1576,8 +1573,6 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bufferFree.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bufferInit.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bufferRead.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bufferWrite.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\

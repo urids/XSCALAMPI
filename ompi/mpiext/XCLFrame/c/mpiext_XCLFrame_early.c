@@ -4,6 +4,7 @@
 #include "ompi/mpi/c/bindings.h"
 #include "ompi/mpiext/mpiext.h"
 #include "mpiext_XCLFrame_c.h"
+#include "../TaskManager/Base/taskManager.h"
 //#include "binding/dvMgmt/commsBench.h" //TODO: must this be here to keep architecture schema?
 
 
@@ -109,7 +110,10 @@ static int XCLFrame_init(void)
 
 static int XCLFrame_fini(void)
 {
-	finishThreads(l_numTasks);
+	if(taskThreadsEnabled){
+		finishThreads(l_numTasks);
+	}
+
 	return OMPI_SUCCESS;
 }
 

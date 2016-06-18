@@ -10,7 +10,8 @@
 
 #include "ompi/include/mpi.h"
 #include "pthread.h"
-#include "../Base/taskManager.h"
+#include "../Base/taskManager.h" //to find Args struct definitions
+
 
 typedef struct syncArgs_st{
 	pthread_barrier_t localBarrier;

@@ -24,6 +24,8 @@ int createQueue(Device* device) {
 	int status;
 	device->queue = clCreateCommandQueue(device->context, device->deviceId,
 			CL_QUEUE_PROFILING_ENABLE, &status);
+	device->queue2 = clCreateCommandQueue(device->context, device->deviceId,
+				CL_QUEUE_PROFILING_ENABLE, &status);
 	chkerr(status, "Building Queue", __FILE__, __LINE__);
 	return status;
 }

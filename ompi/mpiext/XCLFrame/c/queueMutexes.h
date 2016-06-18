@@ -9,6 +9,6 @@
 #define QUEUEMUTEXES_H_
 
 extern pthread_mutex_t deviceQueueMutex;
-
+extern pthread_mutex_t commMutex;
 
 #endif /* QUEUEMUTEXES_H_ */

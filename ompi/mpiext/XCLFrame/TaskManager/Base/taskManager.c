@@ -1,9 +1,23 @@
 
 #include "taskManager.h"
 
+
 XCLtask* l_taskList; // Global Variable declared in task.h
 int l_numTasks;//Global variable declared in task.h
 
+void* waitSubroutine(void*Args){
+
+	sem_t* sem=((struct Args_waitSubroutine_st*)Args)->semaphore;
+	sem_wait(sem);
+	return (void*)0;
+}
+
+void* signalSubroutine(void*Args){
+
+	sem_t* sem=((struct Args_signalSubroutine_st*)Args)->semaphore;
+	sem_post(sem);
+	return (void*)0;
+}
 
 //pthread_mutex_t setProcedureMutex=PTHREAD_MUTEX_INITIALIZER; //this mutex are requiered to
 //pthread_mutex_t execTaskMutex=PTHREAD_MUTEX_INITIALIZER;	//handle non thread safety in certain OCL API calls
@@ -44,12 +58,12 @@ int _OMPI_XclSetProcedure(void* Args){
 	debug_print("0.-kernelSrcFile: %s\n",srcPath);
 
 	int err; //TODO: l_numTasks must be deleted (the 0) from the calls: it is no longer useful =/.
-	pthread_mutex_lock(&deviceQueueMutex); //we use mutex because OCL calls seems not be thrade safe ='( TOO BAD.
+
 		err=(*createProgram)(l_selTask, srcPath,0);
 		err|=(*buildProgram)(l_selTask, 0);
 		err|=(*createKernel)(l_selTask, kernelName, 0);
 		err|=(*kernelXplor)(l_selTask, 0);
-	pthread_mutex_unlock(&deviceQueueMutex);
+
 
 	dlclose(dlhandle);
 
@@ -102,13 +116,13 @@ int _OMPI_XclExecTask(void * Args){
 		}
 
 		int err;
-		pthread_mutex_lock(&deviceQueueMutex);
+
 			err=(*argsParser)(comm, l_selTask, workDim , globalThreads, localThreads, fmt, argsList);
 			err|=(*enqueueKernel)(l_numTasks,l_selTask,workDim, globalThreads, localThreads);
-		pthread_mutex_unlock(&deviceQueueMutex);
+
 
 		//dlclose(dlhandle); //TODO: something wrong here memory leak if I close!.
-	return 0;
+	return err;
 }
 
 

@@ -350,9 +350,7 @@ am__installdirs = "$(DESTDIR)$(dataManagerdir)"
 LTLIBRARIES = $(dataManager_LTLIBRARIES)
 libdataManager_la_LIBADD =
 am__dirstamp = $(am__leading_dot)dirstamp
-am_libdataManager_la_OBJECTS = ./Base/dataManager.lo \
-	./TwoSidedComms/XclScatter.lo \
-	./TwoSidedComms/singleSidedComms.lo
+am_libdataManager_la_OBJECTS = ./Base/dataManager.lo
 libdataManager_la_OBJECTS = $(am_libdataManager_la_OBJECTS)
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
@@ -1160,7 +1158,7 @@ OPAL_ASSEMBLY_ARCH = AMD64
 OPAL_ASSEMBLY_BUILTIN = BUILTIN_NO
 OPAL_ASSEMBLY_FORMAT = default-.text-.globl-:--.L-@-1-0-1-1-1
 OPAL_CC_ABSOLUTE = /usr/bin/gcc
-OPAL_CONFIGURE_DATE = Fri Jun  3 11:10:08 CDT 2016
+OPAL_CONFIGURE_DATE = Sat Jun 18 14:39:10 CDT 2016
 OPAL_CONFIGURE_HOST = myHost
 OPAL_CONFIGURE_USER = uriel
 OPAL_CXX_ABSOLUTE = /usr/bin/g++
@@ -1486,10 +1484,7 @@ dataManager_LTLIBRARIES = libdataManager.la
 # Build information for each library
 
 # Sources for libdataManager
-libdataManager_la_SOURCES = ./Base/dataManager.c \
-		./TwoSidedComms/XclScatter.c \
-        ./TwoSidedComms/singleSidedComms.c
-
+libdataManager_la_SOURCES = ./Base/dataManager.c
 
 #######################################		
 # Linker options  for the library
@@ -1570,16 +1565,6 @@ Base/$(DEPDIR)/$(am__dirstamp):
 	@: > Base/$(DEPDIR)/$(am__dirstamp)
 ./Base/dataManager.lo: Base/$(am__dirstamp) \
 	Base/$(DEPDIR)/$(am__dirstamp)
-TwoSidedComms/$(am__dirstamp):
-	@$(MKDIR_P) ./TwoSidedComms
-	@: > TwoSidedComms/$(am__dirstamp)
-TwoSidedComms/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) ./TwoSidedComms/$(DEPDIR)
-	@: > TwoSidedComms/$(DEPDIR)/$(am__dirstamp)
-./TwoSidedComms/XclScatter.lo: TwoSidedComms/$(am__dirstamp) \
-	TwoSidedComms/$(DEPDIR)/$(am__dirstamp)
-./TwoSidedComms/singleSidedComms.lo: TwoSidedComms/$(am__dirstamp) \
-	TwoSidedComms/$(DEPDIR)/$(am__dirstamp)
 libdataManager.la: $(libdataManager_la_OBJECTS) $(libdataManager_la_DEPENDENCIES) $(EXTRA_libdataManager_la_DEPENDENCIES) 
 	$(AM_V_CCLD)$(libdataManager_la_LINK) -rpath $(dataManagerdir) $(libdataManager_la_OBJECTS) $(libdataManager_la_LIBADD) $(LIBS)
 
@@ -1587,15 +1572,11 @@ mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 	-rm -f ./Base/*.$(OBJEXT)
 	-rm -f ./Base/*.lo
-	-rm -f ./TwoSidedComms/*.$(OBJEXT)
-	-rm -f ./TwoSidedComms/*.lo
 
 distclean-compile:
 	-rm -f *.tab.c
 
 include ./Base/$(DEPDIR)/dataManager.Plo
-include ./TwoSidedComms/$(DEPDIR)/XclScatter.Plo
-include ./TwoSidedComms/$(DEPDIR)/singleSidedComms.Plo
 
 .c.o:
 	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -1627,7 +1608,6 @@ mostlyclean-libtool:
 clean-libtool:
 	-rm -rf .libs _libs
 	-rm -rf ./Base/.libs ./Base/_libs
-	-rm -rf ./TwoSidedComms/.libs ./TwoSidedComms/_libs
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
@@ -1761,8 +1741,6 @@ distclean-generic:
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
 	-rm -f Base/$(DEPDIR)/$(am__dirstamp)
 	-rm -f Base/$(am__dirstamp)
-	-rm -f TwoSidedComms/$(DEPDIR)/$(am__dirstamp)
-	-rm -f TwoSidedComms/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
@@ -1773,7 +1751,7 @@ clean-am: clean-dataManagerLTLIBRARIES clean-generic clean-libtool \
 	mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf ./Base/$(DEPDIR) ./TwoSidedComms/$(DEPDIR)
+	-rm -rf ./Base/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -1819,7 +1797,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf ./Base/$(DEPDIR) ./TwoSidedComms/$(DEPDIR)
+	-rm -rf ./Base/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

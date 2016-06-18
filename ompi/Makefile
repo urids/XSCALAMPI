@@ -1735,7 +1735,7 @@ OPAL_ASSEMBLY_ARCH = AMD64
 OPAL_ASSEMBLY_BUILTIN = BUILTIN_NO
 OPAL_ASSEMBLY_FORMAT = default-.text-.globl-:--.L-@-1-0-1-1-1
 OPAL_CC_ABSOLUTE = /usr/bin/gcc
-OPAL_CONFIGURE_DATE = Fri Jun  3 11:10:08 CDT 2016
+OPAL_CONFIGURE_DATE = Sat Jun 18 14:39:10 CDT 2016
 OPAL_CONFIGURE_HOST = myHost
 OPAL_CONFIGURE_USER = uriel
 OPAL_CXX_ABSOLUTE = /usr/bin/g++
@@ -2108,6 +2108,7 @@ SUBDIRS = include datatype debuggers etc mpi/c mpi/tool \
 	mpiext/XCLFrame/TaskManager/SynchMgmt \
 	mpiext/XCLFrame/DataManager \
 	mpiext/XCLFrame/DataManager/DataCopy \
+	mpiext/XCLFrame/DataManager/CollectiveOps \
 	mpiext/XCLFrame/DataManager/BufferMgmt $(OMPI_MPIEXT_C_DIRS) \
 	mpi/fortran/base/ $(MCA_ompi_FRAMEWORKS_SUBDIRS) \
 	$(MCA_ompi_FRAMEWORK_COMPONENT_STATIC_SUBDIRS) . mpi/cxx \
@@ -2173,6 +2174,7 @@ libmpi_la_LDFLAGS = \
         -Wl,-rpath,$(libdir)/XCLFrame/DataManager \
         -Wl,-rpath,$(libdir)/XCLFrame/DataManager/DataCopy \
         -Wl,-rpath,$(libdir)/XCLFrame/DataManager/BufferMgmt \
+        -Wl,-rpath,$(libdir)/XCLFrame/DataManager/CollectiveOps \
         -Wl,-rpath,$(libdir)/XCLFrame/TaskManager \
         -Wl,-rpath,$(libdir)/XCLFrame/TaskManager/KernelMgmt \
         -Wl,-rpath,$(libdir)/XCLFrame/TaskManager/SynchMgmt \

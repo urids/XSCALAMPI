@@ -12,9 +12,7 @@ bufferMgmt_LTLIBRARIES = libbufferMgmt.la
 
 # Sources for libmultiDeviceMgmt
 libbufferMgmt_la_SOURCES = bufferInit.c \
-			bufferRead.c \
-  			bufferWrite.c \
-			bufferFree.c
+						   bufferFree.c
 
 # Linker options libTestProgram
 libbufferMgmt_la_LDFLAGS =-module -avoid-version -lOpenCL -lm

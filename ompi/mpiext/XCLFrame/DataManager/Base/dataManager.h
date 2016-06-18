@@ -8,6 +8,7 @@
 #ifndef DATAMANAGER_H_
 #define DATAMANAGER_H_
 
+
 #include "ompi/include/mpi.h"
 #include "stdlib.h"
 #include "stdio.h"
@@ -42,14 +43,10 @@ int _OMPI_XclReadTray(void* Args);
 int _OMPI_XclWriteTray(void* Args);
 int _OMPI_XclMallocTray(void* Args);
 int _OMPI_XclFreeTray(void* Args);
-
-
-/*extern pthread_mutex_t mallocTrayMutex;
-extern pthread_mutex_t sendMutex;
-extern pthread_mutex_t recvMutex;
-extern pthread_mutex_t readTrayMutex;
-extern pthread_mutex_t writeTrayMutex;
-extern pthread_mutex_t sendRecvMutex;*/
+int _interDevCpyProducer(void* Args);
+int _interDevCpyConsumer(void* Args);
+int _intraDevCpyProducer(void* Args);
+int _intraDevCpyConsumer(void* Args);
 
 
 struct Args_Send_st{
@@ -58,7 +55,7 @@ struct Args_Send_st{
 	MPI_Datatype MPIentityType;
 	int l_src_task;
 	int g_dest_task;
-	int TAG;
+	int tgID;
 	MPI_Comm comm;
 };
 
@@ -68,7 +65,7 @@ struct Args_Recv_st{
 	MPI_Datatype MPIentityType;
 	int g_src_task;
 	int l_recv_task;
-	int TAG;
+	int tgID;
 	MPI_Comm comm;
 
 };
@@ -109,5 +106,45 @@ struct Args_SendRecv_st{
 	MPI_Datatype MPIentityType;
 	MPI_Comm comm;
 };
+
+
+
+typedef struct ticket_st{
+	pthread_mutex_t mtx;
+	pthread_cond_t cond;
+}ticket_t;
+
+
+struct Args_matchedProducer_st{
+	int tgID;
+	sem_t* FULL;
+	int l_taskIdx;
+	int trayId;
+	int dataSize;
+	ticket_t* ticket;
+};
+
+struct Args_matchedConsumer_st{
+	int tgID;
+	sem_t* FULL;
+	int l_taskIdx;
+	int trayId;
+	int dataSize;
+	ticket_t* ticket;
+};
+
+struct Args_IntraMatchedConsumer_st{
+	int tgID;
+	sem_t* FULL;
+	int l_src_taskIdx;
+	int l_dst_taskIdx;
+	int src_trayId;
+	int dst_trayId;
+	int dataSize;
+	ticket_t* ticket;
+};
+
+
+
 
 #endif /* DATAMANAGER_H_ */

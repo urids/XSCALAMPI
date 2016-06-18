@@ -5,7 +5,7 @@
 device_Task_Info* taskDevMap;
 int numDecls;
 
-
+int taskThreadsEnabled=0; //global var declared in taskManager.h
 schedConfigInfo_t * taskDevList; //Global variable declared in scheduling.h
 
 int _OMPI_CollectDevicesInfo(int devSelection, MPI_Comm comm){
@@ -68,6 +68,8 @@ int createTaskList(int devSelection,MPI_Comm comm){ //This function fills the l_
 	fillLocalTaskList(comm);
     fillGlobalTaskList(comm);
     insertThreads(l_numTasks); // At this very moment we known the local number of tasks.
+    taskThreadsEnabled=1;
+
 	return 0;
 }
 

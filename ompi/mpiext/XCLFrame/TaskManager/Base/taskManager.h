@@ -16,6 +16,7 @@
 #include <stdarg.h>
 #include "string.h"
 #include <CL/cl.h>
+#include <semaphore.h>
 
 #include <sys/time.h> //for profiling =)
 
@@ -40,6 +41,7 @@ extern int g_numTasks; //defined in c_Interface.c
 
 extern struct timeval tval_globalInit; //defined in c_Interface.c
 
+extern int taskThreadsEnabled; //defined and init in scheduling.c
 
 typedef struct enqueueArgs_st{
 	size_t* globalThreads;
@@ -68,14 +70,15 @@ typedef struct enqueueArgs_st{
                                 __LINE__, __func__, ##__VA_ARGS__); } while (0)
 
 
-
-/*mutexes defined in taskManager.c
-extern pthread_mutex_t setProcedureMutex;
-extern pthread_mutex_t execTaskMutex;*/
-
+//in taskManager.c (the interface)
 int _OMPI_XclSetProcedure(void* Args);
 int _OMPI_XclExecTask(void* Args);
 int _OMPI_P_XclExecTask(void* Args);
+
+
+//in syncMgmt.c (the module)
+void* waitSubroutine(void*Args);
+void* signalSubroutine(void*Args);
 
 //////////////////////////////////////////////////////////////////////////////////
 ////////////////////// 	INIT SUBROUTINES ARGS DECLARATIONS////////////////////////
@@ -96,6 +99,15 @@ struct Args_ExecTask_st{
 	const char* fmt;
 	va_list argsList;
 };
+
+struct Args_waitSubroutine_st{
+	sem_t* semaphore;
+};
+
+struct Args_signalSubroutine_st{
+	sem_t* semaphore;
+};
+
 ////////////////////// 	END SUBROUTINES ARGS DECLARATIONS////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
 
