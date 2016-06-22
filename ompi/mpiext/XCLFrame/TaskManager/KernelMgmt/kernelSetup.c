@@ -24,12 +24,12 @@ int createProgram(int l_selTask, char* srcPath,int numTasks){
 			1, sz, fp);
 
 	l_taskList[l_selTask].CLprogram = malloc(sizeof(cl_program));
-
+	pthread_mutex_lock(&deviceQueueMutex);
 	l_taskList[l_selTask].CLprogram[0] = clCreateProgramWithSource(
 			l_taskList[l_selTask].device[0].context, 1,
 			(const char **) &l_taskList[l_selTask].code[0].source_str,
 			(const size_t *) &l_taskList[l_selTask].code[0].source_size, &status);
-
+	pthread_mutex_unlock(&deviceQueueMutex);
 	chkerr(status, "Creating Program ", __FILE__, __LINE__);
 	fclose(fp);
 
@@ -38,10 +38,10 @@ int createProgram(int l_selTask, char* srcPath,int numTasks){
 
 int buildProgram(int l_selTask, int numTasks) {
 	int status;
-
+	pthread_mutex_lock(&deviceQueueMutex);
 	status = clBuildProgram(l_taskList[l_selTask].CLprogram[0], 1,
 			&l_taskList[l_selTask].device[0].deviceId, NULL, NULL, NULL);
-
+	pthread_mutex_unlock(&deviceQueueMutex);
 	if (status == CL_BUILD_PROGRAM_FAILURE) {
 		// Determine the size of the log
 		size_t log_size;
@@ -68,7 +68,9 @@ int createKernel(int l_selTask, char* kernelName, int numTasks){  //TODO: here w
 	//int i;
 	//for(i=0;i<numTasks;i++){
 	l_taskList[l_selTask].kernel=malloc(sizeof(XCLkernel));
+	pthread_mutex_lock(&deviceQueueMutex);
 	l_taskList[l_selTask].kernel[0].kernel = clCreateKernel(l_taskList[l_selTask].CLprogram[0], kernelName, &status);
+	pthread_mutex_unlock(&deviceQueueMutex);
 	chkerr(status, "error at: creating the kernel:", __FILE__, __LINE__);
 	//}
 	return status;
@@ -103,7 +105,7 @@ int setKernelmemObj(int seltask,int numparameter,int paramSize,int trayIdx){
 
 	//for (i = 0; i < numTasks; i++) {
 	int myRack=l_taskList[seltask].Rack;
-	debug_print("\n Debug: setting cl_mem arg: %d in task %d from rack: [%d] tray:[%d] \n", numparameter, seltask,myRack,trayIdx);
+	debug_print("Debug: setting cl_mem arg: %d in task %d from rack: [%d] tray:[%d] \n", numparameter, seltask,myRack,trayIdx);
 
 	pthread_mutex_lock(&deviceQueueMutex);
 	status = clSetKernelArg(l_taskList[seltask].kernel[0].kernel, numparameter,
@@ -119,7 +121,7 @@ int setKernelArgs(int seltask,int numparameter,int paramSize,void* paramValue){
 	int i;
 
 	//for (i = 0; i < numTasks; i++) {
-	debug_print("\n Debug: setting arg: %d in task %d \n", numparameter, seltask);
+	debug_print("Debug: setting arg: %d in task %d \n\n", numparameter, seltask);
 	pthread_mutex_lock(&deviceQueueMutex);
 	status = clSetKernelArg(l_taskList[seltask].kernel[0].kernel, numparameter,
 			paramSize, (void *) paramValue);
@@ -359,15 +361,15 @@ int enqueueKernel(int numTasks,int selTask, int workDim, size_t* globalThreads, 
 		//cl_event kernelDone;
 		//clEnqueueBarrierWithWaitList ( l_taskList[selTask].device[0].queue ,1, &kernelEvent ,&kernelDone);
 
-		int myRack=l_taskList[selTask].Rack;
+		/*--int myRack=l_taskList[selTask].Rack;
 		int dataRes;
 		status = clEnqueueReadBuffer(l_taskList[selTask].device[0].queue,
 							l_taskList[selTask].device[0].memHandler[myRack][0],
 							CL_TRUE, 0, sizeof(int),
 							&dataRes, 0, NULL, NULL);
-		//clFlush(l_taskList[selTask].device[0].queue2);
-		//clFinish(l_taskList[selTask].device[0].queue2);
-		printf(" X-: %d \n",dataRes);
+		clFlush(l_taskList[selTask].device[0].queue);
+		clFinish(l_taskList[selTask].device[0].queue);
+		printf(" res: %d \n",dataRes);--*/
 		//pthread_create(&thds[selTask], NULL, enqueTaskReq, (void*) th_Args[selTask]);
 		debug_print(" -- task %d requested in rank: %d -- \n",selTask,myRank);
 

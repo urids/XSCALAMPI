@@ -31,21 +31,20 @@ void  __attribute__ ((visibility ("hidden")))
 popContainer(container_t** list, container_t** tmpCpy){
 	if((*list)->next==NULL){
 		memcpy(*tmpCpy,*list,sizeof(container_t));
-		free(*list);
 		*list=NULL;
 	}
 	else{
 		container_t *nextN;
 		nextN=(*list)->next;
 		memcpy((*tmpCpy),*list,sizeof(container_t));
-		free(*list);
+		//free(*list);
 		*list=nextN;
 	}
 
 }
 
-void  __attribute__ ((visibility ("hidden")))
-popTagedContainer(container_t** list, int tgID, container_t** tmpCpy){
+//void  __attribute__ ((visibility ("hidden")))
+void popTagedContainer(container_t** list, int tgID, container_t** tmpCpy){
 	container_t *expl=(*list);//explorer node
 	if(*list==NULL){
 		*tmpCpy=NULL;

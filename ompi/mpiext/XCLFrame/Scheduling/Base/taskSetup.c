@@ -96,19 +96,19 @@ int fillLocalTaskList(MPI_Comm comm){
 			l_taskList[j].device = taskDevList[i].mappedDevice;
 			l_taskList[j].numTrays = 0;
 
-			//here we query how many racks has this device.
+			//first we query how many racks has this device.
 			int rackIdx = l_taskList[j].device[0].numRacks;
 			if (rackIdx == 0) {
 				l_taskList[j].device[0].memHandler = malloc(1 * sizeof(cl_mem*));
 				l_taskList[j].Rack = rackIdx; //rack assignment
-				l_taskList[j].device[0].numRacks++;
+				l_taskList[j].device[0].numRacks=l_taskList[j].device[0].numRacks+1;
 			} else {
 				cl_mem** tmpRack;
 				tmpRack = (cl_mem**) realloc(l_taskList[j].device[0].memHandler,(rackIdx + 1) * sizeof(cl_mem*));
 				if (tmpRack != NULL) {
 					l_taskList[j].Rack = rackIdx;
 					l_taskList[j].device[0].memHandler = tmpRack;
-					l_taskList[j].device[0].numRacks++;
+					l_taskList[j].device[0].numRacks=l_taskList[j].device[0].numRacks+1;
 				} else {
 					printf("ERROR AT: Reallocating racks. %d , %d",	__FILE__, __LINE__);
 				}

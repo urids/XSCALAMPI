@@ -95,6 +95,7 @@ int OMPI_XclExecTask(MPI_Comm communicator, int g_selTask, int workDim, size_t *
 		//2.- Get the appropriate thread from the int thID_Of_(g_selTask)
 		int l_selTask= g_taskList[g_selTask].l_taskIdx;
 
+
 		debug_print("local task %d requested in rank %d \n",l_selTask,myRank);
 
 		//3.- Wrap the setProcedure_Args_st with the call parameters
@@ -286,13 +287,13 @@ int OMPI_XclRecv(int trayIdx, int count, MPI_Datatype MPIentityType, int g_src_t
 	return 0;
 }*/
 
-int OMPI_XcltestF(int gsrctask, MPI_Comm comm, int srctrayIdx, int gdsttask, int dsttrayIdx , int traySize, int tgId){
+int OMPI_XcltestF(int g_src_task, int src_trayIdx, int g_dst_task, int dst_trayIdx, int traySize, int tgID){
 	return 0;
 }
 
-int OMPI_XclSendRecv( MPI_Comm comm, int g_src_task, int src_trayIdx, int g_dst_task, int dst_trayIdx, int traySize, int tgID){
+int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_trayIdx, int traySize, int tgID){
 
-		static int firstIni=1;
+	static int firstIni=1;
 	if(firstIni){
 		sem_init(&FULL,0,0);
 		pthread_mutex_init(&opTicket.mtx,NULL);
@@ -303,7 +304,7 @@ int OMPI_XclSendRecv( MPI_Comm comm, int g_src_task, int src_trayIdx, int g_dst_
 
 
 	int myRank;
-	MPI_Comm_rank(comm, &myRank);
+	MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
 	int l_src_task, l_dst_task;
 	//int entityTypeSz;
 	//MPI_Type_size(MPIentityType, &entityTypeSz);
@@ -343,8 +344,8 @@ int OMPI_XclSendRecv( MPI_Comm comm, int g_src_task, int src_trayIdx, int g_dst_
 		switch(cpyMode){
 
 		case INTRADEVICE:
-
-			printf("IntraDevice, tag: %d\n",tgID);
+		{
+			//printf("IntraDevice, tag: %d\n",tgID);
 			struct Args_matchedProducer_st * intracpyProducer_Args=malloc(sizeof(struct Args_matchedProducer_st));
 			intracpyProducer_Args->tgID=tgID;
 			intracpyProducer_Args->FULL=&FULL;
@@ -369,14 +370,14 @@ int OMPI_XclSendRecv( MPI_Comm comm, int g_src_task, int src_trayIdx, int g_dst_
 			//4.- Delegate the call to the thread.
 			addSubRoutine(l_dst_task, _intraDevCpyConsumer, (void*)intraCpyConsumer_Args);
 
-
+		}
 			break;
 
 
 
 		case INTERDEVICE:
-
-			printf("InterDevice, tag: %d\n",tgID);
+		{
+			//printf("InterDevice, tag: %d\n",tgID);
 			struct Args_matchedProducer_st * cpyProducer_Args=malloc(sizeof(struct Args_matchedProducer_st));
 			cpyProducer_Args->tgID=tgID;
 			cpyProducer_Args->FULL=&FULL;
@@ -399,22 +400,22 @@ int OMPI_XclSendRecv( MPI_Comm comm, int g_src_task, int src_trayIdx, int g_dst_
 			//4.- Delegate the call to the thread.
 			addSubRoutine(l_dst_task, _interDevCpyConsumer, (void*)cpyConsumer_Args);
 
-
+		}
 			break;
 
 		case INTERNODE:
-		/*	if(myRank == g_taskList[g_src_task].r_rank){ //Sender
+			if(myRank == g_taskList[g_src_task].r_rank){ //Sender
 				l_src_task = g_taskList[g_src_task].l_taskIdx;
 
 						//3.- Wrap the setProcedure_Args_st with the call parameters (wrap usually done in the c_Interface.c )
 						struct Args_Send_st * send_Args=malloc(sizeof(struct Args_Send_st));
 						send_Args->trayIdx=src_trayIdx;
-						send_Args->count=count;
-						send_Args->MPIentityType=MPIentityType;
+						send_Args->count=traySize;
+						send_Args->MPIentityType=MPI_BYTE;
 						send_Args->l_src_task=l_src_task;
 						send_Args->g_dest_task=g_dst_task;
 						send_Args->tgID=tgID;
-						send_Args->comm=comm;
+						send_Args->comm=MPI_COMM_WORLD;
 
 						//4.- Delegate the call to the thread.
 						addSubRoutine(l_src_task, _OMPI_XclSend, (void*)send_Args);
@@ -423,16 +424,15 @@ int OMPI_XclSendRecv( MPI_Comm comm, int g_src_task, int src_trayIdx, int g_dst_
 				l_dst_task = g_taskList[g_dst_task].l_taskIdx;
 						struct Args_Recv_st * recv_Args=malloc(sizeof(struct Args_Recv_st));
 						recv_Args->trayIdx=dst_trayIdx;
-						recv_Args->count=count;
-						recv_Args->MPIentityType=MPIentityType;
+						recv_Args->count=traySize;
+						recv_Args->MPIentityType=MPI_BYTE;
 						recv_Args->g_src_task=g_src_task;
 						recv_Args->l_recv_task=l_dst_task;
 						recv_Args->tgID=tgID;
-						recv_Args->comm=comm;
-
+						recv_Args->comm=MPI_COMM_WORLD;
 						//4.- Delegate the call to the thread.
 						addSubRoutine(l_dst_task, _OMPI_XclRecv, (void*)recv_Args);
-			}*/
+			}
 
 			break;
 
@@ -442,6 +442,7 @@ int OMPI_XclSendRecv( MPI_Comm comm, int g_src_task, int src_trayIdx, int g_dst_
 			break;
 		}
 	}// If no rank participation just return
+
 	return 0;
 }
 

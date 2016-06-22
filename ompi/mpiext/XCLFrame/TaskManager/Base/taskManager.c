@@ -49,7 +49,7 @@ int _OMPI_XclSetProcedure(void* Args){
 	createProgram = dlsym(dlhandle, "createProgram");
 	buildProgram = dlsym(dlhandle, "buildProgram");
 	createKernel = dlsym(dlhandle, "createKernel");
-	kernelXplor = dlsym(dlhandle, "kernelXplor");
+	//kernelXplor = dlsym(dlhandle, "kernelXplor");
 	if ((error = dlerror()) != NULL ) {
 		fputs(error, stderr);
 		exit(1);
@@ -62,7 +62,7 @@ int _OMPI_XclSetProcedure(void* Args){
 		err=(*createProgram)(l_selTask, srcPath,0);
 		err|=(*buildProgram)(l_selTask, 0);
 		err|=(*createKernel)(l_selTask, kernelName, 0);
-		err|=(*kernelXplor)(l_selTask, 0);
+		//err|=(*kernelXplor)(l_selTask, 0);
 
 
 	dlclose(dlhandle);
@@ -76,8 +76,10 @@ int _OMPI_XclSetProcedure(void* Args){
 
 int _OMPI_XclExecTask(void * Args){
 
+
 	//1.- Unwrap the Args.
 	struct Args_ExecTask_st * execTask_Args=(struct Args_ExecTask_st *)Args;
+	printf("task %d exec \n",execTask_Args->l_selTask);
 	MPI_Comm comm = execTask_Args->comm;
 	int l_selTask =	execTask_Args->l_selTask;
 	int workDim   =	execTask_Args->workDim;

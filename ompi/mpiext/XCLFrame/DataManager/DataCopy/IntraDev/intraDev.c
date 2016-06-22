@@ -14,16 +14,7 @@ int intraDevCpyProducer(void* Args){
 
 
 	//2.- The task thread makes the calls.
-	void* tmpDataBuff=malloc(cpyBuffSz);
 	pthread_mutex_lock(&ticket->mtx);
-
-
-/*	struct Args_ReadTray_st * readTray_Args=malloc(sizeof(struct Args_ReadTray_st));
-	readTray_Args->l_taskIdx=MP_Args->l_taskIdx;
-	readTray_Args->trayIdx=MP_Args->l_taskIdx;
-	readTray_Args->bufferSize=cpyBuffSz;
-	readTray_Args->hostBuffer=tmpDataBuff;
-	_OMPI_XclReadTray(readTray_Args);*/
 
 		//readBuffer(l_src_task,src_trayIdx,cpyBuffSz,tmpDataBuff);
 		//printf(" res: %d \n", *(int*)tmpDataBuff);
@@ -31,6 +22,7 @@ int intraDevCpyProducer(void* Args){
 	pthread_cond_broadcast(&ticket->cond);
 	pthread_mutex_unlock(&ticket->mtx);
 	sem_post(FULL);
+
 	return 0;
 }
 
@@ -50,18 +42,22 @@ int intraDevCpyConsumer(void* Args){
 	//2.- The task thread makes the calls.
 	sem_wait(FULL);
 	pthread_mutex_lock(&ticket->mtx);
+
 	while(1){
+
 		container_t* recContainer=malloc(sizeof(container_t));
+
 		popTagedContainer(&List,tgID,&recContainer);
 		if(recContainer!=NULL){
 
 			//writeBuffer(l_dst_task,dst_trayIdx,cpyBuffSz,recContainer->Data);
-			intracpyBuffer(l_src_task, src_trayIdx, l_dst_task, dst_trayIdx, cpyBuffSz);
 
+			intracpyBuffer(l_src_task, src_trayIdx, l_dst_task, dst_trayIdx, cpyBuffSz);
 			pthread_mutex_unlock(&ticket->mtx);
 			return 0;
 		}
 		else{
+			printf("not Recov\n");
 		sem_post(FULL);
 		pthread_cond_wait(&ticket->cond,&ticket->mtx);
 		}

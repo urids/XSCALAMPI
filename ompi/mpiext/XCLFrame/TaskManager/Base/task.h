@@ -39,8 +39,6 @@ typedef struct Xkernel_st{
 typedef struct XCLtask_st{
 
 	int localID;
-
-
 /*********************************************
 				DEVICE
 *********************************************/

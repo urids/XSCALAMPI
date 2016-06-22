@@ -49,7 +49,6 @@ void* taskThrdDoWk(void *threadid)
 		if(exitSignal[thID] && SubRoutinesQueues[thID]==NULL){ //if required and there's no more work EXIT
 			pthread_exit(NULL);
 		}
-		printf("thd:%d -%d\n",thID,counters[thID]);
 		//avoids concurrence issues when retrieving a tasks against the process thread.
 		pthread_mutex_lock(&prodConsExcl[thID]);
 			pop(&SubRoutinesQueues[thID],&queueNode);//retrieve the subroutine

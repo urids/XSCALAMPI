@@ -37,11 +37,11 @@ OMPI_DECLSPEC int OMPI_XclGather(int trayIdx, int count, MPI_Datatype MPIentityT
 OMPI_DECLSPEC int OMPI_XclSend(int trayIdx, int count, MPI_Datatype MPIentityType, int src_task, int dest_task, int tgId, MPI_Comm comm); //TODO: offset parameter to from tray start
 OMPI_DECLSPEC int OMPI_XclRecv(int trayIdx, int count, MPI_Datatype MPIentityType, int src_task, int dest_task, int tgId, MPI_Comm comm); //TODO: offset parameter to from tray start
 //OMPI_DECLSPEC int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_trayIdx, int count, MPI_Datatype MPIentityType, int TAG, MPI_Comm comm);
-OMPI_DECLSPEC int OMPI_XclSendRecv(MPI_Comm comm, int g_src_task, int src_trayIdx, int g_dst_task, int dst_trayIdx, int traySize, int tgID);
+OMPI_DECLSPEC int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_trayIdx, int traySize, int tgID);
 OMPI_DECLSPEC int OMPI_XclReadTray(int taskIdx, int trayIdx, int bufferSize, void * hostBuffer, MPI_Comm comm);
 OMPI_DECLSPEC int OMPI_XclWriteTray(int taskIdx, int trayIdx, int bufferSize, void * hostBuffer, MPI_Comm comm);
 //OMPI_DECLSPEC int OMPI_XcltestF(int gsrctask, int srctrayIdx,int gdsttask, int dsttrayIdx, int count, int opTag, MPI_Comm comm);
-OMPI_DECLSPEC int OMPI_XcltestF (int gsrctask, MPI_Comm comm, int srctrayIdx, int gdsttask, int dsttrayIdx , int traySize, int tgId);
+OMPI_DECLSPEC int OMPI_XcltestF (int g_src_task, int src_trayIdx, int g_dst_task, int dst_trayIdx, int traySize, int tgID);
 
 
 //OMPI_DECLSPEC int OMPI_XclNewTask(int Rank, int Device, MPI_Comm comm);
