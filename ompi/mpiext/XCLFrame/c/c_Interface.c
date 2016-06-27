@@ -283,13 +283,6 @@ int OMPI_XclRecv(int trayIdx, int count, MPI_Datatype MPIentityType, int g_src_t
 }
 
 
-/*int OMPI_XcltestF(int gsrctask, int srctrayIdx,int gdsttask, int dsttrayIdx, int count, int opTag, MPI_Comm comm){
-	return 0;
-}*/
-
-int OMPI_XcltestF(int g_src_task, int src_trayIdx, int g_dst_task, int dst_trayIdx, int traySize, int tgID){
-	return 0;
-}
 
 int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_trayIdx, int traySize, int tgID){
 
@@ -371,7 +364,7 @@ int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_tr
 			addSubRoutine(l_dst_task, _intraDevCpyConsumer, (void*)intraCpyConsumer_Args);
 
 		}
-			break;
+		break;
 
 
 
@@ -401,44 +394,44 @@ int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_tr
 			addSubRoutine(l_dst_task, _interDevCpyConsumer, (void*)cpyConsumer_Args);
 
 		}
-			break;
+		break;
 
 		case INTERNODE:
 			if(myRank == g_taskList[g_src_task].r_rank){ //Sender
 				l_src_task = g_taskList[g_src_task].l_taskIdx;
 
-						//3.- Wrap the setProcedure_Args_st with the call parameters (wrap usually done in the c_Interface.c )
-						struct Args_Send_st * send_Args=malloc(sizeof(struct Args_Send_st));
-						send_Args->trayIdx=src_trayIdx;
-						send_Args->count=traySize;
-						send_Args->MPIentityType=MPI_BYTE;
-						send_Args->l_src_task=l_src_task;
-						send_Args->g_dest_task=g_dst_task;
-						send_Args->tgID=tgID;
-						send_Args->comm=MPI_COMM_WORLD;
+				//3.- Wrap the setProcedure_Args_st with the call parameters (wrap usually done in the c_Interface.c )
+				struct Args_Send_st * send_Args=malloc(sizeof(struct Args_Send_st));
+				send_Args->trayIdx=src_trayIdx;
+				send_Args->count=traySize;
+				send_Args->MPIentityType=MPI_BYTE;
+				send_Args->l_src_task=l_src_task;
+				send_Args->g_dest_task=g_dst_task;
+				send_Args->tgID=tgID;
+				send_Args->comm=MPI_COMM_WORLD;
 
-						//4.- Delegate the call to the thread.
-						addSubRoutine(l_src_task, _OMPI_XclSend, (void*)send_Args);
+				//4.- Delegate the call to the thread.
+				addSubRoutine(l_src_task, _OMPI_XclSend, (void*)send_Args);
 			}else{ //Receiver
 
 				l_dst_task = g_taskList[g_dst_task].l_taskIdx;
-						struct Args_Recv_st * recv_Args=malloc(sizeof(struct Args_Recv_st));
-						recv_Args->trayIdx=dst_trayIdx;
-						recv_Args->count=traySize;
-						recv_Args->MPIentityType=MPI_BYTE;
-						recv_Args->g_src_task=g_src_task;
-						recv_Args->l_recv_task=l_dst_task;
-						recv_Args->tgID=tgID;
-						recv_Args->comm=MPI_COMM_WORLD;
-						//4.- Delegate the call to the thread.
-						addSubRoutine(l_dst_task, _OMPI_XclRecv, (void*)recv_Args);
+				struct Args_Recv_st * recv_Args=malloc(sizeof(struct Args_Recv_st));
+				recv_Args->trayIdx=dst_trayIdx;
+				recv_Args->count=traySize;
+				recv_Args->MPIentityType=MPI_BYTE;
+				recv_Args->g_src_task=g_src_task;
+				recv_Args->l_recv_task=l_dst_task;
+				recv_Args->tgID=tgID;
+				recv_Args->comm=MPI_COMM_WORLD;
+				//4.- Delegate the call to the thread.
+				addSubRoutine(l_dst_task, _OMPI_XclRecv, (void*)recv_Args);
 			}
 
 			break;
 
 		default:
-				printf("No transference mode.\n");
-				exit(-1);
+			printf("No transference mode.\n");
+			exit(-1);
 			break;
 		}
 	}// If no rank participation just return
@@ -447,14 +440,74 @@ int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_tr
 }
 
 
-
-
 int OMPI_XclGather(int trayIdx, int count, MPI_Datatype MPIentityType,void **hostbuffer,
 		const char* datafileName , MPI_Comm comm){
 	return _OMPI_XclGather(trayIdx, count, MPIentityType,hostbuffer,datafileName ,comm);
 }
-int OMPI_XclScatter(const char* datafileName, int* count, MPI_Datatype MPIentityType, void* hostbuffer, int trayIdx, MPI_Comm comm){
-	return _OMPI_XclScatter(datafileName, count, MPIentityType, hostbuffer, trayIdx, comm);
+int OMPI_XclScatter(const char* datafileName, int* count, MPI_Datatype entityType, int trayIdx, MPI_Comm comm){
+	int i;	//index exclusive variable.
+	int myRank, numRanks;
+	MPI_Comm_rank(comm, &myRank);
+	MPI_Comm_size(comm, &numRanks);
+	int entityTypeSize;
+
+	//Open the data file and allocate a tmp buff.
+
+	MPI_Status status;
+	MPI_File dataFile;
+	MPI_Offset filesize;
+	MPI_File_open(comm, datafileName, MPI_MODE_RDONLY, MPI_INFO_NULL, &dataFile);
+	MPI_File_get_size(dataFile, &filesize);
+
+	MPI_Type_size(entityType, &entityTypeSize);
+
+
+	int numEntities=(int)filesize/entityTypeSize;
+	int ePerTask=(int)numEntities/g_numTasks;
+	int ePerRank=(int)ePerTask*l_numTasks;
+
+	//6.- Create tmp buffer && read l_#TaskBlocks
+	int tmpBuffSz=entityTypeSize*ePerRank;
+	void * tmpScattAdv=malloc(tmpBuffSz);
+	void * tmpScattBuff=tmpScattAdv; //keep pointing to the start of the buffer;
+
+
+	for(i=0;i<l_numTasks;i++){
+		int taskOffset=myAssignedTasks[i];
+
+		MPI_File_set_view(dataFile, taskOffset*ePerTask*entityTypeSize,
+				MPI_FLOAT, entityType, "native", MPI_INFO_NULL);
+
+		MPI_File_read(dataFile, tmpScattAdv, ePerTask, entityType, &status);
+
+		tmpScattAdv+=entityTypeSize*ePerTask;
+	}
+
+
+	//7.-
+	int l_taskIdx;
+	for(l_taskIdx=0;l_taskIdx<l_numTasks;l_taskIdx++){
+
+		//3 Wrap the Args_WriteTray_st with the call parameters
+
+		struct Args_MallocTray_st * mallocTray_Args=malloc(sizeof(struct Args_MallocTray_st));
+		mallocTray_Args->l_taskIdx=l_taskIdx;
+		mallocTray_Args->trayIdx=trayIdx;
+		mallocTray_Args->bufferSize=ePerTask*entityTypeSize;
+
+		struct Args_WriteTray_st * writeTray_Args=malloc(sizeof(struct Args_WriteTray_st));
+		writeTray_Args->l_taskIdx=l_taskIdx;
+		writeTray_Args->trayIdx=trayIdx;
+		writeTray_Args->bufferSize=ePerTask*entityTypeSize;
+		writeTray_Args->hostBuffer=tmpScattBuff+(l_taskIdx*ePerTask*entityTypeSize);
+
+		//4.- Delegate calls to the thread.
+		addSubRoutine(l_taskIdx, _OMPI_XclMallocTray, (void*)mallocTray_Args);
+		addSubRoutine(l_taskIdx, _OMPI_XclWriteTray, (void*)writeTray_Args);
+	}
+
+	return 0;
+
 }
 
 int NON_DELEGATED OMPI_XclWaitFor(int numTasks, int* taskIds, MPI_Comm comm){

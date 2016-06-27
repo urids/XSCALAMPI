@@ -31,8 +31,8 @@ commsBench.lo: commsBench.c /usr/include/stdc-predef.h commsBench.h \
  /usr/include/x86_64-linux-gnu/bits/stdio2.h \
  ../../../../../ompi/include/mpi.h \
  ../../../../../ompi/include/mpi_portable_platform.h \
- ../../TaskManager/Base/task.h /usr/local/include/CL/cl.h \
- /usr/local/include/CL/cl_platform.h \
+ ../../TaskManager/Base/task.h /usr/local/cuda-7.5/include/CL/cl.h \
+ /usr/local/cuda-7.5/include/CL/cl_platform.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/xmmintrin.h \
@@ -146,9 +146,9 @@ commsBench.h:
 
 ../../TaskManager/Base/task.h:
 
-/usr/local/include/CL/cl.h:
+/usr/local/cuda-7.5/include/CL/cl.h:
 
-/usr/local/include/CL/cl_platform.h:
+/usr/local/cuda-7.5/include/CL/cl_platform.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h:
 

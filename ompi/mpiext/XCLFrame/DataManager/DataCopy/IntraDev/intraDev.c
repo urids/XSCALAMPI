@@ -57,7 +57,6 @@ int intraDevCpyConsumer(void* Args){
 			return 0;
 		}
 		else{
-			printf("not Recov\n");
 		sem_post(FULL);
 		pthread_cond_wait(&ticket->cond,&ticket->mtx);
 		}

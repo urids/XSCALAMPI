@@ -60,8 +60,13 @@ c_Interface.lo: c_Interface.c /usr/include/stdc-predef.h c_Interface.h \
  ../DataManager/Base/../../c/queueMutexes.h \
  ../DataManager/DataCopy/CopyContainers/containers.h \
  ../DataManager/DataCopy/CopyContainers/../../../DataManager/Base/dataManager.h \
- ../multiDeviceMgmt/deviceMgmt/localDevices.h \
- ../multiDeviceMgmt/deviceMgmt/Device.h
+ ../Scheduling/Base/scheduling.h \
+ ../Scheduling/Base/../../TaskManager/Base/taskManager.h \
+ ../Scheduling/Base/../../multiDeviceMgmt/deviceMgmt/Device.h \
+ ../Scheduling/Base/../../multiDeviceMgmt/deviceMgmt/localDevices.h \
+ ../Scheduling/Base/../../multiDeviceMgmt/deviceMgmt/Device.h \
+ ../Scheduling/Base/../../multiDeviceMgmt/deviceMgmt/deviceExploration.h \
+ ../multiDeviceMgmt/deviceMgmt/localDevices.h
 
 /usr/include/stdc-predef.h:
 
@@ -227,6 +232,16 @@ c_Interface.h:
 
 ../DataManager/DataCopy/CopyContainers/../../../DataManager/Base/dataManager.h:
 
-../multiDeviceMgmt/deviceMgmt/localDevices.h:
+../Scheduling/Base/scheduling.h:
 
-../multiDeviceMgmt/deviceMgmt/Device.h:
+../Scheduling/Base/../../TaskManager/Base/taskManager.h:
+
+../Scheduling/Base/../../multiDeviceMgmt/deviceMgmt/Device.h:
+
+../Scheduling/Base/../../multiDeviceMgmt/deviceMgmt/localDevices.h:
+
+../Scheduling/Base/../../multiDeviceMgmt/deviceMgmt/Device.h:
+
+../Scheduling/Base/../../multiDeviceMgmt/deviceMgmt/deviceExploration.h:
+
+../multiDeviceMgmt/deviceMgmt/localDevices.h:

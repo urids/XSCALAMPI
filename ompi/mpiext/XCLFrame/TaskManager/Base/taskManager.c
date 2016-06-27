@@ -59,10 +59,10 @@ int _OMPI_XclSetProcedure(void* Args){
 
 	int err; //TODO: l_numTasks must be deleted (the 0) from the calls: it is no longer useful =/.
 
-		err=(*createProgram)(l_selTask, srcPath,0);
-		err|=(*buildProgram)(l_selTask, 0);
-		err|=(*createKernel)(l_selTask, kernelName, 0);
-		//err|=(*kernelXplor)(l_selTask, 0);
+	err=(*createProgram)(l_selTask, srcPath,0);
+	err|=(*buildProgram)(l_selTask, 0);
+	err|=(*createKernel)(l_selTask, kernelName, 0);
+	//err|=(*kernelXplor)(l_selTask, 0);
 
 
 	dlclose(dlhandle);
@@ -72,14 +72,14 @@ int _OMPI_XclSetProcedure(void* Args){
 
 
 //int _OMPI_XclExecTask(MPI_Comm comm, int g_selTask, int workDim, size_t * globalThreads,
-	//	size_t * localThreads, const char * fmt, va_list argsList) {
+//	size_t * localThreads, const char * fmt, va_list argsList) {
 
 int _OMPI_XclExecTask(void * Args){
 
 
 	//1.- Unwrap the Args.
 	struct Args_ExecTask_st * execTask_Args=(struct Args_ExecTask_st *)Args;
-	printf("task %d exec \n",execTask_Args->l_selTask);
+	debug_print("task %d exec \n",execTask_Args->l_selTask);
 	MPI_Comm comm = execTask_Args->comm;
 	int l_selTask =	execTask_Args->l_selTask;
 	int workDim   =	execTask_Args->workDim;
@@ -93,46 +93,46 @@ int _OMPI_XclExecTask(void * Args){
 
 
 
-		//int l_selTask= g_taskList[g_selTask].l_taskIdx;
+	//int l_selTask= g_taskList[g_selTask].l_taskIdx;
 
-		//2.-The task thread makes the calls to the components
-		void *dlhandle;
+	//2.-The task thread makes the calls to the components
+	void *dlhandle;
 
-		int (*argsParser)(MPI_Comm, int selTask, int workDim, size_t*, size_t*, const char *,
-				va_list);
-		int (*enqueueKernel)(int numTasks,int selTask, int workDim, const size_t* globalThreads, const size_t* localThreads);
-		char *error;
+	int (*argsParser)(MPI_Comm, int selTask, int workDim, size_t*, size_t*, const char *,
+			va_list);
+	int (*enqueueKernel)(int numTasks,int selTask, int workDim, const size_t* globalThreads, const size_t* localThreads);
+	char *error;
 
-		dlhandle = dlopen("libkernelMgmt.so", RTLD_LAZY);
-		if (!dlhandle) {
-			fputs(dlerror(), stderr);
-			exit(1);
-		}
+	dlhandle = dlopen("libkernelMgmt.so", RTLD_LAZY);
+	if (!dlhandle) {
+		fputs(dlerror(), stderr);
+		exit(1);
+	}
 
-		argsParser = dlsym(dlhandle, "argsParser");
-		enqueueKernel=dlsym(dlhandle, "enqueueKernel");
+	argsParser = dlsym(dlhandle, "argsParser");
+	enqueueKernel=dlsym(dlhandle, "enqueueKernel");
 
-		if ((error = dlerror()) != NULL) {
-			fputs(error, stderr);
-			exit(1);
-		}
+	if ((error = dlerror()) != NULL) {
+		fputs(error, stderr);
+		exit(1);
+	}
 
-		int err;
+	int err;
 
-			err=(*argsParser)(comm, l_selTask, workDim , globalThreads, localThreads, fmt, argsList);
-			err|=(*enqueueKernel)(l_numTasks,l_selTask,workDim, globalThreads, localThreads);
+	err=(*argsParser)(comm, l_selTask, workDim , globalThreads, localThreads, fmt, argsList);
+	err|=(*enqueueKernel)(l_numTasks,l_selTask,workDim, globalThreads, localThreads);
 
 
-		//dlclose(dlhandle); //TODO: something wrong here memory leak if I close!.
+	//dlclose(dlhandle); //TODO: something wrong here memory leak if I close!.
 	return err;
 }
 
 
 //int _OMPI_P_XclExecTask(MPI_Comm comm, int g_selTask, int workDim, size_t * globalThreads,
-	//	size_t * localThreads, struct timeval tval_globalInit , const char * fmt, va_list argsList) {
+//	size_t * localThreads, struct timeval tval_globalInit , const char * fmt, va_list argsList) {
 
 int _OMPI_P_XclExecTask(void* Args){
-/*	int myRank;
+	/*	int myRank;
 	MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
 
 
@@ -142,44 +142,42 @@ int _OMPI_P_XclExecTask(void* Args){
 		int l_selTask= g_taskList[g_selTask].l_taskIdx;*/
 
 	//1.- Unwrap the Args.
-		struct Args_ExecTask_st * execTask_Args=(struct Args_ExecTask_st *)Args;
-		MPI_Comm comm = execTask_Args->comm;
-		int l_selTask =	execTask_Args->l_selTask;
-		int workDim   =	execTask_Args->workDim;
-		size_t* globalThreads =	execTask_Args->globalThreads;
-		size_t * localThreads =	execTask_Args->localThreads;
-		const char* fmt = execTask_Args->fmt;
-		va_list argsList;
-		va_copy(argsList, execTask_Args->argsList);
-		va_end(argsList);
+	struct Args_ExecTask_st * execTask_Args=(struct Args_ExecTask_st *)Args;
+	MPI_Comm comm = execTask_Args->comm;
+	int l_selTask =	execTask_Args->l_selTask;
+	int workDim   =	execTask_Args->workDim;
+	size_t* globalThreads =	execTask_Args->globalThreads;
+	size_t * localThreads =	execTask_Args->localThreads;
+	const char* fmt = execTask_Args->fmt;
+	va_list argsList;
+	va_copy(argsList, execTask_Args->argsList);
+	va_end(argsList);
 
-		//va_list argsList = execTask_Args->argsList;
+	//va_list argsList = execTask_Args->argsList;
 
 	//2.-The task thread makes the calls to the components
-		void *dlhandle;
+	void *dlhandle;
 
-		int (*argsParser)(MPI_Comm, int selTask, int workDim, size_t*, size_t*, const char *,
-				va_list);
-		char *error;
+	int (*argsParser)(MPI_Comm, int selTask, int workDim, size_t*, size_t*, const char *,
+			va_list);
+	char *error;
 
-		dlhandle = dlopen("libkernelMgmt.so", RTLD_LAZY);
-		if (!dlhandle) {
-			fputs(dlerror(), stderr);
-			exit(1);
-		}
+	dlhandle = dlopen("libkernelMgmt.so", RTLD_LAZY);
+	if (!dlhandle) {
+		fputs(dlerror(), stderr);
+		exit(1);
+	}
 
-		argsParser = dlsym(dlhandle, "argsParser");
+	argsParser = dlsym(dlhandle, "argsParser");
 
-		if ((error = dlerror()) != NULL) {
-			fputs(error, stderr);
-			exit(1);
-		}
+	if ((error = dlerror()) != NULL) {
+		fputs(error, stderr);
+		exit(1);
+	}
 
-		int err;
-		err=argsParser(comm, l_selTask, workDim , globalThreads, localThreads, fmt, argsList);
-		//dlclose(dlhandle); //TODO: something wrong here memory leak if I close!.
-
-
+	int err;
+	err=argsParser(comm, l_selTask, workDim , globalThreads, localThreads, fmt, argsList);
+	//dlclose(dlhandle); //TODO: something wrong here memory leak if I close!.
 
 	return 0;
 }
@@ -209,10 +207,10 @@ int _OMPI_XclWaitFor(int numTasks, int* taskIds, MPI_Comm comm){
 		}
 	}
 	if(l_wTskSize>0){ //Am I (the process thread) the owner of any task?
-		//err = (*XclWaitFor)(l_wTskSize,l_ids, comm);
+
 		void *dlhandle;
 
-		int (*XclWaitFor)(pthread_t* thds, int l_numTasks, int* l_taskIds, MPI_Comm comm);
+
 		void (*localSynch)(int l_numTasks, int* localIDs, MPI_Comm Comm);
 		char *error;
 
@@ -222,25 +220,54 @@ int _OMPI_XclWaitFor(int numTasks, int* taskIds, MPI_Comm comm){
 			exit(1);
 		}
 
-		//XclWaitFor = dlsym(dlhandle, "XclWaitFor");
+
 		localSynch=dlsym(dlhandle,"localSynch");
 		if ((error = dlerror()) != NULL) {
 			fputs(error, stderr);
 			exit(1);
 		}
-		//err = (*XclWaitFor)(thds, l_wTskSize,l_ids, comm);
+
 		(*localSynch)(l_wTskSize,l_ids,comm);
 		//dlclose(dlhandle);
 	}
-
-	//MPI_Barrier(comm);
 
 
 	return MPI_SUCCESS;
 }
 
 int _OMPI_XclWaitAllTasks(MPI_Comm comm){
+
 	void *dlhandle;
+	int i;
+
+	void (*localSynch)(int l_numTasks, int* localIDs, MPI_Comm Comm);
+	char *error;
+
+	dlhandle = dlopen("libsynchMgmt.so", RTLD_LAZY);
+	if (!dlhandle) {
+		fputs(dlerror(), stderr);
+		exit(1);
+	}
+
+
+	localSynch=dlsym(dlhandle,"localSynch");
+	if ((error = dlerror()) != NULL) {
+		fputs(error, stderr);
+		exit(1);
+	}
+
+	int* l_ids=malloc(l_numTasks*sizeof(int));
+	for(i=0;i<l_numTasks;i++){
+		l_ids[i]=i;
+	}
+
+	(*localSynch)(l_numTasks,l_ids,comm);
+
+return 0;
+	//dlclose(dlhandle);
+
+
+	/*void *dlhandle;
 
 	int (*XclWaitAllTasks)(int l_numTasks,MPI_Comm comm);
 	char *error;
@@ -257,7 +284,7 @@ int _OMPI_XclWaitAllTasks(MPI_Comm comm){
 		fputs(error, stderr);
 		exit(1);
 	}
-	return (*XclWaitAllTasks)(l_numTasks,comm);
+	return (*XclWaitAllTasks)(l_numTasks,comm);*/
 
 }
 

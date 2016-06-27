@@ -43,33 +43,9 @@ int ALL_TASKS_writeBuffer(int numTasks, int trayIdx, void * hostBuffer ) {
 #endif //if PROFILE
 
 
-
 	}
 
-	/*PINNED DATA COPY.
-	 *
-	 * This type of copy is favorable for the CPU because is a 0 copy strategy.
-	 *
-
-
-	void **p;
-	p=(void**)malloc(numTasks*sizeof(void*));
-
-	for (i = 0; i < numTasks; i++) {
-		p[i] = (void *) clEnqueueMapBuffer(l_taskList[i].device[0].queue,  //map memory object on device to memory in host.
-				l_taskList[i].device[0].memHandler[0], CL_TRUE,
-				CL_MAP_WRITE, 0, bufferSize,
-				0, NULL, NULL, &status);
-
-		//memset(p, 0, task->kernel[0].buffer[0].size*sizeof(cl_float3));
-		p[i]=*entitiesbuffer;
-		status |= clEnqueueUnmapMemObject(l_taskList[i].device[0].queue, l_taskList[i].device[0].memHandler[0], p[i], 0, NULL,NULL);
-		chkerr(status, "error at Writing Buffers", __FILE__, __LINE__);
-	}
-*/
-
-
-		return status;
+	return status;
 }
 //count is of type pointer because in this same address we could return the number of entities per Rank =)!!.
 int XclScatter(const char* datafileName, int* count, MPI_Datatype MPIentityType, void* hostbuffer, int trayIdx, MPI_Comm comm){

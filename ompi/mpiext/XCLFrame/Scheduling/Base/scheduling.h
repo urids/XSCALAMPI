@@ -39,6 +39,10 @@ extern int numDecls;
 
 extern schedConfigInfo_t* taskDevList; //global variable defined in scheduling.c
 
+//defined in taskSetup.c
+extern int * myAssignedTasks; //this data is declared as extern because is used in
+extern int* RKS; // collective operations.
+
 typedef struct commsInfo_st{
   	float L,BW;
   	float* L_Mtx;

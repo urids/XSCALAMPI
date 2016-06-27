@@ -1,6 +1,9 @@
 
 #include "scheduling.h"
 
+int * myAssignedTasks; // Declared in scheduling.h
+int * RKS; // Declared in scheduling.h
+
 int fillGlobalTaskList(MPI_Comm comm){ //this function creates a local assignment array and then
 										// interchanges this array in all2all (making every process aware.)
 	int i,j;
@@ -10,7 +13,7 @@ int fillGlobalTaskList(MPI_Comm comm){ //this function creates a local assignmen
 
 	g_taskList=(taskInfo*)malloc(g_numTasks*sizeof(taskInfo)); //TODO: find the space for deallocation.
 
-	int* RKS =(int*)malloc(numRanks*sizeof(int)); //RKS-> RanK Structure stores the localNumTask on each node
+	RKS =(int*)malloc(numRanks*sizeof(int)); //RKS-> RanK Structure stores the localNumTask on each node
 	MPI_Allgather(&l_numTasks,1,MPI_INT,RKS,1,MPI_INT,comm);
 
 		for(i=0;i<g_numTasks;i++){
@@ -19,7 +22,7 @@ int fillGlobalTaskList(MPI_Comm comm){ //this function creates a local assignmen
 		}
 
 		//This array serves to deal with non consecutive task declarations.
- 		int * myAssignedTasks=(int*)malloc(l_numTasks*sizeof(int));
+ 		myAssignedTasks=(int*)malloc(l_numTasks*sizeof(int));
 
  		//first each process fills myAssignedTasks with the global IDS assigned
  		for(i=0,j=0;i<g_numTasks;i++){

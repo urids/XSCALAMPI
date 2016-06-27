@@ -729,7 +729,7 @@ int _OMPI_XclFreeTray(void* Args){
 	return 0;
 }
 
-int _OMPI_XclScatter(const char* datafileName, int* count, MPI_Datatype MPIentityType, void* hostbuffer, int trayIdx, MPI_Comm comm){
+int _OMPI_XclScatter(const char* datafileName, int* count, MPI_Datatype MPIentityType, int trayIdx, MPI_Comm comm){
 	return 0;
 }
 
