@@ -60,6 +60,9 @@ c_Interface.lo: c_Interface.c /usr/include/stdc-predef.h c_Interface.h \
  ../DataManager/Base/../../c/queueMutexes.h \
  ../DataManager/DataCopy/CopyContainers/containers.h \
  ../DataManager/DataCopy/CopyContainers/../../../DataManager/Base/dataManager.h \
+ ../DataManager/DataCopy/InterNode/mcs-mutex.h /usr/include/assert.h \
+ /usr/include/strings.h \
+ ../DataManager/DataCopy/InterNode/distLinkedList.h \
  ../Scheduling/Base/scheduling.h \
  ../Scheduling/Base/../../TaskManager/Base/taskManager.h \
  ../Scheduling/Base/../../multiDeviceMgmt/deviceMgmt/Device.h \
@@ -231,6 +234,14 @@ c_Interface.h:
 ../DataManager/DataCopy/CopyContainers/containers.h:
 
 ../DataManager/DataCopy/CopyContainers/../../../DataManager/Base/dataManager.h:
+
+../DataManager/DataCopy/InterNode/mcs-mutex.h:
+
+/usr/include/assert.h:
+
+/usr/include/strings.h:
+
+../DataManager/DataCopy/InterNode/distLinkedList.h:
 
 ../Scheduling/Base/scheduling.h:
 

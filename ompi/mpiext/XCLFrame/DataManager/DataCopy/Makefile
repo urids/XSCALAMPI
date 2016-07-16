@@ -357,7 +357,9 @@ libdataCopy_la_LIBADD =
 am__dirstamp = $(am__leading_dot)dirstamp
 am_libdataCopy_la_OBJECTS = bufferRead.lo bufferWrite.lo \
 	./CopyContainers/containersList.lo ./IntraDev/intraDev.lo \
-	./IntraDev/intraDevBufferCpy.lo ./InterDev/interDev.lo
+	./IntraDev/intraDevBufferCpy.lo ./InterDev/interDev.lo \
+	./InterNode/distLinkedList.lo ./InterNode/mcs-mutex.lo \
+	./InterNode/interNode.lo
 libdataCopy_la_OBJECTS = $(am_libdataCopy_la_OBJECTS)
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
@@ -1165,7 +1167,7 @@ OPAL_ASSEMBLY_ARCH = AMD64
 OPAL_ASSEMBLY_BUILTIN = BUILTIN_NO
 OPAL_ASSEMBLY_FORMAT = default-.text-.globl-:--.L-@-1-0-1-1-1
 OPAL_CC_ABSOLUTE = /usr/bin/gcc
-OPAL_CONFIGURE_DATE = Sat Jun 18 14:39:10 CDT 2016
+OPAL_CONFIGURE_DATE = Fri Jul  8 13:31:28 CDT 2016
 OPAL_CONFIGURE_HOST = myHost
 OPAL_CONFIGURE_USER = uriel
 OPAL_CXX_ABSOLUTE = /usr/bin/g++
@@ -1496,7 +1498,10 @@ libdataCopy_la_SOURCES = bufferRead.c \
         	./CopyContainers/containersList.c \
         	./IntraDev/intraDev.c \
         	./IntraDev/intraDevBufferCpy.c \
-        	./InterDev/interDev.c 
+        	./InterDev/interDev.c \
+        	./InterNode/distLinkedList.c \
+        	./InterNode/mcs-mutex.c \
+        	./InterNode/interNode.c
 
 
 # Linker options libTestProgram
@@ -1595,6 +1600,18 @@ InterDev/$(DEPDIR)/$(am__dirstamp):
 	@: > InterDev/$(DEPDIR)/$(am__dirstamp)
 ./InterDev/interDev.lo: InterDev/$(am__dirstamp) \
 	InterDev/$(DEPDIR)/$(am__dirstamp)
+InterNode/$(am__dirstamp):
+	@$(MKDIR_P) ./InterNode
+	@: > InterNode/$(am__dirstamp)
+InterNode/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) ./InterNode/$(DEPDIR)
+	@: > InterNode/$(DEPDIR)/$(am__dirstamp)
+./InterNode/distLinkedList.lo: InterNode/$(am__dirstamp) \
+	InterNode/$(DEPDIR)/$(am__dirstamp)
+./InterNode/mcs-mutex.lo: InterNode/$(am__dirstamp) \
+	InterNode/$(DEPDIR)/$(am__dirstamp)
+./InterNode/interNode.lo: InterNode/$(am__dirstamp) \
+	InterNode/$(DEPDIR)/$(am__dirstamp)
 libdataCopy.la: $(libdataCopy_la_OBJECTS) $(libdataCopy_la_DEPENDENCIES) $(EXTRA_libdataCopy_la_DEPENDENCIES) 
 	$(AM_V_CCLD)$(libdataCopy_la_LINK) -rpath $(dataCopydir) $(libdataCopy_la_OBJECTS) $(libdataCopy_la_LIBADD) $(LIBS)
 
@@ -1604,6 +1621,8 @@ mostlyclean-compile:
 	-rm -f ./CopyContainers/*.lo
 	-rm -f ./InterDev/*.$(OBJEXT)
 	-rm -f ./InterDev/*.lo
+	-rm -f ./InterNode/*.$(OBJEXT)
+	-rm -f ./InterNode/*.lo
 	-rm -f ./IntraDev/*.$(OBJEXT)
 	-rm -f ./IntraDev/*.lo
 
@@ -1614,6 +1633,9 @@ include ./$(DEPDIR)/bufferRead.Plo
 include ./$(DEPDIR)/bufferWrite.Plo
 include ./CopyContainers/$(DEPDIR)/containersList.Plo
 include ./InterDev/$(DEPDIR)/interDev.Plo
+include ./InterNode/$(DEPDIR)/distLinkedList.Plo
+include ./InterNode/$(DEPDIR)/interNode.Plo
+include ./InterNode/$(DEPDIR)/mcs-mutex.Plo
 include ./IntraDev/$(DEPDIR)/intraDev.Plo
 include ./IntraDev/$(DEPDIR)/intraDevBufferCpy.Plo
 
@@ -1648,6 +1670,7 @@ clean-libtool:
 	-rm -rf .libs _libs
 	-rm -rf ./CopyContainers/.libs ./CopyContainers/_libs
 	-rm -rf ./InterDev/.libs ./InterDev/_libs
+	-rm -rf ./InterNode/.libs ./InterNode/_libs
 	-rm -rf ./IntraDev/.libs ./IntraDev/_libs
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
@@ -1784,6 +1807,8 @@ distclean-generic:
 	-rm -f CopyContainers/$(am__dirstamp)
 	-rm -f InterDev/$(DEPDIR)/$(am__dirstamp)
 	-rm -f InterDev/$(am__dirstamp)
+	-rm -f InterNode/$(DEPDIR)/$(am__dirstamp)
+	-rm -f InterNode/$(am__dirstamp)
 	-rm -f IntraDev/$(DEPDIR)/$(am__dirstamp)
 	-rm -f IntraDev/$(am__dirstamp)
 
@@ -1796,7 +1821,7 @@ clean-am: clean-dataCopyLTLIBRARIES clean-generic clean-libtool \
 	mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf ./$(DEPDIR) ./CopyContainers/$(DEPDIR) ./InterDev/$(DEPDIR) ./IntraDev/$(DEPDIR)
+	-rm -rf ./$(DEPDIR) ./CopyContainers/$(DEPDIR) ./InterDev/$(DEPDIR) ./InterNode/$(DEPDIR) ./IntraDev/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -1842,7 +1867,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf ./$(DEPDIR) ./CopyContainers/$(DEPDIR) ./InterDev/$(DEPDIR) ./IntraDev/$(DEPDIR)
+	-rm -rf ./$(DEPDIR) ./CopyContainers/$(DEPDIR) ./InterDev/$(DEPDIR) ./InterNode/$(DEPDIR) ./IntraDev/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

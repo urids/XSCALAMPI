@@ -47,6 +47,8 @@ int _interDevCpyProducer(void* Args);
 int _interDevCpyConsumer(void* Args);
 int _intraDevCpyProducer(void* Args);
 int _intraDevCpyConsumer(void* Args);
+int _interNodeCpyProducer(void* Args);
+int _interNodeCpyConsumer(void* Args);
 
 
 struct Args_Send_st{

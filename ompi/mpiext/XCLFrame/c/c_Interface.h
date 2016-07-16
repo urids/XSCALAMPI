@@ -21,6 +21,8 @@
 
 #include "../DataManager/Base/dataManager.h"
 #include "../DataManager/DataCopy/CopyContainers/containers.h" // to access containerList declaration
+#include "../DataManager/DataCopy/InterNode/mcs-mutex.h" // to access MCS mutex declaration
+#include "../DataManager/DataCopy/InterNode/distLinkedList.h" // to access dist List declaration
 
 #include "../Scheduling/Base/scheduling.h"
 

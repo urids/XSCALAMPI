@@ -10,7 +10,7 @@ int writeBuffer(int taskId, int trayIdx, int bufferSize, void * hostBuffer){
 	cl_event memProfileEvent;
 	cl_ulong time_start, time_end;
 	double total_time;
-	pthread_mutex_lock(&deviceQueueMutex);
+//	pthread_mutex_lock(&deviceQueueMutex);
 	cl_event writeDone;
 		status = clEnqueueWriteBuffer(l_taskList[taskId].device[0].queue,
 				l_taskList[taskId].device[0].memHandler[myRack][trayIdx], CL_TRUE, 0, bufferSize,
@@ -18,7 +18,7 @@ int writeBuffer(int taskId, int trayIdx, int bufferSize, void * hostBuffer){
 		clFlush(l_taskList[taskId].device[0].queue);
 		clFinish(l_taskList[taskId].device[0].queue);
 		clWaitForEvents(1, &writeDone);
-	pthread_mutex_unlock(&deviceQueueMutex);
+//	pthread_mutex_unlock(&deviceQueueMutex);
 
 		chkerr(status, "Writing the new mem Buffer", __FILE__, __LINE__);
 		debug_print("--write done in task %d, rack %d, tray: %d. \n ",taskId,myRack,trayIdx);

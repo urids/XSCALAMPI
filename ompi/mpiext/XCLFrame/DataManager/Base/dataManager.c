@@ -1,5 +1,6 @@
 #include "dataManager.h"
 
+pthread_mutex_t interNodeCommMtx=PTHREAD_MUTEX_INITIALIZER;
 
 int _OMPI_commit_EntityType(int blockcount, int* blocklen, MPI_Aint* displacements, MPI_Datatype* basictypes, MPI_Datatype * newDatatype){
 
@@ -27,7 +28,7 @@ int _OMPI_XclSend(void* Args){
 	MPI_Datatype MPIentityType=send_Args->MPIentityType;
 	int l_src_task   =send_Args->l_src_task;
 	int g_dest_task  =send_Args->g_dest_task;
-	int tgID			 =send_Args->tgID;
+	int tgID		 =send_Args->tgID;
 	MPI_Comm comm	 =send_Args->comm;
 
 
@@ -42,7 +43,7 @@ int _OMPI_XclSend(void* Args){
 	int (*readBuffer)(int taskId, int bufferSize, int memIdx,
 			void * entitiesbuffer);
 	char *error;
-	memSendHandle = dlopen("libbufferMgmt.so", RTLD_NOW);
+	memSendHandle = dlopen("libdataCopy.so", RTLD_NOW);
 
 	if (!memSendHandle) {
 		perror("library not found or could not be opened AT: OMPI_XclSend");
@@ -61,26 +62,34 @@ int _OMPI_XclSend(void* Args){
 	(*readBuffer)(l_src_task, trayIdx, tmpBuffSz, tmpBuffData);
 
 	//Send to the appropriate rank.
+
+
 	int dest_rank = g_taskList[g_dest_task].r_rank;
 	int ack;
 	MPI_Request request;
 	MPI_Status status;
+//??pthread_mutex_lock(&interNodeCommMtx);
 	int flag=0;
 	MPI_Issend(tmpBuffData, count, MPIentityType, dest_rank, tgID, comm, &request);
 	while (!flag)
 	{
 		MPI_Test(&request, &flag, &status);
 	}
+//??pthread_mutex_unlock(&interNodeCommMtx);
 
 	//MPI_Send(tmpBuffData, count, MPIentityType, dest_rank, tgID, comm);
-
 	//printf("hello there user, I've just started this send\n\
 	and I'm having a good time relaxing.\n");
 	//MPI_Recv(&ack,1,MPI_INT,dest_rank,88,comm,MPI_STATUS_IGNORE);
 	//MPI_Wait(&request,&status);
 
 
-	//TODO:free tmpBuffData after ensure send is complete (MPI_test or Wait).
+	//TODO:free tmpBuffData after ensuring send is complete (MPI_test or Wait).
+
+
+
+
+
 	return 0;
 
 }
@@ -125,23 +134,29 @@ int _OMPI_XclRecv(void* Args){
 	on, and I'm having a good time relaxing.\n");
 	//MPI_Send(&ack,1,MPI_INT,0,88,comm);
 
-	//--MPI_Wait(&request,&status);
+	//MPI_Wait(&request,&status);
 
-	void * memRecvHandle = NULL; //function pointer
+	void * bufferMgmtHandle = NULL; //function pointer
+	void * dataCpyHandle = NULL; //function pointer
 	int (*initNewBuffer)(int taskIdx, int trayIdx, int bufferSize);
 	int (*writeBuffer)(int taskId, int trayIdx, int bufferSize,
 			void * hostBuffer);
 
 	char *error;
-	memRecvHandle = dlopen("libbufferMgmt.so", RTLD_NOW);
-
-	if (!memRecvHandle) {
-		perror("library not found or could not be opened AT: OMPI_XclRecv");
+	bufferMgmtHandle = dlopen("libbufferMgmt.so", RTLD_NOW);
+	if (!bufferMgmtHandle) {
+		perror("library bufferMgmt not found or could not be opened AT: OMPI_XclRecv");
 		exit(1);
 	}
 
-	initNewBuffer = dlsym(memRecvHandle, "initNewBuffer");
-	writeBuffer = dlsym(memRecvHandle, "writeBuffer");
+	dataCpyHandle = dlopen("libdataCopy.so", RTLD_NOW);
+	if (!dataCpyHandle) {
+		perror("library dataCopy not found or could not be opened AT: OMPI_XclRecv");
+		exit(1);
+	}
+
+	initNewBuffer = dlsym(bufferMgmtHandle, "initNewBuffer");
+	writeBuffer = dlsym(dataCpyHandle, "writeBuffer");
 	if ((error = dlerror()) != NULL) {
 		fputs(error, stderr);
 		exit(1);
@@ -419,6 +434,35 @@ int _intraDevCpyConsumer(void* Args){
 
 	return 0;
 
+}
+
+int _interNodeCpyProducer(void* Args){
+	return 0;
+}
+
+
+int _interNodeCpyConsumer(void* Args){
+
+	void * dataCopyHandle = NULL;
+	int (*interNodeCpyConsumer)(void* Args);
+	char *error;
+
+	dataCopyHandle = dlopen("libdataCopy.so", RTLD_NOW);
+	if (!dataCopyHandle) {
+		perror("library data  Copy not found or could not be opened AT: _interDevCpyProducer");
+		exit(-1);
+	}
+
+	interNodeCpyConsumer = dlsym(dataCopyHandle, "interNodeCpyConsumer");
+	if ((error = dlerror()) != NULL) {
+		printf("err: AT %d , %d ", __FUNCTION__ ,__FILE__);
+		fputs(error, stderr);
+		exit(1);
+	}
+
+	interNodeCpyConsumer(Args);
+
+	return 0;
 }
 
 /*

@@ -96,7 +96,7 @@ void devicesInitialization(CLxplorInfo* xpInfo){
 
 
 /* Demo printing proposes!!*/
-/*	for (i = 0; i < xpInfo->platformCount; i++) {
+	for (i = 0; i < xpInfo->platformCount; i++) {
 		clGetDeviceIDs(xpInfo->platforms[i], CL_DEVICE_TYPE_ALL, 0, NULL, &deviceCount);
 		for (j = 0; j < deviceCount; j++) {
 			char *devVendor;
@@ -111,6 +111,6 @@ void devicesInitialization(CLxplorInfo* xpInfo){
 			printf("Device Name: %s \n", devVendor);
 
 		}
-	}*/
+	}
 
 }

@@ -6,8 +6,9 @@ dataManager_LTLIBRARIES = libdataManager.la
  
        
 # Sources for libdataManager
-libdataManager_la_SOURCES = ./Base/dataManager.c
-		
+libdataManager_la_SOURCES = ./Base/dataManager.c \
+							./Base/dLinkListMgmt.c \
+							./Base/dMutexMgmt.c		
 
 #######################################		
 # Linker options  for the library

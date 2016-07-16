@@ -1,7 +1,7 @@
 deviceMgmt/devicesInitialization.lo: deviceMgmt/devicesInitialization.c \
  /usr/include/stdc-predef.h deviceMgmt/devicesInitialization.h \
- deviceMgmt/deviceExploration.h /usr/local/include/CL/cl.h \
- /usr/local/include/CL/cl_platform.h \
+ deviceMgmt/deviceExploration.h /usr/local/cuda-7.5/include/CL/cl.h \
+ /usr/local/cuda-7.5/include/CL/cl_platform.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h /usr/include/stdint.h \
  /usr/include/features.h /usr/include/x86_64-linux-gnu/sys/cdefs.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
@@ -45,9 +45,9 @@ deviceMgmt/devicesInitialization.h:
 
 deviceMgmt/deviceExploration.h:
 
-/usr/local/include/CL/cl.h:
+/usr/local/cuda-7.5/include/CL/cl.h:
 
-/usr/local/include/CL/cl_platform.h:
+/usr/local/cuda-7.5/include/CL/cl_platform.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h:
 

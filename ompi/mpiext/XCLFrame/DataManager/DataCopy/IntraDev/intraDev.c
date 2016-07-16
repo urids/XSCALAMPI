@@ -61,5 +61,4 @@ int intraDevCpyConsumer(void* Args){
 		pthread_cond_wait(&ticket->cond,&ticket->mtx);
 		}
 	}
-	//return 0;
 }

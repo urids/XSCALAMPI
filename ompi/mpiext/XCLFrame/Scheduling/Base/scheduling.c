@@ -46,7 +46,6 @@ int l_numDevs;
 int createTaskList(int devSelection,MPI_Comm comm){ //This function fills the l_taskList table
 									  //There exist one l_taskList per Node
 	int i,j; //index exclusive vars.
-
 	void *dlhandle;
 	int (*readAndParse)();
 

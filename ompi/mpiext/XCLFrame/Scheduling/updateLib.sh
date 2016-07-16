@@ -1,12 +1,12 @@
 #!/bin/bash
 
-host0=148.247.102.190
+host0=192.168.1.25
 host2=148.247.102.192
 host3=148.247.102.193
 
 make && make install
 
-declare -a hosts=($host0 $host2 $host3)
+declare -a hosts=($host0)
 
 for i in "${hosts[@]}"
 do

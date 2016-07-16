@@ -206,11 +206,10 @@ int _OMPI_XclWaitFor(int numTasks, int* taskIds, MPI_Comm comm){
 			l_ids[l_wTskSize-1]=g_taskList[taskIds[i]].l_taskIdx;
 		}
 	}
-	if(l_wTskSize>0){ //Am I (the process thread) the owner of any task?
+
+	if(l_wTskSize>0){ //Am I (the process) the owner of any task?
 
 		void *dlhandle;
-
-
 		void (*localSynch)(int l_numTasks, int* localIDs, MPI_Comm Comm);
 		char *error;
 
@@ -219,8 +218,6 @@ int _OMPI_XclWaitFor(int numTasks, int* taskIds, MPI_Comm comm){
 			fputs(dlerror(), stderr);
 			exit(1);
 		}
-
-
 		localSynch=dlsym(dlhandle,"localSynch");
 		if ((error = dlerror()) != NULL) {
 			fputs(error, stderr);
@@ -230,7 +227,10 @@ int _OMPI_XclWaitFor(int numTasks, int* taskIds, MPI_Comm comm){
 		(*localSynch)(l_wTskSize,l_ids,comm);
 		//dlclose(dlhandle);
 	}
-
+	else{//this process has no local threads involved in the sync.
+		//printf("CALL2 \n");
+		MPI_Barrier(comm);
+	}
 
 	return MPI_SUCCESS;
 }

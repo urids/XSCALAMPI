@@ -350,7 +350,8 @@ am__installdirs = "$(DESTDIR)$(dataManagerdir)"
 LTLIBRARIES = $(dataManager_LTLIBRARIES)
 libdataManager_la_LIBADD =
 am__dirstamp = $(am__leading_dot)dirstamp
-am_libdataManager_la_OBJECTS = ./Base/dataManager.lo
+am_libdataManager_la_OBJECTS = ./Base/dataManager.lo \
+	./Base/dLinkListMgmt.lo ./Base/dMutexMgmt.lo
 libdataManager_la_OBJECTS = $(am_libdataManager_la_OBJECTS)
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
@@ -1158,7 +1159,7 @@ OPAL_ASSEMBLY_ARCH = AMD64
 OPAL_ASSEMBLY_BUILTIN = BUILTIN_NO
 OPAL_ASSEMBLY_FORMAT = default-.text-.globl-:--.L-@-1-0-1-1-1
 OPAL_CC_ABSOLUTE = /usr/bin/gcc
-OPAL_CONFIGURE_DATE = Sat Jun 18 14:39:10 CDT 2016
+OPAL_CONFIGURE_DATE = Fri Jul  8 13:31:28 CDT 2016
 OPAL_CONFIGURE_HOST = myHost
 OPAL_CONFIGURE_USER = uriel
 OPAL_CXX_ABSOLUTE = /usr/bin/g++
@@ -1484,7 +1485,10 @@ dataManager_LTLIBRARIES = libdataManager.la
 # Build information for each library
 
 # Sources for libdataManager
-libdataManager_la_SOURCES = ./Base/dataManager.c
+libdataManager_la_SOURCES = ./Base/dataManager.c \
+							./Base/dLinkListMgmt.c \
+							./Base/dMutexMgmt.c		
+
 
 #######################################		
 # Linker options  for the library
@@ -1565,6 +1569,10 @@ Base/$(DEPDIR)/$(am__dirstamp):
 	@: > Base/$(DEPDIR)/$(am__dirstamp)
 ./Base/dataManager.lo: Base/$(am__dirstamp) \
 	Base/$(DEPDIR)/$(am__dirstamp)
+./Base/dLinkListMgmt.lo: Base/$(am__dirstamp) \
+	Base/$(DEPDIR)/$(am__dirstamp)
+./Base/dMutexMgmt.lo: Base/$(am__dirstamp) \
+	Base/$(DEPDIR)/$(am__dirstamp)
 libdataManager.la: $(libdataManager_la_OBJECTS) $(libdataManager_la_DEPENDENCIES) $(EXTRA_libdataManager_la_DEPENDENCIES) 
 	$(AM_V_CCLD)$(libdataManager_la_LINK) -rpath $(dataManagerdir) $(libdataManager_la_OBJECTS) $(libdataManager_la_LIBADD) $(LIBS)
 
@@ -1576,6 +1584,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+include ./Base/$(DEPDIR)/dLinkListMgmt.Plo
+include ./Base/$(DEPDIR)/dMutexMgmt.Plo
 include ./Base/$(DEPDIR)/dataManager.Plo
 
 .c.o:

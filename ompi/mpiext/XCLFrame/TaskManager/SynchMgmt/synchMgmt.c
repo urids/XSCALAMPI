@@ -58,7 +58,6 @@ void* synchSubroutine(void* args){
 }
 
 void localSynch(int l_wTskSize, int* localIDs, MPI_Comm Comm){
-	if(l_wTskSize>0){
 
 	//INIT A NEW LOCAL SYNCH
 	//0.- initialize a local the barrier and the postBack Counter
@@ -76,7 +75,7 @@ void localSynch(int l_wTskSize, int* localIDs, MPI_Comm Comm){
 	}
 	//3.- WAIT
 	pthread_cond_wait(&condN,&synchMutex);
-
+//printf("CALL");
 	//4.- Synch (distributed) all processes TODO: create and synch a subgroup.
 	MPI_Barrier(Comm);
 	//5.-broadcast backCondition
@@ -86,9 +85,5 @@ void localSynch(int l_wTskSize, int* localIDs, MPI_Comm Comm){
 
 	pthread_barrier_destroy(&mybarrier);
 
-
-	}else{//this process has no local threads involved in the sync.
-		MPI_Barrier(Comm);
-	}
 
 }

@@ -40,8 +40,9 @@ synchMgmt.lo: synchMgmt.c /usr/include/stdc-predef.h synchMgmt.h \
  /usr/include/x86_64-linux-gnu/bits/unistd.h /usr/include/string.h \
  /usr/include/x86_64-linux-gnu/bits/string.h \
  /usr/include/x86_64-linux-gnu/bits/string2.h \
- /usr/include/x86_64-linux-gnu/bits/string3.h /usr/local/include/CL/cl.h \
- /usr/local/include/CL/cl_platform.h \
+ /usr/include/x86_64-linux-gnu/bits/string3.h \
+ /usr/local/cuda-7.5/include/CL/cl.h \
+ /usr/local/cuda-7.5/include/CL/cl_platform.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/xmmintrin.h \
@@ -170,9 +171,9 @@ synchMgmt.h:
 
 /usr/include/x86_64-linux-gnu/bits/string3.h:
 
-/usr/local/include/CL/cl.h:
+/usr/local/cuda-7.5/include/CL/cl.h:
 
-/usr/local/include/CL/cl_platform.h:
+/usr/local/cuda-7.5/include/CL/cl_platform.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h:
 

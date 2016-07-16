@@ -5,7 +5,7 @@
 /* ==================================
  * | INIT OF GLOBAL DEFINITIONS |
  * ==================================
- * */
+ */
 
 PUInfo* g_PUList; //Global Variable declared at localDevices.h
 int g_numDevs;  //Global Variable declared at localDevices.h
@@ -18,14 +18,20 @@ struct timeval tval_globalInit; // Global variable declared in taskManager.h
 pthread_mutex_t deviceQueueMutex=PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t commMutex=PTHREAD_MUTEX_INITIALIZER;
 
-list List;
+list List; //Decl. at containers.h
 sem_t FULL;
 ticket_t opTicket;
+
+
+
 
 /* ==================================
  * | END OF GLOBAL DEFINITIONS  |
  * ==================================
- * */
+ */
+
+
+
 int MPIentityTypeSize;
 int NON_DELEGATED OMPI_commit_EntityType(int blockcount, int* blocklen, MPI_Aint* displacements, MPI_Datatype* basictypes, MPI_Datatype * newDatatype){
 	return _OMPI_commit_EntityType(blockcount, blocklen,  displacements, basictypes, newDatatype);
@@ -63,7 +69,7 @@ int NON_DELEGATED OMPI_CollectTaskInfo(int devSelection, MPI_Comm comm){
 int OMPI_XclSetProcedure(MPI_Comm comm, int g_selTask, char* srcPath, char* kernelName){
 	//1.- Query if this process thread is involved in the operation
 	int myRank;
-	MPI_Comm_rank(comm, &myRank); //TODO: must be comm instead of MPI_COMM_WORLD
+	MPI_Comm_rank(comm, &myRank);
 	if (myRank == g_taskList[g_selTask].r_rank) {
 		//2.- Get the appropriate thread from the int thID_Of_(g_selTask)
 		int l_selTask= g_taskList[g_selTask].l_taskIdx;
@@ -285,6 +291,8 @@ int OMPI_XclRecv(int trayIdx, int count, MPI_Datatype MPIentityType, int g_src_t
 
 
 int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_trayIdx, int traySize, int tgID){
+	int myRank;
+	MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
 
 	static int firstIni=1;
 	if(firstIni){
@@ -292,12 +300,18 @@ int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_tr
 		pthread_mutex_init(&opTicket.mtx,NULL);
 		pthread_cond_init(&opTicket.cond,NULL);
 		list List=NULL;
+
+		l_containers = NULL;
+		l_containers_size  = 0;
+		l_containers_count = 0;
+
+		new_dstrContLst(ROOT_RANK);
+		MCS_Mutex_create(ROOT_RANK, MPI_COMM_WORLD, &global_mtx); //TODO: Call Mutex_Free();
+		MPI_Barrier(MPI_COMM_WORLD);
+
 		firstIni=0;
 	}
 
-
-	int myRank;
-	MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
 	int l_src_task, l_dst_task;
 	//int entityTypeSz;
 	//MPI_Type_size(MPIentityType, &entityTypeSz);
@@ -330,9 +344,6 @@ int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_tr
 		else{
 			cpyMode=INTERNODE;
 		}
-
-
-		//Execution
 
 		switch(cpyMode){
 
@@ -398,6 +409,7 @@ int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_tr
 
 		case INTERNODE:
 			if(myRank == g_taskList[g_src_task].r_rank){ //Sender
+
 				l_src_task = g_taskList[g_src_task].l_taskIdx;
 
 				//3.- Wrap the setProcedure_Args_st with the call parameters (wrap usually done in the c_Interface.c )
@@ -411,7 +423,10 @@ int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_tr
 				send_Args->comm=MPI_COMM_WORLD;
 
 				//4.- Delegate the call to the thread.
-				addSubRoutine(l_src_task, _OMPI_XclSend, (void*)send_Args);
+				addSubRoutine(l_src_task, _interNodeCpyProducer, (void*)send_Args);
+				//_OMPI_XclSend((void*)send_Args);
+
+
 			}else{ //Receiver
 
 				l_dst_task = g_taskList[g_dst_task].l_taskIdx;
@@ -423,8 +438,10 @@ int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_tr
 				recv_Args->l_recv_task=l_dst_task;
 				recv_Args->tgID=tgID;
 				recv_Args->comm=MPI_COMM_WORLD;
+
 				//4.- Delegate the call to the thread.
-				addSubRoutine(l_dst_task, _OMPI_XclRecv, (void*)recv_Args);
+				addSubRoutine(l_dst_task, _interNodeCpyConsumer, (void*)recv_Args);
+				//_OMPI_XclRecv((void*)recv_Args);
 			}
 
 			break;
@@ -435,7 +452,6 @@ int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_tr
 			break;
 		}
 	}// If no rank participation just return
-
 	return 0;
 }
 
@@ -474,11 +490,12 @@ int OMPI_XclScatter(const char* datafileName, int* count, MPI_Datatype entityTyp
 
 	for(i=0;i<l_numTasks;i++){
 		int taskOffset=myAssignedTasks[i];
+		MPI_File_read_at(dataFile,taskOffset*ePerTask*entityTypeSize,tmpScattAdv,ePerTask,entityType,&status);
 
-		MPI_File_set_view(dataFile, taskOffset*ePerTask*entityTypeSize,
+		/*MPI_File_set_view(dataFile, taskOffset*ePerTask*entityTypeSize,
 				MPI_FLOAT, entityType, "native", MPI_INFO_NULL);
 
-		MPI_File_read(dataFile, tmpScattAdv, ePerTask, entityType, &status);
+		MPI_File_read(dataFile, tmpScattAdv, ePerTask, entityType, &status);*/
 
 		tmpScattAdv+=entityTypeSize*ePerTask;
 	}
@@ -507,7 +524,6 @@ int OMPI_XclScatter(const char* datafileName, int* count, MPI_Datatype entityTyp
 	}
 
 	return 0;
-
 }
 
 int NON_DELEGATED OMPI_XclWaitFor(int numTasks, int* taskIds, MPI_Comm comm){

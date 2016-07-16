@@ -16,8 +16,11 @@ libdataCopy_la_SOURCES = bufferRead.c \
         	./CopyContainers/containersList.c \
         	./IntraDev/intraDev.c \
         	./IntraDev/intraDevBufferCpy.c \
-        	./InterDev/interDev.c 
-        	
+        	./InterDev/interDev.c \
+        	./InterNode/distLinkedList.c \
+        	./InterNode/mcs-mutex.c \
+        	./InterNode/interNode.c
+
 
 # Linker options libTestProgram
 libdataCopy_la_LDFLAGS =-module -avoid-version -lOpenCL -lm
