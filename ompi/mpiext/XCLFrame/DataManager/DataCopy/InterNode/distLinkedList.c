@@ -10,7 +10,7 @@ int l_containers_count = 0;*/
 static const meta_ptr_t nil = { -1, (MPI_Aint) MPI_BOTTOM };
 
 /* Allocate a new distributed linked list element */
-MPI_Aint alloc_container(int tagVal,  MPI_Win win) {
+static MPI_Aint alloc_container(int tagVal,  MPI_Win win) {
 	MPI_Aint disp;
 	d_container_t *container_ptr;
 
@@ -76,8 +76,8 @@ int dstrContLst_push(int tagVal){
 
 				/* For implementations that use pt-to-pt messaging, force progress for other threads'
 	                   RMA operations. */
-	                   for (i = 0; i < NPROBE; i++)
-	                	   MPI_Iprobe(MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &flag, MPI_STATUS_IGNORE);
+	                 //  for (i = 0; i < NPROBE; i++)
+	                	//   MPI_Iprobe(MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &flag, MPI_STATUS_IGNORE);
 
 			} else {
 				/* Tail pointer is stale, fetch the displacement.  May take multiple tries
@@ -94,46 +94,101 @@ int dstrContLst_push(int tagVal){
 				tail_ptr = xplr_elem_ptr;
 			}
 		} while (!success);
+
+
+///PRINTING
+/*
+		int have_root=0;
+		tail_ptr = head_ptr;
+
+				// Walk the list and tally up the number of elements inserted by each rank
+				while (tail_ptr.disp != nil.disp) {
+					d_container_t elem;
+
+					MPI_Win_lock(MPI_LOCK_EXCLUSIVE, tail_ptr.rank, 0, llist_win);
+
+					MPI_Get(&elem, sizeof(d_container_t), MPI_BYTE,
+							tail_ptr.rank, tail_ptr.disp, sizeof(d_container_t), MPI_BYTE, llist_win);
+
+					MPI_Win_unlock(tail_ptr.rank, llist_win);
+
+					tail_ptr = elem.next;
+
+					// This is not the root
+					if (have_root) {
+						//assert(elem.Tag >= 0 );
+						 //printf("%d ->", elem.Tag);
+
+					}
+
+					// This is the root
+					else {
+						assert(elem.Tag == -1);
+						have_root = 1;
+					}
+				}*/
+
 	return 0;
 
 }
 
 int find_if(int tagVal){
-	/* Traverse the list and verify that all processes inserted exactly the correct
-       number of elements. */
+	/* Traverse the list and verify that the TAG exists*/
+
 
 		int  have_root = 0;
 		tail_ptr = head_ptr;
+		int found=0;
 
 		/* Walk the list and tally up the number of elements inserted by each rank */
-		while (tail_ptr.disp != nil.disp) {
+		//while (tail_ptr.disp != nil.disp) {
 			d_container_t elem;
-
+while(tail_ptr.disp != nil.disp){
 			MPI_Win_lock(MPI_LOCK_EXCLUSIVE, tail_ptr.rank, 0, llist_win);
-
+			MPI_Win_sync(llist_win);
+			MPI_Win_flush(tail_ptr.rank,llist_win);
 			MPI_Get(&elem, sizeof(d_container_t), MPI_BYTE,
 					tail_ptr.rank, tail_ptr.disp, sizeof(d_container_t), MPI_BYTE, llist_win);
 
 			MPI_Win_unlock(tail_ptr.rank, llist_win);
-
+				if(elem.Tag==tagVal){
+					found=1;
+					break;
+				}
 			tail_ptr = elem.next;
+}
+/*			if(tail_ptr.disp != nil.disp){
+				MPI_Win_lock(MPI_LOCK_EXCLUSIVE, tail_ptr.rank, 0, llist_win);
 
-			/* This is not the root */
-			if (have_root) {
-				assert(elem.Tag >= 0 );
+				MPI_Get(&elem, sizeof(d_container_t), MPI_BYTE,
+						tail_ptr.rank, tail_ptr.disp, sizeof(d_container_t), MPI_BYTE, llist_win);
 
+				MPI_Win_unlock(tail_ptr.rank, llist_win);
+			}*/
+
+	/*		MPI_Win_lock(MPI_LOCK_EXCLUSIVE, tail_ptr.rank, 0, llist_win);
+
+			MPI_Get(&elem, sizeof(d_container_t), MPI_BYTE,
+					tail_ptr.rank, tail_ptr.disp, sizeof(d_container_t), MPI_BYTE, llist_win);
+
+			MPI_Win_unlock(tail_ptr.rank, llist_win);*/
+
+
+		//	printf("%d ->", elem.Tag);
+			// This is not the root
+		/*	if (have_root) {
+				//assert(elem.Tag >= 0 );
 				if(elem.Tag==tagVal){
 					return 1;
 				}
 
 			}
-
-			/* This is the root */
+			// This is the root
 			else {
 				assert(elem.Tag == -1);
 				have_root = 1;
-			}
-		}
-	return 0;
+			}*/
+		//}
+	return found;
 }
 

@@ -11,6 +11,6 @@ declare -a hosts=($host0)
 for i in "${hosts[@]}"
 do
 rsync -r $(pwd) uriel@$i:$(pwd)/../
-rsh uriel@$i 'cd /home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/c && make && make install'
+rsh uriel@$i 'cd /home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/DataManager/DataCopy && make && make install'
 done
 

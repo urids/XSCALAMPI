@@ -2,6 +2,7 @@
 #include "dLinkListMgmt.h"
 
 static const meta_ptr_t nil = { -1, (MPI_Aint) MPI_BOTTOM };
+
 MPI_Win  llist_win; //Declared at distLinkedList.h
 /* List of locally allocated elements.
  * in the distributed linked list */

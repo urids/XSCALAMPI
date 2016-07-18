@@ -1,8 +1,6 @@
 
 
 #include "dMutexMgmt.h"
-
-
 MCS_Mutex global_mtx;
 
 int MCS_Mutex_create(int tail_rank, MPI_Comm comm, MCS_Mutex * hdl_out)

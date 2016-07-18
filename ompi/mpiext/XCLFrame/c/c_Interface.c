@@ -23,8 +23,6 @@ sem_t FULL;
 ticket_t opTicket;
 
 
-
-
 /* ==================================
  * | END OF GLOBAL DEFINITIONS  |
  * ==================================
@@ -305,10 +303,10 @@ int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_tr
 		l_containers_size  = 0;
 		l_containers_count = 0;
 
-		new_dstrContLst(ROOT_RANK);
+		new_dstrContLst(0);
 		MCS_Mutex_create(ROOT_RANK, MPI_COMM_WORLD, &global_mtx); //TODO: Call Mutex_Free();
-		MPI_Barrier(MPI_COMM_WORLD);
 
+		MPI_Barrier(MPI_COMM_WORLD);
 		firstIni=0;
 	}
 

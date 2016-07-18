@@ -437,7 +437,26 @@ int _intraDevCpyConsumer(void* Args){
 }
 
 int _interNodeCpyProducer(void* Args){
-	return 0;
+	void * dataCopyHandle = NULL;
+		int (*interNodeCpyProducer)(void* Args);
+		char *error;
+
+		dataCopyHandle = dlopen("libdataCopy.so", RTLD_NOW);
+		if (!dataCopyHandle) {
+			perror("library data  Copy not found or could not be opened AT: _interDevCpyProducer");
+			exit(-1);
+		}
+
+		interNodeCpyProducer = dlsym(dataCopyHandle, "interNodeCpyProducer");
+		if ((error = dlerror()) != NULL) {
+			printf("err: AT %d , %d ", __FUNCTION__ ,__FILE__);
+			fputs(error, stderr);
+			exit(1);
+		}
+
+		interNodeCpyProducer(Args);
+
+		return 0;
 }
 
 
