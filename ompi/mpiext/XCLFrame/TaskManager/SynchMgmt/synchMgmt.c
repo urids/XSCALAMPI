@@ -85,5 +85,4 @@ void localSynch(int l_wTskSize, int* localIDs, MPI_Comm Comm){
 
 	pthread_barrier_destroy(&mybarrier);
 
-
 }

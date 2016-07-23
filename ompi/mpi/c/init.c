@@ -32,6 +32,9 @@
 //#include "../../../mpiext/XCLFrame/Scheduling/Benchmark/commsBench.h"
 #include "../../../mpiext/XCLFrame/Scheduling/Base/scheduling.h"
 #include <dlfcn.h>
+//#include "ompi/mpiext/XCLFrame/DataManager/Base/dataManager.h"
+
+
 
 #if OPAL_HAVE_WEAK_SYMBOLS && OMPI_PROFILING_DEFINES
 #pragma weak MPI_Init = PMPI_Init
@@ -42,6 +45,9 @@
 #endif
 
 static const char FUNC_NAME[] = "MPI_Init";
+
+//int* interNodeTrans;
+//MPI_Win interNode_win; //declared at dataManager.h
 
 
 int MPI_Init(int *argc, char ***argv)
@@ -137,7 +143,14 @@ int MPI_Init(int *argc, char ***argv)
 		commsBenchmark(&cmf);
 	}
 
-
+/*	MPI_Alloc_mem(10*sizeof(int), MPI_INFO_NULL, &interNodeTrans);
+	MPI_Win_create(interNodeTrans,10*sizeof(int),sizeof(int),MPI_INFO_NULL,MPI_COMM_WORLD,&interNode_win);
+	int i;
+	for(i=0;i<10;i++){
+		interNodeTrans[i]=-1;
+	}
+	MPI_Win_fence(0, interNode_win);
+	MPI_Barrier(MPI_COMM_WORLD);*/
 
     return MPI_SUCCESS;
 }

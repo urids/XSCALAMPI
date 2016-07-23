@@ -6,7 +6,7 @@ host3=148.247.102.193
 
 make && make install
 
-declare -a hosts=($host0 $host2 $host3)
+declare -a hosts=($host0)
 
 for i in "${hosts[@]}"
 do

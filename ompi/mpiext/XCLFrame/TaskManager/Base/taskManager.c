@@ -261,7 +261,12 @@ int _OMPI_XclWaitAllTasks(MPI_Comm comm){
 		l_ids[i]=i;
 	}
 
-	(*localSynch)(l_numTasks,l_ids,comm);
+	if(l_numTasks>0){
+		(*localSynch)(l_numTasks,l_ids,comm);
+	}else{
+		MPI_Barrier(comm);
+	}
+
 
 return 0;
 	//dlclose(dlhandle);

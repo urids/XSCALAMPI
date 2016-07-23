@@ -146,7 +146,8 @@ struct Args_IntraMatchedConsumer_st{
 	ticket_t* ticket;
 };
 
-
+extern int* interNodeTrans;
+extern MPI_Win interNode_win;
 
 
 #endif /* DATAMANAGER_H_ */

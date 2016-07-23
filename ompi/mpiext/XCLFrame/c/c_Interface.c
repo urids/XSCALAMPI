@@ -23,6 +23,7 @@ sem_t FULL;
 ticket_t opTicket;
 
 
+
 /* ==================================
  * | END OF GLOBAL DEFINITIONS  |
  * ==================================
@@ -294,6 +295,7 @@ int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_tr
 
 	static int firstIni=1;
 	if(firstIni){
+		int i;
 		sem_init(&FULL,0,0);
 		pthread_mutex_init(&opTicket.mtx,NULL);
 		pthread_cond_init(&opTicket.cond,NULL);
@@ -302,11 +304,10 @@ int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_tr
 		l_containers = NULL;
 		l_containers_size  = 0;
 		l_containers_count = 0;
-
 		new_dstrContLst(0);
 		MCS_Mutex_create(ROOT_RANK, MPI_COMM_WORLD, &global_mtx); //TODO: Call Mutex_Free();
 
-		MPI_Barrier(MPI_COMM_WORLD);
+
 		firstIni=0;
 	}
 
@@ -425,7 +426,7 @@ int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_tr
 				//_OMPI_XclSend((void*)send_Args);
 
 
-			}else{ //Receiver
+			}if(myRank == g_taskList[g_dst_task].r_rank){ //Receiver
 
 				l_dst_task = g_taskList[g_dst_task].l_taskIdx;
 				struct Args_Recv_st * recv_Args=malloc(sizeof(struct Args_Recv_st));
@@ -446,7 +447,6 @@ int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_tr
 
 		default:
 			printf("No transference mode.\n");
-			exit(-1);
 			break;
 		}
 	}// If no rank participation just return
