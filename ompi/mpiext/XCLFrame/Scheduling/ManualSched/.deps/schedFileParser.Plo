@@ -59,7 +59,8 @@ schedFileParser.lo: schedFileParser.c /usr/include/stdc-predef.h \
  ../Base/../../multiDeviceMgmt/deviceMgmt/Device.h \
  ../Base/../../multiDeviceMgmt/deviceMgmt/localDevices.h \
  ../Base/../../multiDeviceMgmt/deviceMgmt/Device.h \
- ../Base/../../multiDeviceMgmt/deviceMgmt/deviceExploration.h
+ ../Base/../../multiDeviceMgmt/deviceMgmt/deviceExploration.h \
+ ../Base/../StaticSched/wrapperFactory.h
 
 /usr/include/stdc-predef.h:
 
@@ -218,3 +219,5 @@ manualSched.h:
 ../Base/../../multiDeviceMgmt/deviceMgmt/Device.h:
 
 ../Base/../../multiDeviceMgmt/deviceMgmt/deviceExploration.h:
+
+../Base/../StaticSched/wrapperFactory.h:

@@ -223,7 +223,7 @@ int readAndParse() {
 
 					switch (devType) {
 					case CPU:
-						tmp_taskDevList[currSlot].mappedDevice=cpu[deviceIDToken];
+						tmp_taskDevList[currSlot].mappedDevice= cpu[deviceIDToken];
 						break;
 					case GPU:
 						tmp_taskDevList[currSlot].mappedDevice = gpu[deviceIDToken];

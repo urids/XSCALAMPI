@@ -60,6 +60,7 @@ commsBench.lo: commsBench.c /usr/include/stdc-predef.h commsBench.h \
  ../Base/../../multiDeviceMgmt/deviceMgmt/localDevices.h \
  ../Base/../../multiDeviceMgmt/deviceMgmt/Device.h \
  ../Base/../../multiDeviceMgmt/deviceMgmt/deviceExploration.h \
+ ../Base/../StaticSched/wrapperFactory.h \
  ../../multiDeviceMgmt/deviceMgmt/deviceExploration.h
 
 /usr/include/stdc-predef.h:
@@ -223,5 +224,7 @@ commsBench.h:
 ../Base/../../multiDeviceMgmt/deviceMgmt/Device.h:
 
 ../Base/../../multiDeviceMgmt/deviceMgmt/deviceExploration.h:
+
+../Base/../StaticSched/wrapperFactory.h:
 
 ../../multiDeviceMgmt/deviceMgmt/deviceExploration.h:

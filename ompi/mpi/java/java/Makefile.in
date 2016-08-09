@@ -1800,8 +1800,8 @@ maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
 	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
-@OMPI_WANT_JAVA_BINDINGS_FALSE@uninstall-local:
 @OMPI_WANT_JAVA_BINDINGS_FALSE@clean-local:
+@OMPI_WANT_JAVA_BINDINGS_FALSE@uninstall-local:
 @OMPI_WANT_JAVA_BINDINGS_FALSE@install-data-hook:
 clean: clean-am
 

@@ -22,6 +22,7 @@ AC_DEFUN([OMPI_MPIEXT_XCLFrame_CONFIG],[
     AC_CONFIG_FILES([ompi/mpiext/XCLFrame/DataManager/Makefile])
     AC_CONFIG_FILES([ompi/mpiext/XCLFrame/DataManager/BufferMgmt/Makefile])
     AC_CONFIG_FILES([ompi/mpiext/XCLFrame/DataManager/DataCopy/Makefile])
+    AC_CONFIG_FILES([ompi/mpiext/XCLFrame/DataManager/CollectiveOps/Makefile])
 
     # This example can always build, so we just execute $1.
     $1

@@ -19,6 +19,8 @@
 #include "../../multiDeviceMgmt/deviceMgmt/localDevices.h"
 #include "../../multiDeviceMgmt/deviceMgmt/deviceExploration.h"
 
+#include "../StaticSched/wrapperFactory.h"
+
 
 typedef struct device_Task_Info_st{
  Device* mappedDevice;

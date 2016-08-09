@@ -22,7 +22,7 @@ int fillGlobalTaskList(MPI_Comm comm){ //this function creates a local assignmen
 		}
 
 		//This array serves to deal with non consecutive task declarations.
- 		myAssignedTasks=(int*)malloc(l_numTasks*sizeof(int));
+ 		myAssignedTasks=(int*)malloc(l_numTasks*sizeof(int)); //stores the tasksIDs (global)
 
  		//first each process fills myAssignedTasks with the global IDS assigned
  		for(i=0,j=0;i<g_numTasks;i++){
@@ -62,7 +62,7 @@ int fillGlobalTaskList(MPI_Comm comm){ //this function creates a local assignmen
  		// based on the amount of tasks allocated on each rank
  		int k=0;
 		for(i=0;i<numRanks;i++){ //for each rank
-			for(j=0;j<RKS[i];j++,k++){ //j is the counter of the next local assignment, and k goes through the global concatenation
+			for(j=0;j<RKS[i];j++,k++){ //for each task assigned to the rank;  j is the counter of the next local assignment, and k goes through the global concatenation
 				g_taskList[g_Assignments[k]].l_taskIdx=j; // g_Assignments[k] is an array concatenating local
 														  // array assignments, i.e the j-th entry stores
 														  // the global ID of a task allocated in some rank.

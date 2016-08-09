@@ -51,6 +51,7 @@ libmpiext_XCLFrame_c_la_LDFLAGS = -module -avoid-version -ldl -lOpenCL -lm \
     -Wl,-rpath,$(libdir)/XCLFrame/TaskManager/SynchMgmt \
     -Wl,-rpath,$(libdir)/XCLFrame/Scheduling \
     -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/ManualSched \
+    -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/StaticSched \
     -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/Benchmark     	
 #	 \
 #	-L/home/uriel/mpiELFs/lib/XCLFrame/DataManager -ldataManager

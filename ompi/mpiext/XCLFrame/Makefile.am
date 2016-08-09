@@ -22,6 +22,7 @@ SUBDIRS = DataManager \
 		TaskManager/SynchMgmt \
 		Scheduling \
 		Scheduling/Benchmark \
-		Scheduling/ManualSched
+		Scheduling/ManualSched \
+		Scheduling/StaticSched
 
 EXTRA_DIST = README.txt

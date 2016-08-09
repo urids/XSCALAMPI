@@ -43,7 +43,7 @@ int NON_DELEGATED OMPI_CollectDevicesInfo(int devSelection, MPI_Comm comm){
 }
 
 
-int NON_DELEGATED OMPI_CollectTaskInfo(int devSelection, MPI_Comm comm){
+int NON_DELEGATED OMPI_CollectTaskInfo(task_t** myTasks, int numTasks, MPI_Comm comm){
 
 	/*	int numRanks, myRank;
 	MPI_Comm_rank(comm, &myRank);
@@ -59,7 +59,7 @@ int NON_DELEGATED OMPI_CollectTaskInfo(int devSelection, MPI_Comm comm){
 
 	MPI_Bcast(&R_secs,1,MPI_DOUBLE,0,comm);
 	MPI_Bcast(&R_micrs,1,MPI_DOUBLE,0,comm);*/
-
+	int devSelection;
 	gettimeofday(&tval_globalInit, NULL);//TODO:  find the appropriate place to init the clock =0
 	return _OMPI_CollectTaskInfo(devSelection, comm);
 }
