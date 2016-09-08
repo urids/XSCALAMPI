@@ -349,7 +349,7 @@ am__uninstall_files_from_dir = { \
 am__installdirs = "$(DESTDIR)$(benchmarkdir)"
 LTLIBRARIES = $(benchmark_LTLIBRARIES)
 libbenchmark_la_LIBADD =
-am_libbenchmark_la_OBJECTS = commsBench.lo compBench.lo
+am_libbenchmark_la_OBJECTS = commsBench.lo accelerationTest.lo
 libbenchmark_la_OBJECTS = $(am_libbenchmark_la_OBJECTS)
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
@@ -1485,7 +1485,7 @@ benchmark_LTLIBRARIES = libbenchmark.la
 # Sources for libbenchmark
 libbenchmark_la_SOURCES = commsBench.c \
 						  commsBench.h \
-						  compBench.c 						  
+						  accelerationTest.c						  
 
 
 # Linker options libTestProgram
@@ -1573,8 +1573,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+include ./$(DEPDIR)/accelerationTest.Plo
 include ./$(DEPDIR)/commsBench.Plo
-include ./$(DEPDIR)/compBench.Plo
 
 .c.o:
 	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\

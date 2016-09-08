@@ -23,8 +23,11 @@ OMPI_DECLSPEC int OMPI_commit_EntityType(int blockcount, int* blocklen, MPI_Aint
 
 
 OMPI_DECLSPEC int OMPI_CollectDevicesInfo(int devSelection, MPI_Comm comm); //this function returns global number of devices in the system
-OMPI_DECLSPEC int OMPI_CollectTaskInfo(int devSelection, MPI_Comm comm); //first parameter for this represents "ALL" or "GPUs" this function returns
+//OMPI_DECLSPEC int OMPI_CollectTaskInfo(int devSelection, MPI_Comm comm); //first parameter for this represents "ALL" or "GPUs" this function returns
 
+OMPI_DECLSPEC int XSCALA_InitTasks(int argc, char ** argv, task_t const* * myTasks,int numTasks);
+OMPI_DECLSPEC int XSCALA_getNumTasks(int* numTasks, MPI_Comm comm);
+OMPI_DECLSPEC int  XSCALA_Finalize();
 
 
 //OMPI_DECLSPEC int OMPI_XclCreateKernel(MPI_Comm comm,char* srcPath,char* kernelName);

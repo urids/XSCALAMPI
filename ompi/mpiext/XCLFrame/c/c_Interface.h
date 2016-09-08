@@ -13,7 +13,10 @@
 
 #include <stdarg.h>
 #include <unistd.h> //for getenv
+#include <getopt.h> // for parsing args
 #include "ompi/include/mpi.h"
+#include  <sys/types.h> //for fork.
+
 
 
 #include "../TaskManager/Base/task.h"
@@ -28,10 +31,15 @@
 
 #include "../multiDeviceMgmt/deviceMgmt/localDevices.h"
 
+//extern char* benchStoragePath;
 enum copyMode_en{
 	INTRADEVICE=0,
 	INTERDEVICE=1,
 	INTERNODE=2
 };
+
+
+
+
 
 #endif /* C_INTERFACE_H_ */

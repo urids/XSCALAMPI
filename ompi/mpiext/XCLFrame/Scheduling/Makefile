@@ -355,7 +355,8 @@ am__installdirs = "$(DESTDIR)$(schedulingdir)"
 LTLIBRARIES = $(scheduling_LTLIBRARIES)
 libscheduling_la_LIBADD =
 am__dirstamp = $(am__leading_dot)dirstamp
-am_libscheduling_la_OBJECTS = ./Base/scheduling.lo ./Base/taskSetup.lo
+am_libscheduling_la_OBJECTS = ./Base/scheduling.lo ./Base/taskSetup.lo \
+	./Base/appDataCollect.lo ./Base/sysDataCollect.lo
 libscheduling_la_OBJECTS = $(am_libscheduling_la_OBJECTS)
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
@@ -1490,7 +1491,9 @@ scheduling_LTLIBRARIES = libscheduling.la
 
 # Sources for libcommsInfo
 libscheduling_la_SOURCES = ./Base/scheduling.c \
-						  ./Base/taskSetup.c
+						  ./Base/taskSetup.c \
+						  ./Base/appDataCollect.c \
+						  ./Base/sysDataCollect.c
 
 libscheduling_la_LDFLAGS = -avoid-version -lOpenCL -lm -ldl		  				  
 all: all-am
@@ -1571,6 +1574,10 @@ Base/$(DEPDIR)/$(am__dirstamp):
 	Base/$(DEPDIR)/$(am__dirstamp)
 ./Base/taskSetup.lo: Base/$(am__dirstamp) \
 	Base/$(DEPDIR)/$(am__dirstamp)
+./Base/appDataCollect.lo: Base/$(am__dirstamp) \
+	Base/$(DEPDIR)/$(am__dirstamp)
+./Base/sysDataCollect.lo: Base/$(am__dirstamp) \
+	Base/$(DEPDIR)/$(am__dirstamp)
 libscheduling.la: $(libscheduling_la_OBJECTS) $(libscheduling_la_DEPENDENCIES) $(EXTRA_libscheduling_la_DEPENDENCIES) 
 	$(AM_V_CCLD)$(libscheduling_la_LINK) -rpath $(schedulingdir) $(libscheduling_la_OBJECTS) $(libscheduling_la_LIBADD) $(LIBS)
 
@@ -1582,7 +1589,9 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+include ./Base/$(DEPDIR)/appDataCollect.Plo
 include ./Base/$(DEPDIR)/scheduling.Plo
+include ./Base/$(DEPDIR)/sysDataCollect.Plo
 include ./Base/$(DEPDIR)/taskSetup.Plo
 
 .c.o:

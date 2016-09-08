@@ -30,37 +30,42 @@ commsBench.lo: commsBench.c /usr/include/stdc-predef.h commsBench.h \
  /usr/include/x86_64-linux-gnu/bits/stdio.h \
  /usr/include/x86_64-linux-gnu/bits/stdio2.h \
  ../../../../../ompi/include/mpi.h \
- ../../../../../ompi/include/mpi_portable_platform.h \
- ../../TaskManager/Base/task.h /usr/local/cuda-7.5/include/CL/cl.h \
- /usr/local/cuda-7.5/include/CL/cl_platform.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h /usr/include/stdint.h \
- /usr/include/x86_64-linux-gnu/bits/wchar.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/xmmintrin.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mmintrin.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mm_malloc.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h \
- ../../TaskManager/Base/../../multiDeviceMgmt/deviceMgmt/Device.h \
- ../../TaskManager/Base/taskManager.h /usr/include/dlfcn.h \
- /usr/include/x86_64-linux-gnu/bits/dlfcn.h /usr/include/unistd.h \
+ ../../../../../ompi/include/mpi_portable_platform.h ../Base/scheduling.h \
+ /usr/include/dlfcn.h /usr/include/x86_64-linux-gnu/bits/dlfcn.h \
+ ../Base/../../TaskManager/Base/taskManager.h /usr/include/unistd.h \
  /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
  /usr/include/x86_64-linux-gnu/bits/environments.h \
  /usr/include/x86_64-linux-gnu/bits/confname.h /usr/include/getopt.h \
  /usr/include/x86_64-linux-gnu/bits/unistd.h /usr/include/string.h \
  /usr/include/xlocale.h /usr/include/x86_64-linux-gnu/bits/string.h \
  /usr/include/x86_64-linux-gnu/bits/string2.h \
- /usr/include/x86_64-linux-gnu/bits/string3.h /usr/include/semaphore.h \
- /usr/include/x86_64-linux-gnu/bits/semaphore.h \
+ /usr/include/x86_64-linux-gnu/bits/string3.h /usr/local/include/CL/cl.h \
+ /usr/local/include/CL/cl_platform.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h /usr/include/stdint.h \
+ /usr/include/x86_64-linux-gnu/bits/wchar.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/xmmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mm_malloc.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h \
+ /usr/include/semaphore.h /usr/include/x86_64-linux-gnu/bits/semaphore.h \
  /usr/include/x86_64-linux-gnu/sys/time.h \
- ../../TaskManager/Base/../../c/queueMutexes.h \
- ../../TaskManager/Base/task.h /usr/include/pthread.h \
- /usr/include/sched.h /usr/include/x86_64-linux-gnu/bits/sched.h \
- /usr/include/x86_64-linux-gnu/bits/setjmp.h ../Base/scheduling.h \
- ../Base/../../TaskManager/Base/taskManager.h \
+ ../Base/../../TaskManager/Base/../../c/queueMutexes.h \
+ ../Base/../../TaskManager/Base/task.h \
+ ../Base/../../TaskManager/Base/../../multiDeviceMgmt/deviceMgmt/Device.h \
+ /usr/include/pthread.h /usr/include/sched.h \
+ /usr/include/x86_64-linux-gnu/bits/sched.h \
+ /usr/include/x86_64-linux-gnu/bits/setjmp.h \
  ../Base/../../multiDeviceMgmt/deviceMgmt/Device.h \
  ../Base/../../multiDeviceMgmt/deviceMgmt/localDevices.h \
  ../Base/../../multiDeviceMgmt/deviceMgmt/Device.h \
  ../Base/../../multiDeviceMgmt/deviceMgmt/deviceExploration.h \
- ../Base/../StaticSched/wrapperFactory.h \
+ ../Base/../StaticSched/wrapperFactory.h ../../TaskManager/Base/task.h \
+ ../../TaskManager/Base/taskManager.h \
+ ../../DataManager/Base/dataManager.h \
+ ../../DataManager/Base/../../TaskManager/Base/taskManager.h \
+ ../../DataManager/Base/../../c/taskMap.h \
+ ../../DataManager/Base/entityInfo.h \
+ ../../DataManager/Base/../../c/queueMutexes.h \
  ../../multiDeviceMgmt/deviceMgmt/deviceExploration.h
 
 /usr/include/stdc-predef.h:
@@ -145,33 +150,13 @@ commsBench.h:
 
 ../../../../../ompi/include/mpi_portable_platform.h:
 
-../../TaskManager/Base/task.h:
-
-/usr/local/cuda-7.5/include/CL/cl.h:
-
-/usr/local/cuda-7.5/include/CL/cl_platform.h:
-
-/usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h:
-
-/usr/include/stdint.h:
-
-/usr/include/x86_64-linux-gnu/bits/wchar.h:
-
-/usr/lib/gcc/x86_64-linux-gnu/4.8/include/xmmintrin.h:
-
-/usr/lib/gcc/x86_64-linux-gnu/4.8/include/mmintrin.h:
-
-/usr/lib/gcc/x86_64-linux-gnu/4.8/include/mm_malloc.h:
-
-/usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h:
-
-../../TaskManager/Base/../../multiDeviceMgmt/deviceMgmt/Device.h:
-
-../../TaskManager/Base/taskManager.h:
+../Base/scheduling.h:
 
 /usr/include/dlfcn.h:
 
 /usr/include/x86_64-linux-gnu/bits/dlfcn.h:
+
+../Base/../../TaskManager/Base/taskManager.h:
 
 /usr/include/unistd.h:
 
@@ -195,15 +180,35 @@ commsBench.h:
 
 /usr/include/x86_64-linux-gnu/bits/string3.h:
 
+/usr/local/include/CL/cl.h:
+
+/usr/local/include/CL/cl_platform.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h:
+
+/usr/include/stdint.h:
+
+/usr/include/x86_64-linux-gnu/bits/wchar.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.8/include/xmmintrin.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.8/include/mmintrin.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.8/include/mm_malloc.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h:
+
 /usr/include/semaphore.h:
 
 /usr/include/x86_64-linux-gnu/bits/semaphore.h:
 
 /usr/include/x86_64-linux-gnu/sys/time.h:
 
-../../TaskManager/Base/../../c/queueMutexes.h:
+../Base/../../TaskManager/Base/../../c/queueMutexes.h:
 
-../../TaskManager/Base/task.h:
+../Base/../../TaskManager/Base/task.h:
+
+../Base/../../TaskManager/Base/../../multiDeviceMgmt/deviceMgmt/Device.h:
 
 /usr/include/pthread.h:
 
@@ -212,10 +217,6 @@ commsBench.h:
 /usr/include/x86_64-linux-gnu/bits/sched.h:
 
 /usr/include/x86_64-linux-gnu/bits/setjmp.h:
-
-../Base/scheduling.h:
-
-../Base/../../TaskManager/Base/taskManager.h:
 
 ../Base/../../multiDeviceMgmt/deviceMgmt/Device.h:
 
@@ -226,5 +227,19 @@ commsBench.h:
 ../Base/../../multiDeviceMgmt/deviceMgmt/deviceExploration.h:
 
 ../Base/../StaticSched/wrapperFactory.h:
+
+../../TaskManager/Base/task.h:
+
+../../TaskManager/Base/taskManager.h:
+
+../../DataManager/Base/dataManager.h:
+
+../../DataManager/Base/../../TaskManager/Base/taskManager.h:
+
+../../DataManager/Base/../../c/taskMap.h:
+
+../../DataManager/Base/entityInfo.h:
+
+../../DataManager/Base/../../c/queueMutexes.h:
 
 ../../multiDeviceMgmt/deviceMgmt/deviceExploration.h:

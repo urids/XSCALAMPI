@@ -89,15 +89,18 @@ int fillLocalTaskList(MPI_Comm comm){
 
 	//int l_numTasks=0; !!!!!!!!!!!!!!! YOU MUST NEVER DEFINE GLOBAL VARS WITHIN FUNCTION BODY because it BECOMES LOCAL COPY.
 	//XCLtask * l_taskList=NULL; !!!!!!!THE FUNCTION WORKS WITH A LOCAL COPY ='(..
+    //if(l_taskList==NULL) printf("!EXIST\n");
 
-	for(i=0;i<g_numTasks;i++){ //EACH PROCESS: read the whole tasDevList created when parsing to fill his # of tasks
+	for(i=0;i<g_numTasks;i++){ //EACH PROCESS: read the whole tasDevList created in the scheduling step
 	int TDL_rank=taskDevList[i].rank;
 		if(myRank==TDL_rank){
 			int j=l_numTasks;
+
 			l_taskList = (XCLtask*)realloc(l_taskList, (l_numTasks+1)*sizeof(XCLtask));
 			l_taskList[j].device=(Device*) malloc(1*sizeof(Device));
 			l_taskList[j].device = taskDevList[i].mappedDevice;
 			l_taskList[j].numTrays = 0;
+			//l_taskList[j].localID=i;
 
 			//first we query how many racks has this device.
 			int rackIdx = l_taskList[j].device[0].numRacks;
@@ -119,9 +122,9 @@ int fillLocalTaskList(MPI_Comm comm){
 
 			l_numTasks++;
 		}//ENDif myRank==TskDevList_rank
-
-		MPI_Barrier(comm); //To ensure all processes have counted their tasks.
 	}
+
+	MPI_Barrier(comm); //To ensure all processes have counted their tasks.
 	return 0;
 }
 

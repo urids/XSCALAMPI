@@ -8,15 +8,15 @@
 //call from XCLFame_early just after devices are initialized.
 
 #include "commsBench.h"
-
+#define VERBOSE 1
 /*--device_Task_Info* taskDevMap;
 taskInfo* g_taskList; //Global Variable declared at taskManager.h
 --*/
 //int l_numTasks;//Global variable declared in tskMgmt.h
 
-int i,j,k;
 
-int _commsBenchmark(commsInfo* cmInf){
+
+int commsTest(char* storagePath){
 
 	int err;
 
@@ -27,109 +27,38 @@ int _commsBenchmark(commsInfo* cmInf){
 
 	char * myBuff;
 
-	int g_PUs=_OMPI_CollectDevicesInfo(ALL_DEVICES, MPI_COMM_WORLD);
+	int g_NumPUs=_OMPI_CollectDevicesInfo(ALL_DEVICES, MPI_COMM_WORLD);
+	printf("NumPUs: %d \n",g_NumPUs);
+
+
+
 	int l_PUs=clXplr.numDevices;
-		//printf("localPUs: %d \n",l_PUs);
-	int* PU_RK =(int*)malloc(numRanks*sizeof(int)); //PU per RanK Structure
-	MPI_Allgather(&l_PUs,1,MPI_INT,PU_RK,1,MPI_INT,MPI_COMM_WORLD);
 
-	//this section creates the global PUs map.
+	taskDevList=malloc(g_NumPUs*sizeof(schedConfigInfo_t));
 
+	for(i=0;i<g_NumPUs;i++){
+		taskDevList[i].g_taskId=i;
+		taskDevList[i].rank=g_PUList[i].r_rank;
 
-	int mygPU_min=0,mygPU_max=0;
-
-	for(i=0;i<myRank;i++){
-		mygPU_min+=PU_RK[i];
+		//if(g_PUList[i].r_rank==myRank){
+			taskDevList[i].mappedDevice=g_PUList[i].mappedDevice;
+		//}
 	}
-	mygPU_max=mygPU_min+PU_RK[myRank]-1;
 
+	/*for(i=0;i<g_NumPUs;i++){
+		printf(" %d | ", taskDevList[i].g_taskId);
+		printf(" %d | ", taskDevList[i].rank);
+		printf("\n");
+	}*/
 
-	//printf("g_PUs=%d, l_PUs=%d \n",g_PUs,l_PUs);
-	//printf("mygPU_min: %d, mygPU_max: %d \n",mygPU_min, mygPU_max);
-
-	//initialize the local task management system
+	g_numTasks=g_NumPUs;
 	l_numTasks=l_PUs;
-	taskDevMap=malloc(l_PUs*sizeof(device_Task_Info));
-	int slot=0;
-	for(i=0;i<clXplr.numCPUS;i++){
-		taskDevMap[slot].mappedDevice=cpu[i];
-		taskDevMap[slot].min_tskIdx=slot;
-		taskDevMap[slot].max_tskIdx=slot;
-		slot++;
-	}
-	for(i=0;i<clXplr.numGPUS;i++){
-		taskDevMap[slot].mappedDevice=gpu[i];
-		taskDevMap[slot].min_tskIdx=slot;
-		taskDevMap[slot].max_tskIdx=slot;
-		slot++;
-	}
-	for(i=0;i<clXplr.numACCEL;i++){
-		taskDevMap[slot].mappedDevice=accel[i];
-		taskDevMap[slot].min_tskIdx=slot;
-		taskDevMap[slot].max_tskIdx=slot;
-		slot++;
-	}
 
 
-	//here we allocate space for a provisional local l_taskList.
-	l_taskList = (XCLtask*) malloc(sizeof(XCLtask) * l_PUs);
+	fillLocalTaskList(MPI_COMM_WORLD);
+	fillGlobalTaskList(MPI_COMM_WORLD);
+	insertThreads(l_numTasks,0);
 
-
-	//Here we fill the local l_taskList and create "PROVITIONAL" memory Racks.
-	for (i = 0; i <l_PUs; i++) {
-		for (j = taskDevMap[i].min_tskIdx; j <= taskDevMap[i].max_tskIdx;j++) {
-			debug_print("-----matching task %d ------\n",j);
-
-			l_taskList[j].device = taskDevMap[i].mappedDevice;
-			l_taskList[j].numTrays = 0;
-
-			//here we query how many racks has this device.
-			int rackIdx = l_taskList[j].device[0].numRacks;
-			if (rackIdx == 0) {
-				l_taskList[j].device[0].memHandler = malloc(1 * sizeof(cl_mem*));
-				//l_taskList[j].device[0].memHandler[0] = malloc(1 * sizeof(cl_mem));
-				l_taskList[j].Rack = rackIdx; //rack assignment
-				l_taskList[j].device[0].numRacks++;
-			} else {
-				cl_mem** tmpRack;
-				tmpRack = (cl_mem**) realloc(l_taskList[j].device[0].memHandler,(rackIdx + 1) * sizeof(cl_mem*));
-				if (tmpRack != NULL) {
-					l_taskList[j].Rack = rackIdx;
-					l_taskList[j].device[0].memHandler = tmpRack;
-					l_taskList[j].device[0].numRacks++;
-				} else {
-					printf("ERROR AT: Reallocating racks. %d , %d",	__FILE__, __LINE__);
-				}
-			}
-		}
-	}
-
-
-
-	int* RKS =(int*)malloc(numRanks*sizeof(int)); //RKS-> RanK Structure
-	MPI_Allgather(&l_numTasks,1,MPI_INT,RKS,1,MPI_INT,MPI_COMM_WORLD);
-
-	int g_numTasks;
-	for(g_numTasks=0,i=0;i<numRanks;i++){
-		g_numTasks+=RKS[i];
-	}
-
-	g_taskList=(taskInfo*)malloc(g_numTasks*sizeof(taskInfo)); //TODO: find the space for deallocation.
-
-	for(i=0;i<g_numTasks;i++)
-		g_taskList[i].g_taskIdx=i;
-
-
-	//this section creates the global l_taskList map (temporarily for benchmarking).
-	for(i=0,k=0;i<numRanks;i++){
-		for(j=0;j<RKS[i];j++){
-			g_taskList[k].r_rank=i;
-			g_taskList[k].l_taskIdx=j;
-			k++;
-		}
-	}
-
-	//end of task management system initialization
 
 	char* buffer=malloc(sizeof(char)*MAX_SIZE);
 	for(i=0;i<MAX_SIZE;i++){
@@ -137,191 +66,168 @@ int _commsBenchmark(commsInfo* cmInf){
 	}
 
 
-	//int numTasks=OMPI_CollectTaskInfo(ALL_DEVICES, MPI_COMM_WORLD);
+	/*OMPI_XclMallocTray(0, 0, sizeof(char)*MAX_SIZE,MPI_COMM_WORLD);
+	OMPI_XclMallocTray(0, 1, sizeof(char)*MAX_SIZE,MPI_COMM_WORLD);
+	OMPI_XclMallocTray(1, 0, sizeof(char)*MAX_SIZE,MPI_COMM_WORLD);
+	OMPI_XclMallocTray(1, 1, sizeof(char)*MAX_SIZE,MPI_COMM_WORLD);*/
 
-	L_Mtx=malloc(sizeof(double)*g_PUs*g_PUs);
-	BW_Mtx=malloc(sizeof(double)*g_PUs*g_PUs);
-	(cmInf->BW_Mtx)=BW_Mtx;
-
-	for(i=0;i<g_PUs;i++){
-		err = _OMPI_XclWriteTray(i, 0, sizeof(char)*MAX_SIZE, buffer, MPI_COMM_WORLD); //first task init token to 1
-		err|= _OMPI_XclMallocTray(i, 1, sizeof(char)*MAX_SIZE,MPI_COMM_WORLD);//remaining tasks allocate space
+	for(i=0;i<g_numTasks;i++){
+		OMPI_XclMallocTray(i, 0, sizeof(char)*MAX_SIZE,MPI_COMM_WORLD);
+		OMPI_XclMallocTray(i, 1, sizeof(char)*MAX_SIZE,MPI_COMM_WORLD);
 	}
 
+	OMPI_XclWriteTray( 0, 0, sizeof(char)*MAX_SIZE, buffer, MPI_COMM_WORLD);
+	OMPI_XclWriteTray( 1, 0, sizeof(char)*MAX_SIZE, buffer, MPI_COMM_WORLD);
 
-	MPI_Win ltcWin,bdwWin;
+//missing allocations for more tasks.
+
+	L_Mtx=malloc(sizeof(double)*g_NumPUs*g_NumPUs);
+	BW_Mtx=malloc(sizeof(double)*g_NumPUs*g_NumPUs);
+	MPI_Win bdwWin;
+	MPI_Win ltcWin;
+
 
 	if (myRank == ROOT) {
-		MPI_Win_create(L_Mtx, sizeof(float)*g_PUs*g_PUs, 1, MPI_INFO_NULL,
+		MPI_Win_create(L_Mtx, sizeof(float)*g_NumPUs*g_NumPUs, 1, MPI_INFO_NULL,
 				MPI_COMM_WORLD, &ltcWin);
-		MPI_Win_create(BW_Mtx, sizeof(float)*g_PUs*g_PUs, 1, MPI_INFO_NULL,
-						MPI_COMM_WORLD, &bdwWin);
+		MPI_Win_create(BW_Mtx, sizeof(float)*g_NumPUs*g_NumPUs, 1, MPI_INFO_NULL,
+				MPI_COMM_WORLD, &bdwWin);
 	}
 	else {
 		MPI_Win_create(MPI_BOTTOM, 0, 1, MPI_INFO_NULL,
 				MPI_COMM_WORLD, &ltcWin);
 		MPI_Win_create(MPI_BOTTOM, 0, 1, MPI_INFO_NULL,
-						MPI_COMM_WORLD, &bdwWin);
+				MPI_COMM_WORLD, &bdwWin);
 	}
 
 
-	//Latency test
 
-//	float ltc=0;
-	 for(src=0;src<g_PUs;src++){
-	 		for(dst=0;dst<=src;dst++){
-	 			accumTime=0;
-	 			for(i=0;i<LATENCY_REPS;i++){
-	 				deltaT = 0;
-	 				T1 = MPI_Wtime(); // start time
-	 				err |= _OMPI_XclSendRecv(src, 0, dst, 1, 1, MPI_CHAR,MPI_COMM_WORLD ); //SEND
-	 				err |= _OMPI_XclSendRecv(dst, 1, src, 0, 1, MPI_CHAR,MPI_COMM_WORLD ); //SEND-BACK
-	 				T2 = MPI_Wtime(); // end time
-	 				deltaT = T2-T1;
-	 				accumTime += deltaT;
-	 			}
-	 			L_Mtx[g_PUs*src+dst]=L_Mtx[src+g_PUs*dst]=(accumTime/LATENCY_REPS); //Symmetric mtx.
-	 		}
-	 	}
+	int i;
 
-	 MPI_Win_fence(0, ltcWin);
-	 //fill the latency matrix at ROOT
-	 for(src=mygPU_min;src<g_PUs;src++){
-	 	 		for(dst=mygPU_min;dst<=mygPU_max && dst<=src;dst++){
-		 	 		MPI_Put(&L_Mtx[g_PUs*src+dst],1,MPI_FLOAT,ROOT,(g_PUs*src+dst)*(sizeof(float)),1,MPI_FLOAT,ltcWin);
-		 	 		MPI_Put(&L_Mtx[src+g_PUs*dst],1,MPI_FLOAT,ROOT,(src+g_PUs*dst)*(sizeof(float)),1,MPI_FLOAT,ltcWin);
-	 	 		}
-	 }
-
-	 MPI_Win_fence(0, ltcWin);
-
-	 //Bandwidth test.
-//	 float bwd=0;
-		for(src=0;src<g_PUs;src++){
-			for(dst=0;dst<=src;dst++){
-				msgSz=MIN_SIZE;
-				numBWTrials=0;
-				sumAvgs=0;
-				while(msgSz<=MAX_SIZE){
-					deltaT = 0;
-					T1 = MPI_Wtime(); // start time
-					err |= _OMPI_XclSendRecv(src, 0, dst, 1, sizeof(char)*msgSz, MPI_CHAR,MPI_COMM_WORLD ); //SEND
-					err |= _OMPI_XclSendRecv(dst, 1, src, 0, sizeof(char)*msgSz, MPI_CHAR,MPI_COMM_WORLD ); //SEND-BACK
-					T2 = MPI_Wtime(); // end time
-					deltaT = T2-T1;
-					Avg[numBWTrials]=2*msgSz/deltaT;
-					numBWTrials++;
-					msgSz<<=1;
-				}
-
-				for(i=0;i<numBWTrials;i++){
-					sumAvgs+=Avg[i];
-				}
-				BW_Mtx[g_PUs*src+dst]=BW_Mtx[src+g_PUs*dst]=(sumAvgs/numBWTrials); //the matrix is symmetric.
-
+	//Latency Test
+	for(src=0;src<g_NumPUs;src++){
+		for(dst=0;dst<=src;dst++){ // must be symmetric.
+			accumTime=0;
+			for(i=0;i<LATENCY_REPS;i++){
+				deltaT = 0;
+				T1 = MPI_Wtime(); // start time
+				OMPI_XclSendRecv(src, 0, dst, 1, sizeof(char), g_NumPUs*src+dst+i);
+				OMPI_XclWaitFor(1, &dst, MPI_COMM_WORLD);
+				err |= OMPI_XclSendRecv(dst, 1, src, 0, sizeof(char),g_NumPUs*src+dst+i+1 ); //SEND-BACK
+				OMPI_XclWaitFor(1, &src, MPI_COMM_WORLD);
+				T2 = MPI_Wtime(); // end time
+				deltaT = T2-T1;
+				accumTime += deltaT;
 			}
-		}
-
-		MPI_Win_fence(0, bdwWin);
-
-		//fill the bandwidth matrix at ROOT__
-		for(src=mygPU_min;src<g_PUs;src++){
-			for(dst=mygPU_min;dst<=mygPU_max && dst<=src;dst++){
-				MPI_Put(&BW_Mtx[g_PUs*src+dst],1,MPI_FLOAT,ROOT,(g_PUs*src+dst)*(sizeof(float)),1,MPI_FLOAT,bdwWin);
-				MPI_Put(&BW_Mtx[src+g_PUs*dst],1,MPI_FLOAT,ROOT,(src+g_PUs*dst)*(sizeof(float)),1,MPI_FLOAT,bdwWin);
-			}
-		}
-		MPI_Win_fence(0, bdwWin);
-
-
-	//Average computations
-
-if(myRank==ROOT){
-	float LAccum=0;
-	float BWAccum=0;
-	for(i=0;i<g_PUs;i++){
-		for(j=0;j<=i;j++){ //sum triangular inferior of the values due to the other are repeated.
-			LAccum+=L_Mtx[g_PUs*i+j];
-			BWAccum+=BW_Mtx[g_PUs*i+j];
+			L_Mtx[g_NumPUs*src+dst]=L_Mtx[src+g_NumPUs*dst]=(accumTime/LATENCY_REPS); //Symmetric mtx.
 		}
 	}
-	L=LAccum/(g_PUs*(g_PUs+1)/2);
-	BW=BWAccum/(g_PUs*(g_PUs+1)/2);
 
-	printf("Average Latency: %8.8f microSeconds\n",L*1000000);
-	printf("Average Bandwidth: %8.8f GB/s\n",BW/(float)(ONEGB));
+	MPI_Win_fence(0, ltcWin);
 
-	//print && store the matrices
+	//fill the latency matrix at ROOT
+	//(this avoids having zero latency in remote transfers)
+	//for(src=mygPU_min;src<g_NumPUs;src++){
+		//for(dst=mygPU_min;dst<=mygPU_max && dst<=src;dst++){
+			//MPI_Put(&L_Mtx[g_NumPUs*src+dst],1,MPI_FLOAT,ROOT,(g_NumPUs*src+dst)*(sizeof(float)),1,MPI_FLOAT,ltcWin);
+			//MPI_Put(&L_Mtx[src+g_NumPUs*dst],1,MPI_FLOAT,ROOT,(src+g_NumPUs*dst)*(sizeof(float)),1,MPI_FLOAT,ltcWin);
+		//}
+	//}
 
-	FILE* FP_L_Mtx=NULL;
-	FP_L_Mtx=fopen("./L_MtxFile.dat","wb");
-	if(FP_L_Mtx==NULL){
-		perror("L_MtxFile could not be created");
-		exit(-1);
+	MPI_Win_fence(0, ltcWin);
+
+	//write results in persistent storage.
+	FILE* L_FH;
+	char L_File[1024];
+	memcpy(L_File,storagePath,sizeof(L_File));
+	strcat(L_File,"/L_File.dat");
+	L_FH=fopen(L_File,"w");
+	if(L_FH==NULL){
+		perror("unable to open latency file");
 	}
+	fwrite(L_Mtx,sizeof(double),g_NumPUs*g_NumPUs,L_FH);
+	fseek(L_FH, SEEK_SET, 0);
 
-
-	for(i=0;i<g_PUs;i++){
+	//print them if requested.
+#ifdef VERBOSE
+	if(myRank==ROOT){
+	for(i=0;i<g_NumPUs;i++){
 		printf("| ");
-		for(j=0;j<g_PUs;j++){
-			printf(" %8.8f |",L_Mtx[g_PUs*i+j]*1000000); //printed in microseconds
-			fwrite(&L_Mtx[g_PUs*i+j],sizeof(float),1,FP_L_Mtx);
+		for(j=0;j<g_NumPUs;j++){
+			printf(" %8.8f |",L_Mtx[g_NumPUs*i+j]*1000000); //printed in microseconds
 		}
 		printf("\n-------------------------------\n");
 	}
+	}
+#endif
+	OMPI_XclWaitAllTasks(MPI_COMM_WORLD);
 
-	printf("\n\n");
+	//Bandwidth test.
 
-	FILE* FP_BW_Mtx=NULL;
-	FP_BW_Mtx=fopen("./BW_MtxFile.dat","wb");
-	if(FP_BW_Mtx==NULL){
-		perror("BW_MtxFile could not be created");
-		exit(-1);
+	for(src=0;src<g_NumPUs;src++){
+		for(dst=0;dst<=src;dst++){
+			msgSz=MIN_SIZE;
+			numBWTrials=0;
+			sumAvgs=0;
+			while(msgSz<=MAX_SIZE){
+				deltaT = 0;
+				T1 = MPI_Wtime(); // start time
+				OMPI_XclSendRecv(src, 0, dst, 1, sizeof(char)*msgSz, (2*src)+1);
+				//OMPI_XclWaitFor(1, &dst, MPI_COMM_WORLD);
+				err |= OMPI_XclSendRecv(dst, 1, src, 0, sizeof(char)*msgSz,(2*src)+2 ); //SEND-BACK
+				//OMPI_XclWaitFor(1, &src, MPI_COMM_WORLD);
+				OMPI_XclWaitAllTasks(MPI_COMM_WORLD);
+				T2 = MPI_Wtime(); // end time
+				deltaT = T2-T1;
+				Avg[numBWTrials]=2*msgSz/deltaT;
+				numBWTrials++;
+				msgSz<<=1;
+			}
+
+			for(i=0;i<numBWTrials;i++){
+				sumAvgs+=Avg[i];
+			}
+			BW_Mtx[g_NumPUs*src+dst]=BW_Mtx[src+g_NumPUs*dst]=(sumAvgs/numBWTrials); //the matrix is symmetric.
+		}
 	}
 
-	for(i=0;i<g_PUs;i++){
+	//write results to persistent storage.
+	FILE* BW_FH;
+	char BW_File[1024];
+	memcpy(BW_File,storagePath,sizeof(L_File));
+	strcat(BW_File,"/BW_File.dat");
+	BW_FH=fopen(BW_File,"w");
+	if(BW_FH==NULL){
+		perror("unable to open BandWidth file");
+	}
+	fwrite(BW_Mtx,sizeof(double),g_NumPUs*g_NumPUs,BW_FH);
+	fseek(BW_FH, SEEK_SET, 0);
+	//print if requested
+#ifdef VERBOSE
+	if(myRank==ROOT){
+	for(i=0;i<g_NumPUs;i++){
 		printf("| ");
-		for(j=0;j<g_PUs;j++){
-			printf("  %8.6f |",BW_Mtx[g_PUs*i+j]/(float)(ONEGB));
-			fwrite(&BW_Mtx[g_PUs*i+j],sizeof(float),1,FP_BW_Mtx);
+		for(j=0;j<g_NumPUs;j++){
+			printf("  %8.6f |",BW_Mtx[g_NumPUs*i+j]/(float)(ONEGB));
 		}
 		printf("\n-------------------------------\n");
 	}
-
-}
-
-
-
-	for(i=0;i<l_PUs;i++){
-		_OMPI_XclFreeTray(i, 0, MPI_COMM_WORLD);
-		_OMPI_XclFreeTray(i, 1, MPI_COMM_WORLD);
 	}
+#endif
 
-	free(buffer);
-	for (i = 0; i <l_PUs; i++) {
-			for (j = taskDevMap[i].min_tskIdx; j <= taskDevMap[i].max_tskIdx;j++) {
-				debug_print("-----matching task %d ------\n",j);
-				l_taskList[j].numTrays = 0;
-			}
-	}
-
-	//TODO: we must deallocate the number of racks created for each device.
-
-	for (i = 0; i <l_PUs; i++) {
-		for (j = taskDevMap[i].min_tskIdx; j <= taskDevMap[i].max_tskIdx;j++) {
-
-			free(l_taskList[j].device[0].memHandler);
-			l_taskList[j].device[0].numRacks=0;
-		}
-	}
+	MPI_Win_fence(0, bdwWin);
 
 
-	free(taskDevMap);
-	taskDevMap=NULL;
-	free(l_taskList);
+
+	finishThreads(l_numTasks);
+	free(L_Mtx);
+	free(BW_Mtx);
+	taskDevList=NULL;
 	l_taskList=NULL;
-	free(g_taskList);
 	g_taskList=NULL;
+	g_numTasks=0;
+	l_numTasks=0;
+
 
 	return 0;
 }

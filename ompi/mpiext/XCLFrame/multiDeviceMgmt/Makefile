@@ -356,7 +356,7 @@ LTLIBRARIES = $(multiDeviceMgmt_LTLIBRARIES)
 libmultiDeviceMgmt_la_LIBADD =
 am__dirstamp = $(am__leading_dot)dirstamp
 am_libmultiDeviceMgmt_la_OBJECTS = ./errorMgmt/errorHandling.lo \
-	./deviceMgmt/deviceExploration.lo \
+	./Base/deviceMgmt.lo ./deviceMgmt/deviceExploration.lo \
 	./deviceMgmt/devicesInitialization.lo
 libmultiDeviceMgmt_la_OBJECTS = $(am_libmultiDeviceMgmt_la_OBJECTS)
 AM_V_lt = $(am__v_lt_$(V))
@@ -1492,6 +1492,7 @@ multiDeviceMgmt_LTLIBRARIES = libmultiDeviceMgmt.la
 
 # Sources for libmultiDeviceMgmt
 libmultiDeviceMgmt_la_SOURCES = ./errorMgmt/errorHandling.c \
+								./Base/deviceMgmt.c \
 								./deviceMgmt/deviceExploration.c \
 								./deviceMgmt/devicesInitialization.c 
 
@@ -1574,6 +1575,14 @@ errorMgmt/$(DEPDIR)/$(am__dirstamp):
 	@: > errorMgmt/$(DEPDIR)/$(am__dirstamp)
 ./errorMgmt/errorHandling.lo: errorMgmt/$(am__dirstamp) \
 	errorMgmt/$(DEPDIR)/$(am__dirstamp)
+Base/$(am__dirstamp):
+	@$(MKDIR_P) ./Base
+	@: > Base/$(am__dirstamp)
+Base/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) ./Base/$(DEPDIR)
+	@: > Base/$(DEPDIR)/$(am__dirstamp)
+./Base/deviceMgmt.lo: Base/$(am__dirstamp) \
+	Base/$(DEPDIR)/$(am__dirstamp)
 deviceMgmt/$(am__dirstamp):
 	@$(MKDIR_P) ./deviceMgmt
 	@: > deviceMgmt/$(am__dirstamp)
@@ -1589,6 +1598,8 @@ libmultiDeviceMgmt.la: $(libmultiDeviceMgmt_la_OBJECTS) $(libmultiDeviceMgmt_la_
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
+	-rm -f ./Base/*.$(OBJEXT)
+	-rm -f ./Base/*.lo
 	-rm -f ./deviceMgmt/*.$(OBJEXT)
 	-rm -f ./deviceMgmt/*.lo
 	-rm -f ./errorMgmt/*.$(OBJEXT)
@@ -1597,6 +1608,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+include ./Base/$(DEPDIR)/deviceMgmt.Plo
 include ./deviceMgmt/$(DEPDIR)/deviceExploration.Plo
 include ./deviceMgmt/$(DEPDIR)/devicesInitialization.Plo
 include ./errorMgmt/$(DEPDIR)/errorHandling.Plo
@@ -1630,6 +1642,7 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
+	-rm -rf ./Base/.libs ./Base/_libs
 	-rm -rf ./deviceMgmt/.libs ./deviceMgmt/_libs
 	-rm -rf ./errorMgmt/.libs ./errorMgmt/_libs
 
@@ -1763,6 +1776,8 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
+	-rm -f Base/$(DEPDIR)/$(am__dirstamp)
+	-rm -f Base/$(am__dirstamp)
 	-rm -f deviceMgmt/$(DEPDIR)/$(am__dirstamp)
 	-rm -f deviceMgmt/$(am__dirstamp)
 	-rm -f errorMgmt/$(DEPDIR)/$(am__dirstamp)
@@ -1777,7 +1792,7 @@ clean-am: clean-generic clean-libtool clean-multiDeviceMgmtLTLIBRARIES \
 	mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf ./deviceMgmt/$(DEPDIR) ./errorMgmt/$(DEPDIR)
+	-rm -rf ./Base/$(DEPDIR) ./deviceMgmt/$(DEPDIR) ./errorMgmt/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -1823,7 +1838,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf ./deviceMgmt/$(DEPDIR) ./errorMgmt/$(DEPDIR)
+	-rm -rf ./Base/$(DEPDIR) ./deviceMgmt/$(DEPDIR) ./errorMgmt/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

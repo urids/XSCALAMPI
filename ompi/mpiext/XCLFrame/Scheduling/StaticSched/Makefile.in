@@ -350,8 +350,9 @@ am__installdirs = "$(DESTDIR)$(staticScheddir)"
 LTLIBRARIES = $(staticSched_LTLIBRARIES)
 libstaticSched_la_LIBADD =
 am__dirstamp = $(am__leading_dot)dirstamp
-am_libstaticSched_la_OBJECTS = wrapperFactory.lo ISH.lo \
-	./Utilities/topoSort.lo
+am_libstaticSched_la_OBJECTS = wrapperFactory.lo ./ISH/ISH.lo \
+	./HEFT/HEFT.lo ./Utilities/topoSort.lo \
+	./Utilities/utilities.lo
 libstaticSched_la_OBJECTS = $(am_libstaticSched_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -1486,8 +1487,10 @@ staticSched_LTLIBRARIES = libstaticSched.la
 
 # Sources for libstaticSched
 libstaticSched_la_SOURCES = wrapperFactory.cpp \
-							ISH.cpp \
-							./Utilities/topoSort.cpp
+							./ISH/ISH.cpp \
+							./HEFT/HEFT.cpp \
+							./Utilities/topoSort.cpp \
+							./Utilities/utilities.cpp
 
 
 # Linker options libTestProgram
@@ -1561,6 +1564,20 @@ clean-staticSchedLTLIBRARIES:
 	  echo rm -f $${locs}; \
 	  rm -f $${locs}; \
 	}
+ISH/$(am__dirstamp):
+	@$(MKDIR_P) ./ISH
+	@: > ISH/$(am__dirstamp)
+ISH/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) ./ISH/$(DEPDIR)
+	@: > ISH/$(DEPDIR)/$(am__dirstamp)
+./ISH/ISH.lo: ISH/$(am__dirstamp) ISH/$(DEPDIR)/$(am__dirstamp)
+HEFT/$(am__dirstamp):
+	@$(MKDIR_P) ./HEFT
+	@: > HEFT/$(am__dirstamp)
+HEFT/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) ./HEFT/$(DEPDIR)
+	@: > HEFT/$(DEPDIR)/$(am__dirstamp)
+./HEFT/HEFT.lo: HEFT/$(am__dirstamp) HEFT/$(DEPDIR)/$(am__dirstamp)
 Utilities/$(am__dirstamp):
 	@$(MKDIR_P) ./Utilities
 	@: > Utilities/$(am__dirstamp)
@@ -1569,20 +1586,28 @@ Utilities/$(DEPDIR)/$(am__dirstamp):
 	@: > Utilities/$(DEPDIR)/$(am__dirstamp)
 ./Utilities/topoSort.lo: Utilities/$(am__dirstamp) \
 	Utilities/$(DEPDIR)/$(am__dirstamp)
+./Utilities/utilities.lo: Utilities/$(am__dirstamp) \
+	Utilities/$(DEPDIR)/$(am__dirstamp)
 libstaticSched.la: $(libstaticSched_la_OBJECTS) $(libstaticSched_la_DEPENDENCIES) $(EXTRA_libstaticSched_la_DEPENDENCIES) 
 	$(AM_V_CXXLD)$(libstaticSched_la_LINK) -rpath $(staticScheddir) $(libstaticSched_la_OBJECTS) $(libstaticSched_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
+	-rm -f ./HEFT/*.$(OBJEXT)
+	-rm -f ./HEFT/*.lo
+	-rm -f ./ISH/*.$(OBJEXT)
+	-rm -f ./ISH/*.lo
 	-rm -f ./Utilities/*.$(OBJEXT)
 	-rm -f ./Utilities/*.lo
 
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ISH.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/wrapperFactory.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./HEFT/$(DEPDIR)/HEFT.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./ISH/$(DEPDIR)/ISH.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./Utilities/$(DEPDIR)/topoSort.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./Utilities/$(DEPDIR)/utilities.Plo@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -1613,6 +1638,8 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
+	-rm -rf ./HEFT/.libs ./HEFT/_libs
+	-rm -rf ./ISH/.libs ./ISH/_libs
 	-rm -rf ./Utilities/.libs ./Utilities/_libs
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
@@ -1745,6 +1772,10 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
+	-rm -f HEFT/$(DEPDIR)/$(am__dirstamp)
+	-rm -f HEFT/$(am__dirstamp)
+	-rm -f ISH/$(DEPDIR)/$(am__dirstamp)
+	-rm -f ISH/$(am__dirstamp)
 	-rm -f Utilities/$(DEPDIR)/$(am__dirstamp)
 	-rm -f Utilities/$(am__dirstamp)
 
@@ -1757,7 +1788,7 @@ clean-am: clean-generic clean-libtool clean-staticSchedLTLIBRARIES \
 	mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf ./$(DEPDIR) ./Utilities/$(DEPDIR)
+	-rm -rf ./$(DEPDIR) ./HEFT/$(DEPDIR) ./ISH/$(DEPDIR) ./Utilities/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -1803,7 +1834,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf ./$(DEPDIR) ./Utilities/$(DEPDIR)
+	-rm -rf ./$(DEPDIR) ./HEFT/$(DEPDIR) ./ISH/$(DEPDIR) ./Utilities/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

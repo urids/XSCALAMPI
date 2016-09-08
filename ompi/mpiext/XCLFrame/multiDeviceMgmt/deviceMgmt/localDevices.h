@@ -18,6 +18,8 @@ typedef struct PUInfo_st{
 	int g_PUIdx;
 	int l_PUIdx;
 	int r_rank;
+	int deviceType;
+	Device* mappedDevice;
 }PUInfo;
 
 

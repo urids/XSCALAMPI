@@ -114,7 +114,7 @@ int ISH::matchMake(int NumTsk, int NumDvs,float * W, int * AdjMtx,const int* SR,
 	int i,j,k;
 	map<int,int> taskMap;
 	stack<int> topoSortList;
-	list<pair<int,int> > AdjList[NumTsk];
+	list<pair<int,int> > AdjList[NumTsk]; //< Adj, Weight >
 	buildAdjList(AdjMtx,AdjList,NumTsk);
 
 	int *AdjMtx_T=(int*)malloc(NumTsk*NumTsk*sizeof(int));
@@ -122,7 +122,6 @@ int ISH::matchMake(int NumTsk, int NumDvs,float * W, int * AdjMtx,const int* SR,
 
 	list<pair<int,int> > *AdjList_T=new list<pair<int,int> >[NumTsk]; // < predecessor, edgeCost >
 	buildAdjList(AdjMtx_T,AdjList_T,NumTsk);
-
 
 	topoSort(NumTsk,AdjList,topoSortList);
 	stack<int> revTopList;
@@ -150,12 +149,12 @@ int ISH::matchMake(int NumTsk, int NumDvs,float * W, int * AdjMtx,const int* SR,
 
 	//3.- Repeat
 	do{
-		cout<<"\n-------------\n" <<endl;
-		cout<<"READYLIST:" <<endl;
-		for_each(readyList.begin() ,readyList.end() ,[](pair<int, float> rl){
-			cout<<" "<<rl.first;
-		});
-		cout<<endl;
+		//cout<<"\n-------------\n" <<endl;
+		//cout<<"READYLIST:" <<endl;
+		//for_each(readyList.begin() ,readyList.end() ,[](pair<int, float> rl){
+			//cout<<" "<<rl.first;
+		//});
+		//cout<<endl;
 
 		newScheduled.clear();
 		//STEP a) create Q prime.
@@ -169,7 +168,7 @@ int ISH::matchMake(int NumTsk, int NumDvs,float * W, int * AdjMtx,const int* SR,
 		assert(Qp.size()>0);
 
 		Tn=(readyList.front()).first;
-		cout<<"Tn: "<<Tn<<endl;
+		//--cout<<"Tn: "<<Tn<<endl;
 		EST.clear();
 
 		//EST of Tn on each Device.
@@ -187,7 +186,7 @@ int ISH::matchMake(int NumTsk, int NumDvs,float * W, int * AdjMtx,const int* SR,
 
 
 		int bestDevice=EST[0].first;
-		cout<<"bestDevice: "<< bestDevice<<endl;
+		//--cout<<"bestDevice: "<< bestDevice<<endl;
 
 		taskMap[Tn]=bestDevice;
 		newScheduled.push_back(Tn);
@@ -197,11 +196,11 @@ int ISH::matchMake(int NumTsk, int NumDvs,float * W, int * AdjMtx,const int* SR,
 			return task.first==Tn;
 		});
 		readyList.erase(taskFinder_it);
-		AFT[Tn]=EST[0].second+W[NumDvs*Tn]; //devices are sorted by EFT hence [0] refers to the best time.
+		AFT[Tn]=EST[0].second+W[NumDvs*Tn]; //devices are sorted by EST hence [0] refers to the best time.
 
 		//4.- If Scheduling this node causes a slot
 		if(avail[bestDevice]<EST[0].second){
-			cout<<avail[bestDevice]<<","<<EST[0].second<<" win length:"<<EST[0].second- avail[bestDevice]<<endl;
+			//--cout<<avail[bestDevice]<<","<<EST[0].second<<" win length:"<<EST[0].second- avail[bestDevice]<<endl;
 			WinSlots.clear();
 			WinSlots.push_back(make_pair(avail[bestDevice],EST[0].second));
 
@@ -227,7 +226,7 @@ int ISH::matchMake(int NumTsk, int NumDvs,float * W, int * AdjMtx,const int* SR,
 				                                           (pair <float, float> Ws){
 
 					//EST of Tm on the Any other Device.
-					float max_STTm=0;
+					/*--float max_STTm=0;
 					for_each(Qp.begin(),Qp.end(),[&Tm,&max_STTm,&AdjList_T, &max_AST_Tm,&avail]
 					                              (int dev){
 
@@ -237,10 +236,26 @@ int ISH::matchMake(int NumTsk, int NumDvs,float * W, int * AdjMtx,const int* SR,
 					});
 
 
-					if(est_Tm>=Ws.first &&
-							est_Tm+W[NumDvs*Tm]<=Ws.second && //if fits
+					if(est_Tm>=Ws.first &&					  //|_
+							est_Tm+W[NumDvs*Tm]<=Ws.second && //|  if fits.
 							est_Tm <= max_STTm){ // and if starts earlier than in any other device
-						cout<<"Task" << Tm << "fits in slot"<<endl;
+						--*/
+
+					float min_STTmIOD=est_Tm; //start with the current device
+					for_each(Qp.begin(),Qp.end(),[&Tm,&max_STTm,&AdjList_T, &max_AST_Tm,&avail]
+					                              (int dev){
+
+						float estITD=(avail[dev]>max_AST_Tm)?avail[dev]:max_AST_Tm;
+						min_STTmIOD=(estITD<min_STTmIOD)?estITD:min_STTmIOD; //
+
+					});
+
+
+					if(est_Tm>=Ws.first &&					  //|_
+							est_Tm+W[NumDvs*Tm]<=Ws.second && //|  if fits.
+							est_Tm <= min_STTmIOD){
+
+						//--cout<<"Task" << Tm << "fits in slot"<<endl;
 						taskMap[Tm]=bestDevice;
 						newScheduled.push_back(Tm);
 						//Delete Tm from the readyList
@@ -262,9 +277,9 @@ int ISH::matchMake(int NumTsk, int NumDvs,float * W, int * AdjMtx,const int* SR,
 						return true;
 					}
 					return false;
-				});
-			});
-		}  //end if windowSlot
+				});//end if eachSlot
+			});//end if T_m in readyList
+		}  //end if Slot
 		avail[bestDevice]=AFT[Tn];
 
 		//5.- Update the ready list inserting all nodes now ready.

@@ -1,5 +1,5 @@
 Utilities/topoSort.lo: Utilities/topoSort.cpp /usr/include/stdc-predef.h \
- Utilities/topoSort.h /usr/include/c++/4.8/stack \
+ Utilities/utilities.h /usr/include/c++/4.8/stack \
  /usr/include/c++/4.8/deque /usr/include/c++/4.8/bits/stl_algobase.h \
  /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/4.8/bits/os_defines.h \
@@ -111,11 +111,12 @@ Utilities/topoSort.lo: Utilities/topoSort.cpp /usr/include/stdc-predef.h \
  /usr/include/c++/4.8/bits/locale_facets.tcc \
  /usr/include/c++/4.8/bits/basic_ios.tcc \
  /usr/include/c++/4.8/bits/ostream.tcc /usr/include/c++/4.8/istream \
- /usr/include/c++/4.8/bits/istream.tcc
+ /usr/include/c++/4.8/bits/istream.tcc /usr/include/string.h \
+ /usr/include/x86_64-linux-gnu/bits/string3.h
 
 /usr/include/stdc-predef.h:
 
-Utilities/topoSort.h:
+Utilities/utilities.h:
 
 /usr/include/c++/4.8/stack:
 
@@ -404,3 +405,7 @@ Utilities/topoSort.h:
 /usr/include/c++/4.8/istream:
 
 /usr/include/c++/4.8/bits/istream.tcc:
+
+/usr/include/string.h:
+
+/usr/include/x86_64-linux-gnu/bits/string3.h:

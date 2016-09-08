@@ -12,6 +12,7 @@ multiDeviceMgmt_LTLIBRARIES = libmultiDeviceMgmt.la
 
 # Sources for libmultiDeviceMgmt
 libmultiDeviceMgmt_la_SOURCES = ./errorMgmt/errorHandling.c \
+								./Base/deviceMgmt.c \
 								./deviceMgmt/deviceExploration.c \
 								./deviceMgmt/devicesInitialization.c 
 

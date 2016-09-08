@@ -51,5 +51,15 @@ typedef struct commsInfo_st{
   	float* BW_Mtx;
  }commsInfo;
 
+#define SCHEDMASK (0x7<<2)
+#define DEFAULT_STATIC "HEFT"
+#define DEFAULT_DYNAMIC "RR"
+
+enum configOptions{
+	TASKFILE=1<<4,
+	STATICSCHED=1<<3,
+	DYNAMICSCHED=1<<2,
+	AUTOTUNE=1<<1,
+	DEVICEFILTER=1<<0};
 
 #endif /* SCHEDULING_H_ */

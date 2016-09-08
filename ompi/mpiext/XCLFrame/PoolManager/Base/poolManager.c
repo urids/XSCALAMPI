@@ -71,8 +71,10 @@ int addSubRoutine(int thdID, void*(*fp)(void*) ,void* Args){
 }
 
 
-void insertThreads(int numThds){
+void insertThreads(int numThds, int reset){
 	static int currNumThds=0;
+	if(reset) currNumThds=0;
+
 	counters=calloc(numThds,sizeof(int));
 	if(currNumThds==0){
 		//each thread requires a semaphore, a queue, and a mutex.

@@ -1,5 +1,5 @@
 wrapperFactory.lo: wrapperFactory.cpp /usr/include/stdc-predef.h \
- wrapperFactory.h IScheduler.hpp ISH.h /usr/include/c++/4.8/stack \
+ wrapperFactory.h IScheduler.hpp ISH/ISH.h /usr/include/c++/4.8/stack \
  /usr/include/c++/4.8/deque /usr/include/c++/4.8/bits/stl_algobase.h \
  /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/4.8/bits/os_defines.h \
@@ -148,7 +148,9 @@ wrapperFactory.lo: wrapperFactory.cpp /usr/include/stdc-predef.h \
  /usr/include/c++/4.8/bits/ostream.tcc /usr/include/c++/4.8/istream \
  /usr/include/c++/4.8/bits/istream.tcc /usr/include/assert.h \
  /usr/include/string.h /usr/include/x86_64-linux-gnu/bits/string3.h \
- Utilities/topoSort.h
+ ISH/../IScheduler.hpp ISH/../Utilities/utilities.h HEFT/HEFT.h \
+ HEFT/../IScheduler.hpp HEFT/../Utilities/utilities.h \
+ Utilities/utilities.h
 
 /usr/include/stdc-predef.h:
 
@@ -156,7 +158,7 @@ wrapperFactory.h:
 
 IScheduler.hpp:
 
-ISH.h:
+ISH/ISH.h:
 
 /usr/include/c++/4.8/stack:
 
@@ -546,4 +548,14 @@ ISH.h:
 
 /usr/include/x86_64-linux-gnu/bits/string3.h:
 
-Utilities/topoSort.h:
+ISH/../IScheduler.hpp:
+
+ISH/../Utilities/utilities.h:
+
+HEFT/HEFT.h:
+
+HEFT/../IScheduler.hpp:
+
+HEFT/../Utilities/utilities.h:
+
+Utilities/utilities.h:

@@ -42,27 +42,52 @@ int NON_DELEGATED OMPI_CollectDevicesInfo(int devSelection, MPI_Comm comm){
 	return _OMPI_CollectDevicesInfo(devSelection, comm);
 }
 
-
-int NON_DELEGATED OMPI_CollectTaskInfo(task_t** myTasks, int numTasks, MPI_Comm comm){
-
-	/*	int numRanks, myRank;
-	MPI_Comm_rank(comm, &myRank);
-	MPI_Comm_size(comm,&numRanks);
+int NON_DELEGATED XSCALA_InitTasks(int argc, char ** argv, task_t const** myTasks,int numTasks){
 
 
-	double off_secs,R_secs;
-	double off_micrs,R_micrs;
-	if(myRank==0){
-		R_secs = (double) tval_result.tv_sec;
-		R_micrs = (double) (tval_result.tv_usec);
+	char heuristicModel[1024];
+	char selectedDevices[1024];
+	char benchStoragePath[1024];
+	int configInputs=parseArguments(argc,argv, heuristicModel, selectedDevices);
+
+	// locate benchmarkIntsllation Dir.
+	getStoragePath(benchStoragePath);
+
+	if(configInputs & AUTOTUNE){
+		//run autotune benchmarks and store them.
+
+		runCommsTest(benchStoragePath); //Save L and BW in Persistent storage
+		runAccelerationTest(benchStoragePath); //Save Accels in Persistent storage
+
+	} //End autotune subprocess.
+
+	int devSelection=ALL_DEVICES; //this is the default option.
+	if(configInputs & DEVICEFILTER){
+		if (strcmp(selectedDevices, "CPU_ONLY") == 0) devSelection=CPU_DEVICES;
+		if (strcmp(selectedDevices, "ALL_DEVICES") == 0) devSelection=ALL_DEVICES;
 	}
 
-	MPI_Bcast(&R_secs,1,MPI_DOUBLE,0,comm);
-	MPI_Bcast(&R_micrs,1,MPI_DOUBLE,0,comm);*/
-	int devSelection;
-	gettimeofday(&tval_globalInit, NULL);//TODO:  find the appropriate place to init the clock =0
-	return _OMPI_CollectTaskInfo(devSelection, comm);
+	selectScheduler(configInputs,heuristicModel,benchStoragePath, numTasks);
+
+	return 0;
+
 }
+
+int XSCALA_getNumTasks(int* numTasks, MPI_Comm comm){
+	*numTasks=g_numTasks;
+	return 0;
+}
+
+int XSCALA_getNumDevices(int* numDevices, int deviceType, MPI_Comm comm){
+	*numDevices=g_numDevs;
+	return 0;
+}
+
+int NON_DELEGATED XSCALA_Finalize(){
+	return 0;
+}
+
+
 
 
 int OMPI_XclSetProcedure(MPI_Comm comm, int g_selTask, char* srcPath, char* kernelName){
@@ -155,7 +180,7 @@ int OMPI_XclWriteTray(int g_taskIdx, int trayIdx, int bufferSize,void * hostBuff
 	if (myRank == g_taskList[g_taskIdx].r_rank) {
 		//2.- Get the appropriate thread from the int thID_Of_(g_selTask)
 		int l_taskIdx= g_taskList[g_taskIdx].l_taskIdx;
-		//3.- Wrap the setProcedure_Args_st with the call parameters
+		//3.- Wrap the Args_WriteTray_st with the call parameters
 		struct Args_WriteTray_st * writeTray_Args=malloc(sizeof(struct Args_WriteTray_st));
 		writeTray_Args->l_taskIdx=l_taskIdx;
 		writeTray_Args->trayIdx=trayIdx;
@@ -307,7 +332,6 @@ int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_tr
 		new_dstrContLst(0);
 		MCS_Mutex_create(ROOT_RANK, MPI_COMM_WORLD, &global_mtx); //TODO: Call Mutex_Free();
 
-
 		firstIni=0;
 	}
 
@@ -317,8 +341,6 @@ int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_tr
 	//int cpyBuffSz= count * entityTypeSz;
 	int cpyBuffSz=traySize;
 	int cpyMode;
-
-
 	if(myRank == g_taskList[g_src_task].r_rank
 			|| myRank == g_taskList[g_dst_task].r_rank){
 

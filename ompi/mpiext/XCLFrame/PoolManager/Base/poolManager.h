@@ -45,7 +45,7 @@ typedef struct syncArgs_st{
 
 
 int err;
-void insertThreads(int numThds);
+void insertThreads(int numThds, int reset);
 
 
 

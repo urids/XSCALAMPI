@@ -156,7 +156,7 @@ int readTaskBinding(device_Task_Info* taskDevMap) {
 
 
 //--------------------------------------------------------------------
-//TODO: this parser must be done using LR Grammar parsing.
+//TODO: this parser must be done using the LR Grammar parsing.
 
 int readAndParse() {
 
@@ -220,7 +220,7 @@ int readAndParse() {
 					tmp_taskDevList=realloc(tmp_taskDevList,(currSlot+1)*sizeof(schedConfigInfo_t));
 					tmp_taskDevList[currSlot].g_taskId=k;
 					tmp_taskDevList[currSlot].rank=rankToken;
-
+//TODO: This assignment must be done only in the proper rank. "BUG DETECTED"
 					switch (devType) {
 					case CPU:
 						tmp_taskDevList[currSlot].mappedDevice= cpu[deviceIDToken];
@@ -278,7 +278,7 @@ int readAndParse() {
 				tmp_taskDevList=realloc(tmp_taskDevList,(currSlot+1)*sizeof(schedConfigInfo_t));
 				tmp_taskDevList[currSlot].g_taskId=IdsArray[i];
 				tmp_taskDevList[currSlot].rank=rankToken;
-
+//TODO: This assignment must be done only in the proper rank. "BUG DETECTED"
 				switch (devType) {
 				case CPU:
 					tmp_taskDevList[currSlot].mappedDevice=cpu[deviceIDToken];
@@ -313,7 +313,7 @@ int readAndParse() {
 				tmp_taskDevList=realloc(tmp_taskDevList,(currSlot+1)*sizeof(schedConfigInfo_t));
 				tmp_taskDevList[currSlot].g_taskId=singletaskID;
 				tmp_taskDevList[currSlot].rank=rankToken;
-
+//TODO: This assignment must be done only in the proper rank. "BUG DETECTED"
 					switch (devType) {
 					case CPU:
 						tmp_taskDevList[currSlot].mappedDevice=cpu[deviceIDToken];
@@ -334,12 +334,13 @@ int readAndParse() {
 
 	} //ENDwhile lines
 
-     g_numTasks=currSlot; //final counting of the global num tasks.
+     //g_numTasks=currSlot; //final counting of the global num tasks.
+	int taskCount=currSlot;
 
      //Sorting the taskDevList (On^2 is not good =/);
-     taskDevList=malloc(g_numTasks*sizeof(schedConfigInfo_t));
-     for(i=0;i<g_numTasks;i++){
-    	 for(j=0;j<g_numTasks;j++){
+     taskDevList=malloc(taskCount*sizeof(schedConfigInfo_t));
+     for(i=0;i<taskCount;i++){
+    	 for(j=0;j<taskCount;j++){
     		 if(tmp_taskDevList[j].g_taskId==i){
     			 taskDevList[i]=tmp_taskDevList[j];
     			 break;
@@ -347,13 +348,13 @@ int readAndParse() {
     	 }
      }
 
-   /*  for(i=0;i<g_numTasks;i++){ //Print the global task list
+     /*for(i=0;i<g_numTasks;i++){ //Print the global task list
     	 printf("%d .. %d   \n",taskDevList[i].g_taskId, taskDevList[i].rank);
      }*/
 
      //taskDevList=tmp_taskDevList;
 
-	return 0;
+	return currSlot;
 }
 
 

@@ -28,6 +28,8 @@ libmpiext_XCLFrame_c_la_SOURCES = \
         mpiext_XCLFrame_early.c \
         mpiext_XCLFrame_late.c \
         c_Interface.c \
+        argsParser.c \
+        getStoragePath.c \
         ./ErrorHandling/errorHandling.c 
 		
 		
@@ -38,7 +40,8 @@ libmpiext_XCLFrame_c_la_SOURCES = \
 libmpiext_XCLFrame_c_la_LIBADD = $(top_ompi_builddir)/ompi/mpiext/XCLFrame/DataManager/libdataManager.la \
 								 $(top_ompi_builddir)/ompi/mpiext/XCLFrame/TaskManager/libtaskManager.la \
 								 $(top_ompi_builddir)/ompi/mpiext/XCLFrame/Scheduling/libscheduling.la \
-								 $(top_ompi_builddir)/ompi/mpiext/XCLFrame/PoolManager/libpoolManager.la
+								 $(top_ompi_builddir)/ompi/mpiext/XCLFrame/PoolManager/libpoolManager.la \
+								 $(top_ompi_builddir)/ompi/mpiext/XCLFrame/multiDeviceMgmt/libmultiDeviceMgmt.la
 
 libmpiext_XCLFrame_c_la_LDFLAGS = -module -avoid-version -ldl -lOpenCL -lm \
 	-Wl,-rpath,$(libdir)/XCLFrame/PoolManager \
@@ -52,7 +55,8 @@ libmpiext_XCLFrame_c_la_LDFLAGS = -module -avoid-version -ldl -lOpenCL -lm \
     -Wl,-rpath,$(libdir)/XCLFrame/Scheduling \
     -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/ManualSched \
     -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/StaticSched \
-    -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/Benchmark     	
+    -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/Benchmark \
+    -Wl,-rpath,$(libdir)/XCLFrame/multiDeviceMgmt   	
 #	 \
 #	-L/home/uriel/mpiELFs/lib/XCLFrame/DataManager -ldataManager
 

@@ -140,7 +140,8 @@ int MPI_Init(int *argc, char ***argv)
 	}
 
 	if (profilingEnabled) {
-		commsBenchmark(&cmf);
+		runCommsTest(NULL);
+		//commsBenchmark(&cmf);
 	}
 
 /*	MPI_Alloc_mem(10*sizeof(int), MPI_INFO_NULL, &interNodeTrans);

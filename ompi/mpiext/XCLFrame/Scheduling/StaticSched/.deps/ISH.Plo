@@ -148,7 +148,7 @@ ISH.lo: ISH.cpp /usr/include/stdc-predef.h ISH.h \
  /usr/include/c++/4.8/bits/ostream.tcc /usr/include/c++/4.8/istream \
  /usr/include/c++/4.8/bits/istream.tcc /usr/include/assert.h \
  /usr/include/string.h /usr/include/x86_64-linux-gnu/bits/string3.h \
- IScheduler.hpp Utilities/topoSort.h
+ IScheduler.hpp Utilities/utilities.h
 
 /usr/include/stdc-predef.h:
 
@@ -544,4 +544,4 @@ ISH.h:
 
 IScheduler.hpp:
 
-Utilities/topoSort.h:
+Utilities/utilities.h:

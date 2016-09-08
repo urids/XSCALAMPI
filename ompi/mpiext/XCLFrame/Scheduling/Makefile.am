@@ -13,6 +13,8 @@ scheduling_LTLIBRARIES = libscheduling.la
 
 # Sources for libcommsInfo
 libscheduling_la_SOURCES =./Base/scheduling.c \
-						  ./Base/taskSetup.c
+						  ./Base/taskSetup.c \
+						  ./Base/appDataCollect.c \
+						  ./Base/sysDataCollect.c
 					  
 libscheduling_la_LDFLAGS = -avoid-version -lOpenCL -lm -ldl		  				  

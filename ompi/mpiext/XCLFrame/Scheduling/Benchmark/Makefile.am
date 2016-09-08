@@ -9,7 +9,7 @@ benchmark_LTLIBRARIES = libbenchmark.la
 # Sources for libbenchmark
 libbenchmark_la_SOURCES = commsBench.c \
 						  commsBench.h \
-						  compBench.c 						  
+						  accelerationTest.c						  
 
 # Linker options libTestProgram
 

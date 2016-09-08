@@ -5,6 +5,8 @@
 #include "ompi/mpiext/mpiext.h"
 #include "mpiext_XCLFrame_c.h"
 #include "../TaskManager/Base/taskManager.h"
+
+
 //#include "binding/dvMgmt/commsBench.h" //TODO: must this be here to keep architecture schema?
 
 
@@ -102,6 +104,8 @@ static int XCLFrame_init(void)
 
 	clXplr=(*devXploration)();
 	(*devInit)(&clXplr);
+
+
 
 	dlclose(dlhandle);
 

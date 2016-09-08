@@ -4,7 +4,8 @@
 
 //NOTICE: this lib was separated to break apart OpenCL and MPI issues.
 //Device management libs//
-int g_numDevs; //global variable declared in dvMgmt.h
+
+//int g_numDevs; //global variable declared in dvMgmt.h
 
 
 

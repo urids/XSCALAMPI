@@ -8,8 +8,10 @@ staticSched_LTLIBRARIES = libstaticSched.la
 
 # Sources for libstaticSched
 libstaticSched_la_SOURCES = wrapperFactory.cpp \
-							ISH.cpp \
-							./Utilities/topoSort.cpp
+							./ISH/ISH.cpp \
+							./HEFT/HEFT.cpp \
+							./Utilities/topoSort.cpp \
+							./Utilities/utilities.cpp
 
 # Linker options libTestProgram
 libstaticSched_la_LDFLAGS =-module -avoid-version -lOpenCL
