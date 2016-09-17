@@ -97,7 +97,7 @@ int selectScheduler(int configInputs, char* heuristicModel, char* benchStoragePa
 
 		int numDevs=_OMPI_CollectDevicesInfo(ALL_DEVICES,MPI_COMM_WORLD);
 
-		int* adjMtx= calloc(numTasks*numTasks,sizeof(int));
+		int* adjMtx= malloc(numTasks*numTasks*sizeof(int));
 		read_Adj(adjMtx, numTasks);
 
 		float* W= malloc(numTasks*numDevs*sizeof(float));

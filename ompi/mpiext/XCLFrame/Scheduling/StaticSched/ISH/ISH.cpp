@@ -7,6 +7,7 @@
 
 #include "ISH.h"
 using namespace std;
+
 ISH::ISH() {
 	// TODO Auto-generated constructor stub
 
@@ -134,6 +135,23 @@ int ISH::matchMake(int NumTsk, int NumDvs,float * W, int * AdjMtx,const int* SR,
 	//2.- Make a readyList
 	//2.1 Sort bLevel in descending order.
 	sort(bLevel.begin(),bLevel.end(),pairCompareDesc);
+
+
+/*	cout<<"\n-------------\n" <<endl;
+	cout<<"BLEVELs:" <<endl;
+	for_each(bLevel.begin() ,bLevel.end() ,[](pair<int, float> bl){
+		cout<<bl.first<<" "<<bl.second<<"\n";
+	});
+	cout<<endl;
+
+	for(int i=0;i<NumTsk;i++){
+		for(int j=0;j<NumDvs;j++){
+			cout<<" "<<W[NumDvs*i+j];
+		}
+		cout<<"\n";
+	}*/
+
+
 	//2.2 Initially the readyList contains only entry points
 	vector<pair<int, float>> readyList; // <taskId, bLevelVAL>
 	readyList.push_back(bLevel.front());
@@ -149,12 +167,15 @@ int ISH::matchMake(int NumTsk, int NumDvs,float * W, int * AdjMtx,const int* SR,
 
 	//3.- Repeat
 	do{
-		//cout<<"\n-------------\n" <<endl;
-		//cout<<"READYLIST:" <<endl;
-		//for_each(readyList.begin() ,readyList.end() ,[](pair<int, float> rl){
-			//cout<<" "<<rl.first;
-		//});
-		//cout<<endl;
+
+/*
+		cout<<"\n-------------\n" <<endl;
+		cout<<"READYLIST:" <<endl;
+		for_each(readyList.begin() ,readyList.end() ,[](pair<int, float> rl){
+			cout<<" "<<rl.first;
+		});
+		cout<<endl;
+*/
 
 		newScheduled.clear();
 		//STEP a) create Q prime.
@@ -226,7 +247,7 @@ int ISH::matchMake(int NumTsk, int NumDvs,float * W, int * AdjMtx,const int* SR,
 				                                           (pair <float, float> Ws){
 
 					//EST of Tm on the Any other Device.
-					/*--float max_STTm=0;
+/***					float max_STTm=0;
 					for_each(Qp.begin(),Qp.end(),[&Tm,&max_STTm,&AdjList_T, &max_AST_Tm,&avail]
 					                              (int dev){
 
@@ -239,23 +260,24 @@ int ISH::matchMake(int NumTsk, int NumDvs,float * W, int * AdjMtx,const int* SR,
 					if(est_Tm>=Ws.first &&					  //|_
 							est_Tm+W[NumDvs*Tm]<=Ws.second && //|  if fits.
 							est_Tm <= max_STTm){ // and if starts earlier than in any other device
-						--*/
+*/
 
 					float min_STTmIOD=est_Tm; //start with the current device
-					for_each(Qp.begin(),Qp.end(),[&Tm,&max_STTm,&AdjList_T, &max_AST_Tm,&avail]
+					for_each(Qp.begin(),Qp.end(),[&Tm,&min_STTmIOD,&AdjList_T, &max_AST_Tm,&avail]
 					                              (int dev){
 
 						float estITD=(avail[dev]>max_AST_Tm)?avail[dev]:max_AST_Tm;
-						min_STTmIOD=(estITD<min_STTmIOD)?estITD:min_STTmIOD; //
+						min_STTmIOD=(estITD<min_STTmIOD)?estITD:min_STTmIOD;
 
 					});
 
 
 					if(est_Tm>=Ws.first &&					  //|_
-							est_Tm+W[NumDvs*Tm]<=Ws.second && //|  if fits.
-							est_Tm <= min_STTmIOD){
+					   est_Tm+W[NumDvs*Tm]<=Ws.second && //|  if fits.
+					   est_Tm <= min_STTmIOD){
 
-						//--cout<<"Task" << Tm << "fits in slot"<<endl;
+
+						cout<<"Task" << Tm << "fits in slot after "<<Tn <<endl;
 						taskMap[Tm]=bestDevice;
 						newScheduled.push_back(Tm);
 						//Delete Tm from the readyList

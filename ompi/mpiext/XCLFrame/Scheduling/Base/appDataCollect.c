@@ -68,7 +68,7 @@ int build_Wij(float *W, int numTasks, int numDevs, int configInputs,char* storag
 		}*/
 
 
-		float * UV=malloc(numDevs*sizeof(float));
+		float * UV=malloc(numTasks*sizeof(float));
 		unitVector(numTasks,UV);
 
 		//Wij=UnityVector x Accels[0].
@@ -92,7 +92,7 @@ int build_Wij(float *W, int numTasks, int numDevs, int configInputs,char* storag
 		}
 		else{ // no autotune but PWF.txt exists.
 
-			float PW=malloc(numTasks*sizeof(float));
+			float* PW=malloc(numTasks*sizeof(float));
 
 			for(i=0;i<numTasks;i++){
 				fscanf(PW_Fh, "%f", &PW[i]);	//from text file.
@@ -102,7 +102,7 @@ int build_Wij(float *W, int numTasks, int numDevs, int configInputs,char* storag
 
 			}
 			else{
-				float PA=malloc(numDevs*sizeof(float));
+				float* PA=malloc(numDevs*sizeof(float));
 				for(i=0;i<numDevs;i++){
 					fscanf(Accels_Fh, "%f", &PA[i]);	//from accels text file.
 				}

@@ -39,7 +39,7 @@ int _OMPI_CollectDevicesInfo(int devSelection, MPI_Comm comm){
 	for(i=0;i<myRank;i++){
 		offset+=DPRKS[i];
 	}
-printf("offset: %d - DPRKS %d \n",offset, DPRKS[myRank]);
+
 	for(i=offset;i<offset+DPRKS[myRank];){
 		for(l=0;l<clXplr.numCPUS;l++,i++){
 			g_PUList[i].mappedDevice=cpu[l];

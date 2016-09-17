@@ -44,7 +44,7 @@ OMPI_DECLSPEC int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_ta
 OMPI_DECLSPEC int OMPI_XclReadTray(int taskIdx, int trayIdx, int bufferSize, void * hostBuffer, MPI_Comm comm);
 OMPI_DECLSPEC int OMPI_XclWriteTray(int taskIdx, int trayIdx, int bufferSize, void * hostBuffer, MPI_Comm comm);
 
-//OMPI_DECLSPEC int OMPI_XclNewTask(int Rank, int Device, MPI_Comm comm);
+//OMPI_DECLSPEC int OMPI_XclInitNewTask(task_t** task, int Rank, int DeviceType, int DeviceID, MPI_Comm comm);
 //TODO: implement Free routines.
 OMPI_DECLSPEC int OMPI_XclMallocTray(int g_taskIdx, int trayIdx, int bufferSize, MPI_Comm comm);
 OMPI_DECLSPEC int OMPI_XclFreeTray(int g_taskIdx, int trayIdx, MPI_Comm comm);
