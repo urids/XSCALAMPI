@@ -42,7 +42,7 @@ int NON_DELEGATED OMPI_CollectDevicesInfo(int devSelection, MPI_Comm comm){
 	return _OMPI_CollectDevicesInfo(devSelection, comm);
 }
 
-int NON_DELEGATED XSCALA_InitTasks(int argc, char ** argv, task_t const** myTasks,int numTasks){
+int NON_DELEGATED XSCALA_Initialize(int argc, char ** argv){
 
 
 	char heuristicModel[1024];
@@ -67,7 +67,7 @@ int NON_DELEGATED XSCALA_InitTasks(int argc, char ** argv, task_t const** myTask
 		if (strcmp(selectedDevices, "ALL_DEVICES") == 0) devSelection=ALL_DEVICES;
 	}
 
-	selectScheduler(configInputs,heuristicModel,benchStoragePath, numTasks);
+	selectScheduler(configInputs,heuristicModel,benchStoragePath);
 
 	return 0;
 
@@ -552,6 +552,11 @@ int NON_DELEGATED OMPI_XclWaitFor(int numTasks, int* taskIds, MPI_Comm comm){
 
 int OMPI_XclWaitAllTasks(MPI_Comm comm){
 	return _OMPI_XclWaitAllTasks(comm);
+}
+
+int XclCreateNewTasks(task_t* task, int numTasks, int INVOKER, int DeviceType, int DeviceID, MPI_Comm comm){
+	dynDistribution(task,numTasks,INVOKER,DeviceType,DeviceID,comm);
+	return 0;
 }
 
 

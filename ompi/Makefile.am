@@ -89,7 +89,9 @@ SUBDIRS = \
         mpiext/XCLFrame/Scheduling/Benchmark \
         mpiext/XCLFrame/Scheduling/ManualSched \
         mpiext/XCLFrame/Scheduling/StaticSched \
-  	 	mpiext/XCLFrame/multiDeviceMgmt \
+        mpiext/XCLFrame/Scheduling/DynamicSched \
+        mpiext/XCLFrame/Scheduling/DynamicSched/DefaultDynamic \
+        mpiext/XCLFrame/multiDeviceMgmt \
         mpiext/XCLFrame/TaskManager \
         mpiext/XCLFrame/TaskManager/KernelMgmt \
         mpiext/XCLFrame/TaskManager/SynchMgmt \
@@ -194,7 +196,9 @@ libmpi_la_LDFLAGS = \
         -Wl,-rpath,$(libdir)/XCLFrame/Scheduling \
         -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/Benchmark \
         -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/ManualSched \
-        -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/StaticSched
+        -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/StaticSched \
+        -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/DynamicSched \
+        -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/DynamicSched/DefaultDynamic
 
 # included subdirectory Makefile.am's and appended-to variables
 headers =

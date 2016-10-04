@@ -69,7 +69,7 @@ c_Interface.lo: c_Interface.c /usr/include/stdc-predef.h c_Interface.h \
  ../Scheduling/Base/../../multiDeviceMgmt/deviceMgmt/localDevices.h \
  ../Scheduling/Base/../../multiDeviceMgmt/deviceMgmt/Device.h \
  ../Scheduling/Base/../../multiDeviceMgmt/deviceMgmt/deviceExploration.h \
- ../Scheduling/Base/../StaticSched/wrapperFactory.h \
+ ../Scheduling/Base/schedWrapper.h \
  ../multiDeviceMgmt/deviceMgmt/localDevices.h
 
 /usr/include/stdc-predef.h:
@@ -256,6 +256,6 @@ c_Interface.h:
 
 ../Scheduling/Base/../../multiDeviceMgmt/deviceMgmt/deviceExploration.h:
 
-../Scheduling/Base/../StaticSched/wrapperFactory.h:
+../Scheduling/Base/schedWrapper.h:
 
 ../multiDeviceMgmt/deviceMgmt/localDevices.h:

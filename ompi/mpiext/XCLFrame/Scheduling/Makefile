@@ -1164,7 +1164,7 @@ OPAL_ASSEMBLY_ARCH = AMD64
 OPAL_ASSEMBLY_BUILTIN = BUILTIN_NO
 OPAL_ASSEMBLY_FORMAT = default-.text-.globl-:--.L-@-1-0-1-1-1
 OPAL_CC_ABSOLUTE = /usr/bin/gcc
-OPAL_CONFIGURE_DATE = Sat Jul 30 14:25:15 CDT 2016
+OPAL_CONFIGURE_DATE = Tue Sep 27 11:32:26 CDT 2016
 OPAL_CONFIGURE_HOST = myHost
 OPAL_CONFIGURE_USER = uriel
 OPAL_CXX_ABSOLUTE = /usr/bin/g++
@@ -1495,7 +1495,9 @@ libscheduling_la_SOURCES = ./Base/scheduling.c \
 						  ./Base/appDataCollect.c \
 						  ./Base/sysDataCollect.c
 
-libscheduling_la_LDFLAGS = -avoid-version -lOpenCL -lm -ldl		  				  
+libscheduling_la_LDFLAGS = -avoid-version -lOpenCL -lm -ldl	\
+						-Wl,-rpath,$(libdir)/XCLFrame/Scheduling/DynamicSched/DefaultDynamic	  				  
+
 all: all-am
 
 .SUFFIXES:

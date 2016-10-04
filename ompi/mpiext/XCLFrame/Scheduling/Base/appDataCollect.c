@@ -118,7 +118,7 @@ int build_Wij(float *W, int numTasks, int numDevs, int configInputs,char* storag
 }
 
 
-int read_Adj(int * adjMtx, int numTasks){
+int read_Adj(int * adjMtx, int * numTasks){
 
 	int i,j;
 	char cwd[1024];
@@ -135,12 +135,27 @@ int read_Adj(int * adjMtx, int numTasks){
 		exit(-1);
 	}
 
-	for(i=0;i<numTasks;i++){
-		for(j=0;j<numTasks;j++){
-			fscanf(adjFile_Fh,"%d",&adjMtx[numTasks*i+j]);
+	if(adjMtx==NULL){
+		* numTasks=0;
+		size_t lineSz;
+		getline(NULL,&lineSz,adjFile_Fh);
+		char* line=malloc(lineSz*sizeof(char));
+		getline(&line,&lineSz,adjFile_Fh);
+
+		char* token = strtok(line, " ");
+		while (token) {
+		    (*numTasks)++;
+		    token = strtok(NULL, " ");
+		}
+
+	}
+	else{
+		for(i=0;i<(*numTasks);i++){
+			for(j=0;j<(*numTasks);j++){
+				fscanf(adjFile_Fh,"%d",&adjMtx[(*numTasks)*i+j]);
+			}
 		}
 	}
-
 	fclose(adjFile_Fh);
 
 	return 0;

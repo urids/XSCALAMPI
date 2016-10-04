@@ -1,5 +1,5 @@
 wrapperFactory.lo: wrapperFactory.cpp /usr/include/stdc-predef.h \
- wrapperFactory.h IScheduler.hpp /usr/include/c++/4.8/exception \
+ ../Base/schedWrapper.h IScheduler.hpp /usr/include/c++/4.8/exception \
  /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/4.8/bits/os_defines.h \
  /usr/include/features.h /usr/include/x86_64-linux-gnu/sys/cdefs.h \
@@ -165,7 +165,7 @@ wrapperFactory.lo: wrapperFactory.cpp /usr/include/stdc-predef.h \
 
 /usr/include/stdc-predef.h:
 
-wrapperFactory.h:
+../Base/schedWrapper.h:
 
 IScheduler.hpp:
 

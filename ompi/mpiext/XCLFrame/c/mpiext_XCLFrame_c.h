@@ -25,7 +25,7 @@ OMPI_DECLSPEC int OMPI_commit_EntityType(int blockcount, int* blocklen, MPI_Aint
 OMPI_DECLSPEC int OMPI_CollectDevicesInfo(int devSelection, MPI_Comm comm); //this function returns global number of devices in the system
 //OMPI_DECLSPEC int OMPI_CollectTaskInfo(int devSelection, MPI_Comm comm); //first parameter for this represents "ALL" or "GPUs" this function returns
 
-OMPI_DECLSPEC int XSCALA_InitTasks(int argc, char ** argv, task_t const* * myTasks,int numTasks);
+OMPI_DECLSPEC int XSCALA_Initialize(int argc, char ** argv);
 OMPI_DECLSPEC int XSCALA_getNumTasks(int* numTasks, MPI_Comm comm);
 OMPI_DECLSPEC int  XSCALA_Finalize();
 
@@ -43,8 +43,8 @@ OMPI_DECLSPEC int OMPI_XclRecv(int trayIdx, int count, MPI_Datatype MPIentityTyp
 OMPI_DECLSPEC int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_trayIdx, int traySize, int tgID);
 OMPI_DECLSPEC int OMPI_XclReadTray(int taskIdx, int trayIdx, int bufferSize, void * hostBuffer, MPI_Comm comm);
 OMPI_DECLSPEC int OMPI_XclWriteTray(int taskIdx, int trayIdx, int bufferSize, void * hostBuffer, MPI_Comm comm);
-
-//OMPI_DECLSPEC int OMPI_XclInitNewTask(task_t** task, int Rank, int DeviceType, int DeviceID, MPI_Comm comm);
+//, task_t const* * myTasks,int numTasks
+OMPI_DECLSPEC int XclCreateNewTasks(task_t* task, int numTasks, int Rank, int DeviceType, int DeviceID, MPI_Comm comm);
 //TODO: implement Free routines.
 OMPI_DECLSPEC int OMPI_XclMallocTray(int g_taskIdx, int trayIdx, int bufferSize, MPI_Comm comm);
 OMPI_DECLSPEC int OMPI_XclFreeTray(int g_taskIdx, int trayIdx, MPI_Comm comm);

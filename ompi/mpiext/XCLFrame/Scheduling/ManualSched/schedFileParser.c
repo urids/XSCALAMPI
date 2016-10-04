@@ -157,7 +157,7 @@ int readTaskBinding(device_Task_Info* taskDevMap) {
 
 //--------------------------------------------------------------------
 //TODO: this parser must be done using the LR Grammar parsing.
-
+//returns g_numTasks
 int readAndParse() {
 
 	enum devDesc {

@@ -1142,7 +1142,7 @@ OPAL_ASSEMBLY_ARCH = AMD64
 OPAL_ASSEMBLY_BUILTIN = BUILTIN_NO
 OPAL_ASSEMBLY_FORMAT = default-.text-.globl-:--.L-@-1-0-1-1-1
 OPAL_CC_ABSOLUTE = /usr/bin/gcc
-OPAL_CONFIGURE_DATE = Sat Jul 30 14:25:15 CDT 2016
+OPAL_CONFIGURE_DATE = Tue Sep 27 11:32:26 CDT 2016
 OPAL_CONFIGURE_HOST = myHost
 OPAL_CONFIGURE_USER = uriel
 OPAL_CXX_ABSOLUTE = /usr/bin/g++
@@ -1474,7 +1474,9 @@ SUBDIRS = DataManager \
 		Scheduling \
 		Scheduling/Benchmark \
 		Scheduling/ManualSched \
-		Scheduling/StaticSched
+		Scheduling/StaticSched \
+		Scheduling/DynamicSched \
+		Scheduling/DynamicSched/DefaultDynamic
 
 EXTRA_DIST = README.txt
 all: all-recursive

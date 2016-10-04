@@ -55,6 +55,8 @@ libmpiext_XCLFrame_c_la_LDFLAGS = -module -avoid-version -ldl -lOpenCL -lm \
     -Wl,-rpath,$(libdir)/XCLFrame/Scheduling \
     -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/ManualSched \
     -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/StaticSched \
+    -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/DynamicSched \
+    -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/DynamicSched/DefaultDynamic \
     -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/Benchmark \
     -Wl,-rpath,$(libdir)/XCLFrame/multiDeviceMgmt   	
 #	 \

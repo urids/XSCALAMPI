@@ -115,6 +115,7 @@ static int XCLFrame_init(void)
 static int XCLFrame_fini(void)
 {
 	if(taskThreadsEnabled){
+		printf("fini: l_numTsks: %d",l_numTasks);
 		finishThreads(l_numTasks);
 	}
 

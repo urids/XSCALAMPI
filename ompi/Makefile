@@ -1735,7 +1735,7 @@ OPAL_ASSEMBLY_ARCH = AMD64
 OPAL_ASSEMBLY_BUILTIN = BUILTIN_NO
 OPAL_ASSEMBLY_FORMAT = default-.text-.globl-:--.L-@-1-0-1-1-1
 OPAL_CC_ABSOLUTE = /usr/bin/gcc
-OPAL_CONFIGURE_DATE = Sat Jul 30 14:25:15 CDT 2016
+OPAL_CONFIGURE_DATE = Tue Sep 27 11:32:26 CDT 2016
 OPAL_CONFIGURE_HOST = myHost
 OPAL_CONFIGURE_USER = uriel
 OPAL_CXX_ABSOLUTE = /usr/bin/g++
@@ -2104,6 +2104,8 @@ SUBDIRS = include datatype debuggers etc mpi/c mpi/tool \
 	mpiext/XCLFrame/Scheduling/Benchmark \
 	mpiext/XCLFrame/Scheduling/ManualSched \
 	mpiext/XCLFrame/Scheduling/StaticSched \
+	mpiext/XCLFrame/Scheduling/DynamicSched \
+	mpiext/XCLFrame/Scheduling/DynamicSched/DefaultDynamic \
 	mpiext/XCLFrame/multiDeviceMgmt mpiext/XCLFrame/TaskManager \
 	mpiext/XCLFrame/TaskManager/KernelMgmt \
 	mpiext/XCLFrame/TaskManager/SynchMgmt \
@@ -2182,7 +2184,9 @@ libmpi_la_LDFLAGS = \
         -Wl,-rpath,$(libdir)/XCLFrame/Scheduling \
         -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/Benchmark \
         -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/ManualSched \
-        -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/StaticSched
+        -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/StaticSched \
+        -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/DynamicSched \
+        -Wl,-rpath,$(libdir)/XCLFrame/Scheduling/DynamicSched/DefaultDynamic
 
 
 # included subdirectory Makefile.am's and appended-to variables

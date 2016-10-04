@@ -74,6 +74,7 @@ int addSubRoutine(int thdID, void*(*fp)(void*) ,void* Args){
 void insertThreads(int numThds, int reset){
 	static int currNumThds=0;
 	if(reset) currNumThds=0;
+	int i,err;
 
 	counters=calloc(numThds,sizeof(int));
 	if(currNumThds==0){

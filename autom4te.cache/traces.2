@@ -21173,6 +21173,8 @@ m4trace:ompi/mpiext/XCLFrame/configure.m4:11: -1- AC_DEFUN([OMPI_MPIEXT_XCLFrame
     AC_CONFIG_FILES([ompi/mpiext/XCLFrame/Scheduling/Benchmark/Makefile])
     AC_CONFIG_FILES([ompi/mpiext/XCLFrame/Scheduling/ManualSched/Makefile])
     AC_CONFIG_FILES([ompi/mpiext/XCLFrame/Scheduling/StaticSched/Makefile])
+    AC_CONFIG_FILES([ompi/mpiext/XCLFrame/Scheduling/DynamicSched/Makefile])
+    AC_CONFIG_FILES([ompi/mpiext/XCLFrame/Scheduling/DynamicSched/DefaultDynamic/Makefile])
     AC_CONFIG_FILES([ompi/mpiext/XCLFrame/TaskManager/Makefile])
     AC_CONFIG_FILES([ompi/mpiext/XCLFrame/TaskManager/KernelMgmt/Makefile])
     AC_CONFIG_FILES([ompi/mpiext/XCLFrame/TaskManager/SynchMgmt/Makefile])
@@ -21184,7 +21186,7 @@ m4trace:ompi/mpiext/XCLFrame/configure.m4:11: -1- AC_DEFUN([OMPI_MPIEXT_XCLFrame
     # This example can always build, so we just execute $1.
     $1
 ])
-m4trace:ompi/mpiext/XCLFrame/configure.m4:33: -1- AC_DEFUN([OMPI_MPIEXT_XCLFrame_NEED_INIT], [1])
+m4trace:ompi/mpiext/XCLFrame/configure.m4:35: -1- AC_DEFUN([OMPI_MPIEXT_XCLFrame_NEED_INIT], [1])
 m4trace:config/autogen_found_items.m4:450: -1- m4_include([ompi/mpiext/cr/configure.m4])
 m4trace:ompi/mpiext/cr/configure.m4:15: -1- AC_DEFUN([OMPI_MPIEXT_cr_CONFIG], [
     AC_CONFIG_FILES([ompi/mpiext/cr/Makefile])

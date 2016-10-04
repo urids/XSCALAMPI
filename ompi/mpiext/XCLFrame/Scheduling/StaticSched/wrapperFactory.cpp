@@ -1,5 +1,5 @@
 
-#include "wrapperFactory.h"
+#include "../Base/schedWrapper.h"
 #include "IScheduler.hpp"
 #include <exception>
 #include <stdio.h>
@@ -33,8 +33,8 @@ void handler(int sig) {
   backtrace_symbols_fd(array, size, STDERR_FILENO);
   exit(1);
 }
-
-Scheduler* newScheduler(char* heuristicModel, char* benchStoragePath){ //factory.
+//Factory
+Scheduler* newScheduler(char* heuristicModel, char* benchStoragePath){
 
 	if (strcmp(heuristicModel,"ISH")==0){
 		Scheduler* myScheduler;

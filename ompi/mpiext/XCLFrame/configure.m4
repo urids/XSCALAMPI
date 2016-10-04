@@ -17,6 +17,8 @@ AC_DEFUN([OMPI_MPIEXT_XCLFrame_CONFIG],[
     AC_CONFIG_FILES([ompi/mpiext/XCLFrame/Scheduling/Benchmark/Makefile])
     AC_CONFIG_FILES([ompi/mpiext/XCLFrame/Scheduling/ManualSched/Makefile])
     AC_CONFIG_FILES([ompi/mpiext/XCLFrame/Scheduling/StaticSched/Makefile])
+    AC_CONFIG_FILES([ompi/mpiext/XCLFrame/Scheduling/DynamicSched/Makefile])
+    AC_CONFIG_FILES([ompi/mpiext/XCLFrame/Scheduling/DynamicSched/DefaultDynamic/Makefile])
     AC_CONFIG_FILES([ompi/mpiext/XCLFrame/TaskManager/Makefile])
     AC_CONFIG_FILES([ompi/mpiext/XCLFrame/TaskManager/KernelMgmt/Makefile])
     AC_CONFIG_FILES([ompi/mpiext/XCLFrame/TaskManager/SynchMgmt/Makefile])

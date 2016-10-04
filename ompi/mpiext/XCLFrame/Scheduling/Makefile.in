@@ -1495,7 +1495,9 @@ libscheduling_la_SOURCES = ./Base/scheduling.c \
 						  ./Base/appDataCollect.c \
 						  ./Base/sysDataCollect.c
 
-libscheduling_la_LDFLAGS = -avoid-version -lOpenCL -lm -ldl		  				  
+libscheduling_la_LDFLAGS = -avoid-version -lOpenCL -lm -ldl	\
+						-Wl,-rpath,$(libdir)/XCLFrame/Scheduling/DynamicSched/DefaultDynamic	  				  
+
 all: all-am
 
 .SUFFIXES:

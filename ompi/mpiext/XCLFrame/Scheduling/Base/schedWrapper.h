@@ -1,20 +1,12 @@
 /*
- * wrapperFactory.h
+ * schedWrapper.h
  *
- *  Created on: Jul 23, 2016
+ *  Created on: Sep 23, 2016
  *      Author: uriel
  */
 
-#ifndef WRAPPERFACTORY_H_
-#define WRAPPERFACTORY_H_
-
-////////////////////////
-//		Scheduling/Base.c
-//		This wrapeer binds
-// 		WrapperFactory.cpp
-////////////////////////
-
-
+#ifndef SCHEDWRAPPER_H_
+#define SCHEDWRAPPER_H_
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -28,5 +20,4 @@ int matchMake(Scheduler* myScheduler, int NumTsk, int NumDvs,float * W, int * Ad
 #endif /* END of __cplusplus*/
 
 
-
-#endif /* WRAPPERFACTORY_H_ */
+#endif /* SCHEDWRAPPER_H_ */

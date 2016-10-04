@@ -23,6 +23,8 @@ SUBDIRS = DataManager \
 		Scheduling \
 		Scheduling/Benchmark \
 		Scheduling/ManualSched \
-		Scheduling/StaticSched
+		Scheduling/StaticSched \
+		Scheduling/DynamicSched \
+		Scheduling/DynamicSched/DefaultDynamic
 
 EXTRA_DIST = README.txt
