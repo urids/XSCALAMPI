@@ -80,6 +80,7 @@ struct Args_ReadTray_st{
 };
 
 struct Args_WriteTray_st{
+	int g_taskIdx;
 	int l_taskIdx;
 	int trayIdx;
 	int bufferSize;
@@ -87,6 +88,7 @@ struct Args_WriteTray_st{
 };
 
 struct Args_MallocTray_st{
+	int g_taskIdx;
 	int l_taskIdx;
 	int trayIdx;
 	int bufferSize;
@@ -121,6 +123,7 @@ struct Args_matchedProducer_st{
 	int tgID;
 	sem_t* FULL;
 	int l_taskIdx;
+	int g_dstTaskID;
 	int trayId;
 	int dataSize;
 	ticket_t* ticket;

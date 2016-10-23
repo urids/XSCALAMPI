@@ -4,6 +4,80 @@
 int * myAssignedTasks; // Declared in scheduling.h
 int * RKS; // Declared in scheduling.h
 
+int fillGlobalTaskListSingle(int currNumTasks,MPI_Comm comm){
+	//1.- Rebuild the g_taskList table.
+	int i,j;
+	int myRank,numRanks;
+	MPI_Comm_rank(comm, &myRank);
+	MPI_Comm_size(comm, &numRanks);
+
+	g_taskList=(taskInfo*)realloc(g_taskList,currNumTasks*sizeof(taskInfo)); //TODO: find the space for deallocation.
+
+	MPI_Allgather(&l_numTasks,1,MPI_INT,RKS,1,MPI_INT,comm);
+
+	for(i=0;i<currNumTasks;i++){
+		g_taskList[i].g_taskIdx=taskDevList[i].g_taskId;
+		g_taskList[i].r_rank=taskDevList[i].rank;
+	}
+
+	//This array serves to deal with non consecutive task declarations.
+	myAssignedTasks=(int*)realloc(myAssignedTasks,l_numTasks*sizeof(int)); //stores the g_IDs of my AssignedTasks
+
+	//Each process must re-fill myAssignedTasks  with the global IDS assigned
+	for(i=0,j=0;i<currNumTasks;i++){
+		if(taskDevList[i].rank==myRank){
+			myAssignedTasks[j]=taskDevList[i].g_taskId;
+			j++;
+		}
+	}
+
+	printf("RANK: %d local num tasks: %d  \n",myRank, l_numTasks);
+	 		for(i=0;i<l_numTasks;i++){ //Print the global task list
+	 			printf("%d  \n",myAssignedTasks[i]);
+	 		}
+
+
+	int* g_Assignments =(int*)malloc(currNumTasks*sizeof(int));
+	int displs[numRanks];
+	displs[0]=0;
+	for(i=1;i<numRanks;i++){
+		displs[i]=displs[i-1]+RKS[i-1];
+	}
+
+	printf("displs \n");
+	for(i=0;i<numRanks;i++){
+		printf("displ[%d]=%d ",i,displs[i]);
+	}
+	printf("\n");
+
+	//Then the processes interchange the myAssignedTasks.
+	MPI_Allgatherv(myAssignedTasks,l_numTasks,MPI_INT,g_Assignments,RKS,displs,MPI_INT,comm);
+	//
+	/*printf("globalAssignments array: ");
+	 		for(i=0;i<g_numTasks;i++){
+	 			printf(" %d |",g_Assignments[i]);
+	 		}
+	 		printf("\n");*/
+
+	//Finally each process fill localID in the globalTask_List
+	// based on the amount of tasks allocated on each rank
+	int k=0;
+	for(i=0;i<numRanks;i++){ //for each rank
+		for(j=0;j<RKS[i];j++,k++){ //for each task assigned to the rank;  j is the counter of the next local assignment, and k goes through the global concatenation
+			g_taskList[g_Assignments[k]].l_taskIdx=j; // g_Assignments[k] is an array concatenating local
+			// array assignments, i.e the j-th entry stores
+			// the global ID of a task allocated in some rank.
+		}
+	}
+
+	printf("g_taskList %d\n",g_numTasks);
+	for(i=0;i<g_numTasks;i++){ //Print the global task list
+				printf("%d -- %d -- %d \n",g_taskList[i].g_taskIdx, g_taskList[i].l_taskIdx, g_taskList[i].r_rank);
+			}
+
+	return 0;
+}
+
 int reallocGlobalTaskList(MPI_Comm comm){
 	//1.- Rebuild the g_taskList table.
 	int i,j;
@@ -23,7 +97,7 @@ int reallocGlobalTaskList(MPI_Comm comm){
 	//This array serves to deal with non consecutive task declarations.
 	myAssignedTasks=(int*)realloc(myAssignedTasks,l_numTasks*sizeof(int)); //stores the g_IDs of my AssignedTasks
 
-	//first each process fills myAssignedTasks with the global IDS assigned
+	//Each process must re-fill myAssignedTasks  with the global IDS assigned
 	for(i=0,j=0;i<g_numTasks;i++){
 		if(taskDevList[i].rank==myRank){
 			myAssignedTasks[j]=taskDevList[i].g_taskId;
@@ -149,6 +223,46 @@ int fillGlobalTaskList(MPI_Comm comm){ //this function creates a local assignmen
 	return 0;
 }
 
+int fill_l_taskListRow(int g_taskID,MPI_Comm comm){
+	int i;
+	int myRank,numRanks;
+	MPI_Comm_rank(comm, &myRank);
+	MPI_Comm_size(comm,&numRanks);
+
+	i=g_taskID; //this must be the target row to fill
+		int TDL_rank=taskDevList[i].rank;
+		if(myRank==TDL_rank){
+			int j=l_numTasks; // because starts form 0;
+
+			l_taskList = (XCLtask*)realloc(l_taskList, (l_numTasks+1)*sizeof(XCLtask));
+			l_taskList[j].device=(Device*) malloc(1*sizeof(Device));
+			l_taskList[j].device = taskDevList[i].mappedDevice;
+			l_taskList[j].numTrays = 0;
+
+			//first we query how many racks has this device.
+			int rackIdx = l_taskList[j].device[0].numRacks;
+			if (rackIdx == 0) {
+				l_taskList[j].device[0].memHandler = malloc(1 * sizeof(cl_mem*));
+				l_taskList[j].Rack = rackIdx; //rack assignment
+				l_taskList[j].device[0].numRacks=l_taskList[j].device[0].numRacks+1;
+			} else {
+				cl_mem** tmpRack;
+				tmpRack = (cl_mem**) realloc(l_taskList[j].device[0].memHandler,(rackIdx + 1) * sizeof(cl_mem*));
+				if (tmpRack != NULL) {
+					l_taskList[j].Rack = rackIdx;
+					l_taskList[j].device[0].memHandler = tmpRack;
+					l_taskList[j].device[0].numRacks=l_taskList[j].device[0].numRacks+1;
+				} else {
+					printf("ERROR AT: Reallocating racks. %d , %d",	__FILE__, __LINE__);
+				}
+			}
+
+			l_numTasks++;
+		}//ENDif myRank==TskDevList_rank
+
+	return 0;
+}
+
 int reallocLocalTaskList(int currNumTasks,MPI_Comm comm){
 	int i;
 	int myRank,numRanks;
@@ -196,7 +310,8 @@ int fillLocalTaskList(MPI_Comm comm){
 	MPI_Comm_rank(comm, &myRank);
 	MPI_Comm_size(comm,&numRanks);
 
-	l_numTasks=0; // this initialization is very important to reset the local num tasks after the benchmark.
+	l_numTasks=0; //In this initialization is very important to reset
+				  //the local num tasks after the executed any benchmark.
 	//TODO: maybe must be moved just after the exec of the benchmark.
 
 	//int l_numTasks=0; !!!!!!!!!!!!!!! YOU MUST NEVER DEFINE GLOBAL VARS WITHIN FUNCTION BODY because it BECOMES LOCAL COPY.

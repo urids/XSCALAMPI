@@ -85,6 +85,7 @@ void* signalSubroutine(void*Args);
 
 struct Args_SetProcedure_st{
 	//MPI_Comm comm;
+	int g_selTask;
 	int l_selTask;
 	char* srcPath;
 	char* kernelName;
@@ -92,6 +93,7 @@ struct Args_SetProcedure_st{
 
 struct Args_ExecTask_st{
 	MPI_Comm comm;
+	int g_selTask;
 	int l_selTask;
 	int workDim;
 	size_t* globalThreads;

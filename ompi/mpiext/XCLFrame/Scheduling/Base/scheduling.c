@@ -15,7 +15,7 @@ int selectScheduler(int configInputs, char* heuristicModel, char* benchStoragePa
 	void *schedulerLibhandle;
 	int (*readAndParse)();
 	char *error;
-	int i,j; //indx variables.
+	int i,j; //Indx variables.
 
 	switch (schedulingMode) {
 	case TASKFILE:
@@ -125,7 +125,87 @@ int selectScheduler(int configInputs, char* heuristicModel, char* benchStoragePa
 	return 0;
 }
 
-int dynDistribution(task_t* task,  int numTasks, int INVOKER, int DeviceType, int DeviceID, MPI_Comm comm){
+
+int runtimeTaskAllocation(int g_taskID, MPI_Comm comm){
+	int i;
+	static int currNumTasks=0;
+	char *error;
+	void *schedulerLibhandle;
+	int myRank;
+
+	static int* mapSchedule;
+	int numDevs;
+
+	MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
+
+	Scheduler* (*newScheduler)(char* heuristicModel, char* benchStoragePath);
+	int (*matchMake)(Scheduler* myScheduler, int NumTsk, int NumDvs,
+			float * W, int * Adj,const int* SR,
+			const int* AS, int* schedule);
+
+	numDevs =_OMPI_CollectDevicesInfo(ALL_DEVICES,MPI_COMM_WORLD); //lost between call and call
+
+	mapSchedule=realloc(mapSchedule,(currNumTasks+1)*sizeof(int));
+	if(myRank == ROOT){
+		//1.- LOAD THE COMPONENT
+		schedulerLibhandle = dlopen("libdynamicSched.so", RTLD_LAZY);
+		if (!schedulerLibhandle) {
+			fputs(dlerror(), stderr);
+			exit(1);
+		}
+
+		//2.- OPEN WRAPPER SYMBOLS
+		newScheduler=dlsym(schedulerLibhandle, "newScheduler"); //new
+		if ((error = dlerror()) != NULL ) {
+			fputs(error, stderr);
+			exit(-1);
+		}
+		matchMake=dlsym(schedulerLibhandle, "matchMake");
+		if ((error = dlerror()) != NULL ) {
+			fputs(error, stderr);
+			exit(-1);
+		}
+
+		//3.- INSTATNCE AN SCHEDULER AND REQUEST TO DO THE MAPPING
+		Scheduler* myScheduler;
+		myScheduler=newScheduler("RR",NULL); //factory request through the wrapper
+
+		//4.-REQUEST THE MAPPING
+		int chkerr=matchMake(myScheduler,1,numDevs,NULL,NULL,NULL,NULL,mapSchedule);
+
+	}
+
+	int newNumTsks=currNumTasks+1;
+	MPI_Bcast(mapSchedule,newNumTsks,MPI_INT,ROOT,comm);
+
+	printf("-----SCHEDULE----\n");
+	for(i=0;i<newNumTsks;i++){
+		printf(" %d -- %d\n",i,mapSchedule[i]);
+	}
+
+
+	//RE-FILL TASK-DEVLIST (TDL)
+	for(i=currNumTasks;i<g_numTasks;i++){
+		taskDevList[i].g_taskId=i;
+		taskDevList[i].rank=g_PUList[mapSchedule[i]].r_rank; //assuming g_PUList is sorted by g_PUIdx.
+		//TODO: this assign must be done iff myRank has the device. (other wise must be NULL)
+		taskDevList[i].mappedDevice= g_PUList[mapSchedule[i]].mappedDevice;
+	}
+
+	int pre_l_numTasks=l_numTasks;
+	printf("sched: l_numTsks: %d \n",l_numTasks);
+	fill_l_taskListRow(g_taskID,MPI_COMM_WORLD);
+	printf("sched new l_numTsks: %d \n",l_numTasks);
+	fillGlobalTaskListSingle(currNumTasks+1,MPI_COMM_WORLD);
+
+	if(pre_l_numTasks < l_numTasks){
+		int moreTasks=l_numTasks-pre_l_numTasks;
+		insertThreads(moreTasks, 1);
+	}
+	return 0;
+}
+
+int rtDistrib_WO_AutoTune(task_t* task,  int numTasks, int INVOKER, int DeviceType, int DeviceID, MPI_Comm comm){
 	int i;
 	static int currNumTasks=0;
 	char *error;
@@ -142,7 +222,7 @@ int dynDistribution(task_t* task,  int numTasks, int INVOKER, int DeviceType, in
 			float * W, int * Adj,const int* SR,
 			const int* AS, int* schedule);
 
-	numDevs =_OMPI_CollectDevicesInfo(ALL_DEVICES,MPI_COMM_WORLD);
+	numDevs =_OMPI_CollectDevicesInfo(ALL_DEVICES,MPI_COMM_WORLD); //lost between call and call
 
 
 	if(!currNumTasks){
@@ -177,15 +257,15 @@ int dynDistribution(task_t* task,  int numTasks, int INVOKER, int DeviceType, in
 
 		}
 
-
+		//broadcast this schedule to let others fill their TDL
 		MPI_Bcast(mapSchedule,numTasks,MPI_INT,INVOKER,comm);
 		for(i=0;i<numTasks;i++){
 			printf(" %d -- %d\n",i,mapSchedule[i]);
 		}
 
-		g_numTasks=numTasks;
-		//FILL TASK-DEVLIST (MAP)
 		taskDevList=malloc(g_numTasks*sizeof(schedConfigInfo_t));
+		g_numTasks=numTasks;
+		//FILL TASK-DEV-LIST (TDL)
 		for(i=0;i<g_numTasks;i++){
 			(task+i)->ID=i;
 			taskDevList[i].g_taskId=i;
@@ -194,14 +274,12 @@ int dynDistribution(task_t* task,  int numTasks, int INVOKER, int DeviceType, in
 			taskDevList[i].mappedDevice= g_PUList[mapSchedule[i]].mappedDevice;
 		}
 
-
 		fillLocalTaskList(MPI_COMM_WORLD);
 		fillGlobalTaskList(MPI_COMM_WORLD);
 		insertThreads(l_numTasks,1); // we must reset the thread counter.
 		taskThreadsEnabled=1;
-	} else{	//not the first call
+	} else{	//this is not the first call
 		mapSchedule=realloc(mapSchedule,(currNumTasks+numTasks)*sizeof(int));
-
 		if(myRank == INVOKER){
 			//1.- LOAD THE COMPONENT
 			schedulerLibhandle = dlopen("libdynamicSched.so", RTLD_LAZY);
@@ -239,9 +317,9 @@ int dynDistribution(task_t* task,  int numTasks, int INVOKER, int DeviceType, in
 			printf(" %d -- %d\n",i,mapSchedule[i]);
 		}
 
+		taskDevList=realloc(taskDevList,g_numTasks*sizeof(schedConfigInfo_t));
 		g_numTasks=currNumTasks+numTasks;
 		//RE-FILL TASK-DEVLIST (MAP)
-		taskDevList=realloc(taskDevList,g_numTasks*sizeof(schedConfigInfo_t));
 		for(i=currNumTasks;i<g_numTasks;i++){
 			(task+i-currNumTasks)->ID=i;
 			taskDevList[i].g_taskId=i;

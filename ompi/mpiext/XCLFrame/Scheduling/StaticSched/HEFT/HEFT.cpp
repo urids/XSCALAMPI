@@ -348,3 +348,10 @@ cout<<endl;
 	return 0;
 }
 
+extern "C"{
+int dummy(int a){
+	return a+2;
+}
+}
+
+

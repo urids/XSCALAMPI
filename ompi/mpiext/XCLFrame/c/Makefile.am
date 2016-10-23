@@ -30,6 +30,7 @@ libmpiext_XCLFrame_c_la_SOURCES = \
         c_Interface.c \
         argsParser.c \
         getStoragePath.c \
+        ./CallsBag/callsBag.c \
         ./ErrorHandling/errorHandling.c 
 		
 		

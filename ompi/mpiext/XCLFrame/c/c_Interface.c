@@ -41,14 +41,12 @@ int NON_DELEGATED OMPI_commit_EntityType(int blockcount, int* blocklen, MPI_Aint
 int NON_DELEGATED OMPI_CollectDevicesInfo(int devSelection, MPI_Comm comm){
 	return _OMPI_CollectDevicesInfo(devSelection, comm);
 }
-
+int configInputs;
 int NON_DELEGATED XSCALA_Initialize(int argc, char ** argv){
-
-
 	char heuristicModel[1024];
 	char selectedDevices[1024];
 	char benchStoragePath[1024];
-	int configInputs=parseArguments(argc,argv, heuristicModel, selectedDevices);
+	configInputs=parseArguments(argc,argv, heuristicModel, selectedDevices);
 
 	// locate benchmarkIntsllation Dir.
 	getStoragePath(benchStoragePath);
@@ -91,22 +89,39 @@ int NON_DELEGATED XSCALA_Finalize(){
 
 
 int OMPI_XclSetProcedure(MPI_Comm comm, int g_selTask, char* srcPath, char* kernelName){
-	//1.- Query if this process thread is involved in the operation
+
 	int myRank;
 	MPI_Comm_rank(comm, &myRank);
-	if (myRank == g_taskList[g_selTask].r_rank) {
-		//2.- Get the appropriate thread from the int thID_Of_(g_selTask)
-		int l_selTask= g_taskList[g_selTask].l_taskIdx;
-		//3.- Wrap the setProcedure_Args_st with the call parameters
+
+	//0.- Dynamic Scheduling?
+	if(configInputs & DYNAMICSCHED){
+
 		struct Args_SetProcedure_st * setProcedure_Args=malloc(sizeof(struct Args_SetProcedure_st));
 
-		setProcedure_Args->l_selTask = l_selTask;
+		setProcedure_Args->l_selTask = -1;
+		setProcedure_Args->g_selTask=g_selTask;
 		setProcedure_Args->srcPath=srcPath;
 		setProcedure_Args->kernelName=kernelName;
-
 		//4.- Delegate the call to the thread.
-		addSubRoutine(l_selTask, _OMPI_XclSetProcedure, (void*)setProcedure_Args);
+		storeSubRoutine(g_selTask, _OMPI_XclSetProcedure, (void*)setProcedure_Args);
+	}
+	else{
 
+		//1.- Query if this process thread is involved in the operation
+		if (myRank == g_taskList[g_selTask].r_rank) {
+			//2.- Get the appropriate thread from the int thID_Of_(g_selTask)
+			int l_selTask= g_taskList[g_selTask].l_taskIdx;
+			//3.- Wrap the setProcedure_Args_st with the call parameters
+			struct Args_SetProcedure_st * setProcedure_Args=malloc(sizeof(struct Args_SetProcedure_st));
+
+			setProcedure_Args->l_selTask = l_selTask;
+			setProcedure_Args->srcPath=srcPath;
+			setProcedure_Args->kernelName=kernelName;
+
+			//4.- Delegate the call to the thread.
+			addSubRoutine(l_selTask, _OMPI_XclSetProcedure, (void*)setProcedure_Args);
+
+		}
 	}
 	return 0; //return if the delegation succeed
 
@@ -117,18 +132,13 @@ int OMPI_XclSetProcedure(MPI_Comm comm, int g_selTask, char* srcPath, char* kern
 int OMPI_XclExecTask(MPI_Comm communicator, int g_selTask, int workDim, size_t * globalThreads,
 		size_t * localThreads, const char * fmt, ...) {
 
-	//1.- Query if this process thread is involved in the operation
+
 	int myRank;
 	MPI_Comm_rank(communicator, &myRank);
-	if (myRank == g_taskList[g_selTask].r_rank) {
 
-		//2.- Get the appropriate thread from the int thID_Of_(g_selTask)
-		int l_selTask= g_taskList[g_selTask].l_taskIdx;
+	//0.- Dynamic Scheduling?
+	if(configInputs & DYNAMICSCHED){
 
-
-		debug_print("local task %d requested in rank %d \n",l_selTask,myRank);
-
-		//3.- Wrap the setProcedure_Args_st with the call parameters
 		struct Args_ExecTask_st * execTask_Args=malloc(sizeof(struct Args_ExecTask_st));
 
 		va_list argptr;
@@ -136,37 +146,76 @@ int OMPI_XclExecTask(MPI_Comm communicator, int g_selTask, int workDim, size_t *
 		va_end(argptr);
 
 		execTask_Args->comm=communicator;
-		execTask_Args->l_selTask=l_selTask;
+		execTask_Args->g_selTask=g_selTask;
+		execTask_Args->l_selTask=0;
 		execTask_Args->workDim=workDim;
 		execTask_Args->globalThreads=globalThreads;
 		execTask_Args->localThreads=localThreads;
 		execTask_Args->fmt=fmt;
 		va_copy(execTask_Args->argsList,argptr);
 		va_end(execTask_Args->argsList);
-		//execTask_Args->argsList=argptr;
 
-		char* profileFlag;
-		int profilingEnabled = 0;
-		profileFlag = getenv("XSCALA_PROFILING_APP"); //TODO: this profiling file might not be appropriated.
-		if (profileFlag != NULL) {
-			profilingEnabled = 1;
+		storeSubRoutine(g_selTask, _OMPI_XclExecTask, (void*)execTask_Args);
+
+		// AT THIS VERY MOMENT WE SCHEDULE
+
+		 runtimeTaskAllocation(g_selTask,communicator);
+
+		// AND START THE DELEGATION
+		 delegateSubRoutines(g_selTask, 0);
+
+	}
+	else{
+
+		//1.- Query if this process thread is involved in the operation
+		if (myRank == g_taskList[g_selTask].r_rank) {
+
+			//2.- Get the appropriate thread from the int thID_Of_(g_selTask)
+			int l_selTask= g_taskList[g_selTask].l_taskIdx;
+
+
+			debug_print("local task %d requested in rank %d \n",l_selTask,myRank);
+
+			//3.- Wrap the setProcedure_Args_st with the call parameters
+			struct Args_ExecTask_st * execTask_Args=malloc(sizeof(struct Args_ExecTask_st));
+
+			va_list argptr;
+			va_start(argptr, fmt);
+			va_end(argptr);
+
+			execTask_Args->comm=communicator;
+			execTask_Args->l_selTask=l_selTask;
+			execTask_Args->workDim=workDim;
+			execTask_Args->globalThreads=globalThreads;
+			execTask_Args->localThreads=localThreads;
+			execTask_Args->fmt=fmt;
+			va_copy(execTask_Args->argsList,argptr);
+			va_end(execTask_Args->argsList);
+			//execTask_Args->argsList=argptr;
+
+			char* profileFlag;
+			int profilingEnabled = 0;
+			profileFlag = getenv("XSCALA_PROFILING_APP"); //TODO: this profiling file might not be appropriated.
+			if (profileFlag != NULL) {
+				profilingEnabled = 1;
+			}
+
+			if (profilingEnabled) {
+				//4.- Delegate the call to the thread.
+				addSubRoutine(l_selTask, _OMPI_P_XclExecTask, (void*)execTask_Args);
+
+				//_OMPI_P_XclExecTask(communicator, g_selTask, workDim, globalThreads,
+				//	localThreads, tval_globalInit ,fmt, argptr);
+			}else{
+				//4.- Delegate the call to the thread.
+				addSubRoutine(l_selTask, _OMPI_XclExecTask, (void*)execTask_Args);
+				//_OMPI_XclExecTask(communicator, g_selTask, workDim, globalThreads,
+				//	localThreads, fmt, argptr);
+			}
+
+			//va_end(argptr);
+
 		}
-
-		if (profilingEnabled) {
-			//4.- Delegate the call to the thread.
-			addSubRoutine(l_selTask, _OMPI_P_XclExecTask, (void*)execTask_Args);
-
-			//_OMPI_P_XclExecTask(communicator, g_selTask, workDim, globalThreads,
-			//	localThreads, tval_globalInit ,fmt, argptr);
-		}else{
-			//4.- Delegate the call to the thread.
-			addSubRoutine(l_selTask, _OMPI_XclExecTask, (void*)execTask_Args);
-			//_OMPI_XclExecTask(communicator, g_selTask, workDim, globalThreads,
-			//	localThreads, fmt, argptr);
-		}
-
-		//va_end(argptr);
-
 	}
 
 	return 0;
@@ -174,24 +223,39 @@ int OMPI_XclExecTask(MPI_Comm communicator, int g_selTask, int workDim, size_t *
 
 
 int OMPI_XclWriteTray(int g_taskIdx, int trayIdx, int bufferSize,void * hostBuffer, MPI_Comm comm){
-	//1.- Query if this process thread is involved in the operation
+
 	int myRank;
 	MPI_Comm_rank(comm, &myRank);
-	if (myRank == g_taskList[g_taskIdx].r_rank) {
-		//2.- Get the appropriate thread from the int thID_Of_(g_selTask)
-		int l_taskIdx= g_taskList[g_taskIdx].l_taskIdx;
-		//3.- Wrap the Args_WriteTray_st with the call parameters
+
+	//0.- Dynamic Scheduling?
+	if(configInputs & DYNAMICSCHED){
 		struct Args_WriteTray_st * writeTray_Args=malloc(sizeof(struct Args_WriteTray_st));
-		writeTray_Args->l_taskIdx=l_taskIdx;
+		writeTray_Args->l_taskIdx=0;
+		writeTray_Args->g_taskIdx=g_taskIdx;
 		writeTray_Args->trayIdx=trayIdx;
 		writeTray_Args->bufferSize=bufferSize;
 		writeTray_Args->hostBuffer=hostBuffer;
 
 		//4.- Delegate the call to the thread.
-		addSubRoutine(l_taskIdx, _OMPI_XclWriteTray, (void*)writeTray_Args);
+		storeSubRoutine(g_taskIdx, _OMPI_XclWriteTray, (void*)writeTray_Args);
 
+	}else{
+		//1.- Query if this process thread is involved in the operation
+		if (myRank == g_taskList[g_taskIdx].r_rank) {
+			//2.- Get the appropriate thread from the int thID_Of_(g_selTask)
+			int l_taskIdx= g_taskList[g_taskIdx].l_taskIdx;
+			//3.- Wrap the Args_WriteTray_st with the call parameters
+			struct Args_WriteTray_st * writeTray_Args=malloc(sizeof(struct Args_WriteTray_st));
+			writeTray_Args->l_taskIdx=l_taskIdx;
+			writeTray_Args->trayIdx=trayIdx;
+			writeTray_Args->bufferSize=bufferSize;
+			writeTray_Args->hostBuffer=hostBuffer;
+
+			//4.- Delegate the call to the thread.
+			addSubRoutine(l_taskIdx, _OMPI_XclWriteTray, (void*)writeTray_Args);
+
+		}
 	}
-
 	return 0; //return when the delegation succeed
 	//return _OMPI_XclWriteTray(g_taskIdx, trayIdx, bufferSize, hostBuffer, comm);
 }
@@ -200,6 +264,8 @@ int OMPI_XclReadTray(int g_taskIdx, int trayIdx, int bufferSize, void * hostBuff
 	//1.- Query if this process thread is involved in the operation
 	int myRank;
 	MPI_Comm_rank(comm, &myRank);
+	debug_print("l_taskIdx %d \n",g_taskList[g_taskIdx].l_taskIdx);
+
 	if (myRank == g_taskList[g_taskIdx].r_rank) {
 		//2.- Get the appropriate thread from the int thID_Of_(g_selTask)
 		int l_taskIdx= g_taskList[g_taskIdx].l_taskIdx;
@@ -220,21 +286,35 @@ int OMPI_XclReadTray(int g_taskIdx, int trayIdx, int bufferSize, void * hostBuff
 
 int OMPI_XclMallocTray(int g_taskIdx, int trayIdx, int bufferSize, MPI_Comm comm){
 
-	//1.- Query if this process thread is involved in the operation
+
 	int myRank;
 	MPI_Comm_rank(comm, &myRank);
-	if (myRank == g_taskList[g_taskIdx].r_rank) {
-		//2.- Get the appropriate thread from the int thID_Of_(g_selTask)
-		int l_taskIdx= g_taskList[g_taskIdx].l_taskIdx;
 
-		//3.- Wrap the setProcedure_Args_st with the call parameters
+	//0.- Dynamic Scheduling?
+	if(configInputs & DYNAMICSCHED){
 		struct Args_MallocTray_st * mallocTray_Args=malloc(sizeof(struct Args_MallocTray_st));
-		mallocTray_Args->l_taskIdx=l_taskIdx;
+		mallocTray_Args->l_taskIdx=0; //UNKNOWN AT THIS POINT
+		mallocTray_Args->g_taskIdx=g_taskIdx;
 		mallocTray_Args->trayIdx=trayIdx;
 		mallocTray_Args->bufferSize=bufferSize;
-
 		//4.- Delegate the call to the thread.
-		addSubRoutine(l_taskIdx, _OMPI_XclMallocTray, (void*)mallocTray_Args);
+		storeSubRoutine(g_taskIdx, _OMPI_XclMallocTray, (void*)mallocTray_Args);
+	}
+	else { //Then is Static or manual.
+		//1.- Query if this process is involved in the operation
+		if (myRank == g_taskList[g_taskIdx].r_rank) {
+			//2.- Get the appropriate thread from the int thID_Of_(g_selTask)
+			int l_taskIdx= g_taskList[g_taskIdx].l_taskIdx;
+
+			//3.- Wrap the setProcedure_Args_st with the call parameters
+			struct Args_MallocTray_st * mallocTray_Args=malloc(sizeof(struct Args_MallocTray_st));
+			mallocTray_Args->l_taskIdx=l_taskIdx;
+			mallocTray_Args->trayIdx=trayIdx;
+			mallocTray_Args->bufferSize=bufferSize;
+
+			//4.- Delegate the call to the thread.
+			addSubRoutine(l_taskIdx, _OMPI_XclMallocTray, (void*)mallocTray_Args);
+		}
 	}
 	//return _OMPI_XclMallocTray(g_taskIdx, trayIdx, bufferSize, comm);
 	return 0;
@@ -375,6 +455,7 @@ int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_tr
 			intracpyProducer_Args->tgID=tgID;
 			intracpyProducer_Args->FULL=&FULL;
 			intracpyProducer_Args->l_taskIdx=l_src_task;
+			intracpyProducer_Args->g_dstTaskID=g_dst_task;
 			intracpyProducer_Args->dataSize=cpyBuffSz;
 			intracpyProducer_Args->trayId=src_trayIdx;
 			intracpyProducer_Args->ticket=&opTicket;
@@ -407,6 +488,7 @@ int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_tr
 			cpyProducer_Args->tgID=tgID;
 			cpyProducer_Args->FULL=&FULL;
 			cpyProducer_Args->l_taskIdx=l_src_task;
+			cpyProducer_Args->g_dstTaskID=g_dst_task;
 			cpyProducer_Args->dataSize=cpyBuffSz;
 			cpyProducer_Args->trayId=src_trayIdx;
 			cpyProducer_Args->ticket=&opTicket;
@@ -555,7 +637,40 @@ int OMPI_XclWaitAllTasks(MPI_Comm comm){
 }
 
 int XclCreateNewTasks(task_t* task, int numTasks, int INVOKER, int DeviceType, int DeviceID, MPI_Comm comm){
-	dynDistribution(task,numTasks,INVOKER,DeviceType,DeviceID,comm);
+	int static currNumTasks=0;
+	int i;
+	if(!currNumTasks){
+		initNewBag(numTasks);
+		g_numTasks=numTasks;
+		taskDevList=malloc(g_numTasks*sizeof(schedConfigInfo_t));
+
+		//we emphasize this null to be able to query later
+		//if the task is assigned
+		for(i=0;i<g_numTasks;i++){
+			//-------------------------
+			(task+i)->ID=i; //REGISTER
+			//-------------------------
+			taskDevList[i].rank=-1;
+			taskDevList[i].mappedDevice=NULL;
+		}
+
+
+	}else{ //not the first call
+		taskDevList=realloc(taskDevList,g_numTasks*sizeof(schedConfigInfo_t));
+		g_numTasks=currNumTasks+numTasks;
+		//we emphasize this null to be able to query later
+		//if the task has been assigned
+		for(i=currNumTasks;i<g_numTasks;i++){
+			//-------------------------
+			(task+i-currNumTasks)->ID=i; //REGISTER
+			//-------------------------
+			taskDevList[i].rank=-1;
+			taskDevList[i].mappedDevice=NULL;
+		}
+	}
+
+	//deferred rtDistrib_WO_AutoTune(task,numTasks,INVOKER,DeviceType,DeviceID,comm);
+	currNumTasks+=numTasks;
 	return 0;
 }
 

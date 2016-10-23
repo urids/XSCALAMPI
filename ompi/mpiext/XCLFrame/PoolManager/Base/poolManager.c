@@ -107,7 +107,7 @@ void insertThreads(int numThds, int reset){
 		}
 
 		currNumThds+=numThds;
-
+		printf("CurrNTHDS= %d \n",currNumThds);
 
 	}else{ //currNumThds!=0
 		//READERS WRITERS PROTOCOL.

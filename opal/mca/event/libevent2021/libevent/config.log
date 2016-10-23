@@ -493,7 +493,7 @@ configure:12534: checking for zlib.h
 configure:12534: result: yes
 configure:12550: checking for library containing inflateEnd
 configure:12581: gcc -o conftest -O3 -DNDEBUG   -Wall -fno-strict-aliasing -I/home/uriel/Dev/mpisrc/XSCALAMPI -I/home/uriel/Dev/mpisrc/XSCALAMPI -I/home/uriel/Dev/mpisrc/XSCALAMPI/opal/include   -I/home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/hwloc/hwloc172/hwloc/include   conftest.c  >&5
-/tmp/ccfRJfJA.o: In function `main':
+/tmp/cc1lfcFn.o: In function `main':
 conftest.c:(.text.startup+0x7): undefined reference to `inflateEnd'
 collect2: error: ld returned 1 exit status
 configure:12581: $? = 1
@@ -1471,7 +1471,7 @@ configure:13325: $? = 0
 configure:13325: result: yes
 configure:13325: checking for strlcpy
 configure:13325: gcc -o conftest -O3 -DNDEBUG   -Wall -fno-strict-aliasing -I/home/uriel/Dev/mpisrc/XSCALAMPI -I/home/uriel/Dev/mpisrc/XSCALAMPI -I/home/uriel/Dev/mpisrc/XSCALAMPI/opal/include   -I/home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/hwloc/hwloc172/hwloc/include   conftest.c -lm -lutil   >&5
-/tmp/cc5FN6cj.o: In function `main':
+/tmp/ccsG9Xbj.o: In function `main':
 conftest.c:(.text.startup+0x7): undefined reference to `strlcpy'
 collect2: error: ld returned 1 exit status
 configure:13325: $? = 1
@@ -1632,7 +1632,7 @@ configure:13325: $? = 0
 configure:13325: result: yes
 configure:13325: checking for arc4random
 configure:13325: gcc -o conftest -O3 -DNDEBUG   -Wall -fno-strict-aliasing -I/home/uriel/Dev/mpisrc/XSCALAMPI -I/home/uriel/Dev/mpisrc/XSCALAMPI -I/home/uriel/Dev/mpisrc/XSCALAMPI/opal/include   -I/home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/hwloc/hwloc172/hwloc/include   conftest.c -lm -lutil   >&5
-/tmp/cc2MHfu1.o: In function `main':
+/tmp/ccxPHG17.o: In function `main':
 conftest.c:(.text.startup+0x7): undefined reference to `arc4random'
 collect2: error: ld returned 1 exit status
 configure:13325: $? = 1
@@ -1760,7 +1760,7 @@ configure: failed program was:
 configure:13325: result: no
 configure:13325: checking for arc4random_buf
 configure:13325: gcc -o conftest -O3 -DNDEBUG   -Wall -fno-strict-aliasing -I/home/uriel/Dev/mpisrc/XSCALAMPI -I/home/uriel/Dev/mpisrc/XSCALAMPI -I/home/uriel/Dev/mpisrc/XSCALAMPI/opal/include   -I/home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/hwloc/hwloc172/hwloc/include   conftest.c -lm -lutil   >&5
-/tmp/ccR3uNF6.o: In function `main':
+/tmp/cclJaiad.o: In function `main':
 conftest.c:(.text.startup+0x7): undefined reference to `arc4random_buf'
 collect2: error: ld returned 1 exit status
 configure:13325: $? = 1
@@ -1888,7 +1888,7 @@ configure: failed program was:
 configure:13325: result: no
 configure:13325: checking for issetugid
 configure:13325: gcc -o conftest -O3 -DNDEBUG   -Wall -fno-strict-aliasing -I/home/uriel/Dev/mpisrc/XSCALAMPI -I/home/uriel/Dev/mpisrc/XSCALAMPI -I/home/uriel/Dev/mpisrc/XSCALAMPI/opal/include   -I/home/uriel/Dev/mpisrc/XSCALAMPI/opal/mca/hwloc/hwloc172/hwloc/include   conftest.c -lm -lutil   >&5
-/tmp/ccqSGmve.o: In function `main':
+/tmp/ccU0sc6h.o: In function `main':
 conftest.c:(.text.startup+0x7): undefined reference to `issetugid'
 collect2: error: ld returned 1 exit status
 configure:13325: $? = 1
@@ -5375,7 +5375,7 @@ conftest.c:129:22: warning: null argument where non-null required (argument 3) [
 conftest.c:127:27: warning: 'th' is used uninitialized in this function [-Wuninitialized]
  pthread_t th; pthread_join(th, 0);
                            ^
-/tmp/ccEo94ni.o: In function `main':
+/tmp/ccl5mqcR.o: In function `main':
 conftest.c:(.text.startup+0x9): undefined reference to `pthread_join'
 conftest.c:(.text.startup+0x26): undefined reference to `__pthread_register_cancel'
 conftest.c:(.text.startup+0x33): undefined reference to `pthread_create'

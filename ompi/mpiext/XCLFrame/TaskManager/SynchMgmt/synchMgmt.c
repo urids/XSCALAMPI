@@ -75,7 +75,7 @@ void localSynch(int l_wTskSize, int* localIDs, MPI_Comm Comm){
 	}
 	//3.- WAIT
 	pthread_cond_wait(&condN,&synchMutex);
-//printf("CALL");
+	//printf("CALL");
 	//4.- Synch (distributed) all processes TODO: create and synch a subgroup.
 	MPI_Barrier(Comm);
 	//5.-broadcast backCondition

@@ -326,7 +326,7 @@ am__dirstamp = $(am__leading_dot)dirstamp
 am_libmpiext_XCLFrame_c_la_OBJECTS = $(am__objects_1) \
 	mpiext_XCLFrame_early.lo mpiext_XCLFrame_late.lo \
 	c_Interface.lo argsParser.lo getStoragePath.lo \
-	./ErrorHandling/errorHandling.lo
+	./CallsBag/callsBag.lo ./ErrorHandling/errorHandling.lo
 libmpiext_XCLFrame_c_la_OBJECTS =  \
 	$(am_libmpiext_XCLFrame_c_la_OBJECTS)
 AM_V_lt = $(am__v_lt_$(V))
@@ -1164,7 +1164,7 @@ OPAL_ASSEMBLY_ARCH = AMD64
 OPAL_ASSEMBLY_BUILTIN = BUILTIN_NO
 OPAL_ASSEMBLY_FORMAT = default-.text-.globl-:--.L-@-1-0-1-1-1
 OPAL_CC_ABSOLUTE = /usr/bin/gcc
-OPAL_CONFIGURE_DATE = Tue Sep 27 11:32:26 CDT 2016
+OPAL_CONFIGURE_DATE = Sat Oct 22 19:37:49 CDT 2016
 OPAL_CONFIGURE_HOST = myHost
 OPAL_CONFIGURE_USER = uriel
 OPAL_CXX_ABSOLUTE = /usr/bin/g++
@@ -1514,6 +1514,7 @@ libmpiext_XCLFrame_c_la_SOURCES = \
         c_Interface.c \
         argsParser.c \
         getStoragePath.c \
+        ./CallsBag/callsBag.c \
         ./ErrorHandling/errorHandling.c 
 
 
@@ -1591,6 +1592,14 @@ clean-noinstLTLIBRARIES:
 	  echo rm -f $${locs}; \
 	  rm -f $${locs}; \
 	}
+CallsBag/$(am__dirstamp):
+	@$(MKDIR_P) ./CallsBag
+	@: > CallsBag/$(am__dirstamp)
+CallsBag/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) ./CallsBag/$(DEPDIR)
+	@: > CallsBag/$(DEPDIR)/$(am__dirstamp)
+./CallsBag/callsBag.lo: CallsBag/$(am__dirstamp) \
+	CallsBag/$(DEPDIR)/$(am__dirstamp)
 ErrorHandling/$(am__dirstamp):
 	@$(MKDIR_P) ./ErrorHandling
 	@: > ErrorHandling/$(am__dirstamp)
@@ -1604,6 +1613,8 @@ libmpiext_XCLFrame_c.la: $(libmpiext_XCLFrame_c_la_OBJECTS) $(libmpiext_XCLFrame
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
+	-rm -f ./CallsBag/*.$(OBJEXT)
+	-rm -f ./CallsBag/*.lo
 	-rm -f ./ErrorHandling/*.$(OBJEXT)
 	-rm -f ./ErrorHandling/*.lo
 
@@ -1615,6 +1626,7 @@ include ./$(DEPDIR)/c_Interface.Plo
 include ./$(DEPDIR)/getStoragePath.Plo
 include ./$(DEPDIR)/mpiext_XCLFrame_early.Plo
 include ./$(DEPDIR)/mpiext_XCLFrame_late.Plo
+include ./CallsBag/$(DEPDIR)/callsBag.Plo
 include ./ErrorHandling/$(DEPDIR)/errorHandling.Plo
 
 .c.o:
@@ -1646,6 +1658,7 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
+	-rm -rf ./CallsBag/.libs ./CallsBag/_libs
 	-rm -rf ./ErrorHandling/.libs ./ErrorHandling/_libs
 install-ompiHEADERS: $(ompi_HEADERS)
 	@$(NORMAL_INSTALL)
@@ -1799,6 +1812,8 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
+	-rm -f CallsBag/$(DEPDIR)/$(am__dirstamp)
+	-rm -f CallsBag/$(am__dirstamp)
 	-rm -f ErrorHandling/$(DEPDIR)/$(am__dirstamp)
 	-rm -f ErrorHandling/$(am__dirstamp)
 
@@ -1811,7 +1826,7 @@ clean-am: clean-generic clean-libtool clean-noinstLTLIBRARIES \
 	mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf ./$(DEPDIR) ./ErrorHandling/$(DEPDIR)
+	-rm -rf ./$(DEPDIR) ./CallsBag/$(DEPDIR) ./ErrorHandling/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -1857,7 +1872,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf ./$(DEPDIR) ./ErrorHandling/$(DEPDIR)
+	-rm -rf ./$(DEPDIR) ./CallsBag/$(DEPDIR) ./ErrorHandling/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

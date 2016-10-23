@@ -1,4 +1,5 @@
 #include "dataManager.h"
+#define DEBUG 1
 
 pthread_mutex_t interNodeCommMtx=PTHREAD_MUTEX_INITIALIZER;
 
@@ -737,8 +738,11 @@ int _OMPI_XclMallocTray(void* Args){
 	//1.- unwrap the Args.
 	struct Args_MallocTray_st * mallocTray_Args=(struct Args_MallocTray_st*)Args;
 	int l_taskIdx=mallocTray_Args->l_taskIdx;
+	debug_print("l_taskIdx : %d \n",l_taskIdx);
 	int trayIdx=mallocTray_Args->trayIdx;
+	debug_print("trayIdx : %d \n",trayIdx);
 	int bufferSize=mallocTray_Args->bufferSize;
+	debug_print("bufferSize : %d \n",bufferSize);
 
 	//2.-The task thread makes the calls to the components
 	void * memHandle = NULL; //function pointer

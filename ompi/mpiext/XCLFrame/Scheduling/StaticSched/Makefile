@@ -352,7 +352,8 @@ libstaticSched_la_LIBADD =
 am__dirstamp = $(am__leading_dot)dirstamp
 am_libstaticSched_la_OBJECTS = wrapperFactory.lo ./ISH/ISH.lo \
 	./HEFT/HEFT.lo ./Utilities/topoSort.lo \
-	./Utilities/utilities.lo
+	./Utilities/utilities.lo ./U_TEST/staticSchedulersTest.lo \
+	./U_TEST/entryPnt.lo
 libstaticSched_la_OBJECTS = $(am_libstaticSched_la_OBJECTS)
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
@@ -378,6 +379,24 @@ DEFAULT_INCLUDES = -I. -I$(top_builddir)/opal/include -I$(top_builddir)/orte/inc
 depcomp = $(SHELL) $(top_srcdir)/config/depcomp
 am__depfiles_maybe = depfiles
 am__mv = mv -f
+COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) \
+	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+	$(AM_CFLAGS) $(CFLAGS)
+AM_V_CC = $(am__v_CC_$(V))
+am__v_CC_ = $(am__v_CC_$(AM_DEFAULT_VERBOSITY))
+am__v_CC_0 = @echo "  CC      " $@;
+am__v_CC_1 = 
+CCLD = $(CC)
+LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_CCLD = $(am__v_CCLD_$(V))
+am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
+am__v_CCLD_0 = @echo "  CCLD    " $@;
+am__v_CCLD_1 = 
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 LTCXXCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
@@ -1160,7 +1179,7 @@ OPAL_ASSEMBLY_ARCH = AMD64
 OPAL_ASSEMBLY_BUILTIN = BUILTIN_NO
 OPAL_ASSEMBLY_FORMAT = default-.text-.globl-:--.L-@-1-0-1-1-1
 OPAL_CC_ABSOLUTE = /usr/bin/gcc
-OPAL_CONFIGURE_DATE = Tue Sep 27 11:32:26 CDT 2016
+OPAL_CONFIGURE_DATE = Sat Oct 22 19:37:49 CDT 2016
 OPAL_CONFIGURE_HOST = myHost
 OPAL_CONFIGURE_USER = uriel
 OPAL_CXX_ABSOLUTE = /usr/bin/g++
@@ -1490,16 +1509,18 @@ libstaticSched_la_SOURCES = wrapperFactory.cpp \
 							./ISH/ISH.cpp \
 							./HEFT/HEFT.cpp \
 							./Utilities/topoSort.cpp \
-							./Utilities/utilities.cpp
+							./Utilities/utilities.cpp \
+							./U_TEST/staticSchedulersTest.cpp \
+							./U_TEST/entryPnt.c
 
 
 # Linker options libTestProgram
-libstaticSched_la_LDFLAGS = -module -avoid-version -lOpenCL
+libstaticSched_la_LDFLAGS = -module -shared -fPIC -avoid-version -lOpenCL -Wl,-e,entryp
 AM_CXXFLAGS = -std=c++11
 all: all-am
 
 .SUFFIXES:
-.SUFFIXES: .cpp .lo .o .obj
+.SUFFIXES: .c .cpp .lo .o .obj
 $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -1588,6 +1609,16 @@ Utilities/$(DEPDIR)/$(am__dirstamp):
 	Utilities/$(DEPDIR)/$(am__dirstamp)
 ./Utilities/utilities.lo: Utilities/$(am__dirstamp) \
 	Utilities/$(DEPDIR)/$(am__dirstamp)
+U_TEST/$(am__dirstamp):
+	@$(MKDIR_P) ./U_TEST
+	@: > U_TEST/$(am__dirstamp)
+U_TEST/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) ./U_TEST/$(DEPDIR)
+	@: > U_TEST/$(DEPDIR)/$(am__dirstamp)
+./U_TEST/staticSchedulersTest.lo: U_TEST/$(am__dirstamp) \
+	U_TEST/$(DEPDIR)/$(am__dirstamp)
+./U_TEST/entryPnt.lo: U_TEST/$(am__dirstamp) \
+	U_TEST/$(DEPDIR)/$(am__dirstamp)
 libstaticSched.la: $(libstaticSched_la_OBJECTS) $(libstaticSched_la_DEPENDENCIES) $(EXTRA_libstaticSched_la_DEPENDENCIES) 
 	$(AM_V_CXXLD)$(libstaticSched_la_LINK) -rpath $(staticScheddir) $(libstaticSched_la_OBJECTS) $(libstaticSched_la_LIBADD) $(LIBS)
 
@@ -1597,6 +1628,8 @@ mostlyclean-compile:
 	-rm -f ./HEFT/*.lo
 	-rm -f ./ISH/*.$(OBJEXT)
 	-rm -f ./ISH/*.lo
+	-rm -f ./U_TEST/*.$(OBJEXT)
+	-rm -f ./U_TEST/*.lo
 	-rm -f ./Utilities/*.$(OBJEXT)
 	-rm -f ./Utilities/*.lo
 
@@ -1606,8 +1639,34 @@ distclean-compile:
 include ./$(DEPDIR)/wrapperFactory.Plo
 include ./HEFT/$(DEPDIR)/HEFT.Plo
 include ./ISH/$(DEPDIR)/ISH.Plo
+include ./U_TEST/$(DEPDIR)/entryPnt.Plo
+include ./U_TEST/$(DEPDIR)/staticSchedulersTest.Plo
 include ./Utilities/$(DEPDIR)/topoSort.Plo
 include ./Utilities/$(DEPDIR)/utilities.Plo
+
+.c.o:
+	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
+	$(COMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
+	$(am__mv) $$depbase.Tpo $$depbase.Po
+#	$(AM_V_CC)source='$<' object='$@' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(COMPILE) -c -o $@ $<
+
+.c.obj:
+	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.obj$$||'`;\
+	$(COMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ `$(CYGPATH_W) '$<'` &&\
+	$(am__mv) $$depbase.Tpo $$depbase.Po
+#	$(AM_V_CC)source='$<' object='$@' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(COMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+
+.c.lo:
+	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.lo$$||'`;\
+	$(LTCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
+	$(am__mv) $$depbase.Tpo $$depbase.Plo
+#	$(AM_V_CC)source='$<' object='$@' libtool=yes \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(LTCOMPILE) -c -o $@ $<
 
 .cpp.o:
 	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -1640,6 +1699,7 @@ clean-libtool:
 	-rm -rf .libs _libs
 	-rm -rf ./HEFT/.libs ./HEFT/_libs
 	-rm -rf ./ISH/.libs ./ISH/_libs
+	-rm -rf ./U_TEST/.libs ./U_TEST/_libs
 	-rm -rf ./Utilities/.libs ./Utilities/_libs
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
@@ -1776,6 +1836,8 @@ distclean-generic:
 	-rm -f HEFT/$(am__dirstamp)
 	-rm -f ISH/$(DEPDIR)/$(am__dirstamp)
 	-rm -f ISH/$(am__dirstamp)
+	-rm -f U_TEST/$(DEPDIR)/$(am__dirstamp)
+	-rm -f U_TEST/$(am__dirstamp)
 	-rm -f Utilities/$(DEPDIR)/$(am__dirstamp)
 	-rm -f Utilities/$(am__dirstamp)
 
@@ -1788,7 +1850,7 @@ clean-am: clean-generic clean-libtool clean-staticSchedLTLIBRARIES \
 	mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf ./$(DEPDIR) ./HEFT/$(DEPDIR) ./ISH/$(DEPDIR) ./Utilities/$(DEPDIR)
+	-rm -rf ./$(DEPDIR) ./HEFT/$(DEPDIR) ./ISH/$(DEPDIR) ./U_TEST/$(DEPDIR) ./Utilities/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -1834,7 +1896,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf ./$(DEPDIR) ./HEFT/$(DEPDIR) ./ISH/$(DEPDIR) ./Utilities/$(DEPDIR)
+	-rm -rf ./$(DEPDIR) ./HEFT/$(DEPDIR) ./ISH/$(DEPDIR) ./U_TEST/$(DEPDIR) ./Utilities/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

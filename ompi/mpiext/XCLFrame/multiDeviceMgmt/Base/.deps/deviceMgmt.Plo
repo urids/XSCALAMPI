@@ -3,8 +3,7 @@ Base/deviceMgmt.lo: Base/deviceMgmt.c /usr/include/stdc-predef.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h \
  ../../../../ompi/include/mpi_portable_platform.h \
  Base/../../multiDeviceMgmt/deviceMgmt/Device.h \
- /usr/local/cuda-7.5/include/CL/cl.h \
- /usr/local/cuda-7.5/include/CL/cl_platform.h \
+ /usr/local/include/CL/cl.h /usr/local/include/CL/cl_platform.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h /usr/include/stdint.h \
  /usr/include/features.h /usr/include/x86_64-linux-gnu/sys/cdefs.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
@@ -49,9 +48,9 @@ Base/deviceMgmt.h:
 
 Base/../../multiDeviceMgmt/deviceMgmt/Device.h:
 
-/usr/local/cuda-7.5/include/CL/cl.h:
+/usr/local/include/CL/cl.h:
 
-/usr/local/cuda-7.5/include/CL/cl_platform.h:
+/usr/local/include/CL/cl_platform.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h:
 
