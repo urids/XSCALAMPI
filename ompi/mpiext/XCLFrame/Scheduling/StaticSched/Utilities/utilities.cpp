@@ -1,8 +1,6 @@
 #include "utilities.h"
 
 
-
-
 int isSource(int i, int* Adj, int N){ //never receives (Column of zeros)
 	int j;
 	for(j=0;j<N;j++){
@@ -50,7 +48,9 @@ float get_LAvg(double * L_Mtx,int g_NumPUs){
 		}
 	}
 	L=LAccum/(g_NumPUs*(g_NumPUs+1)/2);
+#if VERBOSE
 	printf("Average Latency: %8.8f microSeconds\n",L*1000000);
+#endif
 	return L;
 }
 
@@ -64,6 +64,8 @@ float get_BWAvg(double* BW_Mtx,int g_NumPUs){
 		}
 	}
 	BW=BWAccum/(g_NumPUs*(g_NumPUs+1)/2);
+#if VERBOSE
 	printf("Average Bandwidth: %8.8f GB/s\n",BW/(float)(ONEGB));
+#endif
 	return BW;
 }

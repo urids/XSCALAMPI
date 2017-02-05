@@ -24,8 +24,8 @@ argsParser.lo: argsParser.c /usr/include/stdc-predef.h c_Interface.h \
  /usr/include/x86_64-linux-gnu/bits/select2.h \
  /usr/include/x86_64-linux-gnu/sys/sysmacros.h \
  /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
- ../TaskManager/Base/task.h /usr/local/include/CL/cl.h \
- /usr/local/include/CL/cl_platform.h \
+ ../TaskManager/Base/task.h /usr/local/cuda-7.5/include/CL/cl.h \
+ /usr/local/cuda-7.5/include/CL/cl_platform.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/xmmintrin.h \
@@ -138,9 +138,9 @@ c_Interface.h:
 
 ../TaskManager/Base/task.h:
 
-/usr/local/include/CL/cl.h:
+/usr/local/cuda-7.5/include/CL/cl.h:
 
-/usr/local/include/CL/cl_platform.h:
+/usr/local/cuda-7.5/include/CL/cl_platform.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h:
 

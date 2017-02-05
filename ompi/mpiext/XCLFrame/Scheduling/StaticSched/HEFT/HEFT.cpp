@@ -6,6 +6,8 @@
  */
 
 #include "HEFT.h"
+#define DEBUG 1
+
 using namespace std;
 HEFT::HEFT(){
 }
@@ -97,9 +99,11 @@ void readBWMtx(char* storagePath, int numDevs, double* BW_Mtx){
 	}
 }
 
-
-int HEFT::matchMake(int NumTsk, int NumDvs,float * W, int * AdjMtx,const int* SR,const int* AS, int* schedule){
-	//int i,j;
+#if DEBUG
+int HEFT::matchMake(int volatile NumTsk, int NumDvs,float * W, int * AdjMtx,const int* SR,const int* AS, int* schedule){
+#else
+int HEFT::matchMake(int NumTsk, int NumDvs,float * volatile W, int * AdjMtx,const int* SR,const int* AS, int* schedule){
+#endif
 	map<int,int> taskMap; // <task, device>
 	/*************************
 	 * STEP 01
@@ -169,7 +173,7 @@ int HEFT::matchMake(int NumTsk, int NumDvs,float * W, int * AdjMtx,const int* SR
 	//compute the rank_u starting from the exit task.
 
 
-	//3.1- Find the exit task.
+	//3.1- Find the sink task.
 	static int s = 0;
 	find_if(OD_v.begin(), OD_v.end(),[](int i) {
 		if(i==0) return true;
@@ -206,7 +210,7 @@ cout<<endl;
 }*/
 
 	//3.3 compute the upperRank //we can use BFS without marking visited because there are no cycles!!! =).
-	vector<pair<int,float> > UR(NumTsk); // UR<task,urVAL>
+	 vector<pair<int,float> > UR(NumTsk); // UR<task,urVAL>
 	for(int i=0;i<NumTsk;i++)
 		UR[i]=make_pair(i,0);
 
@@ -224,7 +228,7 @@ cout<<endl;
 			queue.push_back(*i);
 		}*/
 
-		for_each(AdjList_T[s].begin(), AdjList_T[s].end(), [&queue,&UR,&AvgWT](pair<int,int> i) {
+			for_each(AdjList_T[s].begin(), AdjList_T[s].end(), [&queue,&UR,&AvgWT](pair<int,int> i) {
 			//cout<<s<<"-"<<i.first<<endl;
 			queue.push_back(i.first);
 			float val=AvgWT[i.first]+ i.second+UR[s].second;
@@ -253,6 +257,7 @@ cout<<endl;
 	vector<float> EST(NumTsk,0);
 	//float *EST=(float*)calloc(NumTsk*NumDvs,sizeof(float));
 
+	//FOR EACH TASK.
 	for_each(UR.begin(),UR.end(),[BW_Mtx, L_Mtx,&SR,&NumDvs,&NumTsk,&W, &AdjList_T, &AFT ,&EFT, &EST, &avail, &taskMap,&OD_v](pair<int,float> ur){
 		//STEP 07 create Q prime.
 		vector<int> Qp;
@@ -267,13 +272,16 @@ cout<<endl;
 		if(Qp.size()>0){
 			EFT.clear();
 			//STEP 09 find the fastest device
-			//cout <<endl<<"TASK: "<<ur.first <<"  ";
+			cout <<endl<<"TASK: "<<ur.first <<"  "<<endl ;
+
+			//FOR EACH DEVICE.
 			for_each(Qp.begin(),Qp.end(),[BW_Mtx, L_Mtx,&ur,&NumDvs,&NumTsk,&W, &AdjList_T, &AFT,&EST, &EFT,&avail,&taskMap,&OD_v]
 			                              (int dev){
 				//STEP 10 compute the EFT
 				//STEP 10.1 get the MAX time of all dependencies.
 				float max_AST=0.0;
-				//cout<<"TASK: "<<ur.first<<endl;
+
+				//FOR EACH PREDECESSOR.
 				for_each(AdjList_T[ur.first].begin(),AdjList_T[ur.first].end(),[BW_Mtx, L_Mtx,&NumDvs,&dev,&AFT,&max_AST,&taskMap]
 				                                                                (pair<int,float> Pred_t){ //task , msg Size
 					//int L=0;
@@ -292,10 +300,9 @@ cout<<endl;
 				//STEP 10.2 compute the EST
 
 				float est=(avail[dev]>max_AST)?avail[dev]:max_AST;
-				EST[ur.first]=est; //updates the EST[T_i] (used in print_schedule)
+				EST[ur.first]=est; //updates the EST[T_i] (used to print_schedule)
 
-				//cout<<est<<"- ";
-				//cout<<dev<<"="<<avail[dev]<<","<<max_AST<<endl;
+				cout<<"EST: "<<est<<" - DEV: "<<dev<<"   avail[dev]: "<<avail[dev]<<", max_AST: "<<max_AST<<endl;
 
 				EFT.push_back(make_pair(dev ,W[NumDvs*ur.first+dev]+est));
 			});
@@ -333,7 +340,8 @@ cout<<endl;
 			}); //end for each dev in Qp
 		}
 		else{
-			cout << "Tasks could not be scheduled due to the lack of memory space";
+			printf("Tasks could not be scheduled due to the lack of memory space \n");
+			//cout << "Tasks could not be scheduled due to the lack of memory space";
 			exit (EXIT_FAILURE);
 		}
 
@@ -350,7 +358,8 @@ cout<<endl;
 
 extern "C"{
 int dummy(int a){
-	return a+2;
+
+	return a;
 }
 }
 

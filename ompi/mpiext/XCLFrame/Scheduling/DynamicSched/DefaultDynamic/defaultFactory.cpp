@@ -29,6 +29,12 @@ Scheduler* defaultFactory::newScheduler(char* heuristic, char * storagePath){
 			myScheduler=new RR();
 			return myScheduler;
 		}
+	// Put here more heuristics for example EFT
+	/*if (strcmp(heuristic,"EFT")==0){
+				Scheduler* myScheduler;
+				myScheduler=new EFT();
+				return myScheduler;
+	}*/
 }
 
 extern "C"{

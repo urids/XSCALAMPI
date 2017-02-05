@@ -11,6 +11,7 @@
 #include "IScheduler.hpp"
 class Factory{
 public:
+	virtual ~Factory(){}
 	virtual Scheduler* newScheduler(char* heuristic, char * storagePath)=0;
 };
 

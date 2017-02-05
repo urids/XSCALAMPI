@@ -352,8 +352,9 @@ libstaticSched_la_LIBADD =
 am__dirstamp = $(am__leading_dot)dirstamp
 am_libstaticSched_la_OBJECTS = wrapperFactory.lo ./ISH/ISH.lo \
 	./HEFT/HEFT.lo ./Utilities/topoSort.lo \
-	./Utilities/utilities.lo ./U_TEST/staticSchedulersTest.lo \
-	./U_TEST/entryPnt.lo
+	./Utilities/utilities.lo ./U_TEST/entryPnt.lo \
+	./U_TEST/SSentryPnt.lo ./U_TEST/randNumbers.lo \
+	./U_TEST/randDag.lo ./U_TEST/randRsrcGraph.lo
 libstaticSched_la_OBJECTS = $(am_libstaticSched_la_OBJECTS)
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
@@ -1179,7 +1180,7 @@ OPAL_ASSEMBLY_ARCH = AMD64
 OPAL_ASSEMBLY_BUILTIN = BUILTIN_NO
 OPAL_ASSEMBLY_FORMAT = default-.text-.globl-:--.L-@-1-0-1-1-1
 OPAL_CC_ABSOLUTE = /usr/bin/gcc
-OPAL_CONFIGURE_DATE = Sat Oct 22 19:37:49 CDT 2016
+OPAL_CONFIGURE_DATE = Tue Nov  1 12:02:07 CST 2016
 OPAL_CONFIGURE_HOST = myHost
 OPAL_CONFIGURE_USER = uriel
 OPAL_CXX_ABSOLUTE = /usr/bin/g++
@@ -1510,13 +1511,18 @@ libstaticSched_la_SOURCES = wrapperFactory.cpp \
 							./HEFT/HEFT.cpp \
 							./Utilities/topoSort.cpp \
 							./Utilities/utilities.cpp \
-							./U_TEST/staticSchedulersTest.cpp \
-							./U_TEST/entryPnt.c
+							./U_TEST/entryPnt.c \
+							./U_TEST/SSentryPnt.cpp \
+							./U_TEST/randNumbers.cpp \
+							./U_TEST/randDag.cpp \
+							./U_TEST/randRsrcGraph.cpp							
 
 
 # Linker options libTestProgram
-libstaticSched_la_LDFLAGS = -module -shared -fPIC -avoid-version -lOpenCL -Wl,-e,entryp
-AM_CXXFLAGS = -std=c++11
+libstaticSched_la_LDFLAGS = -module -shared -fPIC -avoid-version -lOpenCL \
+						   -Wl,-e,entrypSS -ldl
+
+AM_CXXFLAGS = -std=c++0x -g -O0
 all: all-am
 
 .SUFFIXES:
@@ -1615,9 +1621,15 @@ U_TEST/$(am__dirstamp):
 U_TEST/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) ./U_TEST/$(DEPDIR)
 	@: > U_TEST/$(DEPDIR)/$(am__dirstamp)
-./U_TEST/staticSchedulersTest.lo: U_TEST/$(am__dirstamp) \
-	U_TEST/$(DEPDIR)/$(am__dirstamp)
 ./U_TEST/entryPnt.lo: U_TEST/$(am__dirstamp) \
+	U_TEST/$(DEPDIR)/$(am__dirstamp)
+./U_TEST/SSentryPnt.lo: U_TEST/$(am__dirstamp) \
+	U_TEST/$(DEPDIR)/$(am__dirstamp)
+./U_TEST/randNumbers.lo: U_TEST/$(am__dirstamp) \
+	U_TEST/$(DEPDIR)/$(am__dirstamp)
+./U_TEST/randDag.lo: U_TEST/$(am__dirstamp) \
+	U_TEST/$(DEPDIR)/$(am__dirstamp)
+./U_TEST/randRsrcGraph.lo: U_TEST/$(am__dirstamp) \
 	U_TEST/$(DEPDIR)/$(am__dirstamp)
 libstaticSched.la: $(libstaticSched_la_OBJECTS) $(libstaticSched_la_DEPENDENCIES) $(EXTRA_libstaticSched_la_DEPENDENCIES) 
 	$(AM_V_CXXLD)$(libstaticSched_la_LINK) -rpath $(staticScheddir) $(libstaticSched_la_OBJECTS) $(libstaticSched_la_LIBADD) $(LIBS)
@@ -1639,8 +1651,11 @@ distclean-compile:
 include ./$(DEPDIR)/wrapperFactory.Plo
 include ./HEFT/$(DEPDIR)/HEFT.Plo
 include ./ISH/$(DEPDIR)/ISH.Plo
+include ./U_TEST/$(DEPDIR)/SSentryPnt.Plo
 include ./U_TEST/$(DEPDIR)/entryPnt.Plo
-include ./U_TEST/$(DEPDIR)/staticSchedulersTest.Plo
+include ./U_TEST/$(DEPDIR)/randDag.Plo
+include ./U_TEST/$(DEPDIR)/randNumbers.Plo
+include ./U_TEST/$(DEPDIR)/randRsrcGraph.Plo
 include ./Utilities/$(DEPDIR)/topoSort.Plo
 include ./Utilities/$(DEPDIR)/utilities.Plo
 

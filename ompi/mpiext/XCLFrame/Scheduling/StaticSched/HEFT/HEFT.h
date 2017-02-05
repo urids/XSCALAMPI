@@ -26,7 +26,7 @@ public:
 	virtual int matchMake(int NumTsk, int NumDvs,float * W, int * Adj,const int* SR,const int* AS, int* schedule);
 
 private:
-  char* storagePath; //this implementation will require reading L & BW Matrices.
+  char* storagePath=NULL; //this implementation will require reading L & BW Matrices.
 };
 
 #endif /* HEFT_H_ */

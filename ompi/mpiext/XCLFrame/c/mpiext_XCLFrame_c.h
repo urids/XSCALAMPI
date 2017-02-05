@@ -15,7 +15,7 @@
 
 #define DEBUG 0
 // this function also forms part of the framework but is declared in DataManager/TwoSidedComms/XclScatter.h(just for fun!!)
-//this function is declared in XclScatter.h (Why?)-To show is possible?
+//this function is declared in XclScatter.h (Why?)-To show it is possible?
 // int OMPI_commit_EntityType(int blockcount, int* blocklen, MPI_Aint* displacements, MPI_Datatype* basictypes, MPI_Datatype * newDatatype);
 // ACTUALLY IS DECLRED WITHOUT OMPI_DECLSPEC.
 //OMPI_DECLSPEC int OMPI_commit_EntityType(int blockcount, int* blocklen, MPI_Aint* displacements, MPI_Datatype* basictypes, MPI_Datatype * newDatatype);
@@ -27,7 +27,7 @@ OMPI_DECLSPEC int OMPI_CollectDevicesInfo(int devSelection, MPI_Comm comm); //th
 
 OMPI_DECLSPEC int XSCALA_Initialize(int argc, char ** argv);
 OMPI_DECLSPEC int XSCALA_getNumTasks(int* numTasks, MPI_Comm comm);
-OMPI_DECLSPEC int  XSCALA_Finalize();
+OMPI_DECLSPEC int XSCALA_Finalize();
 
 
 //OMPI_DECLSPEC int OMPI_XclCreateKernel(MPI_Comm comm,char* srcPath,char* kernelName);

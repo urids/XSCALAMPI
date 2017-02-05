@@ -32,6 +32,8 @@ void* readerUNSubscribe(void* Args){
 	reader_Sts[tID]=0;
 	return NULL;
 }
+
+
 int * counters;
 void* taskThrdDoWk(void *threadid)
 {
@@ -45,7 +47,7 @@ void* taskThrdDoWk(void *threadid)
 			reader_Sts[thID]=1;
 		}
 
-		sem_wait(&prodConsSemphs[thID]);
+		sem_wait(&prodConsSemphs[thID]); // if my workQueue is empty then Wait
 		if(exitSignal[thID] && SubRoutinesQueues[thID]==NULL){ //if required and there's no more work EXIT
 			pthread_exit(NULL);
 		}

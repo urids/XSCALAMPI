@@ -39,7 +39,7 @@ Scheduler* newScheduler(char* heuristicModel, char* benchStoragePath){
 
 
 int matchMake(Scheduler* myScheduler, int NumTsk, int NumDvs,float * W, int * Adj,const int* SR,const int* AS, int* schedule){
-	myScheduler->matchMake(NumTsk, NumDvs, W, Adj, SR,AS, schedule);
+	myScheduler->matchMake(NumTsk, NumDvs, W, Adj, SR, AS, schedule);
 	return 0;
 }
 

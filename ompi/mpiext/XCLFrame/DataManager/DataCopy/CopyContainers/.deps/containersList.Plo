@@ -44,8 +44,9 @@ CopyContainers/containersList.lo: CopyContainers/containersList.c \
  /usr/include/unistd.h /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
  /usr/include/x86_64-linux-gnu/bits/environments.h \
  /usr/include/x86_64-linux-gnu/bits/confname.h /usr/include/getopt.h \
- /usr/include/x86_64-linux-gnu/bits/unistd.h /usr/local/include/CL/cl.h \
- /usr/local/include/CL/cl_platform.h \
+ /usr/include/x86_64-linux-gnu/bits/unistd.h \
+ /usr/local/cuda-7.5/include/CL/cl.h \
+ /usr/local/cuda-7.5/include/CL/cl_platform.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/xmmintrin.h \
@@ -184,9 +185,9 @@ CopyContainers/../../../DataManager/Base/../../TaskManager/Base/taskManager.h:
 
 /usr/include/x86_64-linux-gnu/bits/unistd.h:
 
-/usr/local/include/CL/cl.h:
+/usr/local/cuda-7.5/include/CL/cl.h:
 
-/usr/local/include/CL/cl_platform.h:
+/usr/local/cuda-7.5/include/CL/cl_platform.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h:
 

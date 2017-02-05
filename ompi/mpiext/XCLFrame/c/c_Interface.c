@@ -2,10 +2,11 @@
 
 #include "c_Interface.h"
 
-/* ==================================
- * | INIT OF GLOBAL DEFINITIONS |
- * ==================================
- */
+/*
+  ==================================
+  | INIT OF GLOBAL DEFINITIONS |
+  ==================================
+*/
 
 PUInfo* g_PUList; //Global Variable declared at localDevices.h
 int g_numDevs;  //Global Variable declared at localDevices.h
@@ -32,17 +33,20 @@ ticket_t opTicket;
 
 
 int MPIentityTypeSize;
-int NON_DELEGATED OMPI_commit_EntityType(int blockcount, int* blocklen, MPI_Aint* displacements, MPI_Datatype* basictypes, MPI_Datatype * newDatatype){
+int NON_DELEGATED XCL_CommitEntity(int blockcount, int* blocklen, MPI_Aint* displacements, MPI_Datatype* basictypes, MPI_Datatype * newDatatype){
 	return _OMPI_commit_EntityType(blockcount, blocklen,  displacements, basictypes, newDatatype);
 }
 
 
-
-int NON_DELEGATED OMPI_CollectDevicesInfo(int devSelection, MPI_Comm comm){
-	return _OMPI_CollectDevicesInfo(devSelection, comm);
+int NON_DELEGATED XCL_GetNumDevices(int* numDevices, int devSelection, MPI_Comm comm){
+	*numDevices= _OMPI_CollectDevicesInfo(devSelection, comm);
+	return 0;
 }
 int configInputs;
 int NON_DELEGATED XSCALA_Initialize(int argc, char ** argv){
+
+	MPI_Init(&argc, &argv);
+
 	char heuristicModel[1024];
 	char selectedDevices[1024];
 	char benchStoragePath[1024];
@@ -82,6 +86,7 @@ int XSCALA_getNumDevices(int* numDevices, int deviceType, MPI_Comm comm){
 }
 
 int NON_DELEGATED XSCALA_Finalize(){
+	MPI_Finalize();
 	return 0;
 }
 
@@ -214,7 +219,6 @@ int OMPI_XclExecTask(MPI_Comm communicator, int g_selTask, int workDim, size_t *
 			}
 
 			//va_end(argptr);
-
 		}
 	}
 
@@ -291,7 +295,7 @@ int OMPI_XclMallocTray(int g_taskIdx, int trayIdx, int bufferSize, MPI_Comm comm
 	MPI_Comm_rank(comm, &myRank);
 
 	//0.- Dynamic Scheduling?
-	if(configInputs & DYNAMICSCHED){
+	if(configInputs & DYNAMICSCHED /* && is not allocated yet*/){
 		struct Args_MallocTray_st * mallocTray_Args=malloc(sizeof(struct Args_MallocTray_st));
 		mallocTray_Args->l_taskIdx=0; //UNKNOWN AT THIS POINT
 		mallocTray_Args->g_taskIdx=g_taskIdx;
@@ -300,7 +304,7 @@ int OMPI_XclMallocTray(int g_taskIdx, int trayIdx, int bufferSize, MPI_Comm comm
 		//4.- Delegate the call to the thread.
 		storeSubRoutine(g_taskIdx, _OMPI_XclMallocTray, (void*)mallocTray_Args);
 	}
-	else { //Then is Static or manual.
+	else { //Then is Static or manual or dynamic already allocated.
 		//1.- Query if this process is involved in the operation
 		if (myRank == g_taskList[g_taskIdx].r_rank) {
 			//2.- Get the appropriate thread from the int thID_Of_(g_selTask)

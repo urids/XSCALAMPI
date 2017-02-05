@@ -15,7 +15,7 @@ int selectScheduler(int configInputs, char* heuristicModel, char* benchStoragePa
 	void *schedulerLibhandle;
 	int (*readAndParse)();
 	char *error;
-	int i,j; //Indx variables.
+	int i,j; //Index variables.
 
 	switch (schedulingMode) {
 	case TASKFILE:

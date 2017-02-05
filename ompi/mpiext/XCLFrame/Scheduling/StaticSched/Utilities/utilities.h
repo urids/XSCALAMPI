@@ -13,6 +13,7 @@
 #include <iostream>
 #include <string.h>
 #define ONEGB (1<<30)
+#define VERBOSE 0
 using namespace std;
 
 
