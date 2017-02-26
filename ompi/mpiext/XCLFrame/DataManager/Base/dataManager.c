@@ -1,5 +1,5 @@
 #include "dataManager.h"
-#define DEBUG 1
+#define DEBUG 0
 
 pthread_mutex_t interNodeCommMtx=PTHREAD_MUTEX_INITIALIZER;
 

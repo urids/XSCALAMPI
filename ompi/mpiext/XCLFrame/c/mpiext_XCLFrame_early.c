@@ -6,7 +6,7 @@
 #include "mpiext_XCLFrame_c.h"
 #include "../TaskManager/Base/taskManager.h"
 
-
+#define DEBUG 0
 //#include "binding/dvMgmt/commsBench.h" //TODO: must this be here to keep architecture schema?
 
 
@@ -105,8 +105,6 @@ static int XCLFrame_init(void)
 	clXplr=(*devXploration)();
 	(*devInit)(&clXplr);
 
-
-
 	dlclose(dlhandle);
 
 	return OMPI_SUCCESS;
@@ -115,7 +113,7 @@ static int XCLFrame_init(void)
 static int XCLFrame_fini(void)
 {
 	if(taskThreadsEnabled){
-		printf("finalization, l_numTsks: %d",l_numTasks);
+		//debug_print("finalization, l_numTsks: %d",l_numTasks);
 		finishThreads(l_numTasks);
 	}
 

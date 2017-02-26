@@ -3,8 +3,7 @@
 
 int _OMPI_CollectDevicesInfo(int devSelection, MPI_Comm comm){
 //int build_g_PUList(int devSelection, MPI_Comm comm){
-	int i,j,
-	k,l;
+	int i,j,k,l;
 	int myRank,numRanks;
 
 	int l_numDevs=clXplr.numDevices;

@@ -19,10 +19,10 @@
 // int OMPI_commit_EntityType(int blockcount, int* blocklen, MPI_Aint* displacements, MPI_Datatype* basictypes, MPI_Datatype * newDatatype);
 // ACTUALLY IS DECLRED WITHOUT OMPI_DECLSPEC.
 //OMPI_DECLSPEC int OMPI_commit_EntityType(int blockcount, int* blocklen, MPI_Aint* displacements, MPI_Datatype* basictypes, MPI_Datatype * newDatatype);
-OMPI_DECLSPEC int OMPI_commit_EntityType(int blockcount, int* blocklen, MPI_Aint* displacements, MPI_Datatype* basictypes, MPI_Datatype * newDatatype);
+OMPI_DECLSPEC int XCL_CommitEntity(int blockcount, int* blocklen, MPI_Aint* displacements, MPI_Datatype* basictypes, MPI_Datatype * newDatatype);
 
 
-OMPI_DECLSPEC int OMPI_CollectDevicesInfo(int devSelection, MPI_Comm comm); //this function returns global number of devices in the system
+OMPI_DECLSPEC int XCL_GetNumDevices(int* numDevices, int devSelection, MPI_Comm comm); //this function returns global number of devices in the system
 //OMPI_DECLSPEC int OMPI_CollectTaskInfo(int devSelection, MPI_Comm comm); //first parameter for this represents "ALL" or "GPUs" this function returns
 
 OMPI_DECLSPEC int XSCALA_Initialize(int argc, char ** argv);

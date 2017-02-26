@@ -1,7 +1,7 @@
 
 
 #include "poolManager.h"
-
+#define DEBUG 0
 int readersCount=0;
 pthread_mutex_t readTry=PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t readersContention=PTHREAD_MUTEX_INITIALIZER;
@@ -109,7 +109,7 @@ void insertThreads(int numThds, int reset){
 		}
 
 		currNumThds+=numThds;
-		printf("CurrNTHDS= %d \n",currNumThds);
+		debug_print("CurrNTHDS= %d \n",currNumThds);
 
 	}else{ //currNumThds!=0
 		//READERS WRITERS PROTOCOL.

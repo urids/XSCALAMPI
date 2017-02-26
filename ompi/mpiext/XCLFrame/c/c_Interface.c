@@ -33,15 +33,16 @@ ticket_t opTicket;
 
 
 int MPIentityTypeSize;
-int NON_DELEGATED XCL_CommitEntity(int blockcount, int* blocklen, MPI_Aint* displacements, MPI_Datatype* basictypes, MPI_Datatype * newDatatype){
+int NON_DELEGATED XSCALA_CommitEntity(int blockcount, int* blocklen, MPI_Aint* displacements, MPI_Datatype* basictypes, MPI_Datatype * newDatatype){
 	return _OMPI_commit_EntityType(blockcount, blocklen,  displacements, basictypes, newDatatype);
 }
 
 
-int NON_DELEGATED XCL_GetNumDevices(int* numDevices, int devSelection, MPI_Comm comm){
+int NON_DELEGATED XSCALA_GetNumDevices(int* numDevices, int devSelection, MPI_Comm comm){
 	*numDevices= _OMPI_CollectDevicesInfo(devSelection, comm);
 	return 0;
 }
+
 int configInputs;
 int NON_DELEGATED XSCALA_Initialize(int argc, char ** argv){
 
@@ -75,15 +76,16 @@ int NON_DELEGATED XSCALA_Initialize(int argc, char ** argv){
 
 }
 
-int XSCALA_getNumTasks(int* numTasks, MPI_Comm comm){
+int XSCALA_GetNumTasks(int* numTasks, MPI_Comm comm){
 	*numTasks=g_numTasks;
 	return 0;
 }
 
-int XSCALA_getNumDevices(int* numDevices, int deviceType, MPI_Comm comm){
+/*Disabled because only uses first exploration
+ * int XSCALA_getNumDevices(int* numDevices, int deviceType, MPI_Comm comm){
 	*numDevices=g_numDevs;
 	return 0;
-}
+}*/
 
 int NON_DELEGATED XSCALA_Finalize(){
 	MPI_Finalize();
@@ -93,7 +95,7 @@ int NON_DELEGATED XSCALA_Finalize(){
 
 
 
-int OMPI_XclSetProcedure(MPI_Comm comm, int g_selTask, char* srcPath, char* kernelName){
+int XSCALA_SetProcedure(MPI_Comm comm, int g_selTask, char* srcPath, char* kernelName){
 
 	int myRank;
 	MPI_Comm_rank(comm, &myRank);
@@ -134,7 +136,7 @@ int OMPI_XclSetProcedure(MPI_Comm comm, int g_selTask, char* srcPath, char* kern
 }
 
 
-int OMPI_XclExecTask(MPI_Comm communicator, int g_selTask, int workDim, size_t * globalThreads,
+int XSCALA_ExecTask(MPI_Comm communicator, int g_selTask, int workDim, size_t * globalThreads,
 		size_t * localThreads, const char * fmt, ...) {
 
 
@@ -142,6 +144,7 @@ int OMPI_XclExecTask(MPI_Comm communicator, int g_selTask, int workDim, size_t *
 	MPI_Comm_rank(communicator, &myRank);
 
 	//0.- Dynamic Scheduling?
+	// we still store but at this moment we schedule
 	if(configInputs & DYNAMICSCHED){
 
 		struct Args_ExecTask_st * execTask_Args=malloc(sizeof(struct Args_ExecTask_st));
@@ -166,7 +169,7 @@ int OMPI_XclExecTask(MPI_Comm communicator, int g_selTask, int workDim, size_t *
 
 		 runtimeTaskAllocation(g_selTask,communicator);
 
-		// AND START THE DELEGATION
+		// AND START THE DELEGATION (including pending calls)
 		 delegateSubRoutines(g_selTask, 0);
 
 	}
@@ -226,7 +229,7 @@ int OMPI_XclExecTask(MPI_Comm communicator, int g_selTask, int workDim, size_t *
 }
 
 
-int OMPI_XclWriteTray(int g_taskIdx, int trayIdx, int bufferSize,void * hostBuffer, MPI_Comm comm){
+int XSCALA_WriteTray(int g_taskIdx, int trayIdx, int bufferSize,void * hostBuffer, MPI_Comm comm){
 
 	int myRank;
 	MPI_Comm_rank(comm, &myRank);
@@ -264,7 +267,7 @@ int OMPI_XclWriteTray(int g_taskIdx, int trayIdx, int bufferSize,void * hostBuff
 	//return _OMPI_XclWriteTray(g_taskIdx, trayIdx, bufferSize, hostBuffer, comm);
 }
 
-int OMPI_XclReadTray(int g_taskIdx, int trayIdx, int bufferSize, void * hostBuffer, MPI_Comm comm){
+int XSCALA_ReadTray(int g_taskIdx, int trayIdx, int bufferSize, void * hostBuffer, MPI_Comm comm){
 	//1.- Query if this process thread is involved in the operation
 	int myRank;
 	MPI_Comm_rank(comm, &myRank);
@@ -288,7 +291,7 @@ int OMPI_XclReadTray(int g_taskIdx, int trayIdx, int bufferSize, void * hostBuff
 	return 0;
 }
 
-int OMPI_XclMallocTray(int g_taskIdx, int trayIdx, int bufferSize, MPI_Comm comm){
+int XSCALA_MallocTray(int g_taskIdx, int trayIdx, int bufferSize, MPI_Comm comm){
 
 
 	int myRank;
@@ -324,7 +327,7 @@ int OMPI_XclMallocTray(int g_taskIdx, int trayIdx, int bufferSize, MPI_Comm comm
 	return 0;
 }
 
-int OMPI_XclFreeTray(int g_taskIdx, int trayIdx, MPI_Comm comm){
+int XSCALA_FreeTray(int g_taskIdx, int trayIdx, MPI_Comm comm){
 	//1.- Query if this process thread is involved in the operation
 	int myRank;
 	MPI_Comm_rank(comm, &myRank);
@@ -343,7 +346,7 @@ int OMPI_XclFreeTray(int g_taskIdx, int trayIdx, MPI_Comm comm){
 }
 
 
-int OMPI_XclSend(int trayIdx, int count, MPI_Datatype MPIentityType, int g_src_task,
+int XSCALA_Send(int trayIdx, int count, MPI_Datatype MPIentityType, int g_src_task,
 		int g_dest_task, int tgID, MPI_Comm comm){
 
 	//1.- Query if this process thread is involved in the operation
@@ -370,7 +373,7 @@ int OMPI_XclSend(int trayIdx, int count, MPI_Datatype MPIentityType, int g_src_t
 	return 0;
 }
 
-int OMPI_XclRecv(int trayIdx, int count, MPI_Datatype MPIentityType, int g_src_task,
+int XSCALA_Recv(int trayIdx, int count, MPI_Datatype MPIentityType, int g_src_task,
 		int g_recv_task, int tgID,MPI_Comm comm) {
 	//1.- Query if this process thread is involved in the operation
 	int myRank;
@@ -398,7 +401,7 @@ int OMPI_XclRecv(int trayIdx, int count, MPI_Datatype MPIentityType, int g_src_t
 
 
 
-int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_trayIdx, int traySize, int tgID){
+int XSCALA_SendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_trayIdx, int traySize, int tgID){
 	int myRank;
 	MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
 
@@ -425,6 +428,8 @@ int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_tr
 	//int cpyBuffSz= count * entityTypeSz;
 	int cpyBuffSz=traySize;
 	int cpyMode;
+
+	//SELECT MODE
 	if(myRank == g_taskList[g_src_task].r_rank
 			|| myRank == g_taskList[g_dst_task].r_rank){
 
@@ -449,6 +454,7 @@ int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_tr
 		else{
 			cpyMode=INTERNODE;
 		}
+		//END DECIDE MODE
 
 		switch(cpyMode){
 
@@ -562,11 +568,11 @@ int OMPI_XclSendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_tr
 }
 
 
-int OMPI_XclGather(int trayIdx, int count, MPI_Datatype MPIentityType,void **hostbuffer,
+int XSCALA_Gather(int trayIdx, int count, MPI_Datatype MPIentityType,void **hostbuffer,
 		const char* datafileName , MPI_Comm comm){
 	return _OMPI_XclGather(trayIdx, count, MPIentityType,hostbuffer,datafileName ,comm);
 }
-int OMPI_XclScatter(const char* datafileName, int* count, MPI_Datatype entityType, int trayIdx, MPI_Comm comm){
+int XSCALA_Scatter(const char* datafileName,  MPI_Datatype entityType, int trayIdx, MPI_Comm comm){
 	int i;	//index exclusive variable.
 	int myRank, numRanks;
 	MPI_Comm_rank(comm, &myRank);
@@ -632,15 +638,15 @@ int OMPI_XclScatter(const char* datafileName, int* count, MPI_Datatype entityTyp
 	return 0;
 }
 
-int NON_DELEGATED OMPI_XclWaitFor(int numTasks, int* taskIds, MPI_Comm comm){
+int NON_DELEGATED XSCALA_WaitFor(int numTasks, int* taskIds, MPI_Comm comm){
 	return _OMPI_XclWaitFor(numTasks, taskIds, comm);
 }
 
-int OMPI_XclWaitAllTasks(MPI_Comm comm){
+int XSCALA_WaitAllTasks(MPI_Comm comm){
 	return _OMPI_XclWaitAllTasks(comm);
 }
 
-int XclCreateNewTasks(task_t* task, int numTasks, int INVOKER, int DeviceType, int DeviceID, MPI_Comm comm){
+int XSCALA_CreateNewTasks(task_t* task, int numTasks, int INVOKER, int DeviceType, int DeviceID, MPI_Comm comm){
 	int static currNumTasks=0;
 	int i;
 	if(!currNumTasks){

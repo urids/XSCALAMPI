@@ -112,5 +112,6 @@ void devicesInitialization(CLxplorInfo* xpInfo){
 
 		}
 	}
+	printf("------------------------------------------- \n");
 
 }

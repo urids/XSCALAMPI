@@ -1,5 +1,5 @@
 #include "bufferFunctions.h"
-#define DEBUG 1
+#define DEBUG 0
 
 int numEntitiesInHost;
 float entitiesPerTask;
