@@ -6,7 +6,7 @@
   ==================================
   | INIT OF GLOBAL DEFINITIONS |
   ==================================
-*/
+ */
 
 PUInfo* g_PUList; //Global Variable declared at localDevices.h
 int g_numDevs;  //Global Variable declared at localDevices.h
@@ -83,7 +83,7 @@ int XSCALA_GetNumTasks(int* numTasks, MPI_Comm comm){
 
 /*Disabled because only uses first exploration
  * int XSCALA_getNumDevices(int* numDevices, int deviceType, MPI_Comm comm){
-	*numDevices=g_numDevs;
+ *numDevices=g_numDevs;
 	return 0;
 }*/
 
@@ -167,10 +167,10 @@ int XSCALA_ExecTask(MPI_Comm communicator, int g_selTask, int workDim, size_t * 
 
 		// AT THIS VERY MOMENT WE SCHEDULE
 
-		 runtimeTaskAllocation(g_selTask,communicator);
+		runtimeTaskAllocation(g_selTask,communicator);
 
 		// AND START THE DELEGATION (including pending calls)
-		 delegateSubRoutines(g_selTask, 0);
+		delegateSubRoutines(g_selTask, 0);
 
 	}
 	else{
@@ -430,37 +430,44 @@ int XSCALA_SendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_tra
 	int cpyMode;
 
 	//SELECT MODE
-	if(myRank == g_taskList[g_src_task].r_rank
-			|| myRank == g_taskList[g_dst_task].r_rank){
-
-
+	if(!(configInputs & DYNAMICSCHED)){
 		if(myRank == g_taskList[g_src_task].r_rank
-				&& myRank == g_taskList[g_dst_task].r_rank){ //Same Node
-
-			l_src_task = g_taskList[g_src_task].l_taskIdx;
-			l_dst_task = g_taskList[g_dst_task].l_taskIdx;
+				|| myRank == g_taskList[g_dst_task].r_rank){
 
 
-			cpyMode=INTERDEVICE;
+			if(myRank == g_taskList[g_src_task].r_rank
+					&& myRank == g_taskList[g_dst_task].r_rank){ //Same Node
 
-			if(l_taskList[l_src_task].device[0].deviceId==
-					l_taskList[l_dst_task].device[0].deviceId){ //Same Device
+				l_src_task = g_taskList[g_src_task].l_taskIdx;
+				l_dst_task = g_taskList[g_dst_task].l_taskIdx;
 
-				cpyMode=INTRADEVICE;
+
+				cpyMode=INTERDEVICE;
+
+				if(l_taskList[l_src_task].device[0].deviceId==
+						l_taskList[l_dst_task].device[0].deviceId){ //Same Device
+
+					cpyMode=INTRADEVICE;
+
+				}
 
 			}
-
-		}
+			else{
+				cpyMode=INTERNODE;
+			}//END SELECTION of MODE
+		} // END if not dynamic case
 		else{
-			cpyMode=INTERNODE;
+			cpyMode=INTERDEVICE; //Default just to test
 		}
-		//END DECIDE MODE
+
+
+
+
 
 		switch(cpyMode){
-
 		case INTRADEVICE:
 		{
-			//printf("IntraDevice, tag: %d\n",tgID);
+			//PRODUCER
 			struct Args_matchedProducer_st * intracpyProducer_Args=malloc(sizeof(struct Args_matchedProducer_st));
 			intracpyProducer_Args->tgID=tgID;
 			intracpyProducer_Args->FULL=&FULL;
@@ -473,18 +480,36 @@ int XSCALA_SendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_tra
 			//4.- Delegate the call to the thread.
 			addSubRoutine(l_src_task, _intraDevCpyProducer, (void*)intracpyProducer_Args);
 
-			struct Args_IntraMatchedConsumer_st * intraCpyConsumer_Args=malloc(sizeof(struct Args_IntraMatchedConsumer_st));
-			intraCpyConsumer_Args->tgID=tgID;
-			intraCpyConsumer_Args->FULL=&FULL;
-			intraCpyConsumer_Args->l_src_taskIdx=l_src_task;
-			intraCpyConsumer_Args->l_dst_taskIdx=l_dst_task;
-			intraCpyConsumer_Args->dataSize=cpyBuffSz;
-			intraCpyConsumer_Args->src_trayId=src_trayIdx;
-			intraCpyConsumer_Args->dst_trayId=dst_trayIdx;
-			intraCpyConsumer_Args->ticket=&opTicket;
+			//CONSUMER
+			if(configInputs & DYNAMICSCHED /* && is not allocated yet*/){
+				struct Args_IntraMatchedConsumer_st * intraCpyConsumer_Args=malloc(sizeof(struct Args_IntraMatchedConsumer_st));
+				intraCpyConsumer_Args->tgID=tgID;
+				intraCpyConsumer_Args->FULL=&FULL;
+				intraCpyConsumer_Args->l_src_taskIdx=0; //TODO: SUPPOSED UNKNOWN AT THIS POINT
+				intraCpyConsumer_Args->l_dst_taskIdx=1; //TODO: SUPPOSED UNKNOWN AT THIS POINT
+				intraCpyConsumer_Args->dataSize=cpyBuffSz;
+				intraCpyConsumer_Args->src_trayId=src_trayIdx;
+				intraCpyConsumer_Args->dst_trayId=dst_trayIdx;
+				intraCpyConsumer_Args->ticket=&opTicket;
 
-			//4.- Delegate the call to the thread.
-			addSubRoutine(l_dst_task, _intraDevCpyConsumer, (void*)intraCpyConsumer_Args);
+				//4.- Store the call in the callbag
+				storeSubRoutine(g_dst_task, _intraDevCpyConsumer, (void*)intraCpyConsumer_Args);
+			}
+			else{
+				struct Args_IntraMatchedConsumer_st * intraCpyConsumer_Args=malloc(sizeof(struct Args_IntraMatchedConsumer_st));
+				intraCpyConsumer_Args->tgID=tgID;
+				intraCpyConsumer_Args->FULL=&FULL;
+				intraCpyConsumer_Args->l_src_taskIdx=l_src_task;
+				intraCpyConsumer_Args->l_dst_taskIdx=l_dst_task;
+				intraCpyConsumer_Args->dataSize=cpyBuffSz;
+				intraCpyConsumer_Args->src_trayId=src_trayIdx;
+				intraCpyConsumer_Args->dst_trayId=dst_trayIdx;
+				intraCpyConsumer_Args->ticket=&opTicket;
+
+				//4.- Delegate the call to the thread.
+				addSubRoutine(l_dst_task, _intraDevCpyConsumer, (void*)intraCpyConsumer_Args);
+
+			}
 
 		}
 		break;
@@ -506,16 +531,33 @@ int XSCALA_SendRecv(int g_src_task, int src_trayIdx, int g_dst_task, int dst_tra
 			//4.- Delegate the call to the thread.
 			addSubRoutine(l_src_task, _interDevCpyProducer, (void*)cpyProducer_Args);
 
-			struct Args_matchedConsumer_st * cpyConsumer_Args=malloc(sizeof(struct Args_matchedConsumer_st));
-			cpyConsumer_Args->tgID=tgID;
-			cpyConsumer_Args->FULL=&FULL;
-			cpyConsumer_Args->l_taskIdx=l_dst_task;
-			cpyConsumer_Args->dataSize=cpyBuffSz;
-			cpyConsumer_Args->trayId=dst_trayIdx;
-			cpyConsumer_Args->ticket=&opTicket;
+			//CONSUMER
+			if(configInputs & DYNAMICSCHED /* && is not allocated yet*/){
+				printf(" g_dst_task: \n", g_dst_task);
+				struct Args_matchedConsumer_st * cpyConsumer_Args=malloc(sizeof(struct Args_matchedConsumer_st));
+				cpyConsumer_Args->tgID=tgID;
+				cpyConsumer_Args->FULL=&FULL;
+				cpyConsumer_Args->l_taskIdx=l_dst_task;
+				cpyConsumer_Args->dataSize=cpyBuffSz;
+				cpyConsumer_Args->trayId=dst_trayIdx;
+				cpyConsumer_Args->ticket=&opTicket;
 
-			//4.- Delegate the call to the thread.
-			addSubRoutine(l_dst_task, _interDevCpyConsumer, (void*)cpyConsumer_Args);
+				//4.- Delegate the call to the thread.
+				storeSubRoutine(g_dst_task, _interDevCpyConsumer, (void*)cpyConsumer_Args);
+
+			}else{
+
+				struct Args_matchedConsumer_st * cpyConsumer_Args=malloc(sizeof(struct Args_matchedConsumer_st));
+				cpyConsumer_Args->tgID=tgID;
+				cpyConsumer_Args->FULL=&FULL;
+				cpyConsumer_Args->l_taskIdx=1; //TODO: SUPPOSED UNKNOWN AT THIS POINT
+				cpyConsumer_Args->dataSize=cpyBuffSz;
+				cpyConsumer_Args->trayId=dst_trayIdx;
+				cpyConsumer_Args->ticket=&opTicket;
+
+				//4.- Delegate the call to the thread.
+				addSubRoutine(l_dst_task, _interDevCpyConsumer, (void*)cpyConsumer_Args);
+			}
 
 		}
 		break;
