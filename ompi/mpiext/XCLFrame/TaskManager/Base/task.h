@@ -45,7 +45,6 @@ typedef struct XCLtask_st{
 	//every task MUST have an associated device
 	Device* device;
 
-
 /*********************************************
 				PROCEDURE
 *********************************************/
@@ -54,7 +53,6 @@ typedef struct XCLtask_st{
 	cl_program* CLprogram;
 	int numKernels; // TODO: will be useful for multiKernels.
 	XCLkernel* kernel;
-
 
 /*********************************************
 				DATA

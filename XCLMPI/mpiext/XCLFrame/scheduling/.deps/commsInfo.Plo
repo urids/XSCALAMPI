@@ -1,0 +1,5 @@
+commsInfo.lo: commsInfo.c /usr/include/stdc-predef.h commsInfo.h
+
+/usr/include/stdc-predef.h:
+
+commsInfo.h:

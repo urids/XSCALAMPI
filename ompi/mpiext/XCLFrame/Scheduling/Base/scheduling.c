@@ -72,14 +72,14 @@ int selectScheduler(int configInputs, char* heuristicModel, char* benchStoragePa
 
 		int numDevs=_OMPI_CollectDevicesInfo(ALL_DEVICES,MPI_COMM_WORLD);
 
-		int* adjMtx= malloc(numTasks*numTasks*sizeof(int));
-		read_Adj(adjMtx, &numTasks);
+		int* adjMtx= malloc(numTasks*numTasks*sizeof(int)); //TDG
+		read_Adj(adjMtx, &numTasks); //read TDG
 
 		float* W= malloc(numTasks*numDevs*sizeof(float));
 		build_Wij(W,numTasks,numDevs,configInputs,benchStoragePath);
 
 
-		int* mapSchedule=malloc(numTasks*sizeof(int));
+		int* mapSchedule=malloc(numTasks*sizeof(int)); //array of g_PUIDx
 		int res=matchMake(myScheduler,numTasks,numDevs,W,adjMtx,NULL,NULL,mapSchedule);
 
 		/*printf("-----------%s----------\n",heuristicModel);

@@ -39,4 +39,4 @@ dlpreopen=''
 
 # Directory that this library needs to be installed in:
 libdir='/home/uriel/mpiELFs/lib'
-relink_command="(cd /home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/cxx; /bin/bash /home/uriel/Dev/mpisrc/XSCALAMPI/libtool  --silent --tag CXX --mode=relink g++ -O3 -DNDEBUG -finline-functions -pthread -version-info 2:3:1 -export-dynamic -o libmpi_cxx.la -rpath /home/uriel/mpiELFs/lib mpicxx.lo intercepts.lo comm.lo datatype.lo win.lo file.lo ../../../ompi/libmpi.la -lrt -lm -lutil @inst_prefix_dir@)"
+relink_command="(cd /home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/cxx; /bin/sh /home/uriel/Dev/mpisrc/XSCALAMPI/libtool  --silent --tag CXX --mode=relink g++ -O3 -DNDEBUG -finline-functions -pthread -version-info 2:3:1 -export-dynamic -o libmpi_cxx.la -rpath /home/uriel/mpiELFs/lib mpicxx.lo intercepts.lo comm.lo datatype.lo win.lo file.lo ../../../ompi/libmpi.la -lrt -lm -lutil @inst_prefix_dir@)"

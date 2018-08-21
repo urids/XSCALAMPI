@@ -39,4 +39,4 @@ dlpreopen=''
 
 # Directory that this library needs to be installed in:
 libdir='/home/uriel/mpiELFs/lib/openmpi'
-relink_command="(cd /home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/mpool/sm; /bin/bash /home/uriel/Dev/mpisrc/XSCALAMPI/libtool  --silent --tag CC --mode=relink gcc -std=gnu99 -O3 -DNDEBUG -finline-functions -fno-strict-aliasing -pthread -module -avoid-version -export-dynamic -o mca_mpool_sm.la -rpath /home/uriel/mpiELFs/lib/openmpi mpool_sm_module.lo mpool_sm_component.lo /home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/common/sm/libmca_common_sm.la -lrt -lm -lutil @inst_prefix_dir@)"
+relink_command="(cd /home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/mpool/sm; /bin/sh /home/uriel/Dev/mpisrc/XSCALAMPI/libtool  --silent --tag CC --mode=relink gcc -std=gnu99 -O3 -DNDEBUG -finline-functions -fno-strict-aliasing -pthread -module -avoid-version -export-dynamic -o mca_mpool_sm.la -rpath /home/uriel/mpiELFs/lib/openmpi mpool_sm_module.lo mpool_sm_component.lo /home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/common/sm/libmca_common_sm.la -lrt -lm -lutil @inst_prefix_dir@)"

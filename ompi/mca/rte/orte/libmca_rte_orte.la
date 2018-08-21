@@ -39,4 +39,4 @@ dlpreopen=''
 
 # Directory that this library needs to be installed in:
 libdir=''
-relink_command="(cd /home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/rte/orte; /bin/bash /home/uriel/Dev/mpisrc/XSCALAMPI/libtool  --silent --tag CC --mode=relink gcc -std=gnu99 -O3 -DNDEBUG -finline-functions -fno-strict-aliasing -pthread -module -avoid-version -export-dynamic -o libmca_rte_orte.la rte_orte_component.lo rte_orte_module.lo ../../../../orte/libopen-rte.la -lrt -lm -lutil @inst_prefix_dir@)"
+relink_command="(cd /home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/rte/orte; /bin/sh /home/uriel/Dev/mpisrc/XSCALAMPI/libtool  --silent --tag CC --mode=relink gcc -std=gnu99 -O3 -DNDEBUG -finline-functions -fno-strict-aliasing -pthread -module -avoid-version -export-dynamic -o libmca_rte_orte.la rte_orte_component.lo rte_orte_module.lo ../../../../orte/libopen-rte.la -lrt -lm -lutil @inst_prefix_dir@)"

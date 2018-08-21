@@ -91,13 +91,13 @@
 /* #undef HAVE_CRT_EXTERNS_H */
 
 /* Define to 1 if we have -lcuda */
-#define HAVE_CUDA 1
+/* #undef HAVE_CUDA */
 
 /* Define to 1 if you have the <cuda.h> header file. */
-#define HAVE_CUDA_H 1
+/* #undef HAVE_CUDA_H */
 
 /* Define to 1 if you have the <cuda_runtime_api.h> header file. */
-#define HAVE_CUDA_RUNTIME_API_H 1
+/* #undef HAVE_CUDA_RUNTIME_API_H */
 
 /* Define to 1 if you have the <curl/curl.h> header file. */
 /* #undef HAVE_CURL_CURL_H */
@@ -712,7 +712,7 @@
 /* #undef HAVE_STRNCPY_S */
 
 /* Define to 1 if you have the <stropts.h> header file. */
-#define HAVE_STROPTS_H 1
+/* #undef HAVE_STROPTS_H */
 
 /* Define to 1 if you have the `strsignal' function. */
 #define HAVE_STRSIGNAL 1
@@ -928,7 +928,7 @@
 #define HAVE_UTMP_H 1
 
 /* Define to 1 if you have the <valgrind/valgrind.h> header file. */
-#define HAVE_VALGRIND_VALGRIND_H 1
+/* #undef HAVE_VALGRIND_VALGRIND_H */
 
 /* Define to 1 if you have the `vasprintf' function. */
 #define HAVE_VASPRINTF 1
@@ -2002,10 +2002,10 @@
 #define OPAL_BUILD_PLATFORM_COMPILER_FAMILYNAME GNU
 
 /* The compiler $lower which OMPI was built with */
-#define OPAL_BUILD_PLATFORM_COMPILER_VERSION 264196
+#define OPAL_BUILD_PLATFORM_COMPILER_VERSION 264195
 
 /* The compiler $lower which OMPI was built with */
-#define OPAL_BUILD_PLATFORM_COMPILER_VERSION_STR 4.8.4
+#define OPAL_BUILD_PLATFORM_COMPILER_VERSION_STR 4.8.3
 
 /* OMPI underlying C compiler */
 #define OPAL_CC "gcc"
@@ -2198,7 +2198,7 @@
 #define OPAL_HAVE_HWLOC 1
 
 /* do we have Java support */
-#define OPAL_HAVE_JAVA_SUPPORT 1
+#define OPAL_HAVE_JAVA_SUPPORT no
 
 /* Do not use outside of mpi.h. Define to 1 if the system has the type `long
    long'. */
@@ -2279,7 +2279,7 @@
 #define OPAL_NEED_C_BOOL 1
 
 /* package/branding string for Open MPI */
-#define OPAL_PACKAGE_STRING "Open MPI uriel@myHost Distribution"
+#define OPAL_PACKAGE_STRING "Open MPI uriel@localhost.localdomain Distribution"
 
 /* Whether r notation is used for ppc registers */
 /* #undef OPAL_POWERPC_R_REGISTERS */
@@ -2579,7 +2579,7 @@
 
 /* Define to 1 if `lex' declares `yytext' as a `char *' by default, not a
    `char[]'. */
-#define YYTEXT_POINTER 1
+/* #undef YYTEXT_POINTER */
 
 /* Enable GNU extensions on systems that have them.  */
 #ifndef _GNU_SOURCE

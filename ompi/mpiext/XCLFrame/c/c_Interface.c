@@ -708,8 +708,8 @@ int XSCALA_CreateNewTasks(task_t* task, int numTasks, int INVOKER, int DeviceTyp
 
 
 	}else{ //not the first call
-		taskDevList=realloc(taskDevList,g_numTasks*sizeof(schedConfigInfo_t));
 		g_numTasks=currNumTasks+numTasks;
+		taskDevList=realloc(taskDevList,g_numTasks*sizeof(schedConfigInfo_t));
 		//we emphasize this null to be able to query later
 		//if the task has been assigned
 		for(i=currNumTasks;i<g_numTasks;i++){

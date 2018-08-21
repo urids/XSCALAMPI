@@ -41,13 +41,13 @@
 /* #undef HAVE_CPUSET_SETID */
 
 /* Define to 1 if we have -lcuda */
-#define HAVE_CUDA 1
+/* #undef HAVE_CUDA */
 
 /* Define to 1 if you have the <cuda.h> header file. */
-#define HAVE_CUDA_H 1
+/* #undef HAVE_CUDA_H */
 
 /* Define to 1 if you have the <cuda_runtime_api.h> header file. */
-#define HAVE_CUDA_RUNTIME_API_H 1
+/* #undef HAVE_CUDA_RUNTIME_API_H */
 
 /* Define to 1 if you have the declaration of `CL_DEVICE_TOPOLOGY_AMD', and to
    0 if you don't. */

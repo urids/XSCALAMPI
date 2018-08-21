@@ -3,7 +3,7 @@
 #include "manualSched.h"
 #define MAX_LINE_LEN 256
 
-int getNumDecls(){
+int getNumDecls(){ //count the number of lines doing true decls (skip comments)
 
 	FILE* config_fp;
 	char line[MAX_LINE_LEN + 1];
@@ -26,14 +26,10 @@ int getNumDecls(){
 
 	while (fgets(line, MAX_LINE_LEN, config_fp) != NULL) {
 		token = strtok(line, "\t =\n\r");
-		if (token != NULL && token[0] != '#') {
-
-
+		if (token != NULL && token[0] != '#') {//skip comments
 			if (strcmp(token, "CPU") == 0) declsLineCounter++;
 			if (strcmp(token, "GPU") == 0) declsLineCounter++;
 			if (strcmp(token, "ACCEL") == 0) declsLineCounter++;
-
-
 		}
 	}
 

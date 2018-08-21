@@ -1,0 +1,1317 @@
+14:58:45 **** Clean-only build of configuration Default for project ompi ****
+make clean 
+Making clean in include
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/include'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/include'
+Making clean in datatype
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/datatype'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "libdatatype.la" || rm -f libdatatype.la
+rm -f ./so_locations
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/datatype'
+Making clean in debuggers
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/debuggers'
+ rm -f predefined_gap_test dlopen_test
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "libdebuggers.la libompi_debugger_canary.la" || rm -f libdebuggers.la libompi_debugger_canary.la
+rm -f ./so_locations
+test -z "libompi_dbg_msgq.la" || rm -f libompi_dbg_msgq.la
+rm -f ./so_locations
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/debuggers'
+Making clean in etc
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/etc'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/etc'
+Making clean in mpiext/XCLFrame/scheduling
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/scheduling'
+test -z "libcommsInfo.la" || rm -f libcommsInfo.la
+rm -f ./so_locations
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/scheduling'
+Making clean in mpi/c
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/c'
+Making clean in profile
+make[2]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/c/profile'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "libmpi_c_pmpi.la" || rm -f libmpi_c_pmpi.la
+rm -f ./so_locations
+rm -f *.o
+rm -f *.lo
+make[2]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/c/profile'
+make[2]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/c'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "libmpi_c.la " || rm -f libmpi_c.la 
+rm -f ./so_locations
+rm -f *.o
+rm -f *.lo
+make[2]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/c'
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/c'
+Making clean in mpi/tool
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/tool'
+Making clean in profile
+make[2]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/tool/profile'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "libmpi_pmpit.la" || rm -f libmpi_pmpit.la
+rm -f ./so_locations
+rm -f *.o
+rm -f *.lo
+make[2]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/tool/profile'
+make[2]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/tool'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "libmpi_mpit_common.la " || rm -f libmpi_mpit_common.la 
+rm -f ./so_locations
+rm -f *.o
+rm -f *.lo
+make[2]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/tool'
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/tool'
+Making clean in mpiext/XCLFrame/c
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/c'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -rf singleSidedComms/.libs singleSidedComms/_libs
+test -z "libmpiext_XCLFrame_c.la" || rm -f libmpiext_XCLFrame_c.la
+rm -f ./so_locations
+rm -f *.o
+rm -f singleSidedComms/*.o
+rm -f singleSidedComms/*.lo
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/c'
+Making clean in mpi/fortran/base/
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/fortran/base'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/fortran/base'
+Making clean in mca/common
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/common'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/common'
+Making clean in mca/allocator
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/allocator'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -rf base/.libs base/_libs
+test -z "libmca_allocator.la" || rm -f libmca_allocator.la
+rm -f ./so_locations
+rm -f *.o
+rm -f base/*.o
+rm -f base/*.lo
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/allocator'
+Making clean in mca/bcol
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/bcol'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -rf base/.libs base/_libs
+test -z "libmca_bcol.la" || rm -f libmca_bcol.la
+rm -f ./so_locations
+rm -f *.o
+rm -f base/*.o
+rm -f base/*.lo
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/bcol'
+Making clean in mca/bml
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/bml'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -rf base/.libs base/_libs
+test -z "libmca_bml.la" || rm -f libmca_bml.la
+rm -f ./so_locations
+rm -f *.o
+rm -f base/*.o
+rm -f base/*.lo
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/bml'
+Making clean in mca/btl
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/btl'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -rf base/.libs base/_libs
+test -z "libmca_btl.la" || rm -f libmca_btl.la
+rm -f ./so_locations
+rm -f *.o
+rm -f base/*.o
+rm -f base/*.lo
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/btl'
+Making clean in mca/coll
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/coll'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -rf base/.libs base/_libs
+test -z "libmca_coll.la" || rm -f libmca_coll.la
+rm -f ./so_locations
+rm -f *.o
+rm -f base/*.o
+rm -f base/*.lo
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/coll'
+Making clean in mca/crcp
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/crcp'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -rf base/.libs base/_libs
+test -z "libmca_crcp.la" || rm -f libmca_crcp.la
+rm -f ./so_locations
+rm -f *.o
+rm -f base/*.o
+rm -f base/*.lo
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/crcp'
+Making clean in mca/dpm
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/dpm'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -rf base/.libs base/_libs
+test -z "libmca_dpm.la" || rm -f libmca_dpm.la
+rm -f ./so_locations
+rm -f *.o
+rm -f base/*.o
+rm -f base/*.lo
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/dpm'
+Making clean in mca/fbtl
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/fbtl'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -rf base/.libs base/_libs
+test -z "libmca_fbtl.la" || rm -f libmca_fbtl.la
+rm -f ./so_locations
+rm -f *.o
+rm -f base/*.o
+rm -f base/*.lo
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/fbtl'
+Making clean in mca/fcoll
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/fcoll'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -rf base/.libs base/_libs
+test -z "libmca_fcoll.la" || rm -f libmca_fcoll.la
+rm -f ./so_locations
+rm -f *.o
+rm -f base/*.o
+rm -f base/*.lo
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/fcoll'
+Making clean in mca/fs
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/fs'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -rf base/.libs base/_libs
+test -z "libmca_fs.la" || rm -f libmca_fs.la
+rm -f ./so_locations
+rm -f *.o
+rm -f base/*.o
+rm -f base/*.lo
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/fs'
+Making clean in mca/io
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/io'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -rf base/.libs base/_libs
+test -z "libmca_io.la" || rm -f libmca_io.la
+rm -f ./so_locations
+rm -f *.o
+rm -f base/*.o
+rm -f base/*.lo
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/io'
+Making clean in mca/mpool
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/mpool'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -rf base/.libs base/_libs
+test -z "libmca_mpool.la" || rm -f libmca_mpool.la
+rm -f ./so_locations
+rm -f *.o
+rm -f base/*.o
+rm -f base/*.lo
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/mpool'
+Making clean in mca/mtl
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/mtl'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -rf base/.libs base/_libs
+test -z "libmca_mtl.la" || rm -f libmca_mtl.la
+rm -f ./so_locations
+rm -f *.o
+rm -f base/*.o
+rm -f base/*.lo
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/mtl'
+Making clean in mca/op
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/op'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -rf base/.libs base/_libs
+test -z "libmca_op.la" || rm -f libmca_op.la
+rm -f ./so_locations
+rm -f *.o
+rm -f base/*.o
+rm -f base/*.lo
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/op'
+Making clean in mca/osc
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/osc'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -rf base/.libs base/_libs
+test -z "libmca_osc.la" || rm -f libmca_osc.la
+rm -f ./so_locations
+rm -f *.o
+rm -f base/*.o
+rm -f base/*.lo
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/osc'
+Making clean in mca/pml
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/pml'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -rf base/.libs base/_libs
+test -z "libmca_pml.la" || rm -f libmca_pml.la
+rm -f ./so_locations
+rm -f *.o
+rm -f base/*.o
+rm -f base/*.lo
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/pml'
+Making clean in mca/pubsub
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/pubsub'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -rf base/.libs base/_libs
+test -z "libmca_pubsub.la" || rm -f libmca_pubsub.la
+rm -f ./so_locations
+rm -f *.o
+rm -f base/*.o
+rm -f base/*.lo
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/pubsub'
+Making clean in mca/rcache
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/rcache'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -rf base/.libs base/_libs
+test -z "libmca_rcache.la" || rm -f libmca_rcache.la
+rm -f ./so_locations
+rm -f *.o
+rm -f base/*.o
+rm -f base/*.lo
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/rcache'
+Making clean in mca/rte
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/rte'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -rf base/.libs base/_libs
+test -z "libmca_rte.la" || rm -f libmca_rte.la
+rm -f ./so_locations
+rm -f *.o
+rm -f base/*.o
+rm -f base/*.lo
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/rte'
+Making clean in mca/sbgp
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/sbgp'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -rf base/.libs base/_libs
+test -z "libmca_sbgp.la" || rm -f libmca_sbgp.la
+rm -f ./so_locations
+rm -f *.o
+rm -f base/*.o
+rm -f base/*.lo
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/sbgp'
+Making clean in mca/sharedfp
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/sharedfp'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -rf base/.libs base/_libs
+test -z "libmca_sharedfp.la" || rm -f libmca_sharedfp.la
+rm -f ./so_locations
+rm -f *.o
+rm -f base/*.o
+rm -f base/*.lo
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/sharedfp'
+Making clean in mca/topo
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/topo'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -rf base/.libs base/_libs
+test -z "libmca_topo.la" || rm -f libmca_topo.la
+rm -f ./so_locations
+rm -f *.o
+rm -f base/*.o
+rm -f base/*.lo
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/topo'
+Making clean in mca/vprotocol
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/vprotocol'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -rf base/.libs base/_libs
+test -z "libmca_vprotocol.la" || rm -f libmca_vprotocol.la
+rm -f ./so_locations
+rm -f *.o
+rm -f base/*.o
+rm -f base/*.lo
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/vprotocol'
+Making clean in mca/pml/v
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/pml/v'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "" || rm -f 
+test -z "libmca_pml_v.la" || rm -f libmca_pml_v.la
+rm -f ./so_locations
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/pml/v'
+Making clean in mca/rte/orte
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/rte/orte'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -f mpirun.1 mpiexec.1 ompi-ps.1 ompi-clean.1 ompi-top.1 ompi-server.1 
+test -z "libmca_rte_orte.la" || rm -f libmca_rte_orte.la
+rm -f ./so_locations
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/rte/orte'
+Making clean in .
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi'
+test -z "*~ .#*" || rm -f *~ .#*
+test -z "libmpi.la" || rm -f libmpi.la
+rm -f ./so_locations
+rm -rf .libs _libs
+rm -rf attribute/.libs attribute/_libs
+rm -rf class/.libs class/_libs
+rm -rf communicator/.libs communicator/_libs
+rm -rf errhandler/.libs errhandler/_libs
+rm -rf file/.libs file/_libs
+rm -rf group/.libs group/_libs
+rm -rf info/.libs info/_libs
+rm -rf message/.libs message/_libs
+rm -rf mpiext/.libs mpiext/_libs
+rm -rf op/.libs op/_libs
+rm -rf patterns/comm/.libs patterns/comm/_libs
+rm -rf patterns/net/.libs patterns/net/_libs
+rm -rf peruse/.libs peruse/_libs
+rm -rf proc/.libs proc/_libs
+rm -rf request/.libs request/_libs
+rm -rf runtime/.libs runtime/_libs
+rm -rf win/.libs win/_libs
+test -z "" || rm -f 
+rm -f *.o
+rm -f attribute/*.o
+rm -f attribute/*.lo
+rm -f class/*.o
+rm -f class/*.lo
+rm -f communicator/*.o
+rm -f communicator/*.lo
+rm -f errhandler/*.o
+rm -f errhandler/*.lo
+rm -f file/*.o
+rm -f file/*.lo
+rm -f group/*.o
+rm -f group/*.lo
+rm -f info/*.o
+rm -f info/*.lo
+rm -f message/*.o
+rm -f message/*.lo
+rm -f mpiext/*.o
+rm -f mpiext/*.lo
+rm -f op/*.o
+rm -f op/*.lo
+rm -f patterns/comm/*.o
+rm -f patterns/comm/*.lo
+rm -f patterns/net/*.o
+rm -f patterns/net/*.lo
+rm -f peruse/*.o
+rm -f peruse/*.lo
+rm -f proc/*.o
+rm -f proc/*.lo
+rm -f request/*.o
+rm -f request/*.lo
+rm -f runtime/*.o
+rm -f runtime/*.lo
+rm -f win/*.o
+rm -f win/*.lo
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi'
+Making clean in mpi/cxx
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/cxx'
+test -z "*~ .#*" || rm -f *~ .#*
+test -z "libmpi_cxx.la " || rm -f libmpi_cxx.la 
+rm -f ./so_locations
+rm -rf .libs _libs
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/cxx'
+Making clean in mpi/fortran/mpif-h
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/fortran/mpif-h'
+Making clean in profile
+make[2]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/fortran/mpif-h/profile'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z " " || rm -f  
+rm -f *.o
+rm -f *.lo
+make[2]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/fortran/mpif-h/profile'
+make[2]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/fortran/mpif-h'
+test -z "*~ .#*" || rm -f *~ .#*
+test -z "" || rm -f 
+rm -rf .libs _libs
+rm -f *.o
+rm -f *.lo
+make[2]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/fortran/mpif-h'
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/fortran/mpif-h'
+Making clean in mpi/fortran/mpiext
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/fortran/mpiext'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "" || rm -f 
+rm -f *.o
+test -z "" || rm -f 
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/fortran/mpiext'
+Making clean in mca/common/sm
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/common/sm'
+test -z "*~ .#*" || rm -f *~ .#*
+test -z "libmca_common_sm.la" || rm -f libmca_common_sm.la
+rm -f ./so_locations
+rm -rf .libs _libs
+if test -z "libmca_common_sm.la"; then \
+	  rm -f "libmca_common_sm.la"; \
+	fi
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/common/sm'
+Making clean in mca/allocator/basic
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/allocator/basic'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_allocator_basic.la" || rm -f mca_allocator_basic.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/allocator/basic'
+Making clean in mca/allocator/bucket
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/allocator/bucket'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_allocator_bucket.la" || rm -f mca_allocator_bucket.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/allocator/bucket'
+Making clean in mca/bcol/basesmuma
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/bcol/basesmuma'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_bcol_basesmuma.la" || rm -f mca_bcol_basesmuma.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/bcol/basesmuma'
+Making clean in mca/bcol/ptpcoll
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/bcol/ptpcoll'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_bcol_ptpcoll.la" || rm -f mca_bcol_ptpcoll.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/bcol/ptpcoll'
+Making clean in mca/bml/r2
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/bml/r2'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_bml_r2.la" || rm -f mca_bml_r2.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/bml/r2'
+Making clean in mca/btl/self
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/btl/self'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_btl_self.la" || rm -f mca_btl_self.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/btl/self'
+Making clean in mca/btl/tcp
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/btl/tcp'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_btl_tcp.la" || rm -f mca_btl_tcp.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/btl/tcp'
+Making clean in mca/btl/sm
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/btl/sm'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_btl_sm.la" || rm -f mca_btl_sm.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/btl/sm'
+Making clean in mca/btl/vader
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/btl/vader'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_btl_vader.la" || rm -f mca_btl_vader.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/btl/vader'
+Making clean in mca/coll/inter
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/coll/inter'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_coll_inter.la" || rm -f mca_coll_inter.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/coll/inter'
+Making clean in mca/coll/basic
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/coll/basic'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_coll_basic.la" || rm -f mca_coll_basic.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/coll/basic'
+Making clean in mca/coll/sm
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/coll/sm'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_coll_sm.la" || rm -f mca_coll_sm.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/coll/sm'
+Making clean in mca/coll/self
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/coll/self'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_coll_self.la" || rm -f mca_coll_self.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/coll/self'
+Making clean in mca/coll/ml
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/coll/ml'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_coll_ml.la" || rm -f mca_coll_ml.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/coll/ml'
+Making clean in mca/coll/libnbc
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/coll/libnbc'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -rf libdict/.libs libdict/_libs
+test -z "mca_coll_libnbc.la" || rm -f mca_coll_libnbc.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f libdict/*.o
+rm -f libdict/*.lo
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/coll/libnbc'
+Making clean in mca/coll/tuned
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/coll/tuned'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_coll_tuned.la" || rm -f mca_coll_tuned.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/coll/tuned'
+Making clean in mca/coll/hierarch
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/coll/hierarch'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_coll_hierarch.la" || rm -f mca_coll_hierarch.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/coll/hierarch'
+Making clean in mca/dpm/orte
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/dpm/orte'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_dpm_orte.la" || rm -f mca_dpm_orte.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/dpm/orte'
+Making clean in mca/fbtl/posix
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/fbtl/posix'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_fbtl_posix.la" || rm -f mca_fbtl_posix.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/fbtl/posix'
+Making clean in mca/fcoll/static
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/fcoll/static'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_fcoll_static.la" || rm -f mca_fcoll_static.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/fcoll/static'
+Making clean in mca/fcoll/two_phase
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/fcoll/two_phase'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_fcoll_two_phase.la" || rm -f mca_fcoll_two_phase.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/fcoll/two_phase'
+Making clean in mca/fcoll/individual
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/fcoll/individual'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_fcoll_individual.la" || rm -f mca_fcoll_individual.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/fcoll/individual'
+Making clean in mca/fcoll/dynamic
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/fcoll/dynamic'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_fcoll_dynamic.la" || rm -f mca_fcoll_dynamic.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/fcoll/dynamic'
+Making clean in mca/fcoll/ylib
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/fcoll/ylib'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_fcoll_ylib.la" || rm -f mca_fcoll_ylib.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/fcoll/ylib'
+Making clean in mca/fs/ufs
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/fs/ufs'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_fs_ufs.la" || rm -f mca_fs_ufs.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/fs/ufs'
+Making clean in mca/io/ompio
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/io/ompio'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_io_ompio.la" || rm -f mca_io_ompio.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/io/ompio'
+Making clean in mca/io/romio
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/io/romio'
+Making clean in romio
+make[2]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/io/romio/romio'
+make[3]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/io/romio/romio'
+rm -rf .libs _libs
+rm -rf adio/ad_bg/.libs adio/ad_bg/_libs
+rm -rf adio/ad_bgl/.libs adio/ad_bgl/_libs
+rm -rf adio/ad_bglockless/.libs adio/ad_bglockless/_libs
+rm -rf adio/ad_gridftp/.libs adio/ad_gridftp/_libs
+rm -rf adio/ad_hfs/.libs adio/ad_hfs/_libs
+rm -rf adio/ad_lustre/.libs adio/ad_lustre/_libs
+rm -rf adio/ad_nfs/.libs adio/ad_nfs/_libs
+rm -rf adio/ad_panfs/.libs adio/ad_panfs/_libs
+rm -rf adio/ad_pfs/.libs adio/ad_pfs/_libs
+rm -rf adio/ad_piofs/.libs adio/ad_piofs/_libs
+rm -rf adio/ad_pvfs/.libs adio/ad_pvfs/_libs
+rm -rf adio/ad_pvfs2/.libs adio/ad_pvfs2/_libs
+rm -rf adio/ad_sfs/.libs adio/ad_sfs/_libs
+rm -rf adio/ad_testfs/.libs adio/ad_testfs/_libs
+rm -rf adio/ad_ufs/.libs adio/ad_ufs/_libs
+rm -rf adio/ad_xfs/.libs adio/ad_xfs/_libs
+rm -rf adio/ad_zoidfs/.libs adio/ad_zoidfs/_libs
+rm -rf adio/common/.libs adio/common/_libs
+rm -rf mpi-io/.libs mpi-io/_libs
+rm -rf mpi-io/fortran/.libs mpi-io/fortran/_libs
+rm -rf mpi-io/glue/default/.libs mpi-io/glue/default/_libs
+rm -rf mpi-io/glue/mpich/.libs mpi-io/glue/mpich/_libs
+rm -rf mpi-io/glue/openmpi/.libs mpi-io/glue/openmpi/_libs
+test -z "libromio_dist.la " || rm -f libromio_dist.la 
+rm -f ./so_locations
+rm -f *.o
+rm -f adio/ad_bg/*.o
+rm -f adio/ad_bg/*.lo
+rm -f adio/ad_bgl/*.o
+rm -f adio/ad_bgl/*.lo
+rm -f adio/ad_bglockless/*.o
+rm -f adio/ad_bglockless/*.lo
+rm -f adio/ad_gridftp/*.o
+rm -f adio/ad_gridftp/*.lo
+rm -f adio/ad_hfs/*.o
+rm -f adio/ad_hfs/*.lo
+rm -f adio/ad_lustre/*.o
+rm -f adio/ad_lustre/*.lo
+rm -f adio/ad_nfs/*.o
+rm -f adio/ad_nfs/*.lo
+rm -f adio/ad_panfs/*.o
+rm -f adio/ad_panfs/*.lo
+rm -f adio/ad_pfs/*.o
+rm -f adio/ad_pfs/*.lo
+rm -f adio/ad_piofs/*.o
+rm -f adio/ad_piofs/*.lo
+rm -f adio/ad_pvfs/*.o
+rm -f adio/ad_pvfs/*.lo
+rm -f adio/ad_pvfs2/*.o
+rm -f adio/ad_pvfs2/*.lo
+rm -f adio/ad_sfs/*.o
+rm -f adio/ad_sfs/*.lo
+rm -f adio/ad_testfs/*.o
+rm -f adio/ad_testfs/*.lo
+rm -f adio/ad_ufs/*.o
+rm -f adio/ad_ufs/*.lo
+rm -f adio/ad_xfs/*.o
+rm -f adio/ad_xfs/*.lo
+rm -f adio/ad_zoidfs/*.o
+rm -f adio/ad_zoidfs/*.lo
+rm -f adio/common/*.o
+rm -f adio/common/*.lo
+rm -f mpi-io/*.o
+rm -f mpi-io/*.lo
+rm -f mpi-io/fortran/*.o
+rm -f mpi-io/fortran/*.lo
+rm -f mpi-io/glue/default/*.o
+rm -f mpi-io/glue/default/*.lo
+rm -f mpi-io/glue/mpich/*.o
+rm -f mpi-io/glue/mpich/*.lo
+rm -f mpi-io/glue/openmpi/*.o
+rm -f mpi-io/glue/openmpi/*.lo
+rm -f *.lo
+make[3]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/io/romio/romio'
+make[2]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/io/romio/romio'
+make[2]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/io/romio'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -rf src/.libs src/_libs
+test -z "mca_io_romio.la" || rm -f mca_io_romio.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f src/*.o
+rm -f src/*.lo
+rm -f *.lo
+make[2]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/io/romio'
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/io/romio'
+Making clean in mca/mpool/sm
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/mpool/sm'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_mpool_sm.la" || rm -f mca_mpool_sm.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/mpool/sm'
+Making clean in mca/mpool/grdma
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/mpool/grdma'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_mpool_grdma.la" || rm -f mca_mpool_grdma.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/mpool/grdma'
+Making clean in mca/osc/sm
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/osc/sm'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_osc_sm.la" || rm -f mca_osc_sm.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/osc/sm'
+Making clean in mca/osc/rdma
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/osc/rdma'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_osc_rdma.la" || rm -f mca_osc_rdma.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/osc/rdma'
+Making clean in mca/pml/cm
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/pml/cm'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_pml_cm.la" || rm -f mca_pml_cm.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/pml/cm'
+Making clean in mca/pml/ob1
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/pml/ob1'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_pml_ob1.la" || rm -f mca_pml_ob1.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/pml/ob1'
+Making clean in mca/pml/bfo
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/pml/bfo'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_pml_bfo.la" || rm -f mca_pml_bfo.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/pml/bfo'
+Making clean in mca/pubsub/orte
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/pubsub/orte'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_pubsub_orte.la" || rm -f mca_pubsub_orte.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/pubsub/orte'
+Making clean in mca/rcache/vma
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/rcache/vma'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_rcache_vma.la" || rm -f mca_rcache_vma.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/rcache/vma'
+Making clean in mca/sbgp/basesmuma
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/sbgp/basesmuma'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_sbgp_basesmuma.la" || rm -f mca_sbgp_basesmuma.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/sbgp/basesmuma'
+Making clean in mca/sbgp/basesmsocket
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/sbgp/basesmsocket'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_sbgp_basesmsocket.la" || rm -f mca_sbgp_basesmsocket.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/sbgp/basesmsocket'
+Making clean in mca/sbgp/p2p
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/sbgp/p2p'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_sbgp_p2p.la" || rm -f mca_sbgp_p2p.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/sbgp/p2p'
+Making clean in mca/sharedfp/sm
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/sharedfp/sm'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_sharedfp_sm.la" || rm -f mca_sharedfp_sm.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/sharedfp/sm'
+Making clean in mca/sharedfp/lockedfile
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/sharedfp/lockedfile'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_sharedfp_lockedfile.la" || rm -f mca_sharedfp_lockedfile.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/sharedfp/lockedfile'
+Making clean in mca/sharedfp/individual
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/sharedfp/individual'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_sharedfp_individual.la" || rm -f mca_sharedfp_individual.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/sharedfp/individual'
+Making clean in mca/topo/basic
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/topo/basic'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_topo_basic.la" || rm -f mca_topo_basic.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/topo/basic'
+Making clean in mca/vprotocol/pessimist
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/vprotocol/pessimist'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "mca_vprotocol_pessimist.la" || rm -f mca_vprotocol_pessimist.la
+rm -f ./so_locations
+test -z "" || rm -f 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mca/vprotocol/pessimist'
+Making clean in contrib/libompitrace
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/contrib/libompitrace'
+test -z "*~ .#*" || rm -f *~ .#*
+test -z "libompitrace.la" || rm -f libompitrace.la
+rm -f ./so_locations
+rm -rf .libs _libs
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/contrib/libompitrace'
+Making clean in mpiext/XCLFrame/multiDeviceMgmt
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/multiDeviceMgmt'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -rf ./deviceMgmt/.libs ./deviceMgmt/_libs
+rm -rf ./deviceMgmt/memMgmt/.libs ./deviceMgmt/memMgmt/_libs
+rm -rf ./errorMgmt/.libs ./errorMgmt/_libs
+rm -rf ./taskMgmt/.libs ./taskMgmt/_libs
+test -z "libmultiDeviceMgmt.la" || rm -f libmultiDeviceMgmt.la
+rm -f ./so_locations
+rm -f *.o
+rm -f ./deviceMgmt/*.o
+rm -f ./deviceMgmt/*.lo
+rm -f ./deviceMgmt/memMgmt/*.o
+rm -f ./deviceMgmt/memMgmt/*.lo
+rm -f ./errorMgmt/*.o
+rm -f ./errorMgmt/*.lo
+rm -f ./taskMgmt/*.o
+rm -f ./taskMgmt/*.lo
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/multiDeviceMgmt'
+Making clean in mpiext/XCLFrame/c/binding/dvMgmt
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/c/binding/dvMgmt'
+test -z "libdvMgmt.la" || rm -f libdvMgmt.la
+rm -f ./so_locations
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/c/binding/dvMgmt'
+Making clean in mpiext/XCLFrame/c/binding/tskMgmt
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/c/binding/tskMgmt'
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "libtskMgmt.la" || rm -f libtskMgmt.la
+rm -f ./so_locations
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/c/binding/tskMgmt'
+Making clean in tools/ompi_info
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/tools/ompi_info'
+ rm -f ompi_info
+test -z "*~ .#*" || rm -f *~ .#*
+rm -rf .libs _libs
+test -z "" || rm -rf 
+rm -f *.o
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/tools/ompi_info'
+Making clean in tools/wrappers
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/tools/wrappers'
+test -z "*~ .#* " || rm -f *~ .#* 
+rm -rf .libs _libs
+rm -f *.lo
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/tools/wrappers'
+15:02:50 **** Build of configuration Default for project ompi ****
+make all 
+Making all in include
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/include'
+make  all-am
+make[2]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/include'
+make[2]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/include'
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/include'
+Making all in datatype
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/datatype'
+make[1]: Nothing to be done for `all'.
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/datatype'
+Making all in debuggers
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/debuggers'
+make[1]: Nothing to be done for `all'.
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/debuggers'
+Making all in etc
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/etc'
+make[1]: Nothing to be done for `all'.
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/etc'
+Making all in mpiext/XCLFrame/scheduling
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/scheduling'
+make[1]: Nothing to be done for `all'.
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/scheduling'
+Making all in mpi/c
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/c'
+Making all in profile
+make[2]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/c/profile'
+  CC       pinit.lo
+In file included from ../../../mpiext/XCLFrame/c/binding/dvMgmt/dvMgmt.h:10:0,
+                 from ../../../mpiext/XCLFrame/c/binding/dvMgmt/commsBench.h:14,
+                 from pinit.c:31:
+../../../mpiext/XCLFrame/c/binding/dvMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h:10:19: fatal error: CL/cl.h: No such file or directory
+ #include "CL/cl.h"
+                   ^
+compilation terminated.
+make[2]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/c/profile'
+make[2]: *** [pinit.lo] Error 1
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/c'
+make[1]: *** [all-recursive] Error 1
+make: *** [all-recursive] Error 1
+15:05:38 **** Incremental Build of configuration Default for project ompi ****
+make all 
+ cd .. && /bin/bash /home/uriel/Dev/mpisrc/XSCALAMPI/config/missing --run automake-1.12 --foreign ompi/Makefile
+ cd .. && /bin/bash ./config.status ompi/Makefile depfiles
+config.status: creating ompi/Makefile
+config.status: executing depfiles commands
+Making all in include
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/include'
+make  all-am
+make[2]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/include'
+make[2]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/include'
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/include'
+Making all in datatype
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/datatype'
+make[1]: Nothing to be done for `all'.
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/datatype'
+Making all in debuggers
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/debuggers'
+make[1]: Nothing to be done for `all'.
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/debuggers'
+Making all in etc
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/etc'
+make[1]: Nothing to be done for `all'.
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/etc'
+Making all in mpiext/XCLFrame/scheduling
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/scheduling'
+make[1]: Nothing to be done for `all'.
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/scheduling'
+Making all in mpi/c
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/c'
+Making all in profile
+make[2]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/c/profile'
+  CC       pinit.lo
+In file included from ../../../mpiext/XCLFrame/c/binding/dvMgmt/dvMgmt.h:10:0,
+                 from ../../../mpiext/XCLFrame/c/binding/dvMgmt/commsBench.h:14,
+                 from pinit.c:31:
+../../../mpiext/XCLFrame/c/binding/dvMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h:10:19: fatal error: CL/cl.h: No such file or directory
+ #include "CL/cl.h"
+                   ^
+compilation terminated.
+make[2]: *** [pinit.lo] Error 1
+make[2]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/c/profile'
+make[1]: *** [all-recursive] Error 1
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/c'
+make: *** [all-recursive] Error 1
+15:06:03 **** Incremental Build of configuration Default for project ompi ****
+make all 
+ cd .. && /bin/bash /home/uriel/Dev/mpisrc/XSCALAMPI/config/missing --run automake-1.12 --foreign ompi/Makefile
+ cd .. && /bin/bash ./config.status ompi/Makefile depfiles
+config.status: creating ompi/Makefile
+config.status: executing depfiles commands
+Making all in include
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/include'
+make  all-am
+make[2]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/include'
+make[2]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/include'
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/include'
+Making all in datatype
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/datatype'
+make[1]: Nothing to be done for `all'.
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/datatype'
+Making all in debuggers
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/debuggers'
+make[1]: Nothing to be done for `all'.
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/debuggers'
+Making all in etc
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/etc'
+make[1]: Nothing to be done for `all'.
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/etc'
+Making all in mpiext/XCLFrame/scheduling
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/scheduling'
+make[1]: Nothing to be done for `all'.
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/scheduling'
+Making all in mpi/c
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/c'
+Making all in profile
+make[2]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/c/profile'
+  CC       pinit.lo
+In file included from ../../../mpiext/XCLFrame/c/binding/dvMgmt/dvMgmt.h:10:0,
+                 from ../../../mpiext/XCLFrame/c/binding/dvMgmt/commsBench.h:14,
+                 from pinit.c:31:
+../../../mpiext/XCLFrame/c/binding/dvMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h:10:19: fatal error: CL/cl.h: No such file or directory
+ #include "CL/cl.h"
+                   ^
+compilation terminated.
+make[2]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/c/profile'
+make[2]: *** [pinit.lo] Error 1
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/c'
+make[1]: *** [all-recursive] Error 1
+make: *** [all-recursive] Error 1
+15:06:30 **** Incremental Build of configuration Default for project ompi ****
+make all 
+Making all in include
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/include'
+make  all-am
+make[2]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/include'
+make[2]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/include'
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/include'
+Making all in datatype
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/datatype'
+make[1]: Nothing to be done for `all'.
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/datatype'
+Making all in debuggers
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/debuggers'
+make[1]: Nothing to be done for `all'.
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/debuggers'
+Making all in etc
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/etc'
+make[1]: Nothing to be done for `all'.
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/etc'
+Making all in mpiext/XCLFrame/scheduling
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/scheduling'
+make[1]: Nothing to be done for `all'.
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpiext/XCLFrame/scheduling'
+Making all in mpi/c
+make[1]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/c'
+Making all in profile
+make[2]: Entering directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/c/profile'
+  CC       pinit.lo
+In file included from ../../../mpiext/XCLFrame/c/binding/dvMgmt/dvMgmt.h:10:0,
+                 from ../../../mpiext/XCLFrame/c/binding/dvMgmt/commsBench.h:14,
+                 from pinit.c:31:
+../../../mpiext/XCLFrame/c/binding/dvMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h:33:2: error: unknown type name 'cl_device_type'
+  cl_device_type dType;        //device type
+  ^
+../../../mpiext/XCLFrame/c/binding/dvMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h:34:2: error: unknown type name 'cl_device_id'
+  cl_device_id deviceId;       //device ID
+  ^
+../../../mpiext/XCLFrame/c/binding/dvMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h:35:2: error: unknown type name 'cl_context_properties'
+  cl_context_properties platform; //device platform controller
+  ^
+../../../mpiext/XCLFrame/c/binding/dvMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h:36:2: error: unknown type name 'cl_context'
+  cl_context context;          //context
+  ^
+../../../mpiext/XCLFrame/c/binding/dvMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h:37:2: error: unknown type name 'cl_command_queue'
+  cl_command_queue queue;      //command-queue
+  ^
+../../../mpiext/XCLFrame/c/binding/dvMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h:39:2: error: unknown type name 'cl_event'
+  cl_event eventObject;        //event object
+  ^
+../../../mpiext/XCLFrame/c/binding/dvMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h:40:2: error: unknown type name 'cl_ulong'
+  cl_ulong kernelStartTime;    //kernel start time
+  ^
+../../../mpiext/XCLFrame/c/binding/dvMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h:41:2: error: unknown type name 'cl_ulong'
+  cl_ulong kernelEndTime;      //kernel end time
+  ^
+../../../mpiext/XCLFrame/c/binding/dvMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h:46:2: error: unknown type name 'cl_context_properties'
+  cl_context_properties cprops[3];
+  ^
+../../../mpiext/XCLFrame/c/binding/dvMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h:50:2: error: unknown type name 'cl_mem'
+  cl_mem ** memHandler; //handler for the memory object (both cpu or gpu mem)
+  ^
+../../../mpiext/XCLFrame/c/binding/dvMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h:51:2: error: unknown type name 'cl_ulong'
+  cl_ulong maxAllocMemSize;
+  ^
+../../../mpiext/XCLFrame/c/binding/dvMgmt/../../../multiDeviceMgmt/deviceMgmt/Device.h:52:2: error: unknown type name 'cl_ulong'
+  cl_ulong globalMemSize;
+  ^
+In file included from ../../../mpiext/XCLFrame/c/binding/dvMgmt/dvMgmt.h:11:0,
+                 from ../../../mpiext/XCLFrame/c/binding/dvMgmt/commsBench.h:14,
+                 from pinit.c:31:
+../../../mpiext/XCLFrame/c/binding/dvMgmt/../../../multiDeviceMgmt/deviceMgmt/deviceExploration.h:11:19: fatal error: CL/cl.h: No such file or directory
+ #include "CL/cl.h"
+                   ^
+compilation terminated.
+make[2]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/c/profile'
+make[2]: *** [pinit.lo] Error 1
+make[1]: Leaving directory `/home/uriel/Dev/mpisrc/XSCALAMPI/ompi/mpi/c'
+make[1]: *** [all-recursive] Error 1
+make: *** [all-recursive] Error 1
